@@ -1,0 +1,3077 @@
+1
+00:10:22,740 --> 00:10:26,260
+Not too technical, not too complicated.
+Thank you so much, Hila, for the invitation —
+
+2
+00:10:26,310 --> 00:10:30,250
+and it's really great to meet everyone here.
+This looks like an amazing community of people
+
+3
+00:10:30,290 --> 00:10:33,710
+who genuinely support one another —
+
+4
+00:10:33,770 --> 00:10:37,050
+you've built something really special here
+that truly encourages creativity. That's remarkable.
+
+5
+00:10:43,790 --> 00:10:47,530
+Can everyone see the screen? Good.
+
+6
+00:10:48,810 --> 00:10:51,750
+We need to switch to presentation view.
+
+7
+00:10:54,210 --> 00:10:56,090
+Is the slide visible now?
+
+8
+00:10:58,490 --> 00:11:02,350
+Great. First of all, there's a link here
+for anyone who just joined and missed the messages.
+
+9
+00:11:02,390 --> 00:11:06,250
+That link gives you ten dollars in credit
+to try out the platform.
+
+10
+00:11:06,310 --> 00:11:09,410
+So — a little about what I'm covering today.
+
+11
+00:11:09,550 --> 00:11:13,350
+I'm talking about scaling up lookbooks,
+
+12
+00:11:13,360 --> 00:11:19,350
+editorials, social content, and campaigns
+for fashion, e-commerce, and DTC brands.
+
+13
+00:11:20,110 --> 00:11:23,590
+Also joining me on this call are Daniel Ryan
+
+14
+00:11:23,590 --> 00:11:26,260
+and Sivan Aharon, who are part of our team.
+Sivan made the video
+
+15
+00:11:37,650 --> 00:11:40,050
+— the video you may have seen — and is
+a huge help on the creative side.
+
+16
+00:11:41,070 --> 00:11:44,890
+Daniel handles the business side.
+Feel free to reach out to any of us — our emails are available.
+
+17
+00:11:49,390 --> 00:11:53,170
+Alright. Let me quickly outline
+where we're going today.
+
+18
+00:11:53,210 --> 00:11:55,030
+Here's roughly the structure:
+
+19
+00:11:56,290 --> 00:12:00,030
+We'll talk about what traditional photoshoots involve,
+
+20
+00:12:00,110 --> 00:12:03,940
+how things look today — AI photoshoots
+are already happening at major companies.
+
+21
+00:12:03,950 --> 00:12:07,790
+We'll look at real examples.
+We'll explain what brand identity is
+
+22
+00:12:07,890 --> 00:12:11,570
+and how it translates into AI.
+We'll discuss how to apply brand identity in AI,
+
+23
+00:12:11,570 --> 00:12:16,102
+how to work as a creative director
+inside the system,
+
+24
+00:12:16,122 --> 00:12:19,022
+and how to use references from the real world.
+
+25
+00:12:20,110 --> 00:12:23,590
+Then we'll get into prompt editing and refinement —
+
+26
+00:12:23,590 --> 00:12:30,250
+making sure you consistently get strong output
+with fewer bugs and artifacts.
+
+27
+00:12:30,290 --> 00:12:34,170
+After that, how to turn that work into templates
+so you can run shoots faster —
+
+28
+00:12:34,190 --> 00:12:35,590
+that's the core of the "scale up" I mentioned.
+
+29
+00:12:35,590 --> 00:12:38,382
+How to use the Describe tool to bring
+existing client assets into the AI world.
+
+30
+00:12:38,442 --> 00:12:39,282
+How to deliver a digital product to a client.
+
+31
+00:12:39,282 --> 00:12:46,642
+What we're building at Astria is a system that enables
+a real dialogue between creative professionals and brands.
+
+32
+00:12:46,682 --> 00:12:50,042
+We don't just deliver images — and then all the work is wasted.
+We deliver a digital product: a template.
+
+33
+00:12:51,802 --> 00:12:54,992
+Finally, the brand or the creative runs the looks themselves.
+And then a few closing thoughts.
+
+34
+00:12:55,082 --> 00:12:58,662
+That's the structure. So let me start with
+a quick overview — what do I mean when I say
+
+35
+00:12:59,162 --> 00:13:03,082
+"AI photoshoot"? I mean everything that involves
+the logistics of a traditional shoot:
+
+36
+00:13:03,122 --> 00:13:04,002
+coordinating models,
+
+37
+00:13:04,862 --> 00:13:07,682
+locations, shipping all the inventory —
+making sure product arrives
+
+38
+00:13:07,682 --> 00:13:09,882
+from production to the shoot day.
+
+39
+00:13:09,962 --> 00:13:13,762
+Stylists, makeup, hair —
+all of that logistics
+
+40
+00:13:14,142 --> 00:13:17,702
+ultimately exists to serve the brand's DNA.
+
+41
+00:13:22,922 --> 00:13:26,642
+The whole photoshoot is there to convey
+the brand identity,
+
+42
+00:13:26,682 --> 00:13:30,042
+and we need to somehow implement and communicate that.
+
+43
+00:13:30,042 --> 00:13:35,942
+I want to step back for a moment to what Hila said.
+I also come from a technical background — machine learning, coding —
+
+44
+00:13:35,942 --> 00:13:39,422
+and my world has changed a lot too.
+Everyone codes in Claude now.
+
+45
+00:13:39,422 --> 00:13:43,310
+I've largely stopped writing code myself.
+I've moved more toward product thinking —
+
+46
+00:13:43,310 --> 00:13:50,042
+directing at a higher level. That doesn't mean
+I don't need to understand what's happening underneath.
+
+47
+00:13:50,042 --> 00:13:54,342
+The same applies here. Creative professionals,
+photographers — they're absolutely not being replaced.
+
+48
+00:13:54,342 --> 00:13:57,842
+But you still need to guide the system.
+You need to know how to work with a brand,
+
+49
+00:13:57,842 --> 00:14:02,972
+understand its DNA, apply it, and direct the AI.
+Without that, there's no context —
+
+50
+00:14:03,442 --> 00:14:07,022
+and you can't produce anything distinctive.
+
+51
+00:14:07,042 --> 00:14:09,882
+Part of not looking like AI
+is creating differentiation —
+
+52
+00:14:09,962 --> 00:14:13,762
+a very distinctive aesthetic.
+We'll talk about that.
+
+53
+00:14:14,142 --> 00:14:17,702
+So — what kinds of brands are we talking about?
+
+54
+00:14:17,722 --> 00:14:21,222
+Brands in the e-commerce space,
+DTC — direct to consumer —
+
+55
+00:14:21,242 --> 00:14:21,762
+brands selling directly to consumers
+without physical retail,
+
+56
+00:14:22,922 --> 00:14:26,642
+as well as retailers with stores.
+The verticals relevant to today's session
+
+57
+00:14:26,662 --> 00:14:27,782
+are fashion and apparel —
+
+58
+00:14:29,162 --> 00:14:32,982
+shirts, jackets, pants, dresses, wedding dresses,
+
+59
+00:14:33,582 --> 00:14:33,842
+footwear,
+
+60
+00:14:35,162 --> 00:14:38,982
+outdoor and trekking gear, bags, handbags,
+
+61
+00:14:39,082 --> 00:14:42,842
+jewelry — and when I say jewelry
+I mean independent jewelers more than diamond companies.
+
+62
+00:14:46,702 --> 00:14:47,622
+Also eyewear.
+
+63
+00:14:48,602 --> 00:14:52,562
+Eyewear companies have a strong DNA
+in how they look and present themselves.
+
+64
+00:14:52,622 --> 00:14:56,462
+This next slide shows that the AI world
+is already here and operational.
+
+65
+00:14:56,502 --> 00:17:00,482
+This is an example of a campaign for Saks —
+actually not a campaign, they transformed
+
+66
+00:17:00,522 --> 00:17:04,362
+their site with the help of Shai Yechezkel,
+a photographer who works with us as a real partner.
+
+67
+00:17:04,372 --> 00:17:08,142
+You're seeing the entire website —
+it's all generated
+
+68
+00:17:08,162 --> 00:17:11,662
+with Shai's work. He brought the creative eye,
+built their model set,
+
+69
+00:17:12,482 --> 00:17:14,782
+built the template set,
+
+70
+00:17:15,782 --> 00:17:19,182
+and then ran all the looks
+to produce the full collection.
+
+71
+00:17:19,302 --> 00:17:20,182
+They're now
+
+72
+00:17:21,342 --> 00:17:25,002
+on their second collection — and everything is generated.
+
+73
+00:17:25,022 --> 00:17:28,962
+Another example: Nine West,
+already using AI for
+
+74
+00:17:28,962 --> 00:17:32,462
+in-store signage, back-of-checkout displays,
+and billboards.
+
+75
+00:17:33,522 --> 00:17:36,862
+Then there's Ronit Alkabetz — a Paris-based
+elite designer working with AI.
+
+76
+00:17:37,402 --> 00:17:41,130
+All of this was done in Astria.
+And of course there are also
+
+77
+00:17:41,130 --> 00:17:44,562
+the big players — Mango, H&M, Zara —
+they're all working in AI,
+
+78
+00:17:44,562 --> 00:17:48,742
+producing both campaigns and lookbooks.
+The world is already there de facto.
+
+79
+00:17:48,782 --> 00:17:52,032
+What remains is to direct it well,
+scale it up, and do it precisely.
+
+80
+00:17:52,032 --> 00:18:01,206
+So let's talk about brand identity
+and how to create something truly special.
+
+81
+00:18:01,206 --> 00:18:05,206
+We're looking at a demo we built for a fictitious Zara.
+This was created by Sivan Aharon,
+
+82
+00:18:05,206 --> 00:18:09,082
+who's part of this community,
+and you can see how there's a set of templates
+
+83
+00:18:09,082 --> 00:18:11,662
+for different types of garments —
+pants, shoes, shirts,
+
+84
+00:18:11,662 --> 00:18:12,946
+dresses, jackets,
+
+85
+00:18:13,326 --> 00:18:16,746
+heels. Each one speaks a different language
+and requires different templates
+
+86
+00:18:16,962 --> 00:18:20,302
+and different refinements.
+You can see that everything here is clickable —
+
+87
+00:18:20,302 --> 00:18:24,782
+there's a set of studio images,
+and Zara in particular has moved
+
+88
+00:18:24,822 --> 00:18:28,482
+all of their lookbooks toward outdoor photography,
+which is why we see those options here.
+
+89
+00:18:29,102 --> 00:18:33,042
+What we're really showing is how we implement
+a brand's visual language in AI —
+
+90
+00:18:33,042 --> 00:18:36,346
+how this speaks in the language of Zara.
+
+91
+00:18:36,346 --> 00:18:38,346
+Let me show a few more examples.
+
+92
+00:18:38,346 --> 00:18:42,046
+A sportswear brand modeled more around Adidas.
+You can see the slightly more intense expressions,
+
+93
+00:18:42,046 --> 00:18:45,302
+the athletic energy. Here too
+
+94
+00:18:45,302 --> 00:18:47,906
+there's a set of templates
+that brands can pick up and use.
+
+95
+00:19:12,106 --> 00:19:15,706
+We've already had companies that took these templates
+off the shelf and said:
+
+96
+00:19:15,766 --> 00:19:19,586
+"This is beautiful, but it's not my brand. It's not me."
+
+97
+00:19:22,726 --> 00:19:26,106
+And that's exactly the important thing to recognize
+when working with brands.
+
+98
+00:19:26,226 --> 00:19:29,746
+You need to ask: who is the target audience?
+What's their age range?
+
+99
+00:19:33,766 --> 00:19:34,286
+What are the client's existing materials?
+What brief do they give you?
+
+100
+00:19:41,586 --> 00:19:42,066
+How should the models look?
+
+101
+00:19:43,486 --> 00:19:47,406
+Short hair? Gel?
+
+102
+00:19:47,626 --> 00:19:49,446
+I don't come from this world,
+so forgive me
+
+103
+00:19:50,786 --> 00:19:54,766
+for not knowing all the precise terminology —
+but that's exactly the point.
+
+104
+00:19:54,786 --> 00:19:58,636
+This is why it matters.
+Here's another example —
+
+105
+00:20:08,726 --> 00:20:11,946
+a basics brand modeled more
+around Uniqlo, similar to brands like
+
+106
+00:20:11,966 --> 00:20:17,586
+Fox — hoodies, that kind of thing.
+You can see there are several distinct brand types here,
+
+107
+00:20:17,586 --> 00:20:24,026
+all illustrating this idea of brand identity.
+Each brand has its own background color,
+
+108
+00:20:24,026 --> 00:20:27,666
+its own hex values, its own expressions,
+its own set of models
+
+109
+00:20:27,666 --> 00:20:31,446
+that define it — so when you see it you say,
+"That's that brand.
+
+110
+00:20:31,486 --> 00:20:35,306
+That look, that feel, it's right for that age group,
+that type of person,
+
+111
+00:20:35,346 --> 00:20:39,296
+that atmosphere."
+
+112
+00:20:39,326 --> 00:20:42,976
+So how do we actually build this in Astria,
+and how did we decide
+
+113
+00:20:43,366 --> 00:20:47,046
+to translate it into a product?
+
+114
+00:20:57,126 --> 00:21:02,322
+Tali, I think you're not on mute.
+
+115
+00:21:16,306 --> 00:21:20,086
+So at Astria there's a core concept
+of templatization — templates.
+
+116
+00:21:20,566 --> 00:21:24,005
+We take prompts, group them together,
+and turn them into a single template.
+
+117
+00:21:24,186 --> 00:21:27,666
+Those who know Astria from before —
+this used to be called a pack.
+
+118
+00:21:27,766 --> 00:21:31,266
+We're moving away from that term.
+Today we call it a template.
+
+119
+00:21:31,386 --> 00:21:34,506
+You can see here the example of the template
+I started showing earlier.
+
+120
+00:21:38,442 --> 00:21:41,186
+This is the idea behind
+what we want to deliver to the brand.
+
+121
+00:21:41,706 --> 00:21:45,802
+We want to create a workspace for them.
+Workspaces are up here at the top.
+
+122
+00:21:46,806 --> 00:21:50,066
+We open one workspace per brand
+to keep clients separate.
+
+123
+00:21:50,206 --> 00:21:51,546
+Clients also sit within the workspace —
+
+124
+00:21:52,786 --> 00:21:54,986
+they're added to the workspace,
+they put in their credit card,
+
+125
+00:21:57,126 --> 00:21:59,196
+and generations are charged to the client.
+They can see all materials.
+
+126
+00:22:00,346 --> 00:22:04,146
+This is part of what matters to clients —
+it gives them confidence,
+
+127
+00:22:04,266 --> 00:22:08,126
+because once the collection or campaign is done,
+their assets keep living and breathing.
+
+128
+00:22:08,186 --> 00:22:12,026
+They receive templates they can continue
+to develop and refine over time,
+
+129
+00:22:12,066 --> 00:22:16,046
+growing them and keeping up with trends.
+
+130
+00:22:16,086 --> 00:22:17,306
+So here you can see how you can simply take
+
+131
+00:22:17,966 --> 00:22:21,167
+a different dress and run the same templates
+
+132
+00:22:21,167 --> 00:22:23,446
+to get similar images.
+
+133
+00:22:23,706 --> 00:22:27,946
+In a lookbook that's completely fine —
+most brands want a consistent-looking lookbook.
+
+134
+00:22:27,946 --> 00:22:31,006
+Some want very precise uniformity,
+others want some variation.
+
+135
+00:22:31,066 --> 00:22:35,306
+And that's one of those layers
+you can control through the right prompt —
+
+136
+00:22:35,346 --> 00:22:38,766
+either high precision or, conversely,
+allowing some randomness.
+
+137
+00:22:38,806 --> 00:22:42,206
+There's also a feature called Brief
+which allows you to generate variety.
+
+138
+00:22:42,482 --> 00:22:45,802
+Here's the key point — and I've said it once
+but I want to say it from a different angle:
+
+139
+00:22:45,842 --> 00:22:49,422
+brands generally need help.
+They cannot make this transition alone.
+
+140
+00:22:49,982 --> 00:22:53,822
+They don't understand AI, they don't know
+how to write prompts, they don't know
+
+141
+00:22:53,842 --> 00:22:56,881
+what nano banana is. A lot of the time
+they want to hand things off
+
+142
+00:22:57,262 --> 00:25:01,142
+and have someone help them — send over the looks,
+the items, and get assistance.
+
+143
+00:25:01,162 --> 00:25:04,542
+That's exactly why the templatization concept exists.
+Someone needs to come in and help them
+
+144
+00:25:04,862 --> 00:25:09,142
+make that transition. The platform
+enables the abstraction and the collaboration.
+
+145
+00:25:09,182 --> 00:25:12,822
+Six months ago it was LoRA with Flux.
+Then it was nano banana Gemini 2.5.
+
+146
+00:25:12,862 --> 00:25:15,622
+Today it's nano banana 2.
+The brand doesn't care and doesn't want to know.
+
+147
+00:25:26,862 --> 00:25:28,142
+And it doesn't end with building the templates.
+
+148
+00:25:28,682 --> 00:25:32,302
+If today it's nano banana 2,
+in two months they'll need help
+
+149
+00:25:32,342 --> 00:25:35,442
+upgrading to nano banana 3, to seed dream
+
+150
+00:25:35,442 --> 00:25:42,262
+and seed dance 2. If today they need still images,
+tomorrow they'll need video,
+
+151
+00:25:42,262 --> 00:25:46,262
+the day after — multi-format.
+The technology keeps evolving.
+
+152
+00:25:46,262 --> 00:25:50,302
+Think about how it was predicted that the vacuum cleaner
+would replace the cleaner's job.
+
+153
+00:25:50,302 --> 00:25:54,342
+It didn't — the standard just went up.
+Or that computers and 3D would replace animators.
+
+154
+00:25:54,342 --> 00:25:58,422
+They didn't — there are just far more films
+being made, and the bar rose.
+
+155
+00:25:58,422 --> 00:26:02,522
+The same is true here. There's a need to produce
+far more media,
+
+156
+00:26:02,522 --> 00:26:06,882
+more variety, more differentiation,
+and I think this technology
+
+157
+00:26:06,882 --> 00:26:09,952
+is in many ways, as they say in English,
+leveling the playing field.
+
+158
+00:26:09,952 --> 00:26:14,042
+It allows players who couldn't previously produce
+high-quality content
+
+159
+00:26:14,042 --> 00:26:18,566
+to now do so.
+
+160
+00:26:18,566 --> 00:26:22,362
+So — coming back to the practical side.
+We're looking at a template the brand receives.
+
+161
+00:26:22,502 --> 00:26:26,122
+Someone in the studio can simply click Upload,
+upload a photo from a hanger and run it,
+
+162
+00:26:26,162 --> 00:26:29,502
+and receive a lookbook with a single click —
+without having to define anything.
+
+163
+00:26:29,502 --> 00:26:33,162
+The framework was already defined for them —
+the models, everything.
+
+164
+00:26:33,162 --> 00:26:37,742
+They can of course override things.
+Some of Astria's features allow for variation —
+
+165
+00:26:37,782 --> 00:26:41,362
+say we want to shift the mood slightly,
+or add some accessory and say,
+
+166
+00:26:41,402 --> 00:26:44,282
+"This time she's sitting on an armchair," —
+that's the Brief concept.
+
+167
+00:26:44,382 --> 00:26:48,122
+It still runs the entire template
+under one coherent idea.
+
+168
+00:26:48,162 --> 00:26:51,982
+You can change the bag, you can change the model,
+but at the core — the product this template is selling
+
+169
+00:26:51,982 --> 00:26:55,242
+is the dress. And first and foremost,
+you can customize the dress.
+
+170
+00:26:55,242 --> 00:26:58,942
+Beyond that, you can of course run thirty dresses
+with a single click
+
+171
+00:26:58,982 --> 00:27:03,082
+and get all the output at once.
+
+172
+00:27:03,082 --> 00:27:06,082
+That's the key thing. And how does the brand
+see the full collection?
+
+173
+00:27:06,082 --> 00:27:09,342
+They don't just need one template —
+they need a set of templates,
+
+174
+00:27:09,342 --> 00:27:13,082
+because each garment type behaves differently.
+A jacket requires different crops
+
+175
+00:27:13,082 --> 00:27:16,962
+and different details than shoes,
+and different model positioning,
+
+176
+00:27:16,962 --> 00:27:20,566
+and probably outdoor photography too.
+So the brand needs a set of templates,
+
+177
+00:27:20,566 --> 00:27:24,086
+and they see this through their template page.
+They can choose: now I want to run dresses,
+
+178
+00:27:24,086 --> 00:27:27,946
+now shirts, now boots. That's what the brand sees.
+
+179
+00:27:27,946 --> 00:27:31,058
+Now let's look at how we actually create
+and deliver this.
+
+180
+00:27:31,258 --> 00:27:34,542
+Now we're getting to the more practical part —
+everyone is welcome to open the link from earlier
+
+181
+00:27:34,622 --> 00:27:38,602
+and try to follow along and work with me in the system.
+
+182
+00:27:38,742 --> 00:27:42,198
+You're welcome to open a Workspace —
+and try to work in a way
+
+183
+00:27:42,238 --> 00:27:45,858
+where all your materials are organized
+under one theme.
+
+184
+00:27:45,878 --> 00:27:48,798
+I'd recommend trying it with a real concept —
+take a brand you have in mind
+
+185
+00:27:48,798 --> 00:27:52,878
+that you love, and experiment with something real.
+
+186
+00:27:52,878 --> 00:27:56,918
+Think about a story — something special.
+Try to create a concept that's unique.
+
+187
+00:27:56,958 --> 00:27:59,038
+You can really go creative —
+whether it's a farmers market
+
+188
+00:27:59,918 --> 00:28:10,178
+or underwater scenes with jellyfish,
+I've seen some beautiful things like that.
+
+189
+00:28:10,178 --> 00:28:14,898
+So you can open this — there's a link here
+to the Generative tab. We've tried to really simplify Astria.
+
+190
+00:28:14,898 --> 00:28:18,818
+For those who've used Astria before,
+I know it might look different.
+
+191
+00:28:32,278 --> 00:28:35,778
+That's fine — it's just the one link.
+
+192
+00:32:53,558 --> 00:32:54,778
+I shared it in chat.
+
+193
+00:32:54,838 --> 00:32:56,338
+That's how you also get the ten dollars.
+
+194
+00:33:03,758 --> 00:33:06,118
+Let me open a Workspace as well —
+
+195
+00:33:07,598 --> 00:33:09,518
+Just a moment, let everyone connect.
+
+196
+00:33:35,998 --> 00:33:36,238
+Yes.
+
+197
+00:33:36,438 --> 00:33:37,638
+OK.
+
+198
+00:33:45,058 --> 00:33:49,778
+[In response to a question about login:]
+Everyone click Generate in the top right.
+
+199
+00:33:49,818 --> 00:33:51,558
+Can you see where he's clicking?
+
+200
+00:33:54,618 --> 00:33:56,358
+Log in first — log in.
+
+201
+00:33:56,367 --> 00:33:58,318
+Everyone needs to log in first.
+
+202
+00:34:00,598 --> 00:34:03,778
+Yes, just sign in with your Google account or whatever works.
+
+203
+00:34:03,938 --> 00:34:04,898
+Then click Generate.
+
+204
+00:34:05,658 --> 00:34:07,458
+Then click Generate.
+
+205
+00:34:26,798 --> 00:34:27,658
+OK.
+
+206
+00:34:27,678 --> 00:34:29,498
+Did everyone click? Is everyone good?
+
+207
+00:34:32,858 --> 00:34:34,998
+Fine, we're waiting. Everything's fine.
+
+208
+00:34:39,918 --> 00:34:40,298
+Yes.
+
+209
+00:34:41,258 --> 00:34:45,038
+[In response to a question about LoRA:]
+Yes, absolutely — it's still available.
+
+210
+00:34:45,058 --> 00:34:47,418
+You can still go into the old menu —
+
+211
+00:34:48,098 --> 00:34:48,318
+yes —
+
+212
+00:35:09,038 --> 00:35:12,958
+which used to be called fine-tuning.
+It's now called References — and you can still create LoRA
+
+213
+00:35:12,968 --> 00:35:16,378
+there. Absolutely still possible.
+
+214
+00:35:26,698 --> 00:35:30,478
+OK so — just for anyone watching the recording —
+we're supposed to go to the Generative tab and there's
+
+215
+00:35:30,518 --> 00:35:33,918
+a —
+
+216
+00:36:18,718 --> 00:36:19,678
+Yes, yes, we'll do that, we'll do that.
+
+217
+00:36:22,178 --> 00:36:25,438
+Let's meet back in about fifteen minutes, sound good?
+
+218
+00:36:25,638 --> 00:36:28,638
+Sure. I'm not stopping the recording —
+I'm just getting organized.
+
+219
+00:36:29,058 --> 00:36:32,158
+I've already got everything queued up and ready.
+
+220
+00:36:43,486 --> 00:36:47,246
+[In response to a question about Pack Shot:]
+Yes — which means you can also shoot it with your iPhone.
+
+221
+00:36:47,326 --> 00:36:47,686
+Right.
+
+222
+00:36:48,546 --> 00:36:52,146
+If you're a small designer with no Pack Shot —
+just a decent iPhone photo —
+
+223
+00:36:52,586 --> 00:36:56,436
+that's fine. But what you need to understand
+is this has nothing to do with
+
+224
+00:36:56,446 --> 00:36:58,126
+the Astria system itself.
+
+225
+00:36:59,186 --> 00:37:03,146
+The system runs on technologies like nano banana, Flux,
+and others.
+
+226
+00:37:03,226 --> 00:37:06,676
+What happens is we're showing something to the AI —
+I show it this sweater,
+
+227
+00:37:06,786 --> 00:37:10,616
+I tell it to put it on a model.
+I can photograph it on a hanger, on the floor, on a mannequin,
+
+228
+00:37:10,616 --> 00:37:14,882
+and it will dress a model with it.
+But yes — photo quality matters
+
+229
+00:37:14,882 --> 00:37:18,166
+in terms of how much texture and detail
+the AI can see.
+
+230
+00:37:18,246 --> 00:37:22,106
+If I shoot under my room lighting
+with shadows falling across the sweater
+
+231
+00:37:22,146 --> 00:37:26,106
+and it looks distorted — the AI will struggle
+to understand how that sweater should look.
+
+232
+00:37:26,126 --> 00:37:29,986
+If I photograph it properly — I'd even invest
+in some lighting because it's worth it.
+
+233
+00:37:29,986 --> 00:37:33,366
+It saves me shooting days. I point the light at the sweater,
+style it correctly,
+
+234
+00:37:33,366 --> 00:37:37,166
+and then use it — and the image will be sharper,
+textures will be much more visible.
+
+235
+00:37:37,166 --> 00:37:41,056
+Whether it's a Pack Shot or a regular photo
+does change the game.
+
+236
+00:37:41,086 --> 00:37:44,766
+But even without a professional Pack Shot
+it's still possible to create great things.
+
+237
+00:37:59,762 --> 00:38:00,946
+No — not needed.
+
+238
+00:38:02,286 --> 00:38:06,086
+[In response to a question about training models per garment:]
+If it's a Pack Shot or a regular photo —
+that does change the rules of the game.
+
+239
+00:38:06,546 --> 00:38:10,366
+But even those who can't do professional Pack Shots
+can still create output with this.
+
+240
+00:38:37,526 --> 00:38:41,056
+No, no, no. What he'll teach you
+is how to show the item from every angle —
+
+241
+00:38:56,026 --> 00:38:56,766
+Workspace.
+
+242
+00:38:57,022 --> 00:38:57,682
+Workspace.
+
+243
+00:39:29,606 --> 00:39:33,186
+Yes — so it's possible that you didn't select a background,
+so just click Pick a Color
+
+244
+00:39:33,226 --> 00:39:36,106
+and that will give you a uniform color.
+
+245
+00:39:36,186 --> 00:39:39,426
+Since the technology isn't perfect yet,
+it needs you —
+
+246
+00:39:39,426 --> 00:39:42,546
+because things happen.
+
+247
+00:39:42,686 --> 00:40:02,046
+Not in this system, but in Midjourney for example —
+I want a girl standing in a forest,
+
+248
+00:40:02,046 --> 00:40:04,206
+and no matter what I do,
+it keeps giving me a medium shot.
+
+249
+00:40:04,206 --> 00:40:09,226
+It doesn't show her feet, no matter what I write —
+Wide Shot, describing her shoes.
+
+250
+00:40:09,226 --> 00:40:13,346
+But if I describe "the girl touching the ground"
+— suddenly it gives me the full body shot.
+
+251
+00:42:16,206 --> 00:42:17,606
+Can everyone see the screen?
+
+252
+00:42:18,786 --> 00:42:20,846
+So — where we left off:
+how to actually create these templates.
+
+253
+00:42:21,126 --> 00:42:23,386
+I hope everyone is safe and OK.
+
+254
+00:42:25,786 --> 00:42:29,506
+There's a new button here called Lookbook
+which helps us
+
+255
+00:42:29,606 --> 00:42:33,166
+get started with prompts and begin creating
+what we want.
+
+256
+00:42:33,246 --> 00:42:37,226
+The first step is simply to drag and drop,
+
+257
+00:42:37,326 --> 00:42:41,006
+or upload, your references.
+Let's say we start working with a shirt and pants —
+
+258
+00:42:41,646 --> 00:42:45,286
+and they happen to be available.
+We have a public gallery
+
+259
+00:42:45,606 --> 00:42:49,526
+of models and
+
+260
+00:42:49,586 --> 00:42:53,046
+shirts and pants just to make it easy
+to demonstrate.
+
+261
+00:43:06,162 --> 00:43:09,322
+She's asking about the Try tab — what clients see.
+
+262
+00:43:11,182 --> 00:43:11,682
+The...?
+
+263
+00:43:12,462 --> 00:43:13,242
+The tab.
+
+264
+00:43:13,782 --> 00:43:15,032
+She means the Workspace.
+
+265
+00:43:15,082 --> 00:43:15,802
+Workspace.
+
+266
+00:43:16,282 --> 00:43:19,922
+In the dropdown at the top
+there's an option to work in Workspaces.
+
+267
+00:43:19,962 --> 00:43:23,642
+If you click there, you can Add a new workspace
+and create a workspace scoped
+
+268
+00:43:23,682 --> 00:43:27,502
+to the organization you're working with.
+
+269
+00:43:38,562 --> 00:43:39,002
+OK.
+
+270
+00:43:39,982 --> 00:43:43,902
+No problem — we'll fix that.
+But for now,
+
+271
+00:43:43,922 --> 00:43:44,422
+just —
+
+272
+00:43:44,642 --> 00:43:48,472
+just go through the Generate window,
+which is the same window —
+
+273
+00:43:48,502 --> 00:43:49,722
+and the button will be added for you.
+
+274
+00:43:52,722 --> 00:43:53,552
+Click on Generate.
+
+275
+00:43:53,582 --> 00:43:57,242
+Use the link in the chat — you'll be able
+to open a new workspace and then
+
+276
+00:43:57,631 --> 00:44:00,802
+you'll see that dropdown.
+
+277
+00:44:00,832 --> 00:44:03,802
+It's just not open to everyone by default.
+
+278
+00:44:06,852 --> 00:44:08,882
+Can everyone see the Generate window?
+
+279
+00:44:08,962 --> 00:44:12,842
+Click Generate —
+and if you want to see the grid squares,
+
+280
+00:44:15,162 --> 00:44:16,502
+Yes — click Lookbook.
+
+281
+00:44:33,362 --> 00:44:34,182
+So —
+
+282
+00:44:36,422 --> 00:44:40,282
+the Lookbook is essentially a prompt builder
+designed to be a bit more visual.
+
+283
+00:44:40,302 --> 00:44:43,862
+It doesn't replace anything —
+it doesn't do anything behind the scenes.
+
+284
+00:44:43,902 --> 00:44:47,322
+You can actually see the prompt
+being built in the background.
+
+285
+00:44:47,382 --> 00:44:48,362
+Let's take some examples.
+
+286
+00:44:49,202 --> 00:44:52,262
+The simplest example: take a model's face,
+a shirt, jeans.
+
+287
+00:44:52,422 --> 00:44:55,082
+And I'll even drag in some shoes
+
+288
+00:44:55,942 --> 00:44:59,842
+— for the demo I'll also add
+
+289
+00:45:06,341 --> 00:45:08,642
+some shoes I'll search for.
+
+290
+00:45:11,372 --> 00:45:13,242
+[setting up demo]
+
+291
+00:45:14,302 --> 00:45:15,502
+She's not registered by the way.
+
+292
+00:45:15,622 --> 00:45:18,442
+In principle you can also just copy-paste things in.
+
+293
+00:45:28,832 --> 00:45:30,762
+I don't know who that background noise was —
+please put yourself on mute.
+
+294
+00:45:37,022 --> 00:45:40,982
+[In response to a question about using a pre-built character:]
+This isn't a character sheet.
+Here it's just the face.
+
+295
+00:45:40,982 --> 00:45:44,766
+It's best to use just the face,
+from the neck up — no clothes.
+
+296
+00:45:44,882 --> 00:45:45,222
+Yes —
+
+297
+00:45:45,422 --> 00:45:57,562
+It's just a photo of the model —
+no special setup needed.
+This is not like what we did before.
+
+298
+00:45:57,622 --> 00:45:59,502
+Let me give a few tips on references.
+
+299
+00:46:00,762 --> 00:46:04,262
+First — technically, to upload things
+there are a few ways:
+
+300
+00:46:04,262 --> 00:46:07,522
+click the plus sign here, and a picker opens —
+similar to Google Flow —
+
+301
+00:46:07,522 --> 00:46:10,542
+with an Upload button.
+You can also drag directly.
+
+302
+00:46:10,542 --> 00:46:15,462
+It recognizes the type of item
+and adds the thumbnail.
+
+303
+00:46:15,522 --> 00:46:18,542
+I'll do a copy-paste here.
+You can't see my desktop,
+
+304
+00:46:18,542 --> 00:46:22,462
+but I'll paste the shoes in —
+and you'll see it uploads them and adds them.
+
+305
+00:46:22,462 --> 00:46:26,442
+So now we have:
+model, shirt, pants, shoes — that's the basic.
+
+306
+00:46:26,442 --> 00:46:29,282
+Let's also add a background.
+There's a Color Picker here too.
+
+307
+00:46:29,282 --> 00:46:34,382
+You can't see it right now,
+but for those who try — it's very important for brands
+
+308
+00:46:34,382 --> 00:46:38,382
+that when you open their page,
+things are consistent with the same background.
+
+309
+00:46:38,382 --> 00:46:42,862
+A uniform background is very, very important.
+We even have a post-processing step
+
+310
+00:46:42,862 --> 00:46:46,922
+that works a bit like Photoshop to ensure consistency,
+because nano banana doesn't always listen.
+
+311
+00:46:46,922 --> 00:46:50,022
+If you tell it white background FFF,
+it doesn't always do that.
+
+312
+00:46:50,022 --> 00:46:54,922
+So we have a post-processing step afterward
+to help enforce that.
+
+313
+00:46:54,962 --> 00:46:57,522
+Now — a bit about the technical parameters.
+Today the recommended model to work with is nano banana 2.
+
+314
+00:46:57,522 --> 00:47:01,042
+It's the most accurate and the fastest.
+
+315
+00:47:01,042 --> 00:47:06,622
+3×4 is how most product pages are built today.
+2K is my recommendation —
+
+316
+00:47:06,622 --> 00:47:10,742
+it's a good balance between cost and quality.
+If you're happy with something,
+
+317
+00:47:10,742 --> 00:47:13,002
+you can consider going up to 4K.
+Just note that 4K is very,
+
+318
+00:47:13,002 --> 00:47:16,342
+very slow — and Google is struggling
+to supply enough compute these days.
+
+319
+00:47:16,342 --> 00:47:20,322
+Sometimes you'll see errors
+when we're handling the most requests.
+
+320
+00:47:20,322 --> 00:47:24,982
+We're constantly working to keep the system
+as stable as possible. We have fallbacks,
+
+321
+00:47:24,982 --> 00:47:28,382
+we pay Google extra just to get enough quota —
+and still, sometimes there are overloads.
+
+322
+00:47:28,422 --> 00:47:31,342
+So my recommendation is —
+
+323
+00:47:41,042 --> 00:47:44,962
+[In response to a question about model source images:]
+Yes — if you upload a character created in Midjourney,
+just drag-and-drop into the prompt box and it will work.
+
+324
+00:47:44,962 --> 00:47:49,022
+No, no, no. Everything is private.
+Everything lives under your Workspace
+
+325
+00:47:49,022 --> 00:47:53,362
+and is private to the people in that Workspace.
+
+326
+00:47:53,422 --> 00:47:57,242
+Nothing — we've eliminated public galleries.
+We understand the privacy concern.
+
+327
+00:47:57,262 --> 00:48:01,102
+We're removing everything public.
+There's no more public feed.
+
+328
+00:48:01,102 --> 00:48:04,742
+Except for packs or templates
+you actively choose to publish.
+
+329
+00:48:04,742 --> 00:48:08,382
+By default, everything is private.
+
+330
+00:48:08,422 --> 00:48:11,342
+[In response to a question about the color picker:]
+There's a button here called Pick a Color.
+
+331
+00:48:11,342 --> 00:48:14,126
+It opens a system dialog —
+by default it opens in RGB,
+
+332
+00:48:14,146 --> 00:48:17,666
+but you can click it
+and choose a hex value.
+
+333
+00:48:20,166 --> 00:48:22,446
+And the best approach here —
+
+334
+00:48:23,686 --> 00:48:27,666
+really go to the brand's website
+and sample the hex color directly,
+
+335
+00:48:27,686 --> 00:48:30,246
+color by color.
+
+336
+00:48:31,086 --> 00:48:34,926
+You can see the prompt being built
+step by step — and there's almost no text here.
+
+337
+00:48:34,926 --> 00:48:38,766
+I'll generate — and you can see
+a prompt is formed, processed —
+
+338
+00:48:38,766 --> 00:48:49,602
+almost no text at all. Let me explain something:
+there's a common assumption that if you write
+
+339
+00:48:49,602 --> 00:48:53,246
+a complex prompt with extra-realistic faces
+that will make all the difference.
+
+340
+00:48:53,246 --> 00:48:58,662
+That's nice and important —
+but I don't think that's where the real value lies.
+
+341
+00:48:58,662 --> 00:49:02,306
+The value is in the precision of the details —
+knowing where to work with the model
+
+342
+00:49:02,306 --> 00:49:06,002
+even when it's hard to get it
+to avoid mistakes.
+
+343
+00:49:06,002 --> 00:49:10,046
+Knowing to pay attention to the brand's specifics matters.
+You only see that after iterations —
+
+344
+00:49:10,046 --> 00:49:13,766
+after generating and running maybe ten looks,
+suddenly realizing:
+
+345
+00:49:13,766 --> 00:49:16,886
+the shirt needs to be untucked.
+It's not a complex prompt.
+
+346
+00:49:16,926 --> 00:49:20,286
+Just write "untucked shirt."
+
+347
+00:49:20,286 --> 00:49:25,946
+Or the brand wants different facial expressions —
+"change random mimics."
+
+348
+00:49:25,946 --> 00:49:30,206
+Or write "smiling." Same thing —
+if you want to work in the Lookbook,
+
+349
+00:49:30,206 --> 00:49:34,011
+you can type it right here and it's a bit more visual.
+I can type "smiling, untucked shirt."
+
+350
+00:49:34,042 --> 00:49:38,062
+Now a few more tips on references.
+I uploaded a shoe from the side view.
+
+351
+00:49:38,062 --> 00:49:41,326
+Not recommended — not a great idea.
+That's just what I had from the website.
+
+352
+00:49:41,326 --> 00:49:44,742
+I recommend uploading shoes at 45 degrees —
+two shoes, without a person.
+
+353
+00:49:44,742 --> 00:49:48,522
+For garment references — you can ask the brand
+for what's called a flat lay:
+
+354
+00:49:48,522 --> 00:49:51,146
+on a table, good lighting. You can also use a hanger —
+
+355
+00:49:51,146 --> 00:49:55,306
+it's generally less ideal but workable.
+
+356
+00:49:55,946 --> 00:49:59,886
+Depending on the brand and different sensitivities,
+this works very, very well.
+
+357
+00:52:13,226 --> 00:52:16,966
+[In response to a question about Pack Shot vs. on-body:]
+It's a question that gets a bit more technical,
+but let me explain.
+
+358
+00:52:16,966 --> 00:52:22,586
+AI models love statistics. They work based on
+what's prevalent in popular culture.
+
+359
+00:52:22,586 --> 00:52:26,266
+If the jeans are standard —
+if it's a garment the model has seen before
+
+360
+00:52:26,266 --> 00:52:31,126
+and was trained on — it'll probably know
+how to reproduce it.
+
+361
+00:52:31,126 --> 00:52:34,786
+Let me give an extreme example from something we saw:
+a brand we worked with had a logo that changed.
+
+362
+00:52:34,786 --> 00:52:38,646
+It had a crest with text on it —
+but in an older version the text was at the top.
+
+363
+00:52:38,646 --> 00:52:42,886
+It's a very well-known brand,
+and the models were trained on the entire internet —
+
+364
+00:52:42,886 --> 00:52:47,366
+they learned the text was on top.
+No matter how many times you tried to give it the reference,
+
+365
+00:52:47,366 --> 00:52:51,126
+it kept generating the old version.
+
+366
+00:52:51,126 --> 00:52:54,786
+So that's an example of how models work
+based on what they learned from the past.
+
+367
+00:52:54,786 --> 00:52:58,646
+The same applies here. It depends on whether
+the garment is unique — or something the model knows well.
+
+368
+00:52:58,646 --> 00:53:02,866
+And for unique items, there's trial and error.
+A lot of the time there's
+
+369
+00:53:02,866 --> 00:53:07,086
+another layer — whether it's something
+you and I can describe and articulate.
+
+370
+00:53:07,086 --> 00:53:11,606
+The cut, the fit, the length of the dress.
+If we can say — below the knee, above the knee,
+
+371
+00:53:11,606 --> 00:53:15,546
+three-quarter length — then the model can say it too.
+If we don't know, neither does it.
+
+372
+00:53:15,546 --> 00:53:21,485
+Then it might make sense to put it on a mannequin or dress form.
+That's more work —
+
+373
+00:53:21,626 --> 00:53:25,566
+but that's one option. Another option
+is to specify it at the generation level —
+
+374
+00:53:25,566 --> 00:53:29,006
+add detail to that specific garment's generation.
+Write "balloon pants" and it comes out perfect.
+
+375
+00:53:29,006 --> 00:53:33,006
+But that requires an eye that knows —
+"I can see this won't come out right,
+
+376
+00:53:33,006 --> 00:53:36,826
+I know what it needs, I'll fix it." And sometimes
+things just need that attention.
+
+377
+00:53:36,946 --> 00:53:40,846
+More things that help with references
+for getting good results.
+
+378
+00:53:40,906 --> 00:53:43,826
+Your references should be clean.
+But there are editing tools —
+
+379
+00:53:43,826 --> 00:53:47,786
+if you're shooting on a hanger or similar,
+there's a wrench icon here
+
+380
+00:53:47,786 --> 00:53:51,062
+where you can do Remove Background —
+remove any messiness from the background.
+
+381
+00:53:51,062 --> 00:53:55,082
+Crop — to crop the garment precisely
+and remove things like other hangers
+
+382
+00:53:55,082 --> 00:53:58,646
+that were in the background.
+There's also an Edit with nano banana tool —
+
+383
+00:53:58,646 --> 00:54:02,562
+where you can literally say:
+"Turn into an iron flat lay" —
+
+384
+00:54:02,562 --> 00:54:04,562
+and it converts something on a hanger
+into a flat lay
+
+385
+00:54:04,562 --> 00:54:07,642
+that looks cleaner and more polished.
+
+386
+00:54:07,682 --> 00:54:11,082
+This can sometimes affect accuracy.
+Usually it works well.
+
+387
+00:54:11,082 --> 00:54:15,282
+You need to know how to use these tools
+and decide your approach based on
+
+388
+00:54:15,282 --> 00:54:18,022
+how you decided to photograph the references.
+
+389
+00:54:18,022 --> 00:54:21,962
+That's broadly it. You could go much deeper,
+but that's the general idea.
+
+390
+00:55:15,582 --> 00:55:16,232
+That is —
+
+391
+00:55:16,242 --> 00:55:20,082
+[In response to a question about background types:]
+We'll get to that shortly.
+We started from the Lookbook helper —
+
+392
+00:55:20,182 --> 00:55:24,172
+the most visual way in — for more special use cases. But —
+
+393
+00:55:32,742 --> 00:55:34,422
+Here I'm only dealing with a solid color, right?
+
+394
+00:55:44,722 --> 00:55:48,402
+Of course. Just like you uploaded a shirt,
+you can click the picker,
+
+395
+00:55:48,422 --> 00:55:52,102
+hit Upload, and upload a background image.
+Or even better — just describe it.
+
+396
+00:55:52,142 --> 00:55:55,582
+You can write "on a Parisian
+
+397
+00:55:55,682 --> 00:55:59,722
+bridge." Let's try it just for fun.
+
+398
+00:55:59,722 --> 00:57:06,882
+Yes, you really don't need more than that.
+No elaborate prompt needed.
+
+399
+00:57:06,882 --> 00:57:10,782
+I'm a fan of prompts up to about three lines,
+maximum around 200 words —
+
+400
+00:57:10,782 --> 00:57:13,122
+that's great. But the important part
+
+401
+00:57:13,122 --> 00:57:16,822
+of working with references is the balance
+between references and text.
+
+402
+00:57:16,822 --> 00:57:20,682
+Sometimes it's worth using image references —
+for style references for example.
+
+403
+00:57:20,682 --> 00:57:24,522
+Say the brand sells shoes
+but we also need to style pants.
+
+404
+00:57:24,522 --> 00:57:28,922
+We can decide whether the templates we create
+will use image references for pants —
+
+405
+00:57:28,922 --> 00:57:33,341
+actual photos to upload — in which case
+when the brand wants variety they actually need to bring
+
+406
+00:57:33,382 --> 00:57:37,222
+a different pants reference.
+Or we can just write it as text — like "blue chinos" —
+
+407
+00:57:37,222 --> 00:57:39,222
+something like that.
+
+408
+00:57:39,222 --> 00:57:42,522
+And then the template is textually flexible
+and editable via the brief.
+
+409
+00:57:42,522 --> 00:57:45,022
+There's a certain playfulness here
+you need to learn.
+
+410
+00:57:45,022 --> 00:57:49,362
+Also note — don't include shoes
+if you want a medium shot.
+
+411
+00:57:49,482 --> 00:57:53,462
+Or if you want jewelry,
+don't include the whole outfit —
+
+412
+00:57:53,482 --> 00:57:56,281
+it can confuse the model.
+If you want medium and you give it shoes,
+
+413
+00:57:56,281 --> 00:57:58,402
+it'll show the whole body.
+Watch out for that.
+
+414
+00:57:58,402 --> 00:58:02,062
+Yes — there's a lot of room for bugs here.
+If we want a close-up of the shoes,
+
+415
+00:58:02,062 --> 00:58:06,162
+but we give it a face,
+it'll try to fit the face in somewhere
+
+416
+00:58:06,162 --> 00:58:10,442
+and create distorted figures —
+because it's trying to include both
+
+417
+00:58:10,442 --> 00:58:13,982
+the face and the shoes
+while you've asked for a medium close-up.
+
+418
+00:58:13,982 --> 00:58:16,462
+Same thing in reverse — if you want
+a shirt close-up but give it shoes,
+
+419
+00:58:16,462 --> 00:58:17,582
+it won't know what to do.
+
+420
+00:58:17,582 --> 00:58:22,002
+You need to structure your prompts
+so these details are consistent — and free of those bugs.
+
+421
+00:58:22,102 --> 00:58:26,002
+Let's move forward a bit.
+So we started with the Lookbook builder —
+
+422
+00:58:26,002 --> 00:58:30,242
+more visual and simple.
+Now for more complex things,
+
+423
+00:58:30,242 --> 00:58:34,882
+when you want to describe more —
+you can go to the prompt box and define things directly.
+
+424
+00:58:43,582 --> 00:58:47,362
+Let's take an example here.
+
+425
+00:59:57,422 --> 00:59:58,582
+Here we go.
+
+426
+01:00:07,042 --> 01:00:10,962
+You can really go to town on the prompts
+and add the key words — small in number
+
+427
+01:00:11,022 --> 01:00:14,982
+but high in impact.
+"Diffused lighting," "realistic skin,"
+
+428
+01:00:14,982 --> 01:00:18,662
+"soft expression" — things like that.
+
+429
+01:00:18,662 --> 01:00:23,162
+These are what give it the touch
+and the things that matter to the brand —
+
+430
+01:00:23,162 --> 01:00:27,082
+saying: "The expression of my models is serious,
+or they're happy, or pleased."
+
+431
+01:00:27,082 --> 01:00:30,562
+"This is a children's brand,
+this is a low-cost brand,
+
+432
+01:00:30,562 --> 01:00:37,882
+or this is high-end." What exactly does the brand say?
+What does it need to convey?
+
+433
+01:00:37,882 --> 01:00:44,762
+Let me pause for a moment — I want to show
+a feature that helps a lot here.
+
+434
+01:00:44,762 --> 01:00:47,986
+It's called the Describe tool — this button here.
+
+435
+01:00:53,462 --> 01:00:55,122
+The Describe tool — this button.
+
+436
+01:01:00,122 --> 01:01:03,962
+Let me explain what's happening here.
+I recorded this demo
+
+437
+01:01:03,962 --> 01:01:07,166
+when I didn't have a specific brand available —
+
+438
+01:01:07,166 --> 01:01:13,026
+so I used Pinterest.
+In principle, the materials we should use
+
+439
+01:01:13,206 --> 01:01:17,166
+are the client's existing materials — ones they own the rights to.
+But in my case I took Pinterest.
+
+440
+01:01:17,496 --> 01:01:21,466
+What you can do here is take an image,
+copy it,
+
+441
+01:01:21,646 --> 01:01:25,506
+and paste it into the Describe box.
+As you can see, the interface
+
+442
+01:01:25,526 --> 01:01:29,366
+has changed a bit, but there's a "paste from clipboard" option.
+
+443
+01:01:29,366 --> 01:01:33,166
+What it does is extract the prompt —
+similar to what you may have done in Gemini
+
+444
+01:01:33,166 --> 01:01:38,445
+or similar tools —
+and it describes the prompt, and generates the image.
+
+445
+01:01:38,445 --> 01:01:41,106
+Let's take an example here.
+
+446
+01:01:41,106 --> 01:01:44,686
+To simplify: you go to Pinterest,
+copy an image, come back,
+
+447
+01:01:44,686 --> 01:01:48,266
+click Describe and paste —
+and it basically converts the image into words.
+
+448
+01:01:48,266 --> 01:01:52,326
+And the key difference from what you'd do in Gemini
+is that it listens to the references you already have
+
+449
+01:01:52,326 --> 01:01:56,186
+and makes sure not to describe those references.
+What can happen otherwise
+
+450
+01:01:56,186 --> 01:02:00,046
+is a conflict between the prompt
+and your references.
+
+451
+01:02:00,046 --> 01:02:03,246
+For example, it writes "wearing a white shirt"
+but your reference is a yellow dress —
+
+452
+01:02:03,246 --> 01:02:04,886
+and then the model doesn't know what to generate.
+It sometimes produces
+
+453
+01:02:04,886 --> 01:02:09,606
+a yellow dress, sometimes a white shirt —
+because there's both a shirt reference and a dress reference.
+
+454
+01:02:09,606 --> 01:02:13,466
+So you need to be very careful
+about conflicts between text and references.
+
+455
+01:02:13,466 --> 01:02:15,866
+That's part of what the Describe tool tries to handle —
+
+456
+01:02:16,206 --> 01:02:20,006
+it listens to what's already in your references
+and removes descriptions of things
+
+457
+01:02:20,006 --> 01:02:22,226
+that already exist.
+
+458
+01:02:22,226 --> 01:02:25,846
+That's exactly the example of the shoes
+and medium shots we talked about.
+
+459
+01:02:25,886 --> 01:02:29,266
+You can see — we have a shoe reference
+and that conflicts with a medium shot.
+
+460
+01:02:29,266 --> 01:02:32,265
+Let me show another example — I'll remove the shoes.
+
+461
+01:02:32,265 --> 01:02:35,196
+In short: you converted an image to words
+and it didn't override the clothing
+
+462
+01:02:35,196 --> 01:02:39,666
+because it knew to adapt to the clothing
+that was already there.
+
+463
+01:02:46,846 --> 01:02:50,346
+So — in the Lookbook builder
+we didn't take into account
+
+464
+01:02:50,346 --> 01:02:54,090
+something here — there are stick figures
+that help create pose angles.
+
+465
+01:02:54,090 --> 01:02:58,662
+This is also worth factoring in. You can see
+it's inserting a text variable here
+
+466
+01:02:58,662 --> 01:03:03,310
+that helps lock in the angle.
+
+467
+01:03:03,310 --> 01:03:07,330
+And that helps create more consistency
+in exactly how the figure is positioned.
+
+468
+01:03:07,330 --> 01:03:11,006
+Depending on what the brand wants —
+in principle you can also
+
+469
+01:03:11,006 --> 01:03:12,550
+select different angles.
+
+470
+01:03:12,550 --> 01:03:16,340
+If we want to generate front, back, and side view at once,
+there's a dedicated button for that — "Add Front Back" —
+
+471
+01:03:16,340 --> 01:03:20,730
+and you can see it. For any use case —
+if we just want
+
+472
+01:03:20,730 --> 01:03:22,430
+to test by choosing two models,
+
+473
+01:03:22,430 --> 01:03:25,210
+I can click the plus, pick two models —
+
+474
+01:03:25,210 --> 01:03:30,150
+and when I click Generate it will create
+both options. It'll generate two prompts —
+
+475
+01:03:30,150 --> 01:03:33,570
+one with this model and one with the other.
+
+476
+01:03:33,570 --> 01:03:37,110
+I'll leave that — it's a bit advanced,
+and I think there's a bug there right now, sorry.
+
+477
+01:03:37,110 --> 01:03:41,490
+But the idea with the pose is that you can easily
+generate front, back, and side views —
+
+478
+01:03:41,490 --> 01:03:45,210
+which is the basic thing everyone wants.
+
+479
+01:03:51,290 --> 01:03:55,270
+[In response to a question about face proportions:]
+These kinds of bugs usually happen
+
+480
+01:03:55,270 --> 01:03:59,770
+from a crop that's too close — like just the face.
+I'd recommend using the wrench button
+
+481
+01:03:59,770 --> 01:04:04,090
+and doing "edit with nano" —
+write "shoulders and up"
+
+482
+01:04:04,090 --> 01:04:07,010
+with no clothing visible.
+That's very important —
+
+483
+01:04:07,010 --> 01:04:10,530
+don't let a shirt show,
+otherwise it bleeds into the generations.
+
+484
+01:04:10,530 --> 01:04:14,270
+If you have a black shirt and try to generate
+with a dress, it'll produce
+
+485
+01:04:14,270 --> 01:04:16,430
+a black shirt with a dress layered on top.
+
+486
+01:04:16,430 --> 01:04:20,050
+Very important — no clothing.
+And also — someone asked earlier:
+
+487
+01:04:20,050 --> 01:04:24,750
+"I only want a face but don't want
+to show body type." That's just in the prompt.
+
+488
+01:04:24,750 --> 01:04:27,070
+Just write the body type in the prompt.
+
+489
+01:04:27,070 --> 01:04:30,530
+Just write it alongside. That's the next question.
+
+490
+01:04:30,530 --> 01:04:34,690
+Where do you write the model-specific prompt?
+
+491
+01:04:34,730 --> 01:04:37,070
+Just in the prompt — it doesn't matter technically,
+it's more to help us
+
+492
+01:04:37,870 --> 01:04:41,510
+keep organized. We want to create a system
+where it's easy to avoid mistakes.
+
+493
+01:04:41,510 --> 01:04:45,150
+There's a lot of room for mistakes.
+People always say "it's not coming out right."
+
+494
+01:04:45,150 --> 01:04:49,210
+Those are always bugs you can fix —
+in text, in prompts, or by improving references.
+
+495
+01:04:49,210 --> 01:04:53,030
+For example, people often say
+"the model isn't tall enough."
+
+496
+01:04:53,030 --> 01:04:57,830
+OK — write "180 centimeters tall."
+
+497
+01:04:57,830 --> 01:05:03,546
+That's roughly the level of it.
+
+498
+01:05:09,906 --> 01:05:13,466
+I'll be running forward in the remaining few minutes.
+
+499
+01:05:13,466 --> 01:05:19,790
+Ultimately, what we want to arrive at is:
+once we're happy with the result,
+
+500
+01:05:19,810 --> 01:05:22,510
+we turn it into a template.
+
+501
+01:05:22,610 --> 01:05:26,330
+Turn it into a template by clicking this button here —
+
+502
+01:05:26,770 --> 01:05:31,410
+and choosing — the word "pack" will disappear from the lexicon
+and become "template."
+
+503
+01:05:31,410 --> 01:05:35,229
+Associate it with
+
+504
+01:05:36,180 --> 01:05:39,690
+a new pack. You can see that a tag is created here —
+
+505
+01:05:40,570 --> 01:05:44,310
+and from this point we can deliver this digital product
+to the client.
+
+506
+01:05:44,330 --> 01:05:47,910
+The client can run looks against
+these templates.
+
+507
+01:05:47,910 --> 01:05:54,230
+Again — you need several templates
+for different types of items.
+
+508
+01:05:54,230 --> 01:05:57,360
+That's an example of what a lookbook run actually looks like.
+
+509
+01:05:57,360 --> 01:06:01,870
+In practice, the client will often deliver
+a table specifying the styling:
+
+510
+01:06:01,870 --> 01:06:04,670
+which shirt with which pants,
+with which shoes, with which
+
+511
+01:06:04,670 --> 01:06:09,680
+necklace, with which earrings —
+and perhaps in a certain template
+
+512
+01:06:09,680 --> 01:06:15,750
+she's leaning against the wall more,
+and in another template, one leg to the side —
+
+513
+01:06:15,750 --> 01:06:19,930
+and all of those looks need to run
+against the templates we built.
+
+514
+01:06:19,930 --> 01:06:23,810
+That's the full workflow from A to Z —
+
+515
+01:06:23,810 --> 01:06:27,820
+from how the brand sees it, to creating the prompts,
+to templatizing and running
+
+516
+01:06:27,820 --> 01:06:31,820
+looks — either in the brand's studio
+or by the creative team.
+
+517
+01:06:31,820 --> 01:06:35,570
+Depending on the brand and what works.
+That's broadly it.
+
+518
+01:06:35,590 --> 01:06:38,870
+[In response to a question about multiple models:]
+Yes — we have models
+for things more like campaigns —
+
+519
+01:06:38,870 --> 01:06:42,538
+so there's no issue at all.
+
+520
+01:06:43,138 --> 01:06:46,098
+[In response to a question about proportions for jewelry/bags:]
+As I said earlier — if you and I
+can't describe the proportions,
+
+521
+01:06:46,098 --> 01:06:48,638
+then neither can the model.
+That's where it might actually make sense
+
+522
+01:06:48,638 --> 01:06:52,678
+to photograph it on a model.
+Depending on what we want.
+
+523
+01:06:52,678 --> 01:06:56,526
+Someone asked about jewelry —
+yes, there are examples of jewelry,
+
+524
+01:06:56,526 --> 01:06:59,906
+examples of eyewear too.
+
+525
+01:07:00,086 --> 01:07:04,046
+[In response to a question about adding size in cm:]
+You can try it. I don't think measurements in centimeters
+are necessarily how the model thinks —
+
+526
+01:07:04,046 --> 01:07:08,318
+we have to consider how the model was trained.
+Was it trained on images where centimeter size was written?
+
+527
+01:07:08,318 --> 01:07:10,318
+Probably not on the internet.
+But maybe the word "small" or "tiny"
+
+528
+01:07:10,318 --> 01:07:14,878
+would help — or "big" — depending on what you're working with.
+You can also try centimeters. I'm not sure.
+
+529
+01:07:14,878 --> 01:07:17,366
+[In response to follow-up about model height vs. dress length:]
+Honestly it depends on nano banana
+and how much it listens.
+
+530
+01:07:17,366 --> 01:07:21,466
+Sometimes it works better, sometimes less so.
+But in general, if we feel the model
+
+531
+01:07:21,466 --> 01:07:25,338
+should be taller, we'll try adding keywords —
+"180cm" and "tall."
+
+532
+01:07:25,338 --> 01:07:28,248
+It's not a physics simulation —
+it's not 3D rendering.
+
+533
+01:07:28,248 --> 01:07:32,248
+It listens in a relative way — it knows 180 is taller,
+so we'll see some change.
+
+534
+01:07:46,326 --> 01:07:50,126
+[In response to a question about creating new models:]
+Sure, absolutely. I didn't touch on this, but
+
+535
+01:07:51,038 --> 01:07:54,455
+the basic approach is just to write it
+in the prompt box —
+
+536
+01:07:54,455 --> 01:07:59,558
+"unique Israeli woman with French and
+Japanese descent, fair skin,
+
+537
+01:07:59,558 --> 01:08:03,310
+studio white background, shoulders up."
+
+538
+01:08:03,310 --> 01:08:07,330
+Or use the Describer — those of you
+who don't want to write it manually.
+
+539
+01:08:07,350 --> 01:08:11,806
+Yes, the Describe tool can work for this too.
+But really —
+
+540
+01:08:11,806 --> 01:08:15,570
+go to Pinterest, find models you love,
+put them into the Describer —
+
+541
+01:08:15,570 --> 01:08:19,558
+or what I do in Midjourney is bring in
+a few faces I like as reference images,
+
+542
+01:08:19,558 --> 01:08:23,066
+blend them, make them a "baby" model,
+and bring that here.
+
+543
+01:08:33,534 --> 01:08:37,506
+[In response to a question about print/pattern accuracy:]
+In principle that works great — it works very well.
+
+544
+01:08:37,506 --> 01:08:41,166
+In cases where it doesn't work well —
+you can give a detail view
+
+545
+01:08:41,166 --> 01:08:43,286
+in addition to the reference —
+
+546
+01:08:43,286 --> 01:08:44,286
+and that will improve it.
+
+547
+01:08:45,166 --> 01:08:49,386
+We're also working on a custom model of ours
+that will improve detail handling.
+
+548
+01:08:49,386 --> 01:08:53,226
+Coming back to the avatar / model topic —
+once you've created a model
+
+549
+01:08:53,266 --> 01:08:57,266
+that you're happy with — of course,
+if you bring one from Midjourney,
+
+550
+01:08:57,266 --> 01:09:00,606
+just drag and drop into the prompt box and it'll work.
+
+551
+01:09:00,606 --> 01:09:04,286
+If you created it in Astria,
+there's a menu option here:
+
+552
+01:09:04,286 --> 01:09:08,346
+Convert to Reference — and then she's added to
+the prompt box
+
+553
+01:09:08,346 --> 01:09:10,386
+and given a name automatically.
+
+554
+01:09:10,446 --> 01:09:13,826
+[In response to a question about using a real photographed model:]
+Yes, you can —
+just copy-paste her photo. That's it.
+
+555
+01:09:13,826 --> 01:09:17,406
+But there are legal considerations —
+you need to be really careful.
+
+556
+01:09:22,426 --> 01:09:26,396
+Right — that's between you and whatever
+you've agreed with the model — but
+
+557
+01:09:27,026 --> 01:09:30,706
+[In response to a question about body changes:]
+It can't change her body. If I only input her face —
+
+558
+01:09:30,706 --> 01:09:37,966
+the system has no idea about her body.
+The body needs to be specified in the prompt —
+you need to write measurements.
+
+559
+01:09:37,966 --> 01:09:43,386
+This is not face training — it's different.
+If consistency of a specific person is very important —
+
+560
+01:09:43,386 --> 01:09:47,726
+say you're making a clip for a specific singer —
+don't do that through the lookbook system.
+
+561
+01:09:47,726 --> 01:09:51,006
+That whole scenario is less suited to consistent-character work
+
+562
+01:09:51,016 --> 01:09:54,886
+where the face is very important.
+Though there is a solution for that too —
+
+563
+01:09:54,886 --> 01:09:57,726
+I'll leave it out of this conversation for now,
+it's a bit more complex.
+
+564
+01:09:57,726 --> 01:10:01,706
+[In response to a question about multiple angles:]
+Yes — there's a button in the Lookbook:
+Add Front, Back, and Side —
+
+565
+01:10:01,706 --> 01:10:05,646
+and it generates all three prompts at once —
+front, back, and side.
+
+566
+01:10:05,646 --> 01:10:09,666
+But everything we've talked about,
+everything on this screen —
+
+567
+01:10:09,706 --> 01:10:13,386
+is meant for building templates.
+Once we lock that in and we're happy,
+
+568
+01:10:13,386 --> 01:10:17,596
+our goal is to templatize it,
+associate it with a template,
+
+569
+01:10:17,646 --> 01:10:22,566
+and hand it to the brand so they can run it.
+
+570
+01:10:22,566 --> 01:10:26,626
+So — the prompt helper is just a very naive builder.
+
+571
+01:10:26,726 --> 01:10:30,026
+When you get to refinements,
+you'll need to add — "in back view
+
+572
+01:10:30,026 --> 01:10:33,906
+I need the hair off to the side" —
+and similar details.
+
+573
+01:10:33,906 --> 01:10:36,346
+So it's a starting point — not the destination.
+
+574
+01:10:41,262 --> 01:10:45,802
+[In response to a question about the demo examples:]
+Those examples you saw at the start?
+
+575
+01:10:47,886 --> 01:10:51,666
+Yes — that template is what we build
+and deliver to the brand.
+
+576
+01:10:51,706 --> 01:10:55,646
+Then the brand can simply upload a shirt
+and get that same lookbook —
+
+577
+01:10:55,646 --> 01:10:59,086
+more or less the same look and feel.
+That's the goal.
+
+578
+01:10:59,086 --> 01:11:03,386
+The goal is to nail the background,
+the expressions, the model, the hair.
+
+579
+01:11:03,386 --> 01:11:07,386
+Hair band or slick hair pulled back —
+all the things the brand cares about —
+
+580
+01:11:07,386 --> 01:11:11,930
+to create consistency. And of course that varies
+by garment type and requires
+
+581
+01:11:11,930 --> 01:11:14,146
+very specific keywords.
+
+582
+01:11:14,146 --> 01:11:17,046
+That's the concept broadly.
+I also wanted to show something that was sent to me
+
+583
+01:11:17,046 --> 01:11:21,076
+this morning — it's a Noyz collection
+where all the references were uploaded this morning.
+
+584
+01:11:21,076 --> 01:11:25,086
+Someone asked about multiple people.
+You can really start to see the idea emerging —
+
+585
+01:11:25,086 --> 01:11:28,066
+a kind of main CRM for the brand.
+
+586
+01:11:28,066 --> 01:11:31,666
+Once all the items and models are in the system,
+you can start producing
+
+587
+01:11:31,666 --> 01:11:35,206
+campaigns and editorials much more easily —
+bring in four models with a consistent
+
+588
+01:11:35,206 --> 01:11:37,986
+background and scene.
+
+589
+01:11:37,986 --> 01:11:42,076
+This is the entire new collection —
+all done in Astria by Shai Yechezkel.
+
+590
+01:11:42,076 --> 01:11:45,086
+[In response to "are these real models?"]
+No — they're virtual.
+That's part of the process —
+
+591
+01:11:45,086 --> 01:11:48,826
+he worked with the brand, built out
+
+592
+01:11:51,526 --> 01:11:57,726
+the model characters.
+For anyone with children, AI is always preferable
+because working with child models
+
+593
+01:11:57,726 --> 01:12:01,014
+involves so many complications.
+
+594
+01:12:05,894 --> 01:12:07,614
+Look at that — let me show them the video.
+
+595
+01:12:07,654 --> 01:12:08,214
+Important.
+
+596
+01:12:20,534 --> 01:12:24,234
+[In response to a question about pack structure:]
+I think the standard is to create
+about four models for them.
+
+597
+01:12:24,234 --> 01:12:28,214
+You want to get those approved by the brand —
+give them ten options, they choose four,
+
+598
+01:12:28,234 --> 01:12:31,914
+and those four tell a consistent story
+that conveys
+
+599
+01:12:35,254 --> 01:12:38,794
+the brand identity.
+
+600
+01:12:38,794 --> 01:12:42,714
+[In response to follow-up on workflow:]
+Exactly. Lock in the prompt,
+add it to the pack, and from that point
+
+601
+01:12:42,714 --> 01:12:43,714
+you can run it —
+
+602
+01:12:49,834 --> 01:12:53,634
+The pack is accessible here in the menu.
+
+603
+01:12:53,714 --> 01:12:57,614
+Once she's created a generation — you see the image there.
+On the right there's a small menu.
+
+604
+01:12:57,654 --> 01:13:01,054
+Click on the hamburger icon
+and you'll see the word "Pack" — which will soon
+
+605
+01:13:01,054 --> 01:13:05,326
+become "Templates." Click it and there's a New Pack option.
+Click New Pack and it creates
+
+606
+01:13:05,326 --> 01:13:09,326
+a new template you can always return to —
+regardless of what garments you put in,
+
+607
+01:13:09,326 --> 01:13:13,826
+it will apply what you originally defined:
+that model, that background, that lighting.
+
+608
+01:13:23,482 --> 01:13:27,562
+Yes — this is the template we create
+and deliver to the brand.
+
+609
+01:13:27,582 --> 01:13:31,482
+Then the brand can just swap in another garment —
+keep the same angle but
+
+610
+01:13:31,482 --> 01:13:35,342
+change everything else — same background, model, everything.
+
+611
+01:13:35,342 --> 01:13:39,502
+The goal is to run this for the brand
+who has a hundred items from the manufacturer —
+
+612
+01:13:39,502 --> 01:13:41,642
+run a hundred shirts and a hundred pairs of pants
+
+613
+01:13:42,722 --> 01:13:46,642
+in the same angles and same appearance
+with four different models.
+
+614
+01:13:46,642 --> 01:13:50,482
+That's the goal — upload another shirt,
+or select thirty shirts at once
+
+615
+01:13:50,482 --> 01:13:54,252
+and click Generate — and run everything
+against the template you built.
+
+616
+01:14:20,154 --> 01:14:23,894
+[In response to a question about using a pack:]
+Go up to My Packs.
+
+617
+01:14:23,754 --> 01:14:24,763
+My Packs.
+
+618
+01:14:24,774 --> 01:14:28,654
+Here — My Packs. There's the template I built.
+I can now choose a different shirt,
+
+619
+01:14:28,654 --> 01:14:32,354
+upload a different shirt,
+and run the template.
+
+620
+01:14:37,774 --> 01:14:40,214
+[In response to a question about pack contents:]
+Yes — the pack can contain
+
+621
+01:14:41,294 --> 01:14:45,554
+front, side, back views and a certain atmosphere.
+The pack contains a collection of prompts —
+
+622
+01:14:45,974 --> 01:14:49,194
+as you see in the Zara example:
+front, back, side, detail view —
+
+623
+01:14:49,194 --> 01:14:53,174
+and the variations are random. That is,
+if you write "model standing against a white background
+
+624
+01:14:53,174 --> 01:14:56,814
+leaning on an object" —
+the object changes randomly.
+
+625
+01:14:56,854 --> 01:15:00,094
+If you write "chair," there will be a specific chair,
+or it will vary.
+
+626
+01:15:00,094 --> 01:15:03,434
+It depends on how open your prompt is.
+
+627
+01:15:10,374 --> 01:15:13,594
+[In response to a question about the video:]
+Yes, yes — the video was also done in Astria.
+
+628
+01:15:13,654 --> 01:15:18,834
+[In response to a question about generating video:]
+There's a video button — a simple one —
+that gives you all available models,
+
+629
+01:15:18,874 --> 01:15:22,394
+and there's a switcher that lets you
+switch to video mode, choose a model,
+
+630
+01:15:22,394 --> 01:15:26,482
+choose duration, write a prompt —
+and of course the important thing is
+
+631
+01:15:26,482 --> 01:15:30,002
+that you can templatize this too.
+You can create a scenario
+
+632
+01:15:30,002 --> 01:15:34,362
+where the model walks into a scene, turns around,
+exits — just like in a real product page video.
+
+633
+01:15:34,362 --> 01:15:36,212
+And that goes into the template too.
+
+634
+01:15:39,962 --> 01:15:43,882
+[In response to a question about production time for video:]
+I think part of what makes it fast
+comes from the system itself.
+
+635
+01:15:43,882 --> 01:15:47,762
+A big part of the work was done beforehand —
+all the items were already in the system,
+
+636
+01:15:47,762 --> 01:15:51,542
+all the models too.
+The Total Look was already ready in the system,
+
+637
+01:15:51,542 --> 01:15:54,602
+and all that remained was composing them into a scene.
+The scene itself was built before the video.
+
+638
+01:15:54,602 --> 01:15:58,962
+You can see it on the website already.
+That concept — the hot air balloon,
+
+639
+01:15:58,962 --> 01:16:02,402
+that scene — all happened before the video,
+even before the client asked for video.
+
+640
+01:16:02,402 --> 01:16:06,462
+Then it was very easy to say:
+now we're ready for video.
+
+641
+01:16:06,462 --> 01:16:10,262
+That's the whole build-up we do here.
+We go from the most basic —
+
+642
+01:16:10,262 --> 01:16:13,882
+the studio lookbook, very clean with the models —
+up to campaign
+
+643
+01:16:13,882 --> 01:16:17,022
+and editorial, all the way to video.
+The system is meant
+
+644
+01:16:17,022 --> 01:16:20,862
+to cover everything —
+and all of it needs
+
+645
+01:16:25,282 --> 01:16:27,562
+to be built on that foundation.
+This can also take just minutes —
+
+646
+01:16:27,562 --> 01:16:31,472
+what I uploaded yesterday was twenty minutes of work —
+I created images and sent them off.
+
+647
+01:16:35,702 --> 01:16:36,942
+We'll end here.
+
+648
+01:16:44,722 --> 01:16:48,122
+Thank you all so much — it was great to meet you
+and to connect.
+
+649
+01:36:49,562 --> 01:36:52,922
+Take care of yourselves. Bye bye.

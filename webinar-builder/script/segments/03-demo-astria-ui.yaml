@@ -1,0 +1,29 @@
+id: 03-demo-astria-ui
+title: "Brand identity in AI — Zara yellow dress"
+order: 3
+visual: screencast-pip
+
+screencast:
+  mode: "video"
+  url: "astria.ai/p/neutral-muse"   # shown in the fake browser chrome
+  record_script: "scripts/record/03-demo-astria-ui.ts"
+
+caption:
+  eyebrow: "BRAND DNA · 03"
+  html: |
+    One product, <span class="accent">dozens of variations</span>
+    — consistent with the brand.
+
+narration: |
+  Brand identity is the other half of the equation.
+  Every brand has a specific aesthetic — the lighting, the models,
+  the framing, even the mood.
+  If we want AI-generated images to feel on-brand,
+  we can't just describe the product to a generic model.
+  Here's a template on Astria for a neutral editorial look —
+  one recipe, dozens of consistent variations,
+  every frame faithful to the brand's DNA.
+
+avatar:
+  emotion: "friendly"
+  image_url: "https://mp.astria.ai/t9ymjlh1mwv9zj7sf26wypbqs7si"

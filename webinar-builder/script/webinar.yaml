@@ -1,0 +1,30 @@
+# Master script — ordered list of segments + global defaults.
+# Each entry references a file under script/segments/<id>.yaml.
+
+meta:
+  title: "Scaling Fashion Lookbooks with Astria"
+  presenter: "Alon (Astria)"
+  resolution: "1920x1080"
+  fps: 30
+
+defaults:
+  # Inworld TTS (via WaveSpeed). Used when WAVESPEED_API_KEY is set.
+  # Voice catalog: Hades, Ashley, Edward, Mark, Priya, Richard, Timothy, etc.
+  tts:
+    provider: "inworld"
+    voice_id: "Olivia"         # override per segment in script/segments/*.yaml
+    speaking_rate: 1.0
+  # HeyGen stock avatar — Avatar IV will lipsync to the Inworld audio if both keys are set.
+  avatar:
+    avatar_id: "Daisy-inskirt-20220818"
+    voice_id: "1bd001e7e50f421d891986aad5158bc8"   # fallback HeyGen voice when Inworld not used
+    emotion: "friendly"
+
+segments:
+  - 01-opening
+  - 02-what-is-ai-photoshoot
+  - 03-demo-astria-ui             # → astria.ai/explore/zara-yellow-dress
+  - 04-lookbook-references         # → astria.ai/prompts (requires auth)
+  - 05-ai-already-here
+  - 06-templates-concept
+  - 09-closing

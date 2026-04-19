@@ -1,0 +1,36 @@
+{
+  "name": "webinar-builder",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsx pipeline/build.ts",
+    "build:segment": "tsx pipeline/build.ts --segment",
+    "build:all": "tsx pipeline/build.ts --all",
+    "avatar": "tsx pipeline/generate-avatar.ts",
+    "record": "tsx pipeline/record-screencast.ts",
+    "login": "tsx scripts/auth/login.ts",
+    "inspect-webinar": "tsx pipeline/inspect-webinar.ts",
+    "gemini-inspect": "tsx pipeline/gemini-inspect.ts",
+    "inspect-webinar-all": "tsx pipeline/inspect-webinar-all.ts",
+    "stitch": "tsx pipeline/stitch.ts",
+    "preview": "hyperframes preview",
+    "render": "hyperframes render",
+    "lint": "hyperframes lint"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "js-yaml": "^4.1.1"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^25.6.0",
+    "playwright": "^1.59.1",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3"
+  }
+}

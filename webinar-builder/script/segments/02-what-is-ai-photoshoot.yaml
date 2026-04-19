@@ -1,0 +1,29 @@
+id: 02-what-is-ai-photoshoot
+title: "What is an AI photoshoot?"
+order: 2
+visual: presenter-slide
+
+slide:
+  eyebrow: "SECTION 02"
+  title_html: |
+    What is an
+    <span class="accent">AI photoshoot</span>?
+  bullets:
+    - "Model coordination, locations, logistics"
+    - "Stylists, makeup, hair"
+    - "All in service of the brand's DNA"
+
+# Narration source: extracted from transcript_en.srt entries ~34–42
+# (00:12:55 → 00:13:30). Lightly re-punctuated for TTS readability.
+narration: |
+  So, what do I mean when I say "AI photoshoot"?
+  I mean everything that would normally be involved in the logistics of a traditional shoot —
+  coordinating models, locations, shipping inventory, making sure product arrives from production to the shoot day.
+  Stylists, makeup, hair — all of that logistics exists, ultimately, to serve the brand's DNA.
+  The entire photoshoot is there to convey the brand's identity,
+  and we need to somehow implement and communicate that — now, with AI.
+
+avatar:
+  emotion: "friendly"
+  image_url: "https://mp.astria.ai/t9ymjlh1mwv9zj7sf26wypbqs7si"
+  # engine defaults to "omnihuman" — override per segment with "infinitetalk"

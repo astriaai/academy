@@ -1,0 +1,31 @@
+id: 04-lookbook-references
+title: "Editing references inside the Lookbook"
+order: 4
+visual: screencast-pip
+
+screencast:
+  mode: "video"
+  url: "astria.ai/prompts"         # shown in the fake browser chrome
+  record_script: "scripts/record/04-lookbook-references.ts"
+  # compiled from scripts/intent/04-lookbook-references.yaml
+  # The script reads ASTRIA_BASE_URL (default: http://localhost:3000) so you
+  # can point it at dev or prod without editing the compiled file.
+
+caption:
+  eyebrow: "LOOKBOOK · DEMO"
+  html: |
+    Right-click any reference to
+    <span class="accent">edit it in place</span>.
+
+narration: |
+  Let me open a Lookbook I've been working on.
+  Each slot here holds a reference — pose, face, jacket, shirt, footwear, background.
+  The powerful part is that you don't need to re-upload anything if a reference isn't quite right.
+  Right-click on any thumbnail and you get options to crop it,
+  remove the background, or edit it in place with Nano Banana.
+  Here I'll remove the background from the jacket —
+  and the reference updates in the grid without me touching the upload flow again.
+
+avatar:
+  emotion: "focused"
+  image_url: "https://mp.astria.ai/t9ymjlh1mwv9zj7sf26wypbqs7si"

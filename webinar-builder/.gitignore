@@ -1,0 +1,12 @@
+node_modules/
+.env
+renders/
+out/
+.hyperframes/
+.cache/
+storageState.json
+assets/avatars/*.mp4
+assets/avatars/*.mp3
+assets/audio/*.wav
+assets/captures/*.mp4
+!assets/**/.gitkeep

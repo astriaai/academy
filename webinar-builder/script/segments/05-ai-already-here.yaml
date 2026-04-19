@@ -1,0 +1,32 @@
+id: 05-ai-already-here
+title: "AI photoshoots are already here"
+order: 5
+visual: presenter-slide
+
+source:
+  webinar_file: "../astria-webinar.mp4"
+  timestamp: "00:22:00-00:26:00"
+  gemini_report: ".cache/gemini/chunk-002200-002600.json"
+
+slide:
+  eyebrow: "MARKET · 05"
+  title_html: |
+    AI is
+    <span class="accent">already</span>
+    in the shoot.
+  bullets:
+    - "Saks — hero editorials"
+    - "Nine West — seasonal campaigns"
+    - "H&M · Mango · Zara — product pages"
+    - "Ronny Kobo — DTC editorial"
+
+narration: |
+  This isn't speculative. Saks is using AI for editorial hero imagery.
+  Nine West runs seasonal campaigns mixing AI and photography. H&M,
+  Mango, and Zara quietly use AI for product-page variants. Ronny Kobo's
+  DTC editorial pipeline is half-generative. Every brand in your feed that
+  needs hundreds of looks a month is already moving this way.
+
+avatar:
+  emotion: "matter-of-fact"
+  image_url: "https://mp.astria.ai/t9ymjlh1mwv9zj7sf26wypbqs7si"

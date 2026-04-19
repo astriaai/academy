@@ -1,0 +1,17 @@
+# Large media files
+*.mp4
+*.aac
+*.mov
+*.avi
+*.mkv
+*.wav
+*.mp3
+
+# macOS
+.DS_Store
+
+# IDE
+.idea/
+
+# Large transcripts
+transcript.json

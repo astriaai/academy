@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #0B0B0C;
+        font-family: "Inter", system-ui, sans-serif;
+        color: #F4F1EC;
+      }
+
+      /* Browser frame — almost full canvas */
+      #seg-browser {
+        position: absolute;
+        top: 40px;
+        left: 40px;
+        width: 1840px;
+        height: 1000px;
+        border-radius: 16px;
+        overflow: hidden;
+        background: #FFFFFF;
+        box-shadow: 0 32px 80px rgba(0,0,0,0.55);
+        z-index: 1;
+      }
+      .browser-chrome {
+        height: 48px;
+        background: #1E1D1C;
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+        gap: 10px;
+        flex-shrink: 0;
+      }
+      .browser-dot { width: 12px; height: 12px; border-radius: 50%; }
+      .browser-dot.red    { background: #FF5F57; }
+      .browser-dot.yellow { background: #FEBC2E; }
+      .browser-dot.green  { background: #28C840; }
+      .browser-url {
+        margin-left: 16px;
+        background: #0B0B0C;
+        color: #A8A39A;
+        font-size: 14px;
+        padding: 8px 16px;
+        border-radius: 8px;
+        min-width: 520px;
+        letter-spacing: 0.02em;
+      }
+      .browser-url .lock { opacity: 0.6; margin-right: 8px; }
+      .browser-viewport {
+        position: relative;
+        height: 952px;
+        overflow: hidden;
+        background: #000000;
+      }
+      .browser-viewport img,
+      .browser-viewport video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      /* Avatar PIP — bottom-right */
+      #seg-avatar {
+        position: absolute;
+        bottom: 60px;
+        right: 60px;
+        width: 380px;
+        height: 540px;
+        border-radius: 20px;
+        background: #1E1D1C;
+        overflow: hidden;
+        box-shadow: 0 24px 64px rgba(0,0,0,0.6), 0 0 0 2px rgba(244, 241, 236, 0.08);
+        z-index: 3;
+      }
+      #seg-avatar video { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .avatar-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; background: radial-gradient(circle at 50% 40%, #2a2927 0%, #121211 70%); }
+      .avatar-ring { width: 160px; height: 160px; border-radius: 50%; border: 2px solid #A8A39A; position: relative; }
+      .avatar-ring::after { content: ""; position: absolute; inset: 12px; border-radius: 50%; background: radial-gradient(circle at 50% 45%, #3a3938 0%, #1b1a19 80%); }
+      .avatar-label { font-size: 14px; letter-spacing: 0.18em; text-align: center; color: #A8A39A; font-weight: 600; }
+      .avatar-label span { display: block; margin-top: 6px; font-size: 18px; letter-spacing: -0.01em; color: #F4F1EC; font-weight: 400; }
+
+      /* Caption strip — bottom-left, complements PIP */
+      #seg-caption {
+        position: absolute;
+        bottom: 60px;
+        left: 60px;
+        width: 1080px;
+        z-index: 3;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .caption-eyebrow {
+        font-size: 18px;
+        letter-spacing: 0.32em;
+        color: #A8A39A;
+        font-weight: 500;
+        padding-left: 28px;
+        position: relative;
+      }
+      .caption-eyebrow::before {
+        content: "";
+        position: absolute;
+        left: 0; top: 12px;
+        width: 20px; height: 1px; background: #E06A4E;
+      }
+      .caption-text {
+        font-size: 38px;
+        line-height: 1.2;
+        font-weight: 600;
+        letter-spacing: -0.015em;
+        color: #F4F1EC;
+        max-width: 900px;
+      }
+      .caption-text .accent { color: #E06A4E; }
+
+      /* Simulated cursor */
+      #seg-cursor {
+        position: absolute;
+        width: 28px;
+        height: 28px;
+        z-index: 4;
+        pointer-events: none;
+        /* SVG arrow cursor */
+        background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%23F4F1EC' stroke='%230B0B0C' stroke-width='1' d='M3 2 L3 18 L7 14 L9 20 L12 19 L10 13 L16 13 Z'/></svg>") center / contain no-repeat;
+        filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5));
+        opacity: 0;
+      }
+      
+  /* Draft-mode narration overlay — stacked at top-center so it never
+     collides with slide/caption/PIP layout at the bottom of the canvas. */
+  #draft-captions {
+    position: absolute;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1600px;
+    max-width: 90%;
+    display: flex;
+    justify-content: center;
+    z-index: 30;
+    pointer-events: none;
+  }
+  #draft-captions .cap {
+    position: absolute;
+    top: 0;
+    padding: 16px 30px;
+    background: rgba(11, 11, 12, 0.78);
+    backdrop-filter: blur(8px);
+    color: #F4F1EC;
+    font-family: "Inter", sans-serif;
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1.22;
+    letter-spacing: -0.01em;
+    max-width: 1400px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+    border: 1px solid rgba(224, 106, 78, 0.35);
+  }
+  #draft-captions .cap::before {
+    content: "DRAFT · narration";
+    position: absolute;
+    top: -10px;
+    left: 16px;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    padding: 2px 8px;
+    background: #E06A4E;
+    color: #0B0B0C;
+    border-radius: 3px;
+    font-weight: 700;
+  }
+
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="33.30" data-width="1920" data-height="1080">
+      <audio id="seg-narration" class="clip" data-start="0" data-duration="33.30" data-track-index="0" src="assets/audio/04-lookbook-references.mp3" data-volume="1"></audio>
+
+      <!-- Browser window showing the Astria site -->
+      <div id="seg-browser" class="clip" data-start="0" data-duration="33.30" data-track-index="1">
+        <div class="browser-chrome">
+          <div class="browser-dot red"></div>
+          <div class="browser-dot yellow"></div>
+          <div class="browser-dot green"></div>
+          <div class="browser-url"><span class="lock">🔒</span>astria.ai/prompts</div>
+        </div>
+        <div class="browser-viewport">
+          <video id="seg-screencast" muted playsinline autoplay src="assets/captures/04-lookbook-references.mp4"></video>
+        </div>
+      </div>
+
+      <!-- Caption overlay -->
+      <div id="seg-caption" class="clip" data-start="0" data-duration="33.30" data-track-index="2">
+        <div class="caption-eyebrow" id="caption-eyebrow">LOOKBOOK · DEMO</div>
+        <div class="caption-text" id="caption-text">Right-click any reference to
+<span class="accent">edit it in place</span>.
+</div>
+      </div>
+
+      <!-- Cursor (animated via GSAP) -->
+      <div id="seg-cursor" class="clip" data-start="0" data-duration="33.30" data-track-index="3"></div>
+
+      <!-- Avatar PIP -->
+      <div id="seg-avatar" class="clip" data-start="0" data-duration="33.30" data-track-index="4">
+        <div class="avatar-placeholder">
+          <div class="avatar-ring"></div>
+          <div class="avatar-label">PRESENTER<br/><span>Alon · Astria</span></div>
+        </div>
+      </div>
+
+      <div id="draft-captions" class="clip" data-start="0" data-duration="9999" data-track-index="9"><div class="cap" id="cap-0" data-start="0.20" data-duration="3.13">Let me open a Lookbook I've been working</div><div class="cap" id="cap-1" data-start="3.33" data-duration="0.60">on.</div><div class="cap" id="cap-2" data-start="3.93" data-duration="2.35">Each slot here holds a reference —</div><div class="cap" id="cap-3" data-start="6.28" data-duration="2.35">pose, face, jacket, shirt, footwear, background.</div><div class="cap" id="cap-4" data-start="8.63" data-duration="3.13">The powerful part is that you don't need</div><div class="cap" id="cap-5" data-start="11.76" data-duration="3.13">to re-upload anything if a reference isn't quite</div><div class="cap" id="cap-6" data-start="14.89" data-duration="0.60">right.</div><div class="cap" id="cap-7" data-start="15.49" data-duration="3.13">Right-click on any thumbnail and you get options</div><div class="cap" id="cap-8" data-start="18.62" data-duration="3.13">to crop it, remove the background, or edit</div><div class="cap" id="cap-9" data-start="21.76" data-duration="2.35">it in place with Nano Banana.</div><div class="cap" id="cap-10" data-start="24.10" data-duration="3.13">Here I'll remove the background from the jacket</div><div class="cap" id="cap-11" data-start="27.24" data-duration="0.60">—</div><div class="cap" id="cap-12" data-start="27.84" data-duration="3.13">and the reference updates in the grid without</div><div class="cap" id="cap-13" data-start="30.97" data-duration="2.35">me touching the upload flow again.</div></div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const duration = 33.30;
+
+      // Browser slides in from the left
+      tl.from("#seg-browser", { opacity: 0, x: -60, duration: 0.9, ease: "power3.out" }, 0.2);
+      // Caption staggers in over browser
+      tl.from("#caption-eyebrow", { opacity: 0, x: -20, duration: 0.5, ease: "power2.out" }, 0.7);
+      tl.from("#caption-text",    { opacity: 0, y: 20, duration: 0.7, ease: "expo.out"   }, 0.85);
+      // Avatar PIP bounces in from bottom
+      tl.from("#seg-avatar", { opacity: 0, y: 60, scale: 0.9, duration: 0.8, ease: "power3.out" }, 1.1);
+
+      // For image-backed demos we pan; for video-backed demos the recording handles motion.
+      if (document.getElementById("seg-screenshot")) {
+        tl.to("#seg-screenshot", {
+          y: -2400,
+          duration: Math.max(duration - 3, 4),
+          ease: "none"
+        }, 1.6);
+      }
+
+      // Simulated cursor animation — only relevant for image-backed demos.
+      // Real Playwright recordings already include a genuine cursor.
+      if (document.getElementById("seg-screenshot")) {
+        tl.set("#seg-cursor", { x: 1400, y: 200, opacity: 0 }, 0);
+        tl.to("#seg-cursor", { opacity: 1, duration: 0.3 }, 2.0);
+        tl.to("#seg-cursor", { x: 920, y: 360, duration: 1.4, ease: "power2.inOut" }, 2.2);
+        tl.to("#seg-cursor", { scale: 0.85, duration: 0.1 }, 3.6);
+        tl.to("#seg-cursor", { scale: 1.0,  duration: 0.15 }, 3.7);
+        tl.to("#seg-cursor", { opacity: 0, duration: 0.4 }, 4.4);
+      }
+
+      tl.from("#cap-0", { opacity: 0, y: 18, duration: 0.35, ease: "power2.out" }, 0.20);tl.to("#cap-0", { opacity: 0, duration: 0.3, ease: "power1.in" }, 3.13);
+      tl.from("#cap-1", { opacity: 0, y: 18, duration: 0.35, ease: "power2.out" }, 3.33);tl.to("#cap-1", { opacity: 0, duration: 0.3, ease: "power1.in" }, 3.73);
+      tl.from("#cap-2", { opacity: 0, y: 18, duration: 0.35, ease: "power2.out" }, 3.93);tl.to("#cap-2", { opacity: 0, duration: 0.3, ease: "power1.in" }, 6.08);
+      tl.from("#cap-3", { opacity: 0, y: 18, duration: 0.35, ease: "power2.out" }, 6.28);tl.to("#cap-3", { opacity: 0, duration: 0.3, ease: "power1.in" }, 8.43);
+      tl.from("#cap-4", { opacity: 0, y: 18, duration: 0.35, ease: "power2.out" }, 8.63);tl.to("#cap-4", { opacity: 0, duration: 0.3, ease: "power1.in" }, 11.56);
+      tl.from("#cap-5", { opacity: 0, y: 18, duration: 0.35, ease: "power2.out" }, 11.76);tl.to("#cap-5", { opacity: 0, duration: 0.3, ease: "power1.in" }, 14.69);
+      tl.from("#cap-6", { opacity: 0, y: 18, duration: 0.35, ease: "power2.out" }, 14.89);tl.to("#cap-6", { opacity: 0, duration: 0.3, ease: "power1.in" }, 15.29);
+      tl.from("#cap-7", { opacity: 0, y: 18, duration: 0.35, ease: "power2.out" }, 15.49);tl.to("#cap-7", { opacity: 0, duration: 0.3, ease: "power1.in" }, 18.42);
+      tl.from("#cap-8", { opacity: 0, y: 18, duration: 0.35, ease: "power2.out" }, 18.62);tl.to("#cap-8", { opacity: 0, duration: 0.3, ease: "power1.in" }, 21.56);
+      tl.from("#cap-9", { opacity: 0, y: 18, duration: 0.35, ease: "power2.out" }, 21.76);tl.to("#cap-9", { opacity: 0, duration: 0.3, ease: "power1.in" }, 23.90);
+      tl.from("#cap-10", { opacity: 0, y: 18, duration: 0.35, ease: "power2.out" }, 24.10);tl.to("#cap-10", { opacity: 0, duration: 0.3, ease: "power1.in" }, 27.04);
+      tl.from("#cap-11", { opacity: 0, y: 18, duration: 0.35, ease: "power2.out" }, 27.24);tl.to("#cap-11", { opacity: 0, duration: 0.3, ease: "power1.in" }, 27.64);
+      tl.from("#cap-12", { opacity: 0, y: 18, duration: 0.35, ease: "power2.out" }, 27.84);tl.to("#cap-12", { opacity: 0, duration: 0.3, ease: "power1.in" }, 30.77);
+      tl.from("#cap-13", { opacity: 0, y: 18, duration: 0.35, ease: "power2.out" }, 30.97);tl.to("#cap-13", { opacity: 0, duration: 0.3, ease: "power1.in" }, 33.12);
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

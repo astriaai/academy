@@ -1,0 +1,50 @@
+id: 03-explore-zara
+title: "Brand identity in AI — Zara yellow dress"
+
+source:
+  webinar_file: "../astria-webinar.mp4"
+  timestamp: "00:18:00-00:22:00"
+  gemini_report: ".cache/gemini/chunk-001800-002200.json"
+  note: |
+    Per Gemini analysis, Alon navigates to astria.ai/explore and showcases
+    AI-generated lookbooks that preserve brand identity: Zara Boots Heels,
+    Zara Yellow Dress, Sport Shoes. This segment zooms in on the
+    Zara Yellow Dress lookbook.
+
+url: "https://www.astria.ai/explore/zara-yellow-dress"
+requires_auth: false
+
+viewport: "1600x900"
+device_scale_factor: 2
+duration_s: 22
+
+narration: |
+  Brand identity is the other half of the equation. Take Zara — they have a
+  very specific aesthetic: fashion-forward, European, a little editorial,
+  shot against clean cyclorama or urban backdrops. If we want AI-generated
+  images to feel like Zara, we can't just say "yellow dress" to a generic
+  model. Here's a lookbook for a single Zara product, generated through
+  Astria. The model, the lighting, the framing — all consistent with the
+  brand's DNA. One product, dozens of variations.
+
+beats:
+  - id: land
+    at: "0-3s"
+    say: "Brand identity is the other half of the equation."
+    show: "Land on the Zara Yellow Dress lookbook page; initial hero/header visible."
+    action: settle
+
+  - id: scroll-gallery
+    at: "3-18s"
+    say: "Here's a lookbook for a single Zara product, generated through Astria. One product, dozens of variations."
+    show: "slowly scroll down through the gallery so the viewer can read the consistent brand feel."
+    action:
+      type: scroll-to
+      y_end: 4000
+      duration_ms: 14000
+
+  - id: settle
+    at: "18-22s"
+    say: "The model, the lighting, the framing — all consistent with the brand's DNA."
+    show: "pause near the bottom; cursor hover on one tile."
+    action: settle
