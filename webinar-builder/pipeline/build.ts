@@ -1,7 +1,7 @@
 /**
  * Orchestrator — ensures assets are fresh for requested segments, then renders.
  *
- *   tsx pipeline/build.ts --segment 02-what-is-ai-photoshoot
+ *   tsx pipeline/build.ts --segment 02-traditional-photoshoot
  *   tsx pipeline/build.ts --all
  *
  * Tier precedence (picked from env vars + segment config):
