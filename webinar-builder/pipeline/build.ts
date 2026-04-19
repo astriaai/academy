@@ -20,6 +20,7 @@ import yaml from "js-yaml";
 import "dotenv/config";
 
 import { generateInworldAudio } from "./generate-tts.js";
+import { generateGeminiAudio } from "./generate-tts-gemini.js";
 import { generateOmniHuman } from "./generate-omnihuman.js";
 import { generateInfiniteTalk } from "./generate-infinitetalk.js";
 import { generateAvatar } from "./generate-avatar.js";
@@ -62,6 +63,9 @@ interface SegmentYaml {
 }
 interface WebinarYaml {
   segments: string[];
+  defaults?: {
+    tts?: { provider?: "inworld" | "gemini" };
+  };
 }
 
 const loadWebinar = () => yaml.load(readFileSync(join(ROOT, "script", "webinar.yaml"), "utf-8")) as WebinarYaml;
@@ -224,14 +228,26 @@ async function buildOne(segmentId: string) {
   const draftMode = process.env.DRAFT === "1";
   const hasWave = !draftMode && Boolean(process.env.WAVESPEED_API_KEY);
   const hasHeygen = !draftMode && Boolean(process.env.HEYGEN_API_KEY);
+  const hasGemini = !draftMode && Boolean(process.env.VERTEX_API_KEY);
   const noAvatar = process.env.NO_AVATAR === "1";
   const imageUrl = noAvatar ? undefined : segment.avatar?.image_url;
+
+  // Provider selection: TTS_PROVIDER env > webinar.yaml defaults.tts.provider > auto.
+  // Gemini TTS has no hosted URL, so it skips OmniHuman/InfiniteTalk entirely.
+  const webinarCfg = loadWebinar() as WebinarYaml;
+  const providerPref = (process.env.TTS_PROVIDER ?? webinarCfg.defaults?.tts?.provider) as
+    | "inworld"
+    | "gemini"
+    | undefined;
+  const useGemini = providerPref === "gemini" && hasGemini;
 
   const engine = segment.avatar?.engine ?? "omnihuman";
   const resolution = segment.avatar?.resolution ?? "480p";
 
   const tier = draftMode
     ? "draft"
+    : useGemini
+    ? "gemini"
     : hasWave && imageUrl
     ? `inworld+${engine}`
     : hasWave
@@ -251,6 +267,10 @@ async function buildOne(segmentId: string) {
     const duration = draftDurationSec(segment.narration);
     audioMp3 = ensureSilentNarration(ROOT, segmentId, duration);
     console.log(`[draft] ${segmentId}: silent audio ${duration.toFixed(1)}s`);
+  } else if (useGemini) {
+    const g = await generateGeminiAudio(segmentId);
+    audioMp3 = g.localPath;
+    // Gemini TTS does not produce a hosted URL — avatar lipsync path is skipped.
   } else if (hasWave) {
     const inw = await generateInworldAudio(segmentId);
     audioMp3 = inw.localPath;
@@ -261,11 +281,11 @@ async function buildOne(segmentId: string) {
     audioMp3 = ensureSayNarration(segmentId, segment.narration);
   }
 
-  if (hasWave && imageUrl) {
+  if (!useGemini && hasWave && imageUrl && audioUrl) {
     if (engine === "infinitetalk") {
-      avatarMp4 = await generateInfiniteTalk(segmentId, audioUrl!, imageUrl, resolution);
+      avatarMp4 = await generateInfiniteTalk(segmentId, audioUrl, imageUrl, resolution);
     } else {
-      avatarMp4 = await generateOmniHuman(segmentId, audioUrl!, imageUrl);
+      avatarMp4 = await generateOmniHuman(segmentId, audioUrl, imageUrl);
     }
   } else if (tier === "heygen") {
     avatarMp4 = await generateAvatar(segmentId);

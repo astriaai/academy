@@ -8,13 +8,21 @@ meta:
   fps: 30
 
 defaults:
-  # Inworld TTS (via WaveSpeed). Used when WAVESPEED_API_KEY is set.
-  # Voice catalog: Hades, Ashley, Edward, Mark, Priya, Richard, Timothy, etc.
+  # Gemini 3.1 Flash TTS via Google AI Studio (VERTEX_API_KEY).
+  # Voice catalog: Aoede, Kore, Puck, Charon, Fenrir, Zephyr, etc.
+  # Override TTS_PROVIDER=inworld (requires WAVESPEED_API_KEY) for the legacy
+  # backend. macOS `say` is the zero-config fallback.
   tts:
-    provider: "inworld"
-    voice_id: "Olivia"         # override per segment in script/segments/*.yaml
+    provider: "gemini"
+    voice: "Aoede"
+    model: "gemini-3.1-flash-tts-preview"
+    # Legacy Inworld settings (honored only when provider=inworld):
+    voice_id: "Olivia"
     speaking_rate: 1.0
   # HeyGen stock avatar — Avatar IV will lipsync to the Inworld audio if both keys are set.
+  # Note: Gemini TTS has no hosted URL, so avatar lipsync is only available
+  # on the Inworld path. Keep NO_AVATAR=1 or switch TTS_PROVIDER=inworld
+  # when you want talking-head rendering.
   avatar:
     avatar_id: "Daisy-inskirt-20220818"
     voice_id: "1bd001e7e50f421d891986aad5158bc8"   # fallback HeyGen voice when Inworld not used
