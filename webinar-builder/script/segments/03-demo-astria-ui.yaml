@@ -3,6 +3,11 @@ title: "Brand identity in AI — Zara yellow dress"
 order: 3
 visual: screencast-pip
 
+source:
+  webinar_file: "../astria-webinar.mp4"
+  transcript: "../transcript_en.srt"
+  timestamp: "00:17:52-00:19:15"   # SRT entries 80–94 (Zara demo, brand identity)
+
 screencast:
   mode: "video"
   url: "astria.ai/p/neutral-muse"   # shown in the fake browser chrome

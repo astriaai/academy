@@ -5,8 +5,9 @@ visual: presenter-slide
 
 source:
   webinar_file: "../astria-webinar.mp4"
-  timestamp: "00:26:00-00:30:00"
-  gemini_report: ".cache/gemini/chunk-002600-003000.json"
+  transcript: "../transcript_en.srt"
+  timestamp: "00:21:16-00:27:31"   # SRT entries 115–178 (templatization, workspaces, set-of-templates)
+  gemini_report: ".cache/gemini/chunk-002116-002731.json"
 
 slide:
   eyebrow: "METHOD · 06"

@@ -12,7 +12,7 @@
  *   neither                        macOS `say` + placeholder                       (minimum)
  */
 
-import { spawnSync } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, writeFileSync, statSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -44,6 +44,7 @@ interface SegmentYaml {
     eyebrow?: string;
     title_html?: string;
     bullets?: string[];
+    bullet_starts?: number[];   // seconds; index-aligned with bullets for paced reveals
   };
   screencast?: {
     mode?: "video" | "image";
@@ -70,6 +71,40 @@ const loadSegment = (id: string) =>
 function run(cmd: string, args: string[], cwd = ROOT) {
   const r = spawnSync(cmd, args, { cwd, stdio: "inherit" });
   if (r.status !== 0) throw new Error(`${cmd} ${args.join(" ")} exited with ${r.status}`);
+}
+
+/**
+ * Run `hyperframes render` but terminate the child as soon as it prints
+ * "Render complete". The Node process hangs after the mp4 is fully written
+ * (likely a Chromium worker cleanup bug in hyperframes 0.4.6); waiting for
+ * a natural exit adds 30–90 s per build. By the time we see the completion
+ * line the mp4 is flushed — a 1 s grace then SIGTERM is safe.
+ */
+function runRenderWithEarlyKill(args: string[]): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const child = spawn("npx", args, { cwd: ROOT });
+    let completed = false;
+    let killTimer: NodeJS.Timeout | null = null;
+    const onData = (buf: Buffer) => {
+      const s = buf.toString();
+      process.stdout.write(s);
+      if (!completed && s.includes("Render complete")) {
+        completed = true;
+        killTimer = setTimeout(() => {
+          try { process.kill(child.pid!, "SIGTERM"); } catch {}
+          setTimeout(() => { try { process.kill(child.pid!, "SIGKILL"); } catch {} }, 4000).unref();
+        }, 1000);
+      }
+    };
+    child.stdout?.on("data", onData);
+    child.stderr?.on("data", (b) => process.stderr.write(b));
+    child.on("close", (code, signal) => {
+      if (killTimer) clearTimeout(killTimer);
+      if (completed || code === 0) return resolve();
+      reject(new Error(`hyperframes render exited with code=${code} signal=${signal}`));
+    });
+    child.on("error", reject);
+  });
 }
 
 function ffprobeDuration(file: string): number {
@@ -149,10 +184,20 @@ function renderLayout(segment: SegmentYaml, hasAvatar: boolean, audioSrc: string
   };
 
   if (segment.visual === "presenter-slide") {
-    const bullets = (segment.slide?.bullets ?? []).map((b) => `<li>${b}</li>`).join("\n            ");
+    const bulletList = segment.slide?.bullets ?? [];
+    const bulletStarts = segment.slide?.bullet_starts;
+    const bullets = bulletList
+      .map((b, i) => {
+        const t = bulletStarts?.[i];
+        const attr = typeof t === "number" ? ` data-start="${t.toFixed(2)}"` : "";
+        return `<li${attr}>${b}</li>`;
+      })
+      .join("\n            ");
     vars.SLIDE_EYEBROW = segment.slide?.eyebrow ?? "";
     vars.SLIDE_TITLE_HTML = segment.slide?.title_html ?? segment.title;
     vars.SLIDE_BULLETS_HTML = bullets;
+    // Automatic density: 6+ bullets trigger compact typography.
+    vars.SLIDE_FRAME_CLASS = bulletList.length >= 6 ? "dense" : "";
   } else if (segment.visual === "screencast-pip") {
     const screencastMediaPath = pickScreencastMedia(segment);
     if (screencastMediaPath?.endsWith(".mp4")) {
@@ -172,12 +217,15 @@ function renderLayout(segment: SegmentYaml, hasAvatar: boolean, audioSrc: string
   writeFileSync(join(ROOT, "index.html"), html);
 }
 
+let anySegmentHasAvatarMp4 = false;
+
 async function buildOne(segmentId: string) {
   const segment = loadSegment(segmentId);
   const draftMode = process.env.DRAFT === "1";
   const hasWave = !draftMode && Boolean(process.env.WAVESPEED_API_KEY);
   const hasHeygen = !draftMode && Boolean(process.env.HEYGEN_API_KEY);
-  const imageUrl = segment.avatar?.image_url;
+  const noAvatar = process.env.NO_AVATAR === "1";
+  const imageUrl = noAvatar ? undefined : segment.avatar?.image_url;
 
   const engine = segment.avatar?.engine ?? "omnihuman";
   const resolution = segment.avatar?.resolution ?? "480p";
@@ -188,7 +236,7 @@ async function buildOne(segmentId: string) {
     ? `inworld+${engine}`
     : hasWave
     ? "inworld"
-    : hasHeygen
+    : hasHeygen && !noAvatar
     ? "heygen"
     : "say";
 
@@ -241,6 +289,7 @@ async function buildOne(segmentId: string) {
 
   const audioSrc = `assets/audio/${segmentId}.mp3`;
   renderLayout(segment, Boolean(avatarMp4), audioSrc, safeDuration);
+  if (avatarMp4) anySegmentHasAvatarMp4 = true;
   console.log(`[build] ${segmentId}: visual=${segment.visual} duration=${safeDuration.toFixed(2)}s`);
 }
 
@@ -255,15 +304,20 @@ async function main() {
   const targets = all ? loadWebinar().segments : [process.argv[idx + 1]];
   for (const id of targets) await buildOne(id);
 
-  console.log("\n[build] running hyperframes lint…");
-  run("npx", ["hyperframes", "lint"]);
-
   const output = `out/${targets.length === 1 ? targets[0] : "webinar"}.mp4`;
   mkdirSync(join(ROOT, "out"), { recursive: true });
-  console.log(`[build] rendering → ${output}`);
-  // --workers 2 avoids the Target.setAutoAttach timeout we hit with the default 8 workers
-  // on compositions that embed an avatar MP4 with sparse keyframes.
-  run("npx", ["hyperframes", "render", "--output", output, "--quality", "draft", "--workers", "2"]);
+  // Compositions that embed an avatar MP4 with sparse keyframes trip
+  // Target.setAutoAttach at higher worker counts — keep those at 2. Slide-only
+  // renders handle 4 workers cleanly and finish roughly twice as fast.
+  const workers = process.env.HF_WORKERS ?? (anySegmentHasAvatarMp4 ? "2" : "4");
+  console.log(`[build] rendering → ${output} (workers=${workers})`);
+  // Render runs its own lint internally — no need for a separate pass.
+  await runRenderWithEarlyKill([
+    "hyperframes", "render",
+    "--output", output,
+    "--quality", "draft",
+    "--workers", workers,
+  ]);
   console.log(`[build] done → ${join(ROOT, output)}`);
 }
 

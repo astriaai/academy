@@ -5,8 +5,9 @@ visual: presenter-slide
 
 source:
   webinar_file: "../astria-webinar.mp4"
-  timestamp: "01:32:00-01:36:52"
-  gemini_report: ".cache/gemini/chunk-013200-013652.json"
+  transcript: "../transcript_en.srt"
+  timestamp: "01:16:35-01:36:52"   # SRT entries 646–649 (wrap-up + final "bye bye")
+  gemini_report: ".cache/gemini/chunk-011635-013652.json"
 
 slide:
   eyebrow: "CLOSING · 09"

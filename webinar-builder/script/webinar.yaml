@@ -22,6 +22,7 @@ defaults:
 
 segments:
   - 01-opening
+  - 01b-outline
   - 02-what-is-ai-photoshoot
   - 03-demo-astria-ui             # → astria.ai/explore/zara-yellow-dress
   - 04-lookbook-references         # → astria.ai/prompts (requires auth)

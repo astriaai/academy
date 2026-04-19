@@ -5,8 +5,9 @@ visual: presenter-slide
 
 source:
   webinar_file: "../astria-webinar.mp4"
-  timestamp: "00:22:00-00:26:00"
-  gemini_report: ".cache/gemini/chunk-002200-002600.json"
+  transcript: "../transcript_en.srt"
+  timestamp: "00:16:56-00:17:52"   # SRT entries 65–78 (Saks, Nine West, Ronit Alkabetz, Mango/H&M/Zara)
+  gemini_report: ".cache/gemini/chunk-001656-001752.json"
 
 slide:
   eyebrow: "MARKET · 05"

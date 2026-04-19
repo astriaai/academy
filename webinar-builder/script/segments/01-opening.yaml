@@ -5,8 +5,9 @@ visual: presenter-slide
 
 source:
   webinar_file: "../astria-webinar.mp4"
-  timestamp: "00:10:22-00:13:00"
-  gemini_report: ".cache/gemini/chunk-001022-001400.json"
+  transcript: "../transcript_en.srt"
+  timestamp: "00:10:22-00:11:19"   # SRT entries 1–12 (thanks, $10 credit link, scaling lookbooks/editorials/campaigns)
+  gemini_report: ".cache/gemini/chunk-001022-001119.json"
 
 slide:
   eyebrow: "OPENING · 01"
@@ -22,8 +23,10 @@ slide:
 narration: |
   Thanks for having me. Today we're going to cover how to scale up lookbooks,
   editorials, social content, and campaigns for fashion, e-commerce, and
-  direct-to-consumer brands. The goal is to go from single shoots to dozens
-  of consistent variations — fast — without losing the brand.
+  direct-to-consumer brands. The goal is to build a methodic system that will
+  allow us to repeatably and consistently simulate an on-brand photoshoot day:
+  to bring up all the creative knowledge, brand requirement and implement the 
+  brief designs into an automated system.
 
 avatar:
   emotion: "confident"
