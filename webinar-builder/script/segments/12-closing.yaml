@@ -1,6 +1,6 @@
-id: 09-closing
+id: 12-closing
 title: "Wrap-up"
-order: 9
+order: 12
 visual: presenter-slide
 
 source:
@@ -10,7 +10,7 @@ source:
   gemini_report: ".cache/gemini/chunk-011635-013652.json"
 
 slide:
-  eyebrow: "CLOSING · 09"
+  eyebrow: "CLOSING · 12"
   title_html: |
     Templates
     <span class="accent">compound</span>.

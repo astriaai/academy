@@ -25,7 +25,7 @@ import "dotenv/config";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "..");
 
-const VIEWPORT = { width: 1600, height: 900 };
+const DEFAULT_VIEWPORT = { width: 1600, height: 900 };
 
 export interface RecordApi {
   page: Page;
@@ -37,12 +37,19 @@ export interface RecordApi {
 
 export type RecordScript = (api: RecordApi) => Promise<void>;
 
+/**
+ * A record module may export an optional `viewport` to override the default
+ * 16:9 capture size. Useful when the target layout slot is more portrait —
+ * `object-fit: contain` would otherwise letterbox the result.
+ */
+export interface Viewport { width: number; height: number }
+
 function run(cmd: string, args: string[]) {
   const r = spawnSync(cmd, args, { stdio: "inherit" });
   if (r.status !== 0) throw new Error(`${cmd} ${args.join(" ")} exited with ${r.status}`);
 }
 
-async function runRecording(segmentId: string, script: RecordScript) {
+async function runRecording(segmentId: string, script: RecordScript, viewport: Viewport = DEFAULT_VIEWPORT) {
   const capturesDir = join(ROOT, "assets", "captures");
   mkdirSync(capturesDir, { recursive: true });
   const workDir = join(capturesDir, `${segmentId}.work`);
@@ -66,14 +73,79 @@ async function runRecording(segmentId: string, script: RecordScript) {
   if (useStorageState) {
     console.log(`[record] ${segmentId}: using saved Astria session (storageState.json)`);
   }
+  console.log(`[record] ${segmentId}: viewport=${viewport.width}x${viewport.height}`);
   const context: BrowserContext = await browser.newContext({
-    viewport: VIEWPORT,
-    recordVideo: { dir: workDir, size: VIEWPORT },
+    viewport,
+    recordVideo: { dir: workDir, size: viewport },
     deviceScaleFactor: 2,                     // retina-sharp text
     colorScheme: "dark",
     ...(useStorageState ? { storageState: storageStatePath } : {}),
   });
+
+  // Inject a synthetic cursor that follows the Playwright mouse. Chromium
+  // video recordings don't include the OS cursor (there isn't one in
+  // headless), so hovers look invisible without this overlay.
+  //
+  // Passed as a raw STRING, not a function — esbuild (via tsx) adds a
+  // `__name` runtime helper to named functions which isn't defined in the
+  // browser, and a passed-function's .toString() carries that helper call
+  // into the serialized script. A string payload bypasses compilation.
+  await context.addInitScript({
+    content: `(() => {
+      function attach() {
+        if (!document.body || document.getElementById("__hfCursor")) return;
+        var cursor = document.createElement("div");
+        cursor.id = "__hfCursor";
+        cursor.style.cssText = [
+          "position:fixed",
+          "top:0",
+          "left:0",
+          "width:24px",
+          "height:24px",
+          "pointer-events:none",
+          "z-index:2147483647",
+          "background:#E06A4E",
+          "border:3px solid #F4F1EC",
+          "border-radius:50%",
+          "box-shadow:0 2px 8px rgba(0,0,0,0.6)",
+          "transform:translate(-9999px,-9999px)",
+          "transition:none"
+        ].join(";");
+        document.body.appendChild(cursor);
+        window.addEventListener("mousemove", function (e) {
+          cursor.style.transform = "translate(" + (e.clientX - 12) + "px," + (e.clientY - 12) + "px)";
+        }, { passive: true });
+      }
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", attach);
+      } else {
+        attach();
+      }
+      document.addEventListener("turbo:load", attach);
+      document.addEventListener("turbo:render", attach);
+      window.addEventListener("pageshow", attach);
+      new MutationObserver(attach).observe(document.documentElement, {
+        childList: true, subtree: false
+      });
+      setInterval(attach, 1000);
+    })();`,
+  });
+
   const page = await context.newPage();
+
+  if (process.env.DEBUG_CURSOR) {
+    page.on("console", (m) => {
+      const t = m.text();
+      console.log(`[browser] ${t}`);
+    });
+    page.on("framenavigated", async (f) => {
+      if (f !== page.mainFrame()) return;
+      try {
+        const hasCursor = await f.evaluate(() => !!document.getElementById("__hfCursor"));
+        console.log(`[nav] ${f.url()}  cursor=${hasCursor}`);
+      } catch {}
+    });
+  }
 
   const api: RecordApi = {
     page,
@@ -136,7 +208,8 @@ export async function recordScreencast(segmentId: string): Promise<string> {
   if (typeof script !== "function") {
     throw new Error(`${scriptPath} must export a default async function (api) => ...`);
   }
-  return runRecording(segmentId, script);
+  const viewport: Viewport | undefined = mod.viewport;
+  return runRecording(segmentId, script, viewport);
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {

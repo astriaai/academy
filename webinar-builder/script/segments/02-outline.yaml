@@ -1,4 +1,4 @@
-id: 01b-outline
+id: 02-outline
 title: "Outline — what we'll cover today"
 order: 2
 visual: presenter-slide
@@ -10,7 +10,7 @@ source:
   gemini_report: ".cache/gemini/chunk-001149-001258.json"
 
 slide:
-  eyebrow: "AGENDA · 01b"
+  eyebrow: "AGENDA · 02"
   title_html: |
     Here's the <span class="accent">structure</span>.
   bullets:

@@ -1,6 +1,6 @@
-id: 02-traditional-photoshoot
+id: 03-traditional-photoshoot
 title: "Traditional photoshoot"
-order: 2
+order: 3
 visual: presenter-slide
 
 source:
@@ -9,7 +9,7 @@ source:
   timestamp: "00:12:59-00:13:30"   # SRT entries 35–42
 
 slide:
-  eyebrow: "SECTION 02"
+  eyebrow: "SECTION 03"
   title_html: |
     Traditional
     <span class="accent">photoshoot</span>?
@@ -47,4 +47,5 @@ narration: |
 avatar:
   emotion: "friendly"
   image_url: "https://mp.astria.ai/t9ymjlh1mwv9zj7sf26wypbqs7si"
-  # engine defaults to "omnihuman" — override per segment with "infinitetalk"
+  # engine defaults to "omnihuman" — override per segment with "infinitetalk" or "pruna"
+  # ("pruna" = Replicate prunaai/p-video-avatar, needs REPLICATE_API_TOKEN; 720p or 1080p)

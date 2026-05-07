@@ -4,6 +4,8 @@ renders/
 out/
 .hyperframes/
 .cache/
+.work/
+transcript.json
 storageState.json
 assets/avatars/*.mp4
 assets/avatars/*.mp3

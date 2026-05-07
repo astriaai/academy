@@ -152,7 +152,7 @@ export async function inspectWebinarSegment(args: InspectArgs): Promise<unknown>
     generationConfig: {
       temperature: 0.1,
       responseMimeType: "application/json",
-      maxOutputTokens: 4096,          // guard against runaway loops
+      maxOutputTokens: 16384,         // guard against runaway loops
     },
   };
 

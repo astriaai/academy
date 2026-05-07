@@ -3,7 +3,7 @@
 
 meta:
   title: "Scaling Fashion Lookbooks with Astria"
-  presenter: "Alon (Astria)"
+  presenter: "Yuli (Astria)"
   resolution: "1920x1080"
   fps: 30
 
@@ -30,10 +30,14 @@ defaults:
 
 segments:
   - 01-opening
-  - 01b-outline
-  - 02-traditional-photoshoot
-  - 03-demo-astria-ui             # → astria.ai/explore/zara-yellow-dress
-  - 04-lookbook-references         # → astria.ai/prompts (requires auth)
-  - 05-ai-already-here
-  - 06-templates-concept
-  - 09-closing
+  - 02-outline
+  - 03-traditional-photoshoot
+  - 04-brands-verticals
+  - 05-real-world-examples         # → sacksfashion.com + ronnykobo.com + Mango/H&M/Zara
+  - 06-brand-implementations       # → astria.ai/w/{zara,great-sports,america-basics}
+  - 07-platform-partner            # 22:19-30:35 — brands need a partner, model churn, Brief, set-of-templates
+  - 08-start-creating              # 31:00-32:40 — "your turn, open a workspace"
+  - 09-lookbook-references         # → astria.ai/prompts (requires auth)
+  - 10-refine-and-templatize       # 58:00-1:12 — prompt bugs, Describe tool, templatize & deliver
+  - 11-templates-concept
+  - 12-closing

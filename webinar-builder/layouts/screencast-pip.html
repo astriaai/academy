@@ -16,26 +16,35 @@
         color: #F4F1EC;
       }
 
-      /* Browser frame — almost full canvas */
+      /* Browser mock — default 3/4 canvas width, left-aligned. Keeps the
+         "this is a real website" framing; the right-side column hosts the
+         presenter PIP and breathing room. Segments with bullets use the
+         .with-bullets variant, which narrows the browser to 2/3 so the
+         right column has room for a bullet list beneath the caption. */
       #seg-browser {
         position: absolute;
         top: 40px;
         left: 40px;
-        width: 1840px;
+        width: 1440px;      /* ≈ 3/4 of 1920 */
         height: 1000px;
         border-radius: 16px;
         overflow: hidden;
         background: #FFFFFF;
         box-shadow: 0 32px 80px rgba(0,0,0,0.55);
         z-index: 1;
+        display: flex;
+        flex-direction: column;
+      }
+      #seg-browser.with-bullets {
+        width: 1200px;      /* 2/3 of 1920 — leaves 680 px for right column */
       }
       .browser-chrome {
-        height: 48px;
+        height: 44px;
         background: #1E1D1C;
         display: flex;
         align-items: center;
-        padding: 0 20px;
-        gap: 10px;
+        padding: 0 18px;
+        gap: 8px;
         flex-shrink: 0;
       }
       .browser-dot { width: 12px; height: 12px; border-radius: 50%; }
@@ -43,19 +52,22 @@
       .browser-dot.yellow { background: #FEBC2E; }
       .browser-dot.green  { background: #28C840; }
       .browser-url {
-        margin-left: 16px;
+        margin-left: 14px;
         background: #0B0B0C;
         color: #A8A39A;
-        font-size: 14px;
-        padding: 8px 16px;
-        border-radius: 8px;
-        min-width: 520px;
+        font-size: 13px;
+        padding: 7px 14px;
+        border-radius: 7px;
+        min-width: 460px;
         letter-spacing: 0.02em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       .browser-url .lock { opacity: 0.6; margin-right: 8px; }
       .browser-viewport {
         position: relative;
-        height: 952px;
+        flex: 1;
         overflow: hidden;
         background: #000000;
       }
@@ -66,64 +78,116 @@
         left: 0;
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        /* contain, not cover — the Playwright capture is 16:9 (1600×900) while
+           the mock browser viewport isn't; cover would crop the left/right
+           edges (e.g. truncating "Mango" in the big-players gallery). */
+        object-fit: contain;
+        background: #0B0B0C;
         display: block;
       }
 
-      /* Avatar PIP — bottom-right */
+      /* Right column (x≈1480→1920, minus 40 px gutters):
+         — top: caption (eyebrow + headline)
+         — middle (optional): bullets
+         — bottom: presenter PIP
+         The .with-bullets layout moves the avatar down and narrows its width
+         to make room for the bullets list above it. */
       #seg-avatar {
         position: absolute;
         bottom: 60px;
-        right: 60px;
-        width: 380px;
-        height: 540px;
-        border-radius: 20px;
+        right: 40px;
+        width: 360px;
+        height: 500px;
+        border-radius: 18px;
         background: #1E1D1C;
         overflow: hidden;
-        box-shadow: 0 24px 64px rgba(0,0,0,0.6), 0 0 0 2px rgba(244, 241, 236, 0.08);
+        box-shadow: 0 20px 48px rgba(0,0,0,0.6), 0 0 0 2px rgba(244, 241, 236, 0.08);
         z-index: 3;
+      }
+      #seg-avatar.with-bullets {
+        width: 300px;
+        height: 360px;
+        bottom: 60px;
       }
       #seg-avatar video { width: 100%; height: 100%; object-fit: cover; display: block; }
       .avatar-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; background: radial-gradient(circle at 50% 40%, #2a2927 0%, #121211 70%); }
-      .avatar-ring { width: 160px; height: 160px; border-radius: 50%; border: 2px solid #A8A39A; position: relative; }
+      .avatar-ring { width: 150px; height: 150px; border-radius: 50%; border: 2px solid #A8A39A; position: relative; }
       .avatar-ring::after { content: ""; position: absolute; inset: 12px; border-radius: 50%; background: radial-gradient(circle at 50% 45%, #3a3938 0%, #1b1a19 80%); }
-      .avatar-label { font-size: 14px; letter-spacing: 0.18em; text-align: center; color: #A8A39A; font-weight: 600; }
-      .avatar-label span { display: block; margin-top: 6px; font-size: 18px; letter-spacing: -0.01em; color: #F4F1EC; font-weight: 400; }
+      .avatar-label { font-size: 13px; letter-spacing: 0.18em; text-align: center; color: #A8A39A; font-weight: 600; }
+      .avatar-label span { display: block; margin-top: 6px; font-size: 17px; letter-spacing: -0.01em; color: #F4F1EC; font-weight: 400; }
 
-      /* Caption strip — bottom-left, complements PIP */
+      /* Caption stack — top of right column, above the presenter PIP. */
       #seg-caption {
         position: absolute;
-        bottom: 60px;
-        left: 60px;
-        width: 1080px;
+        top: 80px;
+        right: 40px;
+        width: 360px;
         z-index: 3;
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 14px;
+      }
+      #seg-caption.with-bullets {
+        width: 600px;
       }
       .caption-eyebrow {
-        font-size: 18px;
+        font-size: 16px;
         letter-spacing: 0.32em;
         color: #A8A39A;
         font-weight: 500;
-        padding-left: 28px;
+        padding-left: 24px;
         position: relative;
       }
       .caption-eyebrow::before {
         content: "";
         position: absolute;
-        left: 0; top: 12px;
-        width: 20px; height: 1px; background: #E06A4E;
+        left: 0; top: 10px;
+        width: 16px; height: 1px; background: #E06A4E;
       }
       .caption-text {
-        font-size: 38px;
-        line-height: 1.2;
+        font-size: 30px;
+        line-height: 1.18;
         font-weight: 600;
         letter-spacing: -0.015em;
         color: #F4F1EC;
-        max-width: 900px;
       }
       .caption-text .accent { color: #E06A4E; }
+
+      /* Bullets under the caption (optional — only rendered when the yaml
+         segment provides caption.bullets or slide.bullets alongside a
+         screencast-pip visual). */
+      #seg-bullets {
+        position: absolute;
+        top: 280px;
+        right: 40px;
+        width: 600px;
+        z-index: 3;
+      }
+      .pip-bullets {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+      .pip-bullets li {
+        font-size: 24px;
+        line-height: 1.32;
+        color: #F4F1EC;
+        font-weight: 400;
+        padding-left: 34px;
+        position: relative;
+      }
+      .pip-bullets li::before {
+        content: "";
+        position: absolute;
+        left: 0; top: 15px;
+        width: 20px; height: 1px; background: #A8A39A;
+      }
+      .pip-bullets li.accent {
+        color: #E06A4E;
+      }
 
       /* Simulated cursor */
       #seg-cursor {
@@ -144,8 +208,8 @@
     <div id="root" data-composition-id="main" data-start="0" data-duration="{{DURATION}}" data-width="1920" data-height="1080">
       <audio id="seg-narration" class="clip" data-start="0" data-duration="{{DURATION}}" data-track-index="0" src="{{AUDIO_SRC}}" data-volume="1"></audio>
 
-      <!-- Browser window showing the Astria site -->
-      <div id="seg-browser" class="clip" data-start="0" data-duration="{{DURATION}}" data-track-index="1">
+      <!-- Browser mock hosting the recorded screen capture (3/4 width, left). -->
+      <div id="seg-browser" class="clip {{PIP_VARIANT_CLASS}}" data-start="0" data-duration="{{DURATION}}" data-track-index="1">
         <div class="browser-chrome">
           <div class="browser-dot red"></div>
           <div class="browser-dot yellow"></div>
@@ -158,16 +222,21 @@
       </div>
 
       <!-- Caption overlay -->
-      <div id="seg-caption" class="clip" data-start="0" data-duration="{{DURATION}}" data-track-index="2">
+      <div id="seg-caption" class="clip {{PIP_VARIANT_CLASS}}" data-start="0" data-duration="{{DURATION}}" data-track-index="2">
         <div class="caption-eyebrow" id="caption-eyebrow">{{CAPTION_EYEBROW}}</div>
         <div class="caption-text" id="caption-text">{{CAPTION_HTML}}</div>
+      </div>
+
+      <!-- Optional bullets (right column, below caption). Empty when unused. -->
+      <div id="seg-bullets" class="clip" data-start="0" data-duration="{{DURATION}}" data-track-index="5">
+        {{PIP_BULLETS_HTML}}
       </div>
 
       <!-- Cursor (animated via GSAP) -->
       <div id="seg-cursor" class="clip" data-start="0" data-duration="{{DURATION}}" data-track-index="3"></div>
 
       <!-- Avatar PIP -->
-      <div id="seg-avatar" class="clip" data-start="0" data-duration="{{DURATION}}" data-track-index="4">
+      <div id="seg-avatar" class="clip {{PIP_VARIANT_CLASS}}" data-start="0" data-duration="{{DURATION}}" data-track-index="4">
         {{AVATAR_MEDIA}}
       </div>
 
@@ -184,8 +253,28 @@
       // Caption staggers in over browser
       tl.from("#caption-eyebrow", { opacity: 0, x: -20, duration: 0.5, ease: "power2.out" }, 0.7);
       tl.from("#caption-text",    { opacity: 0, y: 20, duration: 0.7, ease: "expo.out"   }, 0.85);
+      // Optional caption fade-out — set when yaml provides caption.hide_at.
+      const captionHideAt = "{{CAPTION_HIDE_AT}}";
+      if (captionHideAt) {
+        const t = parseFloat(captionHideAt);
+        tl.to("#seg-caption", { opacity: 0, duration: 0.6, ease: "power2.in" }, t);
+      }
       // Avatar PIP bounces in from bottom
       tl.from("#seg-avatar", { opacity: 0, y: 60, scale: 0.9, duration: 0.8, ease: "power3.out" }, 1.1);
+
+      // Optional: per-bullet reveal (honors data-start if provided).
+      const pipBullets = Array.from(document.querySelectorAll(".pip-bullets li"));
+      if (pipBullets.length) {
+        const hasPaced = pipBullets.some((li) => li.dataset.start !== undefined);
+        if (hasPaced) {
+          pipBullets.forEach((li) => {
+            const t = parseFloat(li.dataset.start ?? "0");
+            tl.from(li, { opacity: 0, x: 40, duration: 0.55, ease: "power2.out" }, t);
+          });
+        } else {
+          tl.from(".pip-bullets li", { opacity: 0, x: 40, duration: 0.55, ease: "power2.out", stagger: 0.4 }, 1.3);
+        }
+      }
 
       // For image-backed demos we pan; for video-backed demos the recording handles motion.
       if (document.getElementById("seg-screenshot")) {

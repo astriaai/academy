@@ -17,22 +17,32 @@ import "dotenv/config";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "..");
 
-const OMNI_ENDPOINT =
-  "https://api.wavespeed.ai/api/v3/bytedance/avatar-omni-human";
+export type OmniHumanVersion = "v1" | "v1.5";
 
-function cacheKey(audioUrl: string, imageUrl: string) {
+const OMNI_ENDPOINTS: Record<OmniHumanVersion, string> = {
+  "v1": "https://api.wavespeed.ai/api/v3/bytedance/avatar-omni-human",
+  "v1.5": "https://api.wavespeed.ai/api/v3/bytedance/avatar-omni-human-1.5",
+};
+
+function cacheKey(audioUrl: string, imageUrl: string, version: OmniHumanVersion) {
   const h = createHash("sha256");
   h.update(audioUrl);
   h.update("|");
   h.update(imageUrl);
+  h.update("|");
+  h.update(version);
   return h.digest("hex").slice(0, 12);
 }
 
-async function submit(audioUrl: string, imageUrl: string): Promise<string> {
+async function submit(
+  audioUrl: string,
+  imageUrl: string,
+  version: OmniHumanVersion
+): Promise<string> {
   const apiKey = process.env.WAVESPEED_API_KEY;
   if (!apiKey) throw new Error("WAVESPEED_API_KEY not set");
 
-  const res = await fetch(OMNI_ENDPOINT, {
+  const res = await fetch(OMNI_ENDPOINTS[version], {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -77,40 +87,42 @@ async function download(url: string, dest: string) {
 export async function generateOmniHuman(
   segmentId: string,
   audioUrl: string,
-  imageUrl: string
+  imageUrl: string,
+  version: OmniHumanVersion = "v1"
 ): Promise<string> {
   const avatarDir = join(ROOT, "assets", "avatars");
   mkdirSync(avatarDir, { recursive: true });
-  const key = cacheKey(audioUrl, imageUrl);
+  const key = cacheKey(audioUrl, imageUrl, version);
   const cached = join(avatarDir, `${segmentId}.${key}.mp4`);
   const active = join(avatarDir, `${segmentId}.mp4`);
+  const tag = version === "v1" ? "omnihuman" : `omnihuman-${version}`;
 
   if (existsSync(cached)) {
     writeFileSync(active, readFileSync(cached));
-    console.log(`[omnihuman] ${segmentId}: cache hit (${key})`);
+    console.log(`[${tag}] ${segmentId}: cache hit (${key})`);
     return active;
   }
 
-  console.log(`[omnihuman] ${segmentId}: submitting (audio=${audioUrl.slice(0, 60)}… image=${imageUrl})`);
-  const resultUrl = await submit(audioUrl, imageUrl);
+  console.log(`[${tag}] ${segmentId}: submitting (audio=${audioUrl.slice(0, 60)}… image=${imageUrl})`);
+  const resultUrl = await submit(audioUrl, imageUrl, version);
   const videoUrl = await poll(resultUrl, (s) =>
-    process.stdout.write(`\r[omnihuman] ${segmentId}: ${s}           `)
+    process.stdout.write(`\r[${tag}] ${segmentId}: ${s}           `)
   );
   process.stdout.write("\n");
-  console.log(`[omnihuman] ${segmentId}: downloading`);
+  console.log(`[${tag}] ${segmentId}: downloading`);
   await download(videoUrl, cached);
   writeFileSync(active, readFileSync(cached));
-  console.log(`[omnihuman] ${segmentId}: cached at ${cached}`);
+  console.log(`[${tag}] ${segmentId}: cached at ${cached}`);
   return active;
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
-  const [id, audio, image] = process.argv.slice(2);
+  const [id, audio, image, version = "v1"] = process.argv.slice(2);
   if (!id || !audio || !image) {
-    console.error("Usage: tsx pipeline/generate-omnihuman.ts <segment-id> <audio_url> <image_url>");
+    console.error("Usage: tsx pipeline/generate-omnihuman.ts <segment-id> <audio_url> <image_url> [v1|v1.5]");
     process.exit(1);
   }
-  generateOmniHuman(id, audio, image).catch((e) => {
+  generateOmniHuman(id, audio, image, version as OmniHumanVersion).catch((e) => {
     console.error(e);
     process.exit(1);
   });

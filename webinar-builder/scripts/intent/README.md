@@ -25,7 +25,7 @@ Everything else is generated.
 ## Schema
 
 ```yaml
-id: 04-lookbook-references
+id: 09-lookbook-references
 title: "Working with references in the Lookbook"
 
 # Optional — lets reviewers cross-check against the original webinar.
@@ -128,7 +128,7 @@ npx tsx scripts/auth/login.ts
 Two options today:
 
 1. **Claude Code** — paste the intent YAML into a Claude Code chat and ask:
-   > "Compile `scripts/intent/04-lookbook-references.yaml` into `scripts/record/04-lookbook-references.ts`
+   > "Compile `scripts/intent/09-lookbook-references.yaml` into `scripts/record/09-lookbook-references.ts`
    > matching the pattern of the existing scripts."
 
 2. **`npm run compile-intent <id>`** — optional; requires `ANTHROPIC_API_KEY`. Calls Claude to
@@ -161,7 +161,7 @@ eyeballing what the UI looks like.
 ### Gemini video analysis (recommended)
 
 ```bash
-npm run gemini-inspect -- 01:09:30 01:10:30 04-lookbook-references
+npm run gemini-inspect -- 01:09:30 01:10:30 09-lookbook-references
 ```
 
 Chops the clip, uploads it inline to Gemini 2.5 Flash (via `VERTEX_API_KEY`), and asks a

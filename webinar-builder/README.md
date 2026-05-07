@@ -21,7 +21,7 @@ The same `npm run build` command drives both — if `HEYGEN_API_KEY` is set in `
 
 ```bash
 npm install
-npm run build:segment -- 02-traditional-photoshoot   # renders out/02-traditional-photoshoot.mp4
+npm run build:segment -- 03-traditional-photoshoot   # renders out/03-traditional-photoshoot.mp4
 ```
 
 ## Switching to Tier B (real avatar)
@@ -29,7 +29,7 @@ npm run build:segment -- 02-traditional-photoshoot   # renders out/02-traditiona
 ```bash
 cp .env.example .env
 # edit .env — paste your HeyGen key into HEYGEN_API_KEY=
-npm run build:segment -- 02-traditional-photoshoot
+npm run build:segment -- 03-traditional-photoshoot
 ```
 
 The build script will:
@@ -53,7 +53,7 @@ npm run preview   # opens HyperFrames studio with hot-reload
 Full render:
 
 ```bash
-npm run build:segment -- 02-traditional-photoshoot
+npm run build:segment -- 03-traditional-photoshoot
 ```
 
 Multiple segments (once the script has them):
@@ -80,7 +80,7 @@ webinar-builder/
 ├── script/
 │   ├── webinar.yaml             # Global defaults + segment order
 │   └── segments/
-│       └── 02-traditional-photoshoot.yaml
+│       └── 03-traditional-photoshoot.yaml
 ├── assets/
 │   ├── audio/                   # TTS / HeyGen audio, auto-generated
 │   ├── avatars/                 # HeyGen MP4s, hash-cached

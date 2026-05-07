@@ -1,10 +1,10 @@
-id: 04-lookbook-references
+id: 09-lookbook-references
 title: "Editing references inside the Lookbook"
 
 source:
   webinar_file: "../astria-webinar.mp4"
   timestamp: "01:09:30-01:10:30"
-  gemini_report: ".cache/gemini/04-lookbook-references.json"
+  gemini_report: ".cache/gemini/09-lookbook-references.json"
   note: |
     Per Gemini analysis of the original clip (see gemini_report), the demo
     is: Alon starts on astria.ai/prompts with a reference already uploaded
