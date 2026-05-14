@@ -1,0 +1,26 @@
+id: 01-showcase
+title: "Result showcase — rotating packshots"
+order: 1
+visual: video-showcase
+
+showcase:
+  videos:
+    - src: "assets/results/3d-packshots/rotation-bag-burgundy.mp4"
+      label: "LEATHER HANDBAG"
+    - src: "assets/results/3d-packshots/rotation-backpack-blue.mp4"
+      label: "TECHNICAL BACKPACK"
+
+caption:
+  eyebrow: "3D PACKSHOTS"
+  html: |
+    Studio-quality 360° turnarounds
+    from a <span class="accent">single reference</span> photo.
+
+narration: |
+  Here's what Astria 3D Packshots produces. Two products, two clean
+  studio rotations — generated entirely from a single reference image
+  for each. The same workflow handles bags, footwear, accessories,
+  apparel — anything you'd put on a turntable.
+
+sfx:
+  - { src: "assets/sfx/whoosh-soft.mp3", start: 0.2, volume: 0.55 }

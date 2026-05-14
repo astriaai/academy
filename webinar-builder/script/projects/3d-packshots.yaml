@@ -1,0 +1,48 @@
+# Project manifest — Astria 3D Packshots feature tutorial.
+# Standalone tutorial under the bi-weekly cadence. Editorial product-studio
+# aesthetic; distinct presenter look from the VST project.
+
+meta:
+  title: "Astria · 3D Packshots"
+  presenter: "Astria"
+  resolution: "1920x1080"
+  fps: 30
+
+defaults:
+  tts:
+    provider: "gemini"
+    voice: "Aoede"
+    model: "gemini-3.1-flash-tts-preview"
+
+  music:
+    src: "assets/music/luxe-pad.mp3"
+    volume: 0.12
+
+  # Rotation MP4s pulled from astria.ai/w/fashion-3d-packshots — used as
+  # b-roll behind the FAQ slide + the showcase background layer.
+  background_videos:
+    - "assets/results/3d-packshots/rotation-bag-burgundy.mp4"
+    - "assets/results/3d-packshots/rotation-backpack-blue.mp4"
+    - "assets/results/3d-packshots/rotation-sneakers-pair.mp4"
+    - "assets/results/3d-packshots/rotation-sneaker-single.mp4"
+
+  # Editorial presenter — ivory linen blazer + champagne silk slip + gold
+  # chain earring, painted taupe backdrop. Distinct from the VST look so the
+  # series feels like a curated collection.
+  # Note: tmpfiles URLs expire ~1h; re-upload from assets/avatars/.../avatar-portrait.jpg
+  # via `edit-image-gemini.ts --upload` when needed.
+  avatar:
+    image_url: "https://tmpfiles.org/dl/wCwOwHtT77KO/avatar-portrait.jpg"
+    engine: "infinitetalk"
+    resolution: "720p"
+    video_prompt: >-
+      Subtle natural micro-expressions, calm composed expression of a creative
+      director on a photo shoot day, very small head movements, looking at
+      camera with quiet confidence, no hand gestures, minimal upper-body motion.
+
+segments:
+  - 00-intro              # TV-show open with editorial Seedance + serif title (~10s)
+  - 01-showcase           # Side-by-side rotating packshots (~12s)
+  - 02-before-after       # Ugly iPhone reference vs clean rotating packshot (~18s)
+  # - 03-workflow         # TODO: Playwright recording of Astria packshot UI (~50s)
+  - 04-faqs               # FAQ slide — what counts as a good source, cost, formats (~30s)

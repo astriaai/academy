@@ -23,3 +23,8 @@ narration: |
   or actions, the background — for example, plain white background.
   Keywords like natural relaxed pose, fumbling her eyes, micro-expressions,
   help the model land the look.
+
+sfx:
+  - { src: "assets/sfx/whoosh-soft.mp3", start: 0.2,  volume: 0.5 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 3.0,  volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 14.0, volume: 0.45 }

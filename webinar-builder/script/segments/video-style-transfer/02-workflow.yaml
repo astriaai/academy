@@ -20,8 +20,38 @@ slide:
     - "Select an input driving video"
     - "Write a minimal video prompt"
     - "Select Seedance 2 fast — 720p or 480p"
-  # Paced to the ~41s draft narration. Re-tune once real Gemini TTS lands.
-  bullet_starts: [3.0, 12.0, 22.0, 32.0]
+  # Paced to the ~47s real Gemini narration.
+  bullet_starts: [3.0, 14.0, 26.0, 38.0]
+
+# SFX — soft ding per bullet reveal (matches bullet_starts) plus a whoosh at
+# the segment entry under the caption fade-in. Click on each marker onset.
+sfx:
+  - { src: "assets/sfx/whoosh-soft.mp3", start: 0.2,  volume: 0.5 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 3.0,  volume: 0.45 }
+  - { src: "assets/sfx/click-subtle.mp3", start: 3.2,  volume: 0.5 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 14.0, volume: 0.45 }
+  - { src: "assets/sfx/click-subtle.mp3", start: 14.2, volume: 0.5 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 26.0, volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 38.0, volume: 0.45 }
+  - { src: "assets/sfx/click-subtle.mp3", start: 38.2, volume: 0.5 }
+
+# Marker highlights — luxe-gold strokes around the UI element each bullet
+# refers to. Coordinates are in Playwright source-pixel space (1600×900).
+# Astria's mode-switcher buttons sit upper-left of the prompt panel; the
+# file-upload trigger is the small button-row beside the prompt box; the
+# model dropdown is in the parameter rail below the prompt. These coords
+# are eyeball estimates — refine against the actual capture if needed.
+markers:
+  # Bullet 1 (t=3) → Image-mode pill (top of prompt panel)
+  - { start: 3.0,  duration: 4.0,  shape: circle,   cx: 260,  cy: 145, r: 70,  style: luxe-gold }
+  # Bullet 2 (t=14) → Video-mode pill (sibling of Image, slightly right)
+  - { start: 14.0, duration: 4.0,  shape: circle,   cx: 380,  cy: 145, r: 70,  style: luxe-gold }
+  # Bullet 2 cont. → driving-video upload button (file-input trigger row)
+  - { start: 18.5, duration: 4.0,  shape: underline, cx: 360, cy: 470, w: 280, style: luxe-gold }
+  # Bullet 3 (t=26) → video prompt textarea (centered)
+  - { start: 26.0, duration: 6.0,  shape: underline, cx: 800, cy: 720, w: 700, style: luxe-cream }
+  # Bullet 4 (t=38) → Seedance model select in the param rail
+  - { start: 38.0, duration: 6.0,  shape: circle,   cx: 1290, cy: 250, r: 130, style: luxe-gold }
 
 narration: |
   Here's the four-step flow.

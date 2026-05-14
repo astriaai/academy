@@ -23,3 +23,7 @@ narration: |
   credits on a full video, generate just the still in the image tab.
   Iterate the prompt until the first frame matches what you want. Then
   switch to video mode and render. Way faster, way cheaper.
+
+sfx:
+  - { src: "assets/sfx/whoosh-soft.mp3", start: 0.2, volume: 0.5 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 6.0, volume: 0.4 }

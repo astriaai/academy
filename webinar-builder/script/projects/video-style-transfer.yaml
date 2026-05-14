@@ -14,9 +14,36 @@ defaults:
     voice: "Aoede"
     model: "gemini-3.1-flash-tts-preview"
 
-# No `defaults.avatar` — this tutorial is screencast-driven, no talking head.
+  # Ambient pad ducked beneath the narration. Synthesized with ffmpeg
+  # (6 stacked sines at chord intervals + low-pass + vibrato + fades).
+  music:
+    src: "assets/music/luxe-pad.mp3"
+    volume: 0.12
+
+  # Pool of looping clips used by the .bg-layer in video-showcase /
+  # presenter-slide. Silent + GOP-30 re-encoded already.
+  background_videos:
+    - "assets/results/video-style-transfer/showcase-left.mp4"
+    - "assets/results/video-style-transfer/showcase-right.mp4"
+    - "assets/results/video-style-transfer/driving-jc.mp4"
+
+  # Full-body presenter avatar (NanoBanana 3.1 edit of the head-only source).
+  # Lipsynced via WaveSpeed InfiniteTalk at 720p with a calm-motion prompt.
+  # Note: tmpfiles URLs expire ~1h — re-upload from assets/avatars/.../intro-fullbody.jpg
+  # when needed (`pipeline/edit-image-gemini.ts --upload` prints a fresh URL).
+  avatar:
+    # Source headshot (same image the tv-intro Seedance ends on) — the
+    # avatar PiP picks up seamlessly from the intro's final close-up.
+    image_url: "https://mp.astria.ai/t9ymjlh1mwv9zj7sf26wypbqs7si"
+    engine: "infinitetalk"
+    resolution: "720p"
+    video_prompt: >-
+      Subtle natural micro-expressions and very small head movements,
+      calm steady pose, looking directly at the camera, professional
+      presenter, minimal upper-body motion, no hand gestures.
 
 segments:
+  - 00-intro               # TV-show open with avatar + serif title (~6s)
   - 01-result-showcase     # Side-by-side finished examples (~12s)
   - 02-workflow            # Screencast of the 4-step Astria UI flow (~47s)
   - 02b-first-frame-match  # Visual side-by-side teaching the first-frame concept (~22s)

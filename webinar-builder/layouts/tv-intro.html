@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500&family=Inter:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #000;
+        font-family: "Inter", system-ui, sans-serif;
+        color: #F4F1EC;
+      }
+
+      /* Full-bleed avatar still — Ken-Burns push-in over the segment. */
+      #intro-bg {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        overflow: hidden;
+      }
+      #intro-bg-media {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: 50% 40%;
+        transform: scale(1.0);
+        transform-origin: center 40%;
+        will-change: transform;
+        display: block;
+      }
+
+      /* Edge vignettes — frame the title lockup with breathing room. */
+      .vignette {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background:
+          linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.05) 25%, rgba(0,0,0,0.05) 65%, rgba(0,0,0,0.78) 100%),
+          radial-gradient(70% 60% at 50% 50%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.45) 100%);
+        pointer-events: none;
+      }
+
+      /* Title lockup — centered. ASTRIA in Playfair Display, subtitle in Inter italic. */
+      #intro-lockup {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 3;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 28px;
+        text-align: center;
+      }
+
+      /* Hairline above the title — sweeps in from center. */
+      .lockup-rule {
+        width: 320px;
+        height: 1px;
+        background: linear-gradient(90deg, transparent 0%, #D9B97A 30%, #D9B97A 70%, transparent 100%);
+        transform-origin: center;
+        opacity: 0.85;
+      }
+
+      .lockup-title {
+        font-family: "Playfair Display", "Cormorant", Georgia, serif;
+        font-weight: 300;
+        font-size: 240px;
+        line-height: 1;
+        letter-spacing: 0.14em;
+        color: #F4F1EC;
+        text-transform: uppercase;
+        text-indent: 0.14em;  /* visually balance the letter-spacing */
+        display: flex;
+        gap: 0;
+        overflow: hidden;
+      }
+      .lockup-title .letter {
+        display: inline-block;
+        will-change: transform, opacity;
+      }
+      .lockup-subtitle {
+        font-family: "Inter", sans-serif;
+        font-weight: 400;
+        font-style: italic;
+        font-size: 38px;
+        letter-spacing: 0.18em;
+        color: #D9B97A;
+        text-transform: uppercase;
+        opacity: 0;
+        will-change: opacity, transform;
+      }
+
+      /* Soft black-out at the tail — hands off cleanly to the next segment. */
+      #intro-blackout {
+        position: absolute;
+        inset: 0;
+        z-index: 4;
+        background: #000;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      {{CAPTIONS_CSS}}
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="{{DURATION}}" data-width="1920" data-height="1080">
+      <audio id="seg-narration" class="clip" data-start="0" data-duration="{{DURATION}}" data-track-index="0" src="{{AUDIO_SRC}}" data-volume="1"></audio>
+      {{MUSIC_AUDIO_HTML}}
+      {{SFX_AUDIOS_HTML}}
+
+      <div id="intro-bg" class="clip" data-start="0" data-duration="{{DURATION}}" data-track-index="1">
+        {{INTRO_BG_MEDIA}}
+      </div>
+      <div class="vignette" aria-hidden="true"></div>
+
+      <div id="intro-lockup" class="clip" data-start="0" data-duration="{{DURATION}}" data-track-index="2">
+        <div class="lockup-rule" id="lockup-rule"></div>
+        <div class="lockup-title" id="lockup-title"></div>
+        <div class="lockup-subtitle" id="lockup-subtitle">{{INTRO_SUBTITLE_HTML}}</div>
+      </div>
+
+      <div id="intro-blackout" class="clip" data-start="0" data-duration="{{DURATION}}" data-track-index="5"></div>
+
+      {{CAPTIONS_HTML}}
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const duration = {{DURATION}};
+
+      // Split the title into per-letter spans so we can stagger them in.
+      const titleEl = document.getElementById("lockup-title");
+      const rawTitle = (`{{INTRO_TITLE_HTML}}`).trim();
+      titleEl.innerHTML = rawTitle.split("").map((ch) =>
+        ch === " "
+          ? '<span class="letter">&nbsp;</span>'
+          : `<span class="letter">${ch}</span>`
+      ).join("");
+      const letters = titleEl.querySelectorAll(".letter");
+
+      // t=0.0  — start from black, push-in begins
+      tl.set("#intro-blackout", { opacity: 1 }, 0);
+      tl.to("#intro-blackout", { opacity: 0, duration: 0.8, ease: "power2.out" }, 0);
+      // Ken-Burns push-in over the full segment (still or video bg).
+      tl.to("#intro-bg-media", { scale: 1.06, duration: duration, ease: "none" }, 0);
+
+      // t=0.6 — hairline sweeps in from a thin center to its full width
+      tl.from("#lockup-rule", { scaleX: 0, duration: 0.9, ease: "power3.out", transformOrigin: "center" }, 0.6);
+
+      // t=1.0 — title letters cascade in
+      tl.from(letters, { opacity: 0, y: 28, duration: 0.9, ease: "power3.out", stagger: 0.04 }, 1.0);
+
+      // t=1.9 — subtitle fades up
+      tl.to("#lockup-subtitle", { opacity: 1, duration: 0.9, ease: "power2.out", y: 0 }, 1.9);
+
+      // Lockup fade-out: cap at 4.5s for longer intros so the later
+      // shots (closeup, workstation approach) play without the title
+      // obscuring the action. Short intros (≤4s) keep the title up
+      // until the final beat.
+      const lockupOutAt = duration <= 4 ? Math.max(duration - 1.2, 3.0) : 4.5;
+      tl.to("#intro-lockup", { opacity: 0, duration: 0.8, ease: "power2.in" }, lockupOutAt);
+      tl.to("#intro-blackout", { opacity: 1, duration: 0.6, ease: "power2.in" }, duration - 0.6);
+
+      {{CAPTIONS_GSAP}}
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

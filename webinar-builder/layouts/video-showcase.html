@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=1920, height=1080" />
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500&family=Inter:ital,wght@0,400;0,500;0,600;1,400&display=swap" />
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       html, body {
@@ -36,6 +37,35 @@
            headline:       y=940..1020 (80px high, 60px from bottom)
          Each video box is 600x800 (3:4 to match portrait sources).
          Two boxes + 32px gap = 1232px; centered in 1920 = 344px margin. */
+      /* B-roll background — looping result clips, heavily blurred + dimmed,
+         z-indexed behind the foreground content. Visual motion without
+         competing with the panes. Auto-fills the canvas in a 2x2 grid. */
+      .bg-layer {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        overflow: hidden;
+        pointer-events: none;
+      }
+      .bg-tile {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: blur(14px) brightness(0.32) saturate(1.1);
+        transform: scale(1.08);   /* hides blur edges */
+      }
+      /* Dark vignette sits above the bg-layer to keep foreground readable. */
+      .bg-vignette {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background:
+          radial-gradient(80% 60% at 50% 50%, rgba(11,11,12,0.35) 0%, rgba(11,11,12,0.85) 100%);
+        pointer-events: none;
+      }
       .showcase-grid {
         position: absolute;
         top: 120px;
@@ -125,14 +155,15 @@
         justify-content: center;
       }
       .headline-text {
-        font-size: 42px;
-        line-height: 1.18;
-        font-weight: 600;
-        letter-spacing: -0.015em;
+        font-family: "Playfair Display", "Cormorant", Georgia, serif;
+        font-size: 56px;
+        line-height: 1.15;
+        font-weight: 400;
+        letter-spacing: 0.005em;
         color: #F4F1EC;
         text-align: center;
       }
-      .headline-text .accent { color: #E06A4E; }
+      .headline-text .accent { color: #D9B97A; font-style: italic; }
 
       {{CAPTIONS_CSS}}
     </style>
@@ -140,6 +171,12 @@
   <body>
     <div id="root" data-composition-id="main" data-start="0" data-duration="{{DURATION}}" data-width="1920" data-height="1080">
       <audio id="seg-narration" class="clip" data-start="0" data-duration="{{DURATION}}" data-track-index="0" src="{{AUDIO_SRC}}" data-volume="1"></audio>
+      {{MUSIC_AUDIO_HTML}}
+      {{SFX_AUDIOS_HTML}}
+
+      <!-- B-roll background (optional; empty when no background_videos configured) -->
+      {{BG_LAYER_HTML}}
+      <div class="bg-vignette" aria-hidden="true"></div>
 
       <!-- Side-by-side result videos. Each loops natively. -->
       <div class="showcase-grid">

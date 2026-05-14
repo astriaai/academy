@@ -106,12 +106,16 @@
          — bottom: presenter PIP
          The .with-bullets layout moves the avatar down and narrows its width
          to make room for the bullets list above it. */
+      /* Avatar PiP — taller now to accommodate full-body framing. The new
+         intro-fullbody NanoBanana edit is 3:4 portrait standing pose, so the
+         PIP slot mirrors that ratio. Falls back gracefully to head-only
+         images (still 3:4 looks fine, just framed waist-up). */
       #seg-avatar {
         position: absolute;
-        bottom: 60px;
+        top: 100px;
         right: 40px;
         width: 360px;
-        height: 500px;
+        height: 880px;
         border-radius: 18px;
         background: #1E1D1C;
         overflow: hidden;
@@ -119,9 +123,12 @@
         z-index: 3;
       }
       #seg-avatar.with-bullets {
+        /* When bullets occupy the upper portion of the right column, the
+           avatar slides down and narrows so both fit. */
+        top: 540px;
         width: 300px;
-        height: 360px;
-        bottom: 60px;
+        height: 440px;
+        bottom: auto;
       }
       #seg-avatar video { width: 100%; height: 100%; object-fit: cover; display: block; }
       .avatar-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; background: radial-gradient(circle at 50% 40%, #2a2927 0%, #121211 70%); }
@@ -203,6 +210,31 @@
         color: #E06A4E;
       }
 
+      /* Marker highlights — SVG overlay above the screencast video, sized
+         exactly to the .browser-viewport (so coordinates map to the rendered
+         video frame). preserveAspectRatio="xMidYMid meet" + the same
+         object-fit:contain math means cx/cy in source-pixel space land where
+         you expect on screen. */
+      #markers-svg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 4;
+        pointer-events: none;
+        overflow: visible;
+      }
+      #markers-svg .marker {
+        opacity: 0;
+        stroke-dasharray: 1;
+        stroke-dashoffset: 1;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        filter: drop-shadow(0 1px 2px rgba(0,0,0,0.4));
+      }
+      .marker-gold { stroke: #D9B97A; stroke-width: 5; }
+      .marker-cream { stroke: #F4F1EC; stroke-width: 4; }
+
       /* Simulated cursor */
       #seg-cursor {
         position: absolute;
@@ -221,6 +253,8 @@
   <body>
     <div id="root" data-composition-id="main" data-start="0" data-duration="{{DURATION}}" data-width="1920" data-height="1080">
       <audio id="seg-narration" class="clip" data-start="0" data-duration="{{DURATION}}" data-track-index="0" src="{{AUDIO_SRC}}" data-volume="1"></audio>
+      {{MUSIC_AUDIO_HTML}}
+      {{SFX_AUDIOS_HTML}}
 
       <!-- Browser mock hosting the recorded screen capture (3/4 width, left). -->
       <div id="seg-browser" class="clip {{PIP_VARIANT_CLASS}}" data-start="0" data-duration="{{DURATION}}" data-track-index="1">
@@ -232,6 +266,7 @@
         </div>
         <div class="browser-viewport">
           {{SCREENCAST_MEDIA}}
+          {{MARKERS_SVG_HTML}}
         </div>
       </div>
 
@@ -275,6 +310,24 @@
       }
       // Avatar PIP bounces in from bottom
       tl.from("#seg-avatar", { opacity: 0, y: 60, scale: 0.9, duration: 0.8, ease: "power3.out" }, 1.1);
+
+      // Marker highlights — each <ellipse>/<path> has data-start / data-duration.
+      // Strategy: set initial dashoffset:1 + opacity:0, fade in over 0.2s,
+      // draw the stroke (dashoffset 1→0) over 0.7s, hold, fade out in the
+      // final 0.4s of the marker's window.
+      const markers = document.querySelectorAll("#markers-svg .marker");
+      markers.forEach((m) => {
+        const start = parseFloat(m.dataset.start ?? "0");
+        const dur = parseFloat(m.dataset.duration ?? "1.5");
+        // Reset
+        tl.set(m, { opacity: 0, attr: { "stroke-dashoffset": 1 } }, 0);
+        // Fade in + draw
+        tl.to(m, { opacity: 1, duration: 0.2, ease: "power2.out" }, start);
+        tl.to(m, { attr: { "stroke-dashoffset": 0 }, duration: Math.min(0.7, dur - 0.4), ease: "power2.out" }, start + 0.05);
+        // Fade out near the end of the marker's window
+        const fadeAt = start + Math.max(dur - 0.4, 0.4);
+        tl.to(m, { opacity: 0, duration: 0.4, ease: "power2.in" }, fadeAt);
+      });
 
       // Optional: per-bullet reveal (honors data-start if provided).
       const pipBullets = Array.from(document.querySelectorAll(".pip-bullets li"));

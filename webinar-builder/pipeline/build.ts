@@ -61,7 +61,18 @@ interface SegmentYaml {
   id: string;
   title: string;
   narration: string;
-  visual: "presenter-slide" | "screencast-pip" | "avatar-hero" | "video-showcase";
+  visual: "presenter-slide" | "screencast-pip" | "avatar-hero" | "video-showcase" | "tv-intro";
+  /** Override the audio-derived duration. Used for visual-only segments like the TV intro. */
+  duration?: number;
+  /** TV-intro layout config — full-bleed image or video with serif title lockup. */
+  intro?: {
+    /** Static still image used as the background. */
+    background_image?: string;
+    /** Looping/playing video used as the background. Takes priority over background_image. */
+    background_video?: string;
+    title_html: string;
+    subtitle_html?: string;
+  };
   showcase?: {
     // Side-by-side or stacked result videos. Used by the video-showcase
     // visual for one-off tutorial intros that lead with finished examples.
@@ -123,12 +134,42 @@ interface SegmentYaml {
     // Ignored by OmniHuman/InfiniteTalk (they take no prompt).
     video_prompt?: string;
   };
+  // Optional SFX tracks layered onto the composition timeline. Each entry
+  // becomes an <audio class="clip"> element at the given start time.
+  sfx?: Array<{ src: string; start: number; duration?: number; volume?: number }>;
+  // Optional override of the project-level music bed for this segment.
+  music?: { src: string; volume?: number } | null;
+  // Optional pool of background videos to loop behind the foreground content.
+  // Used by video-showcase / presenter-slide via their .bg-layer container.
+  // Falls back to project defaults.background_videos.
+  background_videos?: string[];
+  // Marker highlights overlayed on the screencast viewport. Coordinates are
+  // in source-video space (1600×900 for our Playwright captures); the SVG
+  // overlay uses object-fit:contain so coordinates map 1:1 to recording px.
+  markers?: Array<{
+    start: number;
+    duration: number;
+    shape: "circle" | "underline" | "arrow";
+    cx: number;
+    cy: number;
+    r?: number;
+    w?: number;
+    h?: number;
+    style?: "luxe-gold" | "luxe-cream";
+  }>;
 }
 interface ProjectYaml {
   segments: string[];
   defaults?: {
     tts?: { provider?: "inworld" | "gemini" };
-    avatar?: { video_prompt?: string };
+    avatar?: {
+      image_url?: string;
+      engine?: NonNullable<SegmentYaml["avatar"]>["engine"];
+      resolution?: NonNullable<SegmentYaml["avatar"]>["resolution"];
+      video_prompt?: string;
+    };
+    music?: { src: string; volume?: number };
+    background_videos?: string[];
   };
 }
 
@@ -270,7 +311,7 @@ function avatarMediaHtml(project: string, segmentId: string, hasAvatar: boolean)
         </div>`;
 }
 
-function renderLayout(project: string, segment: SegmentYaml, hasAvatar: boolean, audioSrc: string, durationSec: number): string {
+function renderLayout(project: string, projectCfg: ProjectYaml, segment: SegmentYaml, hasAvatar: boolean, audioSrc: string, durationSec: number): string {
   const layoutPath = join(ROOT, "layouts", `${segment.visual}.html`);
   let html = readFileSync(layoutPath, "utf-8");
 
@@ -287,6 +328,45 @@ function renderLayout(project: string, segment: SegmentYaml, hasAvatar: boolean,
     captionsGsap = rendered.gsap;
   }
 
+  // SFX layer — additional <audio class="clip"> tracks at staggered start times.
+  // Each entry from segment.sfx[] becomes one element; data-volume defaults to 0.6,
+  // data-duration defaults to 2s (long enough for ~0.6s whoosh plus headroom).
+  const sfxList = segment.sfx ?? [];
+  const sfxAudiosHtml = sfxList
+    .map((s, i) => {
+      const start = s.start.toFixed(2);
+      const dur = (s.duration ?? 2).toFixed(2);
+      const vol = (s.volume ?? 0.6).toFixed(2);
+      return `<audio class="clip" data-start="${start}" data-duration="${dur}" data-track-index="${20 + i}" data-volume="${vol}" src="${s.src}"></audio>`;
+    })
+    .join("\n      ");
+
+  // Music bed — single track looped under everything. Segment override wins;
+  // null explicitly disables. Project default fills in otherwise.
+  let musicAudioHtml = "";
+  if (segment.music !== null) {
+    const music = segment.music ?? projectCfg.defaults?.music;
+    if (music?.src) {
+      const vol = (music.volume ?? 0.12).toFixed(2);
+      musicAudioHtml = `<audio id="seg-music" class="clip" data-start="0" data-duration="${durationSec.toFixed(2)}" data-track-index="9" data-volume="${vol}" src="${music.src}" loop></audio>`;
+    }
+  }
+
+  // Background b-roll videos (used by video-showcase / presenter-slide).
+  const bgVideos = segment.background_videos ?? projectCfg.defaults?.background_videos ?? [];
+  const bgLayerHtml = bgVideos.length
+    ? `<div class="bg-layer" aria-hidden="true">\n        ` +
+      bgVideos
+        .map(
+          (src, i) =>
+            `<video class="bg-tile clip" data-start="0" data-duration="${durationSec.toFixed(
+              2,
+            )}" data-track-index="${30 + i}" data-volume="0" muted playsinline autoplay loop src="${src}"></video>`,
+        )
+        .join("\n        ") +
+      `\n      </div>`
+    : "";
+
   const vars: Record<string, string> = {
     DURATION: durationSec.toFixed(2),
     AUDIO_SRC: audioSrc,
@@ -294,6 +374,10 @@ function renderLayout(project: string, segment: SegmentYaml, hasAvatar: boolean,
     CAPTIONS_CSS: captionsCss,
     CAPTIONS_HTML: captionsHtml,
     CAPTIONS_GSAP: captionsGsap,
+    SFX_AUDIOS_HTML: sfxAudiosHtml,
+    MUSIC_AUDIO_HTML: musicAudioHtml,
+    BG_LAYER_HTML: bgLayerHtml,
+    ROOT_CLASS: bgLayerHtml ? "has-bg-layer" : "",
   };
 
   if (segment.visual === "presenter-slide" || segment.visual === "avatar-hero") {
@@ -346,12 +430,18 @@ function renderLayout(project: string, segment: SegmentYaml, hasAvatar: boolean,
         const labelHtml = label
           ? `<div class="showcase-label">${label}</div>`
           : "";
+        // Stills (jpg/png/webp/avif) render as <img>; videos as autoplay <video>.
+        // Same .showcase-video class so the layout sizing/styling is identical.
+        const isStill = /\.(jpe?g|png|webp|avif|gif)$/i.test(src);
+        const mediaHtml = isStill
+          ? `<img class="showcase-video" id="showcase-media-${i}" src="${src}" alt="" />`
+          : `<video class="showcase-video" id="showcase-media-${i}" data-volume="0" muted playsinline autoplay loop src="${src}"></video>`;
         return (
           `<div class="showcase-pane clip" data-start="0" data-duration="${durationSec.toFixed(
             2,
           )}" data-track-index="${1 + i}">\n` +
           `          ${labelHtml}\n` +
-          `          <video class="showcase-video" id="showcase-video-${i}" data-volume="0" muted playsinline autoplay loop src="${src}"></video>\n` +
+          `          ${mediaHtml}\n` +
           `        </div>`
         );
       })
@@ -359,6 +449,18 @@ function renderLayout(project: string, segment: SegmentYaml, hasAvatar: boolean,
     vars.CAPTION_EYEBROW = segment.caption?.eyebrow ?? "";
     vars.CAPTION_HTML = segment.caption?.html ?? "";
     // No avatar / no PIP variant for this layout.
+    vars.AVATAR_MEDIA = "";
+  } else if (segment.visual === "tv-intro") {
+    const intro = segment.intro;
+    const bgSrc = intro?.background_video ?? intro?.background_image;
+    if (!bgSrc || !intro?.title_html) {
+      throw new Error(`segment ${segment.id}: tv-intro requires intro.background_image or intro.background_video, plus intro.title_html`);
+    }
+    vars.INTRO_BG_MEDIA = intro?.background_video
+      ? `<video id="intro-bg-media" muted playsinline autoplay loop data-volume="0" src="${intro.background_video}"></video>`
+      : `<img id="intro-bg-media" src="${intro!.background_image}" alt="" />`;
+    vars.INTRO_TITLE_HTML = intro.title_html;
+    vars.INTRO_SUBTITLE_HTML = intro.subtitle_html ?? "";
     vars.AVATAR_MEDIA = "";
   } else if (segment.visual === "screencast-pip") {
     const screencastMediaPath = pickScreencastMedia(project, segment);
@@ -416,6 +518,45 @@ function renderLayout(project: string, segment: SegmentYaml, hasAvatar: boolean,
       vars.PIP_BULLETS_HTML = "";
       vars.PIP_VARIANT_CLASS = "";
     }
+
+    // Marker highlights — SVG overlay above the viewport. Each marker is a
+    // pathLength=1 stroke (circle / underline / arrow) that GSAP animates
+    // via stroke-dashoffset from 1 → 0 over ~0.8s, holds, then fades.
+    // Coordinates are in source-video space (1600×900) matching our
+    // Playwright captures; the SVG uses preserveAspectRatio="xMidYMid meet"
+    // so it object-fit:contains alongside the <video>.
+    const markers = segment.markers ?? [];
+    if (markers.length) {
+      const styleClassFor = (s: string | undefined) => s === "luxe-cream" ? "marker-cream" : "marker-gold";
+      const markerEls = markers
+        .map((m, i) => {
+          const klass = `clip marker ${styleClassFor(m.style)}`;
+          const dataAttrs = `data-start="${m.start.toFixed(2)}" data-duration="${m.duration.toFixed(2)}" data-track-index="${40 + i}"`;
+          if (m.shape === "circle") {
+            const r = m.r ?? 80;
+            return `<ellipse id="marker-${i}" class="${klass}" ${dataAttrs} cx="${m.cx}" cy="${m.cy}" rx="${r}" ry="${(r * 0.85).toFixed(0)}" pathLength="1" fill="none" />`;
+          }
+          if (m.shape === "underline") {
+            const w = m.w ?? 200;
+            const x1 = m.cx - w / 2;
+            const x2 = m.cx + w / 2;
+            // Slight curve so it doesn't look like a CSS border.
+            const midY = m.cy + 6;
+            return `<path id="marker-${i}" class="${klass}" ${dataAttrs} d="M ${x1} ${m.cy} Q ${m.cx} ${midY} ${x2} ${m.cy}" pathLength="1" fill="none" />`;
+          }
+          // arrow
+          const w = m.w ?? 140;
+          const h = m.h ?? 30;
+          const x1 = m.cx - w / 2;
+          const x2 = m.cx + w / 2;
+          return `<path id="marker-${i}" class="${klass}" ${dataAttrs} d="M ${x1} ${m.cy} L ${x2} ${m.cy} M ${x2 - h} ${m.cy - h * 0.6} L ${x2} ${m.cy} L ${x2 - h} ${m.cy + h * 0.6}" pathLength="1" fill="none" />`;
+        })
+        .join("\n          ");
+      vars.MARKERS_SVG_HTML =
+        `<svg id="markers-svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid meet" aria-hidden="true">\n          ${markerEls}\n        </svg>`;
+    } else {
+      vars.MARKERS_SVG_HTML = "";
+    }
   }
 
   for (const [k, v] of Object.entries(vars)) {
@@ -440,7 +581,6 @@ async function buildOne(project: string, segmentId: string) {
   const hasHeygen = !draftMode && Boolean(process.env.HEYGEN_API_KEY);
   const hasGemini = !draftMode && Boolean(process.env.VERTEX_API_KEY);
   const noAvatar = process.env.NO_AVATAR === "1";
-  const imageUrl = noAvatar ? undefined : segment.avatar?.image_url;
 
   // Provider selection: TTS_PROVIDER env > project.yaml defaults.tts.provider > auto.
   // Gemini TTS has no hosted URL, so it skips OmniHuman/InfiniteTalk entirely.
@@ -451,7 +591,22 @@ async function buildOne(project: string, segmentId: string) {
     | undefined;
   const useGemini = providerPref === "gemini" && hasGemini;
 
-  const engine = segment.avatar?.engine ?? "omnihuman";
+  // Avatar config — segment overrides project defaults. Allow inheriting
+  // image_url + engine from defaults.avatar so a single line in the project
+  // manifest enables the avatar across every segment that has a visual slot.
+  // Visuals without an avatar PiP slot (video-showcase, tv-intro) skip the
+  // avatar render entirely even if the project default supplies a URL.
+  const visualSupportsAvatar =
+    segment.visual === "presenter-slide" ||
+    segment.visual === "screencast-pip" ||
+    segment.visual === "avatar-hero";
+  type AvatarDefaults = NonNullable<SegmentYaml["avatar"]>;
+  const projectAvatar = (projectCfg.defaults?.avatar ?? undefined) as Partial<AvatarDefaults> | undefined;
+  const imageUrl = noAvatar || !visualSupportsAvatar
+    ? undefined
+    : (segment.avatar?.image_url ?? projectAvatar?.image_url);
+
+  const engine = segment.avatar?.engine ?? projectAvatar?.engine ?? "omnihuman";
   // Default resolution depends on engine: Pruna only supports 720p/1080p,
   // OmniHuman/InfiniteTalk start at 480p.
   // Engine-specific resolution defaults:
@@ -461,6 +616,7 @@ async function buildOne(project: string, segmentId: string) {
   //   omnihuman*        — 480p (cheaper; 1.5-byteplus upscales to 1440 internally)
   const resolution =
     segment.avatar?.resolution ??
+    projectAvatar?.resolution ??
     (engine === "pruna" || engine === "infinitetalk" ? "720p" : "480p");
   const hasReplicate =
     !draftMode &&
@@ -504,13 +660,19 @@ async function buildOne(project: string, segmentId: string) {
   let audioUrl: string | null = null;
   let avatarMp4: string | null = null;
 
-  if (draftMode) {
-    // No paid APIs: silent audio sized from narration word count.
-    const duration = draftDurationSec(segment.narration);
+  // Visual-only segments (e.g. tv-intro) can declare no narration. In that
+  // case we still need an audio file of the right length so the composition
+  // timeline has something to ride. Generate a silent placeholder.
+  const isSilentSegment = !segment.narration || segment.narration.trim() === "";
+
+  if (draftMode || isSilentSegment) {
+    const duration = isSilentSegment
+      ? (segment.duration ?? 3.0)
+      : draftDurationSec(segment.narration);
     const draftAudioDir = join(ROOT, "assets", "audio", project);
     mkdirSync(draftAudioDir, { recursive: true });
     audioMp3 = ensureSilentNarration(ROOT, join(project, segmentId), duration);
-    console.log(`[draft] ${segmentId}: silent audio ${duration.toFixed(1)}s`);
+    console.log(`[${draftMode ? "draft" : "silent"}] ${segmentId}: silent audio ${duration.toFixed(1)}s`);
   } else if (useGemini) {
     const g = await generateGeminiAudio(project, segmentId);
     audioMp3 = g.localPath;
@@ -571,7 +733,9 @@ async function buildOne(project: string, segmentId: string) {
   }
 
   const sourceForDuration = avatarMp4 ?? audioMp3;
-  const safeDuration = Math.ceil(ffprobeDuration(sourceForDuration) * 10) / 10 + 0.2;
+  const audioDuration = Math.ceil(ffprobeDuration(sourceForDuration) * 10) / 10 + 0.2;
+  // Visual-only segments (e.g. tv-intro) can override duration explicitly.
+  const safeDuration = segment.duration ?? audioDuration;
 
   // Screencast recording: only for screencast-pip segments with mode=video.
   // Skipped when the mp4 already exists (cheap iteration) unless --rerecord is passed.
@@ -586,7 +750,7 @@ async function buildOne(project: string, segmentId: string) {
   }
 
   const audioSrc = `assets/audio/${project}/${segmentId}.mp3`;
-  const workDir = renderLayout(project, segment, Boolean(avatarMp4), audioSrc, safeDuration);
+  const workDir = renderLayout(project, projectCfg, segment, Boolean(avatarMp4), audioSrc, safeDuration);
   if (avatarMp4) anySegmentHasAvatarMp4 = true;
   console.log(`[build] ${segmentId}: visual=${segment.visual} duration=${safeDuration.toFixed(2)}s`);
 

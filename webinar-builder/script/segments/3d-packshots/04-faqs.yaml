@@ -1,0 +1,36 @@
+id: 04-faqs
+title: "FAQs"
+order: 4
+visual: presenter-slide
+
+slide:
+  eyebrow: "FAQ"
+  title_html: |
+    Three things to
+    <span class="accent">know</span>.
+  bullets:
+    - "What works as a reference — any clear shot of the product, even bad lighting. Worst case: messy phone snapshot. The cleaner the reference, the cleaner the rotation."
+    - "Aspect & resolution — output is portrait 3:4 at studio quality. Loops cleanly for product pages and Reels."
+    - "Per-product cost — pennies per rotation. Cheap enough to A/B alternative angles or backgrounds before locking the listing shot."
+  bullet_starts: [3.0, 14.0, 26.0]
+
+narration: |
+  Three things worth knowing.
+
+  Reference photo — anything goes. A clean studio shot is ideal, but
+  even a messy phone snapshot under bad lighting works. Astria does
+  the heavy lifting. The cleaner the source, the more faithful the
+  rotation.
+
+  Output — portrait three-by-four at studio quality, loops cleanly.
+  Drop straight into a product page, Reels, or a Pinterest carousel.
+
+  Cost — pennies per rotation. Cheap enough to iterate. Test two
+  background colors. Try a different angle. Find the best listing
+  shot before you commit.
+
+sfx:
+  - { src: "assets/sfx/whoosh-soft.mp3", start: 0.2,  volume: 0.5 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 3.0,  volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 14.0, volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 26.0, volume: 0.45 }

@@ -1,0 +1,27 @@
+id: 00-intro
+title: "Astria — Video Style Transfer (TV intro)"
+order: 0
+visual: tv-intro
+
+# Visual-only segment — no narration. The composition rides a silent
+# audio track of the explicit duration below.
+duration: 10.0
+narration: ""
+
+intro:
+  # Dynamic intro generated via Astria Seedance v1.5 (first+last frame
+  # interpolation) at 16:9. Three-shot composition: studio pose →
+  # closeup → approach workstation + turn to microphone.
+  # Fallback to the still if the video is missing.
+  background_video: "assets/avatars/video-style-transfer/00-intro-seedance.mp4"
+  background_image: "assets/avatars/video-style-transfer/intro-fullbody-wide.jpg"
+  title_html: "ASTRIA"
+  subtitle_html: "Video Style Transfer"
+
+# Whoosh under the hairline sweep + ding when the subtitle locks in.
+# Lockup holds in the middle, fades out before the final shot so the
+# face-at-mic close-up lands clean.
+# Music bed inherited from project defaults rides underneath.
+sfx:
+  - { src: "assets/sfx/whoosh-soft.mp3", start: 0.6, volume: 0.6 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 2.0, volume: 0.4 }
