@@ -211,8 +211,11 @@ function commitAndPush(
   for (let attempt = 1; attempt <= 6; attempt++) {
     const idxEnv: NodeJS.ProcessEnv = { ...ID_ENV, GIT_INDEX_FILE: join(TMP, `index.${attempt}`) };
 
+    // Full fetch (no blob filter): the orphan commit reuses the branch's
+    // existing blobs, and `git push` can only build the pack if those blobs
+    // are present locally. A blob:none fetch makes every push fail.
     const hasBranch = tryRun("git", [
-      "fetch", "--filter=blob:none", "--depth", "1", "--no-tags", "origin", BRANCH,
+      "fetch", "--depth", "1", "--no-tags", "origin", BRANCH,
     ]);
     const before = hasBranch ? git(["rev-parse", "FETCH_HEAD"]).trim() : "";
     sh("git", ["read-tree", hasBranch ? "FETCH_HEAD" : "--empty"], { env: idxEnv, quiet: true });
@@ -243,11 +246,14 @@ function commitAndPush(
     const pushArgs = hasBranch
       ? ["push", `--force-with-lease=refs/heads/${BRANCH}:${before}`, "origin", refspec]
       : ["push", "origin", refspec];
-    if (tryRun("git", pushArgs)) {
+    const push = spawnSync("git", pushArgs, { cwd: ROOT, encoding: "utf-8" });
+    if (push.status === 0) {
       console.log(`[ci] ${label} → ${BRANCH} (${commit.slice(0, 9)})`);
       return;
     }
-    console.log(`[ci] ${BRANCH} moved under us — re-assembling (attempt ${attempt})`);
+    const why = (push.stderr || push.stdout || "").trim().split("\n").slice(-3).join(" / ");
+    console.log(`[ci] push attempt ${attempt}/6 failed — ${why || "unknown"}`);
+    spawnSync("sleep", [String(2 + attempt)]); // back off so racers de-sync
   }
   throw new Error(`failed to push ${BRANCH} after 6 attempts`);
 }
