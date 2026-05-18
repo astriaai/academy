@@ -286,6 +286,15 @@ function ensureSayNarration(project: string, segmentId: string, narration: strin
     console.log(`[say] ${segmentId}: narration cached`);
     return mp3;
   }
+  // macOS `say` is the local-dev fallback and has no Linux equivalent. CI must
+  // either run DRAFT (silent placeholder audio) or supply a TTS API key —
+  // fail loudly here instead of with an opaque `spawn say ENOENT`.
+  if (process.platform !== "darwin") {
+    throw new Error(
+      `[say] ${segmentId}: macOS \`say\` is unavailable on ${process.platform}. ` +
+        `Run with DRAFT=1, or set a TTS API key (VERTEX_API_KEY / WAVESPEED_API_KEY / HEYGEN_API_KEY).`,
+    );
+  }
   console.log(`[say] ${segmentId}: running macOS say`);
   run("say", ["-v", "Daniel", "-r", "175", "-o", aiff, sanitizeForSay(narration)]);
   run("ffmpeg", ["-y", "-i", aiff, "-c:a", "libmp3lame", "-q:a", "2", mp3]);
@@ -742,7 +751,14 @@ async function buildOne(project: string, segmentId: string) {
   if (segment.visual === "screencast-pip" && segment.screencast?.mode === "video") {
     const mp4 = join(ROOT, "assets", "captures", project, `${segmentId}.mp4`);
     const rerecord = process.argv.includes("--rerecord");
-    if (!existsSync(mp4) || rerecord) {
+    // Screencast recording drives a logged-in Astria browser session
+    // (storageState.json) and cannot run unattended in CI. NO_SCREENCAST=1
+    // (set automatically whenever CI is set) skips recording; pickScreencastMedia()
+    // then falls back to screencast.fallback_image / screencast.src.
+    const noScreencast = process.env.NO_SCREENCAST === "1" || Boolean(process.env.CI);
+    if (noScreencast && !existsSync(mp4) && !rerecord) {
+      console.log(`[record] ${segmentId}: NO_SCREENCAST — skipping recording, using fallback image`);
+    } else if (!existsSync(mp4) || rerecord) {
       await recordScreencast(project, segmentId);
     } else {
       console.log(`[record] ${segmentId}: using cached ${mp4} (pass --rerecord to refresh)`);

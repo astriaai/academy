@@ -1,0 +1,48 @@
+name: PR preview cleanup
+
+# When a PR closes (merged or not), remove its gh-pages/pr-<N>/ preview so
+# the site doesn't accumulate stale previews.
+
+on:
+  pull_request:
+    types: [closed]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: course-publish
+  cancel-in-progress: false
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: webinar-builder/package-lock.json
+
+      - name: Install dependencies
+        working-directory: webinar-builder
+        run: npm ci
+
+      - name: Drop PR preview
+        working-directory: webinar-builder
+        run: npx tsx pipeline/ci/gh-pages.ts drop pr-${{ github.event.pull_request.number }}
+
+      - name: Comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              ...context.repo,
+              issue_number: context.payload.pull_request.number,
+              body: '🧹 Course preview removed (PR closed).',
+            });

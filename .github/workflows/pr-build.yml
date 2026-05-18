@@ -1,0 +1,108 @@
+name: PR build (draft)
+
+# Every PR push renders the affected course modules in DRAFT mode — free:
+# silent placeholder audio with burned-in caption text, no avatars, no paid
+# APIs. The result is deployed as a browsable preview the editor can review.
+# Comment `/render-paid` on the PR to render real narration/avatars/video.
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: write # push the gh-pages preview
+  pull-requests: write # comment the preview link
+
+concurrency:
+  group: pr-build-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # affected.ts diffs against the PR base
+
+      - name: Set up build environment
+        uses: ./.github/actions/setup-build
+
+      - name: Restore artifact cache from gh-pages
+        working-directory: webinar-builder
+        run: npm run ci:restore
+
+      - name: Detect affected projects
+        id: affected
+        working-directory: webinar-builder
+        env:
+          BASE_REF: origin/${{ github.event.pull_request.base.ref }}
+        run: npm run -s ci:affected
+
+      - name: Build affected modules (DRAFT — no paid APIs)
+        if: steps.affected.outputs.any == 'true'
+        working-directory: webinar-builder
+        env:
+          DRAFT: "1"
+          NO_SCREENCAST: "1"
+        run: |
+          for p in $(echo '${{ steps.affected.outputs.projects }}' | tr -d '[]"' | tr ',' ' '); do
+            echo "::group::build $p"
+            npx tsx pipeline/build.ts --project "$p" --all --parallel 2
+            echo "::endgroup::"
+          done
+
+      - name: Lint compositions
+        if: steps.affected.outputs.any == 'true'
+        working-directory: webinar-builder
+        run: npx hyperframes@0.4.9 lint --json > lint.json || true
+
+      - name: Build debug dashboard
+        if: ${{ !cancelled() }}
+        working-directory: webinar-builder
+        env:
+          BUILD_MODE: draft
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          AFFECTED_PROJECTS: ${{ steps.affected.outputs.projects }}
+          GIT_SHA: ${{ github.event.pull_request.head.sha }}
+          PAGES_BASE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+        run: npm run dashboard
+
+      - name: Deploy PR preview to gh-pages
+        if: ${{ !cancelled() }}
+        working-directory: webinar-builder
+        run: npm run ci:publish -- pr-${{ github.event.pull_request.number }}
+
+      - name: Comment preview link
+        if: ${{ !cancelled() }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request.number;
+            const base = `https://${context.repo.owner}.github.io/${context.repo.repo}`;
+            const url = `${base}/pr-${pr}/`;
+            const ok = '${{ job.status }}' === 'success';
+            const marker = '<!-- course-preview -->';
+            const body = [
+              marker,
+              `### 🎬 Course preview — PR #${pr}`,
+              '',
+              `**[Open the debug dashboard →](${url})**`,
+              '',
+              ok
+                ? '_DRAFT build (silent audio + burned-in captions, no paid APIs)._'
+                : '⚠️ _Build reported errors — open the dashboard to see which segments failed._',
+              '',
+              'Comment `/render-paid` to render real narration, avatars and video.',
+            ].join('\n');
+            const { data: comments } = await github.rest.issues.listComments({
+              ...context.repo, issue_number: pr,
+            });
+            const existing = comments.find((c) => c.body && c.body.includes(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({ ...context.repo, comment_id: existing.id, body });
+            } else {
+              await github.rest.issues.createComment({ ...context.repo, issue_number: pr, body });
+            }

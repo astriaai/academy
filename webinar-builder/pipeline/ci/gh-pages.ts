@@ -1,0 +1,298 @@
+/**
+ * gh-pages branch = single artifact store for the course.
+ *
+ * It holds, in one branch:
+ *   index.html, app.js, style.css, manifest.json   the published debug GUI
+ *   videos/<project>/*.mp4                          rendered segment + full-draft videos
+ *   media/<assetdir>/...                            input artifacts the GUI links to
+ *   cache/...                                       the .cache/ build cache
+ *   pr-<N>/...                                      per-PR preview sites
+ *
+ * Two subcommands:
+ *
+ *   tsx pipeline/ci/gh-pages.ts restore
+ *       Pull `cache/` + `media/` off gh-pages into `.cache/` and `assets/`
+ *       so an unchanged segment is a cache hit (no paid API call). Partial
+ *       fetch — only the cache/media blobs download. No-op on a cold repo.
+ *
+ *   tsx pipeline/ci/gh-pages.ts publish <root|pr-N> [--update-cache]
+ *       Deploy the freshly built `site/` + `out/` + `assets/` to the branch.
+ *       Rebuilds gh-pages as ONE fresh orphan commit (force-push) so history
+ *       never bloats; git dedupes unchanged blobs by SHA. Sibling `pr-N`
+ *       preview directories are preserved untouched. `--update-cache`
+ *       (paid PR build) also refreshes the shared root `cache/` + `media/`.
+ *
+ * Runs inside the existing Actions checkout — reuses its authenticated
+ * `origin` remote. The build working tree and index are never touched
+ * (a throwaway index file + staging work-tree are used for the commit).
+ */
+import { spawnSync } from "node:child_process";
+import { cpSync, existsSync, mkdirSync, readdirSync, rmSync } from "node:fs";
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const ROOT = resolve(__dirname, "..", ".."); // webinar-builder/
+const GIT_DIR = (
+  spawnSync("git", ["rev-parse", "--absolute-git-dir"], { cwd: ROOT, encoding: "utf-8" }).stdout || ""
+).trim() || resolve(ROOT, "..", ".git");
+// Repo work-tree root. webinar-builder/ is a subdirectory, so path-scoped git
+// commands (ls-tree, archive) must run from here, not from ROOT.
+const GIT_ROOT = (
+  spawnSync("git", ["rev-parse", "--show-toplevel"], { cwd: ROOT, encoding: "utf-8" }).stdout || ""
+).trim() || resolve(ROOT, "..");
+const BRANCH = process.env.PAGES_BRANCH || "gh-pages";
+const TMP = join(ROOT, ".gh-pages-tmp");
+const SITE = join(ROOT, "site");
+const CACHE = join(ROOT, ".cache");
+const ASSETS = join(ROOT, "assets");
+const OUT = join(ROOT, "out");
+
+function sh(cmd: string, args: string[], opts: { cwd?: string; env?: NodeJS.ProcessEnv; quiet?: boolean } = {}) {
+  const r = spawnSync(cmd, args, {
+    cwd: opts.cwd ?? ROOT,
+    env: opts.env ?? process.env,
+    encoding: "utf-8",
+  });
+  if (r.status !== 0) {
+    throw new Error(`${cmd} ${args.join(" ")} failed (${r.status}): ${r.stderr || r.stdout}`);
+  }
+  if (!opts.quiet && r.stdout.trim()) console.log(r.stdout.trim());
+  return r.stdout;
+}
+
+/** Run a command, return true on success, false on failure (no throw). */
+function tryRun(cmd: string, args: string[], env?: NodeJS.ProcessEnv): boolean {
+  return spawnSync(cmd, args, { cwd: ROOT, env: env ?? process.env, stdio: "ignore" }).status === 0;
+}
+
+function git(args: string[], env?: NodeJS.ProcessEnv): string {
+  return spawnSync("git", args, { cwd: ROOT, env: env ?? process.env, encoding: "utf-8" }).stdout;
+}
+
+/** The projects that have rendered output worth publishing. */
+function projectsWithOutput(): string[] {
+  const manifests = [
+    ...readdirSync(join(ROOT, "script", "projects")),
+    ...(existsSync(join(ROOT, "script", "music-videos"))
+      ? readdirSync(join(ROOT, "script", "music-videos"))
+      : []),
+  ]
+    .filter((f) => f.endsWith(".yaml"))
+    .map((f) => f.replace(/\.yaml$/, ""));
+  return [...new Set(manifests)].filter(
+    (p) => existsSync(join(OUT, p)) && readdirSync(join(OUT, p)).some((f) => f.endsWith(".mp4")),
+  );
+}
+
+// ─── restore ────────────────────────────────────────────────────────────────
+
+function restore() {
+  rmSync(TMP, { recursive: true, force: true });
+  mkdirSync(TMP, { recursive: true });
+
+  // Partial fetch — trees + commit only, blobs stay lazy on the server.
+  if (!tryRun("git", ["fetch", "--filter=blob:none", "--depth", "1", "--no-tags", "origin", BRANCH])) {
+    console.log(`[ci] no '${BRANCH}' branch yet — cold cache, nothing to restore`);
+    return;
+  }
+
+  const top = git(["ls-tree", "--name-only", "--full-tree", "FETCH_HEAD"])
+    .split("\n")
+    .filter(Boolean);
+  const want = ["cache", "media"].filter((d) => top.includes(d));
+  if (want.length === 0) {
+    console.log(`[ci] '${BRANCH}' has no cache/media yet — cold cache`);
+    return;
+  }
+
+  // `git archive` of just these pathspecs lazily fetches only their blobs.
+  // Pathspecs resolve from cwd, so run it at the repo root.
+  const tar = join(TMP, "artifacts.tar");
+  sh("git", ["archive", "-o", tar, "FETCH_HEAD", ...want], { cwd: GIT_ROOT, quiet: true });
+  sh("tar", ["-xf", tar, "-C", TMP], { quiet: true });
+  rmSync(tar, { force: true });
+
+  if (existsSync(join(TMP, "cache"))) {
+    mkdirSync(CACHE, { recursive: true });
+    cpSync(join(TMP, "cache"), CACHE, { recursive: true });
+    console.log("[ci] restored .cache/");
+  }
+  if (existsSync(join(TMP, "media"))) {
+    mkdirSync(ASSETS, { recursive: true });
+    const dirs = readdirSync(join(TMP, "media"));
+    cpSync(join(TMP, "media"), ASSETS, { recursive: true });
+    console.log(`[ci] restored assets/{${dirs.join(",")}}`);
+  }
+  rmSync(TMP, { recursive: true, force: true });
+}
+
+// ─── publish ────────────────────────────────────────────────────────────────
+
+/** branch-relative path → absolute source dir/file (recursive copy). */
+type Entry = { path: string; src: string };
+
+/** What this publish replaces on the branch; everything else is preserved. */
+function buildPlan(target: string, updateCache: boolean): Entry[] {
+  const prefix = target === "root" ? "" : `${target}/`;
+  const entries: Entry[] = [];
+
+  // 1. site shell + manifest (generated by build-dashboard.ts into site/)
+  if (!existsSync(SITE)) throw new Error("site/ missing — run 'npm run dashboard' first");
+  for (const f of readdirSync(SITE)) entries.push({ path: prefix + f, src: join(SITE, f) });
+
+  // 2. videos for this build — curated copy of out/<project>/*.mp4 under TMP/videos
+  const vids = join(TMP, "videos");
+  rmSync(vids, { recursive: true, force: true });
+  for (const p of projectsWithOutput()) {
+    mkdirSync(join(vids, p), { recursive: true });
+    for (const f of readdirSync(join(OUT, p))) {
+      if (f.endsWith(".mp4")) cpSync(join(OUT, p, f), join(vids, p, f));
+    }
+  }
+  if (existsSync(vids) && readdirSync(vids).length) entries.push({ path: prefix + "videos", src: vids });
+
+  // 3. input media the GUI links to (= assets/, the gitignored generated dirs)
+  if (existsSync(ASSETS)) entries.push({ path: prefix + "media", src: ASSETS });
+
+  // 4. shared build cache — root publish always; a PR paid build with
+  //    --update-cache also refreshes the canonical root cache/ + media/.
+  if (target === "root" || updateCache) {
+    if (existsSync(CACHE)) entries.push({ path: "cache", src: CACHE });
+    if (target !== "root" && existsSync(ASSETS)) entries.push({ path: "media", src: ASSETS });
+  }
+  return entries;
+}
+
+const ID_ENV: NodeJS.ProcessEnv = {
+  ...process.env,
+  GIT_AUTHOR_NAME: "astria-course-ci",
+  GIT_AUTHOR_EMAIL: "ci@astria.ai",
+  GIT_COMMITTER_NAME: "astria-course-ci",
+  GIT_COMMITTER_EMAIL: "ci@astria.ai",
+};
+
+/**
+ * Assemble + push one fresh orphan commit. Optimistic concurrency: the push
+ * uses --force-with-lease pinned to the branch tip we read, so a racing
+ * publish (another PR, or a main publish) is detected and the whole assemble
+ * is retried against the new tip instead of silently clobbering it.
+ *
+ *   removePaths — branch paths cleared from the index (then re-added if staged)
+ *   addPaths    — branch paths added from <stage> (must exist on disk there)
+ * Unnamed paths (e.g. other pr-N preview dirs) keep their original tree OIDs.
+ */
+function commitAndPush(
+  label: string,
+  removePaths: string[],
+  addPaths: string[],
+  stage: string,
+  msg: string,
+) {
+  for (let attempt = 1; attempt <= 6; attempt++) {
+    const idxEnv: NodeJS.ProcessEnv = { ...ID_ENV, GIT_INDEX_FILE: join(TMP, `index.${attempt}`) };
+
+    const hasBranch = tryRun("git", [
+      "fetch", "--filter=blob:none", "--depth", "1", "--no-tags", "origin", BRANCH,
+    ]);
+    const before = hasBranch ? git(["rev-parse", "FETCH_HEAD"]).trim() : "";
+    sh("git", ["read-tree", hasBranch ? "FETCH_HEAD" : "--empty"], { env: idxEnv, quiet: true });
+
+    // Run rm/add from inside <stage> with <stage> as the work-tree so branch
+    // pathspecs (videos, media, pr-N/...) resolve at the branch root, not
+    // relative to the repo subdirectory this script lives in.
+    const treeEnv: NodeJS.ProcessEnv = { ...idxEnv, GIT_DIR, GIT_WORK_TREE: stage };
+    for (const p of removePaths) {
+      spawnSync("git", ["rm", "-r", "--cached", "--ignore-unmatch", "-q", "--", p], {
+        cwd: stage,
+        env: treeEnv,
+      });
+    }
+    if (addPaths.length) {
+      const add = spawnSync("git", ["add", "--", ...addPaths], {
+        cwd: stage,
+        env: treeEnv,
+        stdio: "inherit",
+      });
+      if (add.status !== 0) throw new Error("git add (staging) failed");
+    }
+
+    const tree = sh("git", ["write-tree"], { env: idxEnv, quiet: true }).trim();
+    const commit = sh("git", ["commit-tree", tree, "-m", msg], { env: ID_ENV, quiet: true }).trim();
+
+    const refspec = `${commit}:refs/heads/${BRANCH}`;
+    const pushArgs = hasBranch
+      ? ["push", `--force-with-lease=refs/heads/${BRANCH}:${before}`, "origin", refspec]
+      : ["push", "origin", refspec];
+    if (tryRun("git", pushArgs)) {
+      console.log(`[ci] ${label} → ${BRANCH} (${commit.slice(0, 9)})`);
+      return;
+    }
+    console.log(`[ci] ${BRANCH} moved under us — re-assembling (attempt ${attempt})`);
+  }
+  throw new Error(`failed to push ${BRANCH} after 6 attempts`);
+}
+
+/** A preview directory slug — pr-<N>, module-<name>, etc. */
+const SLUG = /^[a-z0-9][a-z0-9._-]*$/;
+
+function publish(target: string, updateCache: boolean) {
+  if (target !== "root" && !SLUG.test(target)) {
+    throw new Error(`publish target must be 'root' or a slug (pr-N, module-X), got '${target}'`);
+  }
+  rmSync(TMP, { recursive: true, force: true });
+  mkdirSync(TMP, { recursive: true });
+  const stage = join(TMP, "stage");
+  mkdirSync(stage, { recursive: true });
+
+  const plan = buildPlan(target, updateCache);
+
+  // Lay new content into the staging work-tree once (re-added each attempt).
+  for (const { path, src } of plan) {
+    const dest = join(stage, path);
+    mkdirSync(dirname(dest), { recursive: true });
+    cpSync(src, dest, { recursive: true });
+  }
+
+  const paths = plan.map((e) => e.path);
+  const msg =
+    target === "root"
+      ? `publish: course site${updateCache ? " + cache" : ""}`
+      : `publish: ${target} preview${updateCache ? " + cache" : ""}`;
+  commitAndPush(`published ${target}`, paths, paths, stage, msg);
+  rmSync(TMP, { recursive: true, force: true });
+}
+
+/** Remove a closed PR's preview directory from gh-pages. */
+function drop(target: string) {
+  if (target === "root" || !SLUG.test(target)) {
+    throw new Error(`drop target must be a preview slug (pr-N, module-X), got '${target}'`);
+  }
+  rmSync(TMP, { recursive: true, force: true });
+  mkdirSync(TMP, { recursive: true });
+  commitAndPush(`dropped ${target}`, [target], [], TMP, `cleanup: remove ${target} preview`);
+  rmSync(TMP, { recursive: true, force: true });
+}
+
+// ─── entry ──────────────────────────────────────────────────────────────────
+
+function main() {
+  const [cmd, ...rest] = process.argv.slice(2);
+  if (cmd === "restore") {
+    restore();
+  } else if (cmd === "publish") {
+    const target = rest.find((a) => !a.startsWith("--")) ?? "root";
+    publish(target, rest.includes("--update-cache"));
+  } else if (cmd === "drop") {
+    const target = rest.find((a) => !a.startsWith("--"));
+    if (!target) throw new Error("drop requires a pr-<N> target");
+    drop(target);
+  } else {
+    console.error(
+      "usage: gh-pages.ts restore | publish <root|pr-N> [--update-cache] | drop <pr-N>",
+    );
+    process.exit(1);
+  }
+}
+
+main();

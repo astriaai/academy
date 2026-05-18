@@ -52,6 +52,23 @@ https://hyperframes.heygen.com/llms.txt
 
 Override behavior with env flags rather than editing keys: `DRAFT=1` skips paid APIs, `NO_AVATAR=1` skips talking heads, `TTS_PROVIDER=inworld` switches off the default Gemini path, `HF_WORKERS=1` serializes hyperframes rendering.
 
+## CI & previews
+
+This repo runs in GitHub Actions (`.github/workflows/`). When acting on a PR:
+
+- **PRs build in DRAFT** — `pr-build.yml` renders affected modules with
+  `DRAFT=1 NO_SCREENCAST=1` (silent placeholder audio, burned-in captions, no
+  paid APIs) and deploys a preview to GitHub Pages at `pr-<N>/`.
+- **`/render-paid`** — a PR comment from a maintainer triggers `pr-render-paid.yml`,
+  a real paid render. Don't run paid builds yourself.
+- **The artifact cache is restored from the `gh-pages` branch** before every
+  build (`npm run ci:restore`) and saved back after a paid build — so an
+  unchanged segment is a free cache hit. Never hand-edit files under `.cache/`
+  or the generated `assets/` dirs; let the content-hash cache manage them.
+- A change to a segment's `narration` / prompt **must** change the generator's
+  cache key (it hashes the text) — that's expected and correct.
+- See `docs/CI.md` for the full workflow map.
+
 ## Project Structure
 
 - `index.html` — main composition (root timeline)
