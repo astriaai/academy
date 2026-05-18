@@ -28,6 +28,7 @@ import {
   readdirSync,
   readFileSync,
   rmSync,
+  statSync,
   writeFileSync,
 } from "node:fs";
 import { dirname, join, resolve } from "node:path";
@@ -136,6 +137,8 @@ function main() {
       };
     });
 
+    // Only link a video GitHub Pages will actually serve (≤ 100 MB push limit).
+    const servable = (abs: string) => existsSync(abs) && statSync(abs).size <= 99 * 1024 * 1024;
     const fullDraftAbs = join(ROOT, "out", pid, "_full-draft.mp4");
     const builtCount = segments.filter((s) => s.status === "built").length;
     return {
@@ -146,7 +149,7 @@ function main() {
       builtCount,
       failedCount: segments.filter((s) => s.status === "failed").length,
       duration: segments.reduce((t, s) => t + (s.duration || 0), 0),
-      fullDraftUrl: existsSync(fullDraftAbs) ? `videos/${pid}/_full-draft.mp4` : null,
+      fullDraftUrl: servable(fullDraftAbs) ? `videos/${pid}/_full-draft.mp4` : null,
       segments,
     };
   });

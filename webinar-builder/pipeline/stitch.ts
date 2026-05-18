@@ -12,7 +12,7 @@
  * raw ffmpeg `-f concat`.
  */
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, renameSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import yaml from "js-yaml";
@@ -116,6 +116,39 @@ function runXfadeStitch(clips: string[], outPath: string, fadeDur: number) {
   if (r.status !== 0) throw new Error("ffmpeg xfade failed");
 }
 
+/**
+ * GitHub rejects any pushed file over 100 MB (GH001), so a long stitched cut
+ * can't reach the gh-pages course site. Re-encode to a computed bitrate when
+ * the file runs over ~90 MB — review quality, but publishable.
+ */
+function fitForPages(outPath: string, limitMB = 90) {
+  const bytes = statSync(outPath).size;
+  if (bytes <= limitMB * 1024 * 1024) return;
+  const dur = ffprobeDuration(outPath);
+  const audioKbps = 128;
+  const totalKbps = Math.floor((limitMB * 1024 * 1024 * 8) / dur / 1000);
+  const videoKbps = Math.max(300, totalKbps - audioKbps);
+  const tmp = outPath.replace(/\.mp4$/, ".fit.mp4");
+  console.log(
+    `[stitch] ${(bytes / 1048576).toFixed(0)} MB > ${limitMB} MB — re-encoding video to ~${videoKbps}k`,
+  );
+  const r = spawnSync(
+    "ffmpeg",
+    [
+      "-y", "-i", outPath,
+      "-c:v", "libx264", "-b:v", `${videoKbps}k`,
+      "-maxrate", `${Math.floor(videoKbps * 1.45)}k`, "-bufsize", `${videoKbps * 2}k`,
+      "-pix_fmt", "yuv420p", "-preset", "fast",
+      "-c:a", "aac", "-b:a", `${audioKbps}k`, "-movflags", "+faststart",
+      tmp,
+    ],
+    { stdio: "inherit" },
+  );
+  if (r.status !== 0) throw new Error("[stitch] re-encode to fit failed");
+  renameSync(tmp, outPath);
+  console.log(`[stitch] re-encoded → ${(statSync(outPath).size / 1048576).toFixed(0)} MB`);
+}
+
 function main() {
   const project = parseProject();
   const noXfade = process.argv.includes("--no-xfade");
@@ -149,6 +182,7 @@ function main() {
     runXfadeStitch(clips, outPath, fadeDur);
   }
 
+  fitForPages(outPath);
   console.log(`\n[stitch] project=${project}: ${clips.length} clips → ${outPath}`);
 }
 

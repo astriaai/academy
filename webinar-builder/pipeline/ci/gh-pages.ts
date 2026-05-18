@@ -27,7 +27,7 @@
  * (a throwaway index file + staging work-tree are used for the commit).
  */
 import { spawnSync } from "node:child_process";
-import { cpSync, existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -167,13 +167,21 @@ function buildPlan(target: string, updateCache: boolean): Entry[] {
   // 2. videos for this build — curated copy of out/<project>/*.mp4 under TMP/videos
   const vids = join(TMP, "videos");
   rmSync(vids, { recursive: true, force: true });
+  // GitHub rejects any pushed file > 100 MB (GH001 pre-receive hook). Skip
+  // oversized videos so the publish push can't die on one — stitch.ts keeps
+  // full-draft cuts under this, so in practice nothing is skipped.
+  const MAX_PUSH_BYTES = 99 * 1024 * 1024;
   for (const p of projectsWithOutput()) {
     mkdirSync(join(vids, p), { recursive: true });
     for (const f of readdirSync(join(OUT, p))) {
       // .mp4 = the video; .mp4.key = its render-cache key (skips re-render).
-      if (f.endsWith(".mp4") || f.endsWith(".mp4.key")) {
-        cpSync(join(OUT, p, f), join(vids, p, f));
+      if (!f.endsWith(".mp4") && !f.endsWith(".mp4.key")) continue;
+      const src = join(OUT, p, f);
+      if (f.endsWith(".mp4") && statSync(src).size > MAX_PUSH_BYTES) {
+        console.warn(`[ci] skipping ${p}/${f} — over GitHub's 100 MB push limit`);
+        continue;
       }
+      cpSync(src, join(vids, p, f));
     }
   }
   if (existsSync(vids) && readdirSync(vids).length) entries.push({ path: prefix + "videos", src: vids });
@@ -258,8 +266,8 @@ function commitAndPush(
       console.log(`[ci] ${label} → ${BRANCH} (${commit.slice(0, 9)})`);
       return;
     }
-    const why = (push.stderr || push.stdout || "").trim().split("\n").slice(-3).join(" / ");
-    console.log(`[ci] push attempt ${attempt}/6 failed — ${why || "unknown"}`);
+    const why = (push.stderr || push.stdout || "").trim();
+    console.log(`[ci] push attempt ${attempt}/6 failed:\n${why || "(no output)"}`);
     spawnSync("sleep", [String(2 + attempt)]); // back off so racers de-sync
   }
   throw new Error(`failed to push ${BRANCH} after 6 attempts`);
