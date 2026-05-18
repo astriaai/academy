@@ -45,7 +45,7 @@ jobs:
 
       - name: Restore artifact cache from gh-pages
         working-directory: webinar-builder
-        run: npm run ci:restore
+        run: npm run ci:restore -- module-${{ inputs.project }}
 
       - name: Render ${{ inputs.project }} (${{ inputs.mode }})
         working-directory: webinar-builder

@@ -33,6 +33,7 @@ import {
   lstatSync,
   unlinkSync,
 } from "node:fs";
+import { createHash } from "node:crypto";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import yaml from "js-yaml";
@@ -56,6 +57,10 @@ import {
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "..");
+
+// hyperframes is run via npx and pinned — see runRenderWithEarlyKill. The
+// version is part of the render-cache key (an engine bump invalidates it).
+const HYPERFRAMES_VERSION = "0.4.9";
 
 interface SegmentYaml {
   id: string;
@@ -581,6 +586,41 @@ function renderLayout(project: string, projectCfg: ProjectYaml, segment: Segment
   return workDir;
 }
 
+/**
+ * Content hash of everything that determines a segment's rendered mp4: the
+ * composition HTML and every local file it references (audio, video, images).
+ * Lets the build skip the slow hyperframes render when an identical mp4
+ * already exists — see the render-cache check in buildOne(). Disable with
+ * NO_RENDER_CACHE=1.
+ */
+function computeRenderKey(workDir: string): string {
+  const html = readFileSync(join(workDir, "index.html"), "utf-8");
+  const refs = new Set<string>();
+  const collect = (re: RegExp) => {
+    for (const m of html.matchAll(re)) {
+      const p = m[1];
+      if (p && !/^(https?:|data:|#|\/\/)/.test(p)) refs.add(p);
+    }
+  };
+  collect(/(?:src|data-composition-src)\s*=\s*"([^"]+)"/g);
+  collect(/url\(\s*['"]?([^'")]+)['"]?\s*\)/g);
+
+  const h = createHash("sha256");
+  h.update(`engine:hyperframes@${HYPERFRAMES_VERSION}\n`);
+  h.update(`html:${createHash("sha256").update(html).digest("hex")}\n`);
+  for (const ref of [...refs].sort()) {
+    let fileHash = "absent";
+    try {
+      const abs = join(workDir, ref);
+      if (statSync(abs).isFile()) {
+        fileHash = createHash("sha256").update(readFileSync(abs)).digest("hex");
+      }
+    } catch {}
+    h.update(`ref:${ref}:${fileHash}\n`);
+  }
+  return h.digest("hex");
+}
+
 let anySegmentHasAvatarMp4 = false;
 
 async function buildOne(project: string, segmentId: string) {
@@ -775,18 +815,36 @@ async function buildOne(project: string, segmentId: string) {
   const outputDir = join(ROOT, "out", project);
   mkdirSync(outputDir, { recursive: true });
   const output = join("out", project, `${segmentId}.mp4`);
+  const outAbs = join(ROOT, output);
+  const keyPath = `${outAbs}.key`;
+
+  // Render cache — the hyperframes render is the slowest step. Skip it when
+  // this exact composition + assets already produced an mp4 (key restored
+  // from gh-pages by `ci:restore`). This is what makes a re-run cheap.
+  const renderKey = computeRenderKey(workDir);
+  if (
+    process.env.NO_RENDER_CACHE !== "1" &&
+    existsSync(outAbs) &&
+    existsSync(keyPath) &&
+    readFileSync(keyPath, "utf-8").trim() === renderKey
+  ) {
+    console.log(`[build] ${segmentId}: render cached (${renderKey.slice(0, 12)}) — skipped`);
+    return;
+  }
+
   const workers = process.env.HF_WORKERS ?? (avatarMp4 ? "2" : "4");
   console.log(`[build] ${segmentId}: rendering → ${output} (workers=${workers})`);
   // Pin to 0.4.9 — newer hyperframes (0.4.45+) bumped sharp to 0.34.5, which
   // fails to install on this Mac (sharp falls through to node-gyp build and
   // errors on missing node-addon-api). Bump again once the dep tree settles.
   await runRenderWithEarlyKill([
-    "hyperframes@0.4.9", "render",
+    `hyperframes@${HYPERFRAMES_VERSION}`, "render",
     workDir,
     "--output", output,
     "--quality", "draft",
     "--workers", workers,
   ]);
+  writeFileSync(keyPath, `${renderKey}\n`);
   console.log(`[build] ${segmentId}: done → ${join(ROOT, output)}`);
 }
 

@@ -55,6 +55,14 @@ and `media/`. Every build restores them first (`npm run ci:restore`) and a
 paid build saves the refreshed cache back. So a segment is paid for **once** —
 the PR's `/render-paid`, the `main` publish, and any later PR all reuse it.
 
+**Render caching.** The slowest step is the hyperframes render itself, not the
+API calls. Each segment's mp4 is stored under `gh-pages` `videos/` next to a
+`.mp4.key` — a content hash of the composition HTML and every asset it
+references. On the next build, an unchanged segment matches its key and the
+render is skipped entirely. So a re-run only re-renders what actually changed.
+The first build of any segment is always a full render; set `NO_RENDER_CACHE=1`
+to force one.
+
 `gh-pages` is rebuilt as a single fresh orphan commit on every deploy
 (`pipeline/ci/gh-pages.ts`), so its history never bloats; git deduplicates
 unchanged blobs by SHA.

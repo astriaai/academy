@@ -31,7 +31,8 @@ jobs:
 
       - name: Restore artifact cache from gh-pages
         working-directory: webinar-builder
-        run: npm run ci:restore
+        # pr-<N> overlay: reuse render-cache keys from this PR's last build
+        run: npm run ci:restore -- pr-${{ github.event.pull_request.number }}
 
       - name: Detect affected projects
         id: affected

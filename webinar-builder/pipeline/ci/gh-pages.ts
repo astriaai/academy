@@ -87,7 +87,7 @@ function projectsWithOutput(): string[] {
 
 // ─── restore ────────────────────────────────────────────────────────────────
 
-function restore() {
+function restore(overlay?: string) {
   rmSync(TMP, { recursive: true, force: true });
   mkdirSync(TMP, { recursive: true });
 
@@ -100,16 +100,23 @@ function restore() {
   const top = git(["ls-tree", "--name-only", "--full-tree", "FETCH_HEAD"])
     .split("\n")
     .filter(Boolean);
-  const want = ["cache", "media"].filter((d) => top.includes(d));
-  if (want.length === 0) {
-    console.log(`[ci] '${BRANCH}' has no cache/media yet — cold cache`);
+  // Root cache/media/videos, plus optionally a preview's own videos overlaid
+  // on top — lets a PR reuse the render-cache keys from its own last build.
+  const paths = ["cache", "media", "videos"].filter((d) => top.includes(d));
+  const hasOverlay =
+    !!overlay &&
+    spawnSync("git", ["cat-file", "-e", `FETCH_HEAD:${overlay}/videos`], { cwd: GIT_ROOT })
+      .status === 0;
+  if (hasOverlay) paths.push(`${overlay}/videos`);
+  if (paths.length === 0) {
+    console.log(`[ci] '${BRANCH}' has no artifacts yet — cold cache`);
     return;
   }
 
   // `git archive` of just these pathspecs lazily fetches only their blobs.
   // Pathspecs resolve from cwd, so run it at the repo root.
   const tar = join(TMP, "artifacts.tar");
-  sh("git", ["archive", "-o", tar, "FETCH_HEAD", ...want], { cwd: GIT_ROOT, quiet: true });
+  sh("git", ["archive", "-o", tar, "FETCH_HEAD", ...paths], { cwd: GIT_ROOT, quiet: true });
   sh("tar", ["-xf", tar, "-C", TMP], { quiet: true });
   rmSync(tar, { force: true });
 
@@ -123,6 +130,15 @@ function restore() {
     const dirs = readdirSync(join(TMP, "media"));
     cpSync(join(TMP, "media"), ASSETS, { recursive: true });
     console.log(`[ci] restored assets/{${dirs.join(",")}}`);
+  }
+  if (existsSync(join(TMP, "videos"))) {
+    mkdirSync(OUT, { recursive: true });
+    cpSync(join(TMP, "videos"), OUT, { recursive: true });
+    console.log("[ci] restored out/ (videos + render-cache keys)");
+  }
+  if (hasOverlay && existsSync(join(TMP, overlay!, "videos"))) {
+    cpSync(join(TMP, overlay!, "videos"), OUT, { recursive: true });
+    console.log(`[ci] overlaid ${overlay}/videos onto out/`);
   }
   rmSync(TMP, { recursive: true, force: true });
 }
@@ -147,7 +163,10 @@ function buildPlan(target: string, updateCache: boolean): Entry[] {
   for (const p of projectsWithOutput()) {
     mkdirSync(join(vids, p), { recursive: true });
     for (const f of readdirSync(join(OUT, p))) {
-      if (f.endsWith(".mp4")) cpSync(join(OUT, p, f), join(vids, p, f));
+      // .mp4 = the video; .mp4.key = its render-cache key (skips re-render).
+      if (f.endsWith(".mp4") || f.endsWith(".mp4.key")) {
+        cpSync(join(OUT, p, f), join(vids, p, f));
+      }
     }
   }
   if (existsSync(vids) && readdirSync(vids).length) entries.push({ path: prefix + "videos", src: vids });
@@ -279,7 +298,7 @@ function drop(target: string) {
 function main() {
   const [cmd, ...rest] = process.argv.slice(2);
   if (cmd === "restore") {
-    restore();
+    restore(rest.find((a) => !a.startsWith("--")));
   } else if (cmd === "publish") {
     const target = rest.find((a) => !a.startsWith("--")) ?? "root";
     publish(target, rest.includes("--update-cache"));
