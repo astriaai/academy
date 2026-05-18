@@ -1,0 +1,143 @@
+name: PR build (paid)
+
+# Triggered by a `/render-paid` comment from someone with write access, once
+# the script in a PR is approved. Renders the affected modules for real
+# (narration, avatars, video) — the content-hash cache makes every unchanged
+# segment a free hit, so only what actually changed costs money. The refreshed
+# cache is written back so merging the PR to main re-renders nothing.
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: course-publish
+  cancel-in-progress: false
+
+jobs:
+  render:
+    # PR comment, contains the command, author has write access.
+    if: >-
+      github.event.issue.pull_request &&
+      contains(github.event.comment.body, '/render-paid') &&
+      contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Acknowledge command + resolve PR head
+        id: pr
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prNumber = context.payload.issue.number;
+            await github.rest.reactions.createForIssueComment({
+              ...context.repo, comment_id: context.payload.comment.id, content: 'eyes',
+            });
+            const { data: pr } = await github.rest.pulls.get({
+              ...context.repo, pull_number: prNumber,
+            });
+            core.setOutput('number', String(prNumber));
+            core.setOutput('head_sha', pr.head.sha);
+            core.setOutput('base_ref', pr.base.ref);
+            core.setOutput('title', pr.title);
+
+      - name: Checkout PR head
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.pr.outputs.head_sha }}
+          fetch-depth: 0
+
+      - name: Set up build environment
+        uses: ./.github/actions/setup-build
+
+      - name: Fetch PR base
+        run: git fetch --no-tags origin ${{ steps.pr.outputs.base_ref }}
+
+      - name: Restore artifact cache from gh-pages
+        working-directory: webinar-builder
+        run: npm run ci:restore
+
+      - name: Detect affected projects
+        id: affected
+        working-directory: webinar-builder
+        env:
+          BASE_REF: origin/${{ steps.pr.outputs.base_ref }}
+        run: npm run -s ci:affected
+
+      - name: Render affected modules (PAID — cache-gated)
+        if: steps.affected.outputs.any == 'true'
+        working-directory: webinar-builder
+        env:
+          NO_SCREENCAST: "1"
+          VERTEX_API_KEY: ${{ secrets.VERTEX_API_KEY }}
+          WAVESPEED_API_KEY: ${{ secrets.WAVESPEED_API_KEY }}
+          HEYGEN_API_KEY: ${{ secrets.HEYGEN_API_KEY }}
+          BYTEPLUS_ACCESS_KEY_ID: ${{ secrets.BYTEPLUS_ACCESS_KEY_ID }}
+          BYTEPLUS_SECRET_ACCESS_KEY: ${{ secrets.BYTEPLUS_SECRET_ACCESS_KEY }}
+          REPLICATE_API_KEY: ${{ secrets.REPLICATE_API_KEY }}
+          ASTRIA_AUTH_TOKEN: ${{ secrets.ASTRIA_AUTH_TOKEN }}
+          GEMINI_TUNE_ID: ${{ secrets.GEMINI_TUNE_ID }}
+          WORKSPACE_ID: ${{ secrets.WORKSPACE_ID }}
+          ASTRIA_BASE_URL: ${{ secrets.ASTRIA_BASE_URL }}
+        run: |
+          export HF_WORKERS=$(nproc)
+          echo "rendering: HF_WORKERS=$HF_WORKERS, one segment at a time"
+          for p in $(echo '${{ steps.affected.outputs.projects }}' | tr -d '[]"' | tr ',' ' '); do
+            echo "::group::render $p"
+            npx tsx pipeline/build.ts --project "$p" --all --parallel 1
+            echo "::endgroup::"
+          done
+
+      - name: Lint compositions
+        if: steps.affected.outputs.any == 'true'
+        working-directory: webinar-builder
+        run: npx hyperframes@0.4.9 lint --json > lint.json || true
+
+      - name: Build debug dashboard
+        if: ${{ !cancelled() }}
+        working-directory: webinar-builder
+        env:
+          BUILD_MODE: paid
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+          PR_TITLE: ${{ steps.pr.outputs.title }}
+          AFFECTED_PROJECTS: ${{ steps.affected.outputs.projects }}
+          GIT_SHA: ${{ steps.pr.outputs.head_sha }}
+          PAGES_BASE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+        run: npm run dashboard
+
+      - name: Deploy PR preview + save cache
+        if: ${{ !cancelled() }}
+        working-directory: webinar-builder
+        run: npm run ci:publish -- pr-${{ steps.pr.outputs.number }} --update-cache
+
+      - name: Comment result
+        if: ${{ !cancelled() }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = Number('${{ steps.pr.outputs.number }}');
+            const base = `https://${context.repo.owner}.github.io/${context.repo.repo}`;
+            const ok = '${{ job.status }}' === 'success';
+            const marker = '<!-- course-preview -->';
+            const body = [
+              marker,
+              `### 🎬 Course preview — PR #${pr}`,
+              '',
+              `**[Open the debug dashboard →](${base}/pr-${pr}/)**`,
+              '',
+              ok
+                ? '✅ _PAID build — real narration, avatars and video. Unchanged segments were free cache hits._'
+                : '⚠️ _Paid render reported errors — open the dashboard to see which segments failed._',
+            ].join('\n');
+            const { data: comments } = await github.rest.issues.listComments({
+              ...context.repo, issue_number: pr,
+            });
+            const existing = comments.find((c) => c.body && c.body.includes(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({ ...context.repo, comment_id: existing.id, body });
+            } else {
+              await github.rest.issues.createComment({ ...context.repo, issue_number: pr, body });
+            }

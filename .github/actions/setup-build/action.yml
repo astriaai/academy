@@ -1,0 +1,37 @@
+name: Set up build environment
+description: >
+  Node + npm deps + ffmpeg + headless Chromium for the webinar-builder
+  pipeline. Assumes the repo is already checked out.
+
+runs:
+  using: composite
+  steps:
+    - name: Set up Node
+      uses: actions/setup-node@v4
+      with:
+        node-version-file: .nvmrc
+        cache: npm
+        cache-dependency-path: webinar-builder/package-lock.json
+
+    - name: Install ffmpeg
+      shell: bash
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y --no-install-recommends ffmpeg
+
+    - name: Install npm dependencies
+      shell: bash
+      working-directory: webinar-builder
+      run: npm ci
+
+    - name: Install headless Chromium
+      shell: bash
+      working-directory: webinar-builder
+      # hyperframes render + Playwright both drive Chromium; --with-deps
+      # pulls the OS libraries a headless browser needs on ubuntu runners.
+      run: npx playwright install --with-deps chromium
+
+    - name: Verify hyperframes renderer
+      shell: bash
+      working-directory: webinar-builder
+      run: npx hyperframes@0.4.9 doctor || true
