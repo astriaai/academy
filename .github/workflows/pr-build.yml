@@ -47,9 +47,11 @@ jobs:
           DRAFT: "1"
           NO_SCREENCAST: "1"
         run: |
+          export HF_WORKERS=$(nproc)
+          echo "rendering: HF_WORKERS=$HF_WORKERS, one segment at a time"
           for p in $(echo '${{ steps.affected.outputs.projects }}' | tr -d '[]"' | tr ',' ' '); do
             echo "::group::build $p"
-            npx tsx pipeline/build.ts --project "$p" --all --parallel 2
+            npx tsx pipeline/build.ts --project "$p" --all --parallel 1
             echo "::endgroup::"
           done
 

@@ -83,9 +83,11 @@ jobs:
           WORKSPACE_ID: ${{ secrets.WORKSPACE_ID }}
           ASTRIA_BASE_URL: ${{ secrets.ASTRIA_BASE_URL }}
         run: |
+          export HF_WORKERS=$(nproc)
+          echo "rendering: HF_WORKERS=$HF_WORKERS, one segment at a time"
           for p in $(echo '${{ steps.affected.outputs.projects }}' | tr -d '[]"' | tr ',' ' '); do
             echo "::group::render $p"
-            npx tsx pipeline/build.ts --project "$p" --all --parallel 2
+            npx tsx pipeline/build.ts --project "$p" --all --parallel 1
             echo "::endgroup::"
           done
 

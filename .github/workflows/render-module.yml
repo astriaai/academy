@@ -62,7 +62,10 @@ jobs:
           GEMINI_TUNE_ID: ${{ secrets.GEMINI_TUNE_ID }}
           WORKSPACE_ID: ${{ secrets.WORKSPACE_ID }}
           ASTRIA_BASE_URL: ${{ secrets.ASTRIA_BASE_URL }}
-        run: npx tsx pipeline/build.ts --project "${{ inputs.project }}" --all --parallel 2
+        run: |
+          export HF_WORKERS=$(nproc)
+          echo "rendering: HF_WORKERS=$HF_WORKERS, one segment at a time"
+          npx tsx pipeline/build.ts --project "${{ inputs.project }}" --all --parallel 1
 
       - name: Lint compositions
         working-directory: webinar-builder
