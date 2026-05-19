@@ -66,7 +66,7 @@ async function submit(
 
 async function poll(resultUrl: string, onTick: (s: string) => void): Promise<string> {
   const apiKey = process.env.WAVESPEED_API_KEY!;
-  const deadline = Date.now() + 20 * 60 * 1000;  // longer timeout — InfiniteTalk is slower
+  const deadline = Date.now() + 35 * 60 * 1000;  // long timeout — InfiniteTalk is slow, esp. on 90s+ segments
   while (Date.now() < deadline) {
     const res = await fetch(resultUrl, { headers: { Authorization: `Bearer ${apiKey}` } });
     if (!res.ok) throw new Error(`InfiniteTalk poll failed: ${res.status}`);

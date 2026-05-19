@@ -1,0 +1,77 @@
+id: 03-switch-to-video
+title: "Switch the artboard to video"
+order: 3
+visual: screencast-pip
+
+# ┌─────────────────────────────────────────────────────────────────────────┐
+# │ NOT YET RECORDED — segment authored, screencast pending.                  │
+# │                                                                           │
+# │ This segment is intentionally commented OUT of script/projects/artboard   │
+# │ .yaml until its recording exists. Author the recording script, capture    │
+# │ it, then uncomment the segment in the manifest.                           │
+# │                                                                           │
+# │ Planned recording — scripts/record/artboard/03-switch-to-video.ts:        │
+# │   The artboard is a *reference*; the payoff is feeding it to a            │
+# │   text-to-video pass so the clip inherits one cast, wardrobe and look      │
+# │   across every cut (see the astria-claude-skills `artboard` SKILL.md and   │
+# │   the America Basics music-video pipeline, which uses seedance2_fast).     │
+# │                                                                           │
+# │   Beat 1  Land on the generated artboard's result in /prompts (Image mode).│
+# │   Beat 2  Click the mode switcher → Video  (button.mode-switcher-btn).     │
+# │   Beat 3  The artboard carries over as the first-frame / input image      │
+# │           (input#prompt_input_image — verify; image-to-video, not the     │
+# │           driving-video input#prompt_input_video the VST script uses).     │
+# │   Beat 4  Pick the Seedance 2 fast model in select[name='prompt[video_    │
+# │           model]'] — value seedance2_fast_480p or seedance2_fast_720p.     │
+# │   Beat 5  Write a minimal motion prompt — camera glides, the cast's        │
+# │           gentle motion, a cut roughly every second.                      │
+# │   Beat 6  End — match segment 02's choice (send/generate, then linger).    │
+# │                                                                           │
+# │   Selector head start: the Video-mode surface (mode switcher, video model  │
+# │   select, Seedance values) is already documented in                       │
+# │   scripts/record/video-style-transfer/02-workflow.ts — reuse it. The only  │
+# │   new piece to verify live is the image-to-video input wiring.             │
+# │                                                                           │
+# │ Do NOT use the browser MCP or write the .ts for this segment yet —         │
+# │ planning only, per the current task scope.                                │
+# └─────────────────────────────────────────────────────────────────────────┘
+
+screencast:
+  mode: "video"
+  url: "astria.ai/prompts"
+  record_script: "scripts/record/artboard/03-switch-to-video.ts"  # TODO: author
+
+caption:
+  eyebrow: "ARTBOARD → VIDEO"
+  html: |
+    Hand the artboard
+    to a <span class="accent">video model</span>.
+
+slide:
+  bullets:
+    - "Open the artboard, switch to Video mode"
+    - "The artboard becomes the first frame"
+    - "Pick Seedance 2 fast"
+    - "Write a short motion prompt, generate"
+  # Estimates — refine against the real capture once recorded.
+  bullet_starts: [3.0, 14.0, 24.0, 34.0]
+
+sfx:
+  - { src: "assets/sfx/whoosh-soft.mp3", start: 0.2,  volume: 0.5  }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 3.0,  volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 14.0, volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 24.0, volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 34.0, volume: 0.45 }
+
+# Draft narration — finalize alongside the recording.
+narration: |
+  You have the artboard. Now switch it to video.
+
+  Open the artboard in the prompt editor, and flip from Image to
+  Video mode. The artboard becomes the first frame — so the video
+  inherits its cast, its wardrobe, its whole look.
+
+  Pick Seedance 2 fast. Write a short motion prompt — what moves, how
+  the camera glides, the cut rhythm. Generate.
+
+  And your sixteen still tiles become a fifteen-second film.

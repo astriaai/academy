@@ -69,6 +69,23 @@ This repo runs in GitHub Actions (`.github/workflows/`). When acting on a PR:
   cache key (it hashes the text) — that's expected and correct.
 - See `docs/CI.md` for the full workflow map.
 
+## Presenter — one face for the whole course
+
+Every module uses the **same** recurring presenter, **Yuli**. Never generate,
+cast, or restyle a new presenter per video — a new face breaks series
+continuity.
+
+- `defaults.avatar.image_url` is always `assets/avatars/yuli.jpg` — the
+  committed in-repo headshot. `build.ts` inlines any repo-relative `image_url`
+  as a base64 data URI for the lipsync API, so never use an external
+  image-host URL (`mp.astria.ai`, `tmpfiles.org`, …) here.
+- Intro footage is Yuli's, reused: point `intro.background_video` /
+  `background_image` straight at `assets/avatars/video-style-transfer/00-intro-seedance.mp4`
+  + `intro-fullbody-wide.jpg` (reference in place — don't copy, or CI must
+  seed the gitignored .mp4 onto gh-pages). Her source images (headshot,
+  microphone shots, full-body frames) live in `assets/avatars/video-style-transfer/`.
+- Only `subtitle_html` changes per module — the presenter and show-open stay identical.
+
 ## Project Structure
 
 - `index.html` — main composition (root timeline)

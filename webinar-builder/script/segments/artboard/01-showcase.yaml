@@ -1,0 +1,31 @@
+id: 01-showcase
+title: "What the artboard skill makes"
+order: 1
+visual: video-showcase
+
+# video-showcase renders .jpg/.png sources as stills (build.ts) — so the two
+# finished America Basics artboards display side-by-side as static 4x4 grids.
+showcase:
+  videos:
+    - src: "assets/artboard/america-basics/artboard-act1.jpg"
+      label: "STUDIO STORYBOARD"
+    - src: "assets/artboard/america-basics/artboard-act2.jpg"
+      label: "ON-LOCATION STORYBOARD"
+
+caption:
+  eyebrow: "THE ARTBOARD"
+  html: |
+    Sixteen cinematic shots,
+    <span class="accent">one image</span>.
+
+narration: |
+  This is an artboard. One image — a four-by-four grid of sixteen
+  cinematic tiles, each a film still. Together they storyboard a
+  fifteen-second video.
+
+  One consistent cast, one wardrobe, one location, one color grade
+  across every tile. You generate it once — then hand it to a video
+  model. Here are two, both built from a single Astria workspace.
+
+sfx:
+  - { src: "assets/sfx/whoosh-soft.mp3", start: 0.2, volume: 0.55 }

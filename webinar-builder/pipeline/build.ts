@@ -276,6 +276,20 @@ function mp3FileToDataUri(path: string): string {
   return `data:audio/mp3;base64,${b64}`;
 }
 
+/**
+ * Resolve an avatar `image_url` to something the lipsync APIs accept. An
+ * http(s) URL passes through; a repo-relative path is inlined as a base64
+ * data URI so the presenter source can live in-repo with no dependency on an
+ * external image host. OmniHuman / InfiniteTalk both accept a data URI.
+ */
+function resolveAvatarImage(imageRef: string): string {
+  if (/^(https?:|data:)/.test(imageRef)) return imageRef;
+  const abs = resolve(ROOT, imageRef);
+  if (!existsSync(abs)) throw new Error(`avatar image_url not found: ${imageRef}`);
+  const ext = abs.toLowerCase().endsWith(".png") ? "png" : "jpeg";
+  return `data:image/${ext};base64,${readFileSync(abs).toString("base64")}`;
+}
+
 function sanitizeForSay(text: string) {
   return text.replace(/[—–]/g, " - ").replace(/["']/g, "").replace(/\s+/g, " ").trim();
 }
@@ -651,9 +665,10 @@ async function buildOne(project: string, segmentId: string) {
     segment.visual === "avatar-hero";
   type AvatarDefaults = NonNullable<SegmentYaml["avatar"]>;
   const projectAvatar = (projectCfg.defaults?.avatar ?? undefined) as Partial<AvatarDefaults> | undefined;
-  const imageUrl = noAvatar || !visualSupportsAvatar
+  const imageRef = noAvatar || !visualSupportsAvatar
     ? undefined
     : (segment.avatar?.image_url ?? projectAvatar?.image_url);
+  const imageUrl = imageRef ? resolveAvatarImage(imageRef) : undefined;
 
   const engine = segment.avatar?.engine ?? projectAvatar?.engine ?? "omnihuman";
   // Default resolution depends on engine: Pruna only supports 720p/1080p,

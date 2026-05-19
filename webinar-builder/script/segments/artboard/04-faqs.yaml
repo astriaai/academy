@@ -1,0 +1,36 @@
+id: 04-faqs
+title: "FAQs"
+order: 4
+visual: presenter-slide
+
+slide:
+  eyebrow: "FAQ"
+  title_html: |
+    Three things that make an
+    <span class="accent">artboard</span> work.
+  bullets:
+    - "Sixteen tiles ≈ a 15-second video — about one cut per second. A 4x4 grid keeps the geometry tidy."
+    - "Rotate the camera scale every tile — close-up, wide, detail — and never repeat a scale twice in a row."
+    - "Reference the same token every time, and match the artboard's aspect ratio to the final video."
+  bullet_starts: [3.0, 12.0, 21.0]
+
+narration: |
+  Three things that make an artboard work.
+
+  First — sixteen tiles is about a fifteen-second video, roughly one
+  cut per second. A four-by-four grid keeps the geometry tidy.
+
+  Second — rotate the camera scale every tile. Close-up, wide, a
+  detail macro. Never repeat the same scale twice in a row — that's
+  what makes the cuts feel cinematic.
+
+  Third — reference the same token every time, so the cast and the
+  wardrobe stay consistent across the grid. And set the artboard's
+  aspect ratio to match the final video — sixteen by nine, or nine
+  by sixteen for vertical.
+
+sfx:
+  - { src: "assets/sfx/whoosh-soft.mp3", start: 0.2,  volume: 0.5  }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 3.0,  volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 12.0, volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 21.0, volume: 0.45 }

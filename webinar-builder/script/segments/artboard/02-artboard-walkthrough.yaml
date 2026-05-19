@@ -1,0 +1,99 @@
+id: 02-artboard-walkthrough
+title: "From workspace to artboard"
+order: 2
+visual: screencast-pip
+
+screencast:
+  mode: "video"
+  url: "astria.ai/packs"
+  record_script: "scripts/record/artboard/02-artboard-walkthrough.ts"
+
+# This walkthrough runs ~108s — more than 2x a normal segment. A regular
+# InfiniteTalk render of an avatar that long overruns the poll window, so
+# this segment overrides the project default to the `infinitetalk-fast`
+# engine (480p, server-side). The avatar is only a small corner PiP here, so
+# 480p is plenty; 04-faqs keeps the 720p default.
+avatar:
+  engine: "infinitetalk-fast"
+
+caption:
+  eyebrow: "WALKTHROUGH"
+  html: |
+    From workspace
+    to <span class="accent">artboard</span>.
+
+slide:
+  bullets:
+    - "A campaign workspace — three templates"
+    - "References — filter by Human and Garment"
+    - "Each template holds a worked prompt"
+    - "/artboard, then describe the film"
+  # Paced to the 108s screencast capture. Beat map: packs 0-13, references
+  # 13-40, the three worked prompts 40-76, the AI chat + /artboard 76-108.
+  bullet_starts: [3.0, 15.0, 41.0, 78.0]
+
+# SFX — soft ding per bullet reveal plus a whoosh under the caption fade-in
+# and a subtle click as the AI assistant opens.
+sfx:
+  - { src: "assets/sfx/whoosh-soft.mp3",  start: 0.2,  volume: 0.5 }
+  - { src: "assets/sfx/ding-soft.mp3",    start: 3.0,  volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",    start: 15.0, volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",    start: 41.0, volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",    start: 78.0, volume: 0.45 }
+  - { src: "assets/sfx/click-subtle.mp3", start: 77.0, volume: 0.5  }
+
+# Marker highlights — luxe-gold strokes around the UI element each beat refers
+# to. Coordinates are in Playwright source-pixel space (1600x900). These are
+# eyeball estimates — refine against the actual capture before final render.
+markers:
+  # Beat 1 → the row of three template cards on /packs
+  - { start: 3.0,  duration: 5.0, shape: underline, cx: 800,  cy: 540,  w: 1100, style: luxe-gold }
+  # Beat 2 → the Filters button on /tunes (top-left, beside Search)
+  - { start: 14.0, duration: 4.0, shape: circle,    cx: 300,  cy: 165,  r: 60,   style: luxe-gold }
+  # Beat 4 → the AI assistant button in the top nav (chat opens ~76s)
+  - { start: 74.0, duration: 4.0, shape: circle,    cx: 1360, cy: 26,   r: 70,   style: luxe-gold }
+  # Beat 5 → the chat composer where /artboard is typed (~88-101s)
+  - { start: 86.0, duration: 6.0, shape: underline, cx: 1340, cy: 840,  w: 460,  style: luxe-cream }
+
+# Narration paced to the 108s screencast — each paragraph tracks one beat so
+# the voice and the screen stay together. See bullet_starts above.
+narration: |
+  Let's build one. Start in your Astria workspace. This is America
+  Basics — a campaign built around three product templates. A shirt.
+  A jacket. A pair of pants. Each one a finished, repeatable
+  photoshoot.
+
+  Open your References. This is everything the campaign is made of.
+  Use the Filters button to sort the library by class. Filter to
+  Human, and you meet the cast — a girl, a woman, and a man, each one
+  trained as its own face reference.
+
+  Now filter to Garment, and the wardrobe appears — the jackets, the
+  shirts, the pants, every piece trained as a reference too. Cast and
+  wardrobe, side by side — that library is what every prompt here
+  draws from.
+
+  Open a template, and it already holds a worked prompt. The shirt —
+  on the girl, full length on a tennis court, garment tokens resolved
+  into a real photograph.
+
+  The jacket — on the man, mid-stride through a skate park, carried by
+  the same reference tokens.
+
+  And the pants — on the woman, framed close on the waistline, the fit
+  shown in fine detail. Three templates, three worked prompts, one
+  shared cast and wardrobe.
+
+  Now the artboard. Up in the corner, open the Astria assistant and
+  start a fresh chat. Instead of writing a long prompt by hand, you
+  reach for a skill — type a slash to see them.
+
+  Type slash artboard. Then simply describe the film you want
+  storyboarded, in plain language — all three models together on a
+  clean seamless studio backdrop, calm and editorial, the full
+  wardrobe on show across sixteen cinematic shots.
+
+  You never list a single reference token yourself. The skill resolves
+  the workspace's cast and wardrobe on its own, and lays out the grid
+  with one consistent look. Send it — and it builds the artboard you
+  saw at the very start.
