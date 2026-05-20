@@ -13,16 +13,17 @@ showcase:
 caption:
   eyebrow: "TIP · FIRST FRAME MATCH"
   html: |
-    Nail the first frame
-    <span class="accent">before</span>
-    you render the video.
+    Lock the look on one frame.
+    <span class="accent">Then</span>
+    render the full video.
 
 narration: |
   Here's the trick. The model locks the look from the driving video's
-  first frame — face, pose, garments, background. So before you spend
-  credits on a full video, generate just the still in the image tab.
-  Iterate the prompt until the first frame matches what you want. Then
-  switch to video mode and render. Way faster, way cheaper.
+  first frame: the face, the pose, the garments, the background. So
+  before you spend credits on a full video, generate just the still
+  in the image tab. Iterate the prompt until the first frame matches
+  what you want. Then switch to video mode and render. Way faster,
+  way cheaper.
 
 sfx:
   - { src: "assets/sfx/whoosh-soft.mp3", start: 0.2, volume: 0.5 }

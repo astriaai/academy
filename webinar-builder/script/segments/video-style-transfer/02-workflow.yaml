@@ -16,10 +16,10 @@ caption:
 
 slide:
   bullets:
-    - "Write a minimal image prompt"
-    - "Select an input driving video"
-    - "Write a minimal video prompt"
-    - "Select Seedance 2 fast — 720p or 480p"
+    - "Build the image with your own assets: clothes, shoes, models, jewelry"
+    - "Upload a reference video and a single, simple prompt"
+    - "Pick your resolution: 480p, 720p, or 1080p"
+    - "Get your styled video back in minutes"
   # Paced to the ~47s real Gemini narration.
   bullet_starts: [3.0, 14.0, 26.0, 38.0]
 
@@ -54,18 +54,18 @@ markers:
   - { start: 38.0, duration: 6.0,  shape: circle,   cx: 1290, cy: 250, r: 130, style: luxe-gold }
 
 narration: |
-  Here's the four-step flow.
+  Here's the whole flow inside Astria.
 
-  First — write a minimal image prompt in the image tab. Subject,
-  framing, nothing more. Astria handles the rest.
+  Step one. Build the image with your own assets. Clothes, shoes,
+  models, jewelry. Drop in everything you want the video to feature.
 
-  Next — pick the driving video. This is the motion source. We'll
-  use a 360 turnaround so the model rotates naturally.
+  Step two. Upload a reference video and a single simple prompt.
+  The reference is your motion source. The prompt is your style
+  direction. Both fit in a few short lines.
 
-  Third — write a minimal video prompt describing the action. In our
-  case: she is turning around 360, professional lookbook, plain
-  white background, looking at the camera, natural relaxed pose,
-  micro-expressions, with shot cuts every two seconds.
+  Step three. Pick the resolution. Four-eighty for a fast preview,
+  seven-twenty for the daily driver, ten-eighty for the final cut.
+  Your call.
 
-  Finally — select Seedance 2 fast, at 720p or 480p. That's it.
-  Hit generate and you'll get the result clips you saw at the start.
+  That's it. A few minutes later the finished video lands, with your
+  style and your garments, ready to drop into a campaign.

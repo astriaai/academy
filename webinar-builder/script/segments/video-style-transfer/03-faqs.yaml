@@ -9,20 +9,21 @@ slide:
     Two more things to
     <span class="accent">know</span>.
   bullets:
-    - "Max duration 15 s — for longer videos, concat several clips together."
-    - "Prompting — describe what's happening: motion, scene, background. Keywords like 'natural relaxed pose' and 'fumbling her eyes' help."
+    - "Clips run up to 15 seconds. Concat a few together for a longer cut."
+    - "The prompt is your director: shape the motion, the background, the lighting, the camera angle, the mood. Specific phrases like 'natural relaxed pose' or 'micro-expressions' help the model land the exact look you want."
   bullet_starts: [3.0, 14.0]
 
 narration: |
-  Two more things to know.
+  Two more things worth knowing.
 
-  First — max duration is fifteen seconds per clip. For longer videos,
-  just concat several clips together.
+  Each clip runs up to fifteen seconds. For anything longer, just
+  concat a handful together into one continuous cut.
 
-  Second — prompting. Describe what's happening in the scene: the motion
-  or actions, the background — for example, plain white background.
-  Keywords like natural relaxed pose, fumbling her eyes, micro-expressions,
-  help the model land the look.
+  And the prompt is your director. Shape the motion you want, the
+  background, the lighting, the camera angle, the mood. Specific
+  phrases like natural relaxed pose, fumbling her eyes, or
+  micro-expressions help the model land the exact look you want.
+  The more you direct, the closer the result.
 
 sfx:
   - { src: "assets/sfx/whoosh-soft.mp3", start: 0.2,  volume: 0.5 }
