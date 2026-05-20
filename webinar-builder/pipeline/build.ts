@@ -32,6 +32,7 @@ import {
   symlinkSync,
   lstatSync,
   unlinkSync,
+  copyFileSync,
 } from "node:fs";
 import { createHash } from "node:crypto";
 import { dirname, join, resolve } from "node:path";
@@ -211,18 +212,30 @@ function ensureWorkDir(segmentId: string): string {
   // Targets that need to resolve from the rendered HTML. Symlinks instead
   // of copies — assets are large and these are read-only.
   const links = ["assets", "hyperframes.json", "meta.json", "compositions"];
+  // Windows: file symlinks require admin / Developer Mode. Use junctions for
+  // directories (absolute path, no privilege) and plain copies for small JSON
+  // files. POSIX keeps the original relative symlink.
+  const isWindows = process.platform === "win32";
   for (const name of links) {
     const src = join(ROOT, name);
     if (!existsSync(src)) continue;
     const dest = join(dir, name);
     try {
-      // Refresh stale symlinks (handles the case where target moved).
+      // Refresh stale links/copies (handles the case where target moved).
       if (existsSync(dest) || lstatSync(dest, { throwIfNoEntry: false } as any)) {
         unlinkSync(dest);
       }
     } catch {}
-    const rel = name.includes("/") ? resolve(src) : join("..", "..", name);
-    symlinkSync(rel, dest);
+    if (isWindows) {
+      if (statSync(src).isDirectory()) {
+        symlinkSync(resolve(src), dest, "junction");
+      } else {
+        copyFileSync(src, dest);
+      }
+    } else {
+      const rel = name.includes("/") ? resolve(src) : join("..", "..", name);
+      symlinkSync(rel, dest);
+    }
   }
   return dir;
 }
@@ -236,7 +249,8 @@ function ensureWorkDir(segmentId: string): string {
  */
 function runRenderWithEarlyKill(args: string[]): Promise<void> {
   return new Promise((resolve, reject) => {
-    const child = spawn("npx", args, { cwd: ROOT });
+    // shell: true so Windows resolves the npx.cmd shim. POSIX is unaffected.
+    const child = spawn("npx", args, { cwd: ROOT, shell: true });
     let completed = false;
     let killTimer: NodeJS.Timeout | null = null;
     const onData = (buf: Buffer) => {

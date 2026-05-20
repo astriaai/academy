@@ -101,41 +101,95 @@
       .slide-footer { display: flex; align-items: center; gap: 16px; font-size: 20px; letter-spacing: 0.2em; color: #A8A39A; font-weight: 500; }
       .slide-dot { width: 4px; height: 4px; background: #A8A39A; border-radius: 50%; }
       
+  /* Draft-mode narration overlay — stacked at top-center so it never
+     collides with slide/caption/PIP layout at the bottom of the canvas. */
+  #draft-captions {
+    position: absolute;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1600px;
+    max-width: 90%;
+    display: flex;
+    justify-content: center;
+    z-index: 30;
+    pointer-events: none;
+  }
+  #draft-captions .cap {
+    position: absolute;
+    top: 0;
+    padding: 16px 30px;
+    background: rgba(11, 11, 12, 0.78);
+    backdrop-filter: blur(8px);
+    color: #F4F1EC;
+    font-family: "Inter", sans-serif;
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1.22;
+    letter-spacing: -0.01em;
+    max-width: 1400px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+    border: 1px solid rgba(224, 106, 78, 0.35);
+  }
+  #draft-captions .cap::before {
+    content: "DRAFT · narration";
+    position: absolute;
+    top: -10px;
+    left: 16px;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    padding: 2px 8px;
+    background: #E06A4E;
+    color: #0B0B0C;
+    border-radius: 3px;
+    font-weight: 700;
+  }
+
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="main" data-start="0" data-duration="42.40" data-width="1920" data-height="1080" class="">
-      <audio id="seg-narration" class="clip" data-start="0" data-duration="42.40" data-track-index="0" src="assets/audio/edit-image/04-faqs.mp3" data-volume="1"></audio>
-      <audio id="seg-music" class="clip" data-start="0" data-duration="42.40" data-track-index="9" data-volume="0.12" src="assets/music/luxe-pad.mp3" loop></audio>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="38.20" data-width="1920" data-height="1080" class="has-bg-layer">
+      <audio id="seg-narration" class="clip" data-start="0" data-duration="38.20" data-track-index="0" src="assets/audio/3d-packshots/04-faqs.mp3" data-volume="1"></audio>
+      <audio id="seg-music" class="clip" data-start="0" data-duration="38.20" data-track-index="9" data-volume="0.12" src="assets/music/luxe-pad.mp3" loop></audio>
       <audio class="clip" data-start="0.20" data-duration="2.00" data-track-index="20" data-volume="0.50" src="assets/sfx/whoosh-soft.mp3"></audio>
       <audio class="clip" data-start="3.00" data-duration="2.00" data-track-index="21" data-volume="0.45" src="assets/sfx/ding-soft.mp3"></audio>
       <audio class="clip" data-start="14.00" data-duration="2.00" data-track-index="22" data-volume="0.45" src="assets/sfx/ding-soft.mp3"></audio>
       <audio class="clip" data-start="26.00" data-duration="2.00" data-track-index="23" data-volume="0.45" src="assets/sfx/ding-soft.mp3"></audio>
 
-      
+      <div class="bg-layer" aria-hidden="true">
+        <video class="bg-tile clip" data-start="0" data-duration="38.20" data-track-index="30" data-volume="0" muted playsinline autoplay loop src="assets/results/3d-packshots/rotation-backpack.mp4"></video>
+        <video class="bg-tile clip" data-start="0" data-duration="38.20" data-track-index="31" data-volume="0" muted playsinline autoplay loop src="assets/results/3d-packshots/rotation-handbag.mp4"></video>
+        <video class="bg-tile clip" data-start="0" data-duration="38.20" data-track-index="32" data-volume="0" muted playsinline autoplay loop src="assets/results/3d-packshots/rotation-shoes-front.mp4"></video>
+        <video class="bg-tile clip" data-start="0" data-duration="38.20" data-track-index="33" data-volume="0" muted playsinline autoplay loop src="assets/results/3d-packshots/rotation-shoes-side.mp4"></video>
+      </div>
       <div class="bg-vignette" aria-hidden="true"></div>
 
-      <div id="seg-avatar" class="clip" data-start="0" data-duration="42.40" data-track-index="1">
-        <video muted playsinline src="assets/avatars/edit-image/04-faqs.mp4" style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+      <div id="seg-avatar" class="clip" data-start="0" data-duration="38.20" data-track-index="1">
+        <div class="avatar-placeholder">
+          <div class="avatar-ring"></div>
+          <div class="avatar-label">PRESENTER<br/><span>Yuli · Astria</span></div>
+        </div>
       </div>
 
-      <div id="seg-slide" class="clip" data-start="0" data-duration="42.40" data-track-index="2">
+      <div id="seg-slide" class="clip" data-start="0" data-duration="38.20" data-track-index="2">
         <div class="slide-frame ">
           <div class="slide-eyebrow" id="slide-eyebrow">FAQ</div>
           <h1 class="slide-title" id="slide-title">Three things to
 <span class="accent">know</span>.
 </h1>
           <div class="slide-body"><ul class="slide-bullets" id="slide-bullets">
-              <li data-start="3.00">Surgical, not creative — Edit's strongest move is <span class="accent">removing or replacing one thing</span>, not reimagining the whole image.</li>
-              <li data-start="14.00">Minimal prompts win — say what changes. <span class="accent">"Remove X, keep everything else exact."</span> Long prompts confuse the model.</li>
-              <li data-start="26.00">Use it as a prep step — strip styling, clean references, isolate subjects before packshots, training, or video. Edit is the <span class="accent">first link in the chain</span>.</li>
+              <li data-start="3.00">What works as a reference — any clean shot of the product. Polished studio capture is ideal; even a phone snap on the cutting table will fly. The cleaner the source, the more faithful the rotation.</li>
+              <li data-start="14.00">Format & finish — portrait 3:4 at studio quality, looped to drop straight into the PDP, the lookbook, or the Reels grid. Matches a fashion grid out of the box.</li>
+              <li data-start="26.00">Per-product cost — pennies per rotation. Cheap enough to A/B test two backdrops or a half-step in the angle before locking the listing shot.</li>
             </ul></div>
           <div class="slide-footer" id="slide-footer">
             <span>Astria</span><span class="slide-dot"></span><span>Scaling Fashion Lookbooks</span>
           </div>
         </div>
       </div>
-      
+      <div id="draft-captions" class="clip" data-start="0" data-duration="9999" data-track-index="9"><div class="cap" id="cap-0" data-start="0.20" data-duration="1.56">Three things worth knowing.</div><div class="cap" id="cap-1" data-start="1.76" data-duration="0.78">Reference photo —</div><div class="cap" id="cap-2" data-start="2.54" data-duration="1.56">anything goes, within reason.</div><div class="cap" id="cap-3" data-start="4.09" data-duration="3.12">A clean studio capture is the easy path.</div><div class="cap" id="cap-4" data-start="7.21" data-duration="3.12">A phone snap from the cutting table still</div><div class="cap" id="cap-5" data-start="10.33" data-duration="0.60">works.</div><div class="cap" id="cap-6" data-start="10.93" data-duration="1.95">Astria does the heavy lifting.</div><div class="cap" id="cap-7" data-start="12.87" data-duration="3.12">The cleaner the source, the more faithful the</div><div class="cap" id="cap-8" data-start="15.99" data-duration="0.60">rotation.</div><div class="cap" id="cap-9" data-start="16.59" data-duration="0.60">Format —</div><div class="cap" id="cap-10" data-start="17.19" data-duration="2.73">portrait three-by-four at studio quality, loops seamlessly.</div><div class="cap" id="cap-11" data-start="19.92" data-duration="3.12">Drop it straight into a product page, a</div><div class="cap" id="cap-12" data-start="23.03" data-duration="2.34">lookbook reel, or a Pinterest carousel.</div><div class="cap" id="cap-13" data-start="25.37" data-duration="2.34">It already matches a fashion grid.</div><div class="cap" id="cap-14" data-start="27.71" data-duration="0.60">Cost —</div><div class="cap" id="cap-15" data-start="28.31" data-duration="1.17">pennies per rotation.</div><div class="cap" id="cap-16" data-start="29.47" data-duration="1.56">Cheap enough to iterate.</div><div class="cap" id="cap-17" data-start="31.03" data-duration="1.56">Try a champagne backdrop.</div><div class="cap" id="cap-18" data-start="32.59" data-duration="2.34">Try a half-step in the angle.</div><div class="cap" id="cap-19" data-start="34.93" data-duration="3.12">Land on the hero shot before you commit.</div></div>
     </div>
 
     <script>
@@ -158,7 +212,26 @@
       } else {
         tl.from(".slide-bullets li", { opacity: 0, x: -30, duration: 0.55, ease: "power2.out", stagger: 0.12 }, 0.85);
       }
-      
+      tl.from("#cap-0", { opacity: 0, y: 18, duration: 0.35, ease: "power2.out" }, 0.20);tl.to("#cap-0", { opacity: 0, duration: 0.3, ease: "power1.in" }, 1.56);
+      tl.from("#cap-1", { opacity: 0, y: 18, duration: 0.35, ease: "power2.out" }, 1.76);tl.to("#cap-1", { opacity: 0, duration: 0.3, ease: "power1.in" }, 2.34);
+      tl.from("#cap-2", { opacity: 0, y: 18, duration: 0.35, ease: "power2.out" }, 2.54);tl.to("#cap-2", { opacity: 0, duration: 0.3, ease: "power1.in" }, 3.89);
+      tl.from("#cap-3", { opacity: 0, y: 18, duration: 0.35, ease: "power2.out" }, 4.09);tl.to("#cap-3", { opacity: 0, duration: 0.3, ease: "power1.in" }, 7.01);
+      tl.from("#cap-4", { opacity: 0, y: 18, duration: 0.35, ease: "power2.out" }, 7.21);tl.to("#cap-4", { opacity: 0, duration: 0.3, ease: "power1.in" }, 10.13);
+      tl.from("#cap-5", { opacity: 0, y: 18, duration: 0.35, ease: "power2.out" }, 10.33);tl.to("#cap-5", { opacity: 0, duration: 0.3, ease: "power1.in" }, 10.73);
+      tl.from("#cap-6", { opacity: 0, y: 18, duration: 0.35, ease: "power2.out" }, 10.93);tl.to("#cap-6", { opacity: 0, duration: 0.3, ease: "power1.in" }, 12.67);
+      tl.from("#cap-7", { opacity: 0, y: 18, duration: 0.35, ease: "power2.out" }, 12.87);tl.to("#cap-7", { opacity: 0, duration: 0.3, ease: "power1.in" }, 15.79);
+      tl.from("#cap-8", { opacity: 0, y: 18, duration: 0.35, ease: "power2.out" }, 15.99);tl.to("#cap-8", { opacity: 0, duration: 0.3, ease: "power1.in" }, 16.39);
+      tl.from("#cap-9", { opacity: 0, y: 18, duration: 0.35, ease: "power2.out" }, 16.59);tl.to("#cap-9", { opacity: 0, duration: 0.3, ease: "power1.in" }, 16.99);
+      tl.from("#cap-10", { opacity: 0, y: 18, duration: 0.35, ease: "power2.out" }, 17.19);tl.to("#cap-10", { opacity: 0, duration: 0.3, ease: "power1.in" }, 19.72);
+      tl.from("#cap-11", { opacity: 0, y: 18, duration: 0.35, ease: "power2.out" }, 19.92);tl.to("#cap-11", { opacity: 0, duration: 0.3, ease: "power1.in" }, 22.83);
+      tl.from("#cap-12", { opacity: 0, y: 18, duration: 0.35, ease: "power2.out" }, 23.03);tl.to("#cap-12", { opacity: 0, duration: 0.3, ease: "power1.in" }, 25.17);
+      tl.from("#cap-13", { opacity: 0, y: 18, duration: 0.35, ease: "power2.out" }, 25.37);tl.to("#cap-13", { opacity: 0, duration: 0.3, ease: "power1.in" }, 27.51);
+      tl.from("#cap-14", { opacity: 0, y: 18, duration: 0.35, ease: "power2.out" }, 27.71);tl.to("#cap-14", { opacity: 0, duration: 0.3, ease: "power1.in" }, 28.11);
+      tl.from("#cap-15", { opacity: 0, y: 18, duration: 0.35, ease: "power2.out" }, 28.31);tl.to("#cap-15", { opacity: 0, duration: 0.3, ease: "power1.in" }, 29.27);
+      tl.from("#cap-16", { opacity: 0, y: 18, duration: 0.35, ease: "power2.out" }, 29.47);tl.to("#cap-16", { opacity: 0, duration: 0.3, ease: "power1.in" }, 30.83);
+      tl.from("#cap-17", { opacity: 0, y: 18, duration: 0.35, ease: "power2.out" }, 31.03);tl.to("#cap-17", { opacity: 0, duration: 0.3, ease: "power1.in" }, 32.39);
+      tl.from("#cap-18", { opacity: 0, y: 18, duration: 0.35, ease: "power2.out" }, 32.59);tl.to("#cap-18", { opacity: 0, duration: 0.3, ease: "power1.in" }, 34.73);
+      tl.from("#cap-19", { opacity: 0, y: 18, duration: 0.35, ease: "power2.out" }, 34.93);tl.to("#cap-19", { opacity: 0, duration: 0.3, ease: "power1.in" }, 37.84);
       window.__timelines["main"] = tl;
     </script>
   </body>

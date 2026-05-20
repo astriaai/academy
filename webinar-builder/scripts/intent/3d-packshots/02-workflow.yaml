@@ -1,0 +1,58 @@
+id: 02-workflow
+title: "Workflow — upload one photo, get a packshot"
+
+# Demonstrates the actual product flow inside Astria so the viewer sees this
+# isn't a bespoke render: it's a templated tool anyone can drive.
+#
+# Target pack:  https://www.astria.ai/p/backpack  (workspace 503, pack 4861)
+# Reference image we upload (matches the backpack the showcase rotates):
+#   assets/results/3d-packshots/ref-backpack-blue-ugly.jpg
+#
+# We DO NOT click Generate — we land on a ready-to-fire state so the audience
+# infers the next step. Avoids consuming a real prompt on every re-recording.
+
+url: https://www.astria.ai/p/backpack
+requires_auth: true
+viewport: 1600x900
+duration_s: 40
+
+beats:
+  - id: land
+    at: "0-4s"
+    say: "Open the 3D-packshot template inside Astria."
+    show: "land on the pack page; cursor settles near the upload affordance."
+    action: settle
+
+  - id: hover-upload
+    at: "4-10s"
+    say: "Every pack has a built-in upload — image goes in, packshot comes out."
+    show: "cursor glides over the visible upload/reference area."
+    action:
+      type: hover
+      target: "[data-action*='triggerFile'], button:has-text('Upload'), label:has-text('Upload'), .image-input, input[type='file']"
+      hold_ms: 1500
+
+  - id: upload-ugly-snap
+    at: "10-24s"
+    say: "Drop in any product photo — even a messy phone snap. Astria takes it from there."
+    show: "the messy iPhone reference uploads; the page shows the preview."
+    action:
+      type: upload
+      target: "input[type='file']"
+      files: ["assets/results/3d-packshots/ref-backpack-blue-ugly.jpg"]
+      wait_after_ms: 4000
+
+  - id: hover-generate
+    at: "24-34s"
+    say: "One click and it queues — a clean studio rotation plus multi-angle stills, every angle of the product."
+    show: "cursor glides toward the Generate button without clicking."
+    action:
+      type: hover
+      target: "button:has-text('Generate'), input[type='submit'], button[type='submit']"
+      hold_ms: 6000
+
+  - id: settle
+    at: "34-40s"
+    say: "That's the whole loop. One image in, an editorial-grade packshot out."
+    show: "settle on the ready-to-fire state."
+    action: settle

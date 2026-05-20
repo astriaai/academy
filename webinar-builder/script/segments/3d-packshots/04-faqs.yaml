@@ -9,25 +9,26 @@ slide:
     Three things to
     <span class="accent">know</span>.
   bullets:
-    - "What works as a reference — any clear shot of the product, even bad lighting. Worst case: messy phone snapshot. The cleaner the reference, the cleaner the rotation."
-    - "Aspect & resolution — output is portrait 3:4 at studio quality. Loops cleanly for product pages and Reels."
-    - "Per-product cost — pennies per rotation. Cheap enough to A/B alternative angles or backgrounds before locking the listing shot."
+    - "What works as a reference — any clean shot of the product. Polished studio capture is ideal; even a phone snap on the cutting table will fly. The cleaner the source, the more faithful the rotation."
+    - "Format & finish — portrait 3:4 at studio quality, looped to drop straight into the PDP, the lookbook, or the Reels grid. Matches a fashion grid out of the box."
+    - "Per-product cost — pennies per rotation. Cheap enough to A/B test two backdrops or a half-step in the angle before locking the listing shot."
   bullet_starts: [3.0, 14.0, 26.0]
 
 narration: |
   Three things worth knowing.
 
-  Reference photo — anything goes. A clean studio shot is ideal, but
-  even a messy phone snapshot under bad lighting works. Astria does
-  the heavy lifting. The cleaner the source, the more faithful the
-  rotation.
+  Reference photo — anything goes, within reason. A clean studio
+  capture is the easy path. A phone snap from the cutting table
+  still works. Astria does the heavy lifting. The cleaner the
+  source, the more faithful the rotation.
 
-  Output — portrait three-by-four at studio quality, loops cleanly.
-  Drop straight into a product page, Reels, or a Pinterest carousel.
+  Format — portrait three-by-four at studio quality, loops
+  seamlessly. Drop it straight into a product page, a lookbook
+  reel, or a Pinterest carousel. It already matches a fashion grid.
 
-  Cost — pennies per rotation. Cheap enough to iterate. Test two
-  background colors. Try a different angle. Find the best listing
-  shot before you commit.
+  Cost — pennies per rotation. Cheap enough to iterate. Try a
+  champagne backdrop. Try a half-step in the angle. Land on the
+  hero shot before you commit.
 
 sfx:
   - { src: "assets/sfx/whoosh-soft.mp3", start: 0.2,  volume: 0.5 }
