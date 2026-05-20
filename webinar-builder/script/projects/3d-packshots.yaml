@@ -43,7 +43,10 @@ defaults:
 segments:
   - 00-intro              # TV-show open with editorial Seedance + serif title (~10s)
   - 01-showcase           # One reference still in → 360° + stills out (~14s)
-  - 02-workflow           # Playwright screencast of /p/backpack upload flow (~40s)
+  # - 02-workflow         # Playwright screencast of /p/backpack upload flow (~40s)
+                          # Blocked: requires storageState.json from `npm run login`.
+                          # Google SSO bot-detection on Playwright Chrome is unresolved.
+                          # Re-enable once a valid session is saved.
   - 02-before-after       # Ugly iPhone reference vs clean rotating packshot (~18s)
-  - 03-why-it-matters     # Conversion math — +134% PDP, +27% spin, +35% ATC, −12–18% returns (~36s)
-  - 04-faqs               # FAQ slide — what counts as a good source, cost, formats (~30s)
+  - 03-why-it-matters     # Better visuals → better business; 5-40% sales lifts (~50s)
+  - 04-faqs               # Reference / Format / Production efficiency (~32s)
