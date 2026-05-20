@@ -9,29 +9,27 @@ slide:
     Three things to
     <span class="accent">know</span>.
   bullets:
-    - "What works as a reference — any clean shot of the product. Polished studio capture is ideal; even a phone snap on the cutting table will fly. The cleaner the source, the more faithful the rotation."
-    - "Format & finish — portrait 3:4 at studio quality, looped to drop straight into the PDP, the lookbook, or the Reels grid. Matches a fashion grid out of the box."
-    - "Per-product cost — pennies per rotation. Cheap enough to A/B test two backdrops or a half-step in the angle before locking the listing shot."
-  bullet_starts: [3.0, 14.0, 26.0]
+    - "Reference image. Any clean product shot works. Studio is ideal, but a clear phone photo can work too."
+    - "Format and finish. Studio-quality 3:4 visuals, ready for PDPs, lookbooks, and Reels."
+    - "Production efficiency. Much more affordable than a traditional product shoot, so you can test backdrops, angles, and styling options before locking the final visuals."
+  bullet_starts: [3.0, 12.0, 22.0]
 
 narration: |
-  Three things worth knowing.
+  Three things to know.
 
-  Reference photo — anything goes, within reason. A clean studio
-  capture is the easy path. A phone snap from the cutting table
-  still works. Astria does the heavy lifting. The cleaner the
-  source, the more faithful the rotation.
+  Reference image. Any clean product shot works. A studio capture is
+  ideal, but a clear phone photo can work too. The cleaner the source,
+  the more faithful the rotation.
 
-  Format — portrait three-by-four at studio quality, loops
-  seamlessly. Drop it straight into a product page, a lookbook
-  reel, or a Pinterest carousel. It already matches a fashion grid.
+  Format and finish. Studio-quality three-by-four visuals, ready for
+  PDPs, lookbooks, and Reels.
 
-  Cost — pennies per rotation. Cheap enough to iterate. Try a
-  champagne backdrop. Try a half-step in the angle. Land on the
-  hero shot before you commit.
+  Production efficiency. Much more affordable than a traditional
+  product shoot, so you can test backdrops, angles, and styling
+  options before locking the final visuals.
 
 sfx:
   - { src: "assets/sfx/whoosh-soft.mp3", start: 0.2,  volume: 0.5 }
   - { src: "assets/sfx/ding-soft.mp3",   start: 3.0,  volume: 0.45 }
-  - { src: "assets/sfx/ding-soft.mp3",   start: 14.0, volume: 0.45 }
-  - { src: "assets/sfx/ding-soft.mp3",   start: 26.0, volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 12.0, volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 22.0, volume: 0.45 }

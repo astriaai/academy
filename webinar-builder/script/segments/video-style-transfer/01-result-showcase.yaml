@@ -16,8 +16,8 @@ caption:
 
 narration: |
   Here is what you can build with Astria's video style transfer.
-  Two finished clips — both driven by the same reference video,
-  styled with a single prompt each.
+  Two finished clips, both driven by the same reference video,
+  each styled with a single prompt.
 
 sfx:
   - { src: "assets/sfx/whoosh-soft.mp3", start: 0.2, volume: 0.55 }

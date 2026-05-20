@@ -11,43 +11,43 @@ visual: presenter-slide
 slide:
   eyebrow: "WHY IT MATTERS"
   title_html: |
-    The numbers
-    fashion buyers
-    <span class="accent">already moved on</span>.
+    Better visuals.
+    <span class="accent">Better business.</span>
   bullets:
-    - "+134% conversion on the PDP — fashion retailer case study after adding product video to product pages."
-    - "+27% lift in conversion — switching a flat product image for a 360° rotation (Practical Ecommerce / DueMaternity)."
-    - "+35% add-to-cart — pages with 360° spin vs. static stills (Cappasity / luxury benchmark)."
-    - "−12 to −18% returns — fashion retailers who added product demo video, measured over six months."
-  bullet_starts: [2.5, 11.0, 19.5, 28.0]
+    - "Better product visuals help shoppers understand the product faster, trust what they see, and feel more confident buying online."
+    - "360° product views have been linked to higher conversions, stronger engagement, and fewer returns in ecommerce case studies."
+    - "Practical Ecommerce reports that 360° product photography has been associated with sales lifts ranging from 5% to 40%, with one cited study suggesting a 14% increase in sales and a 17% better shopping experience."
+    - "In another example, True Value reportedly saw a 22% conversion lift after adding 360° product photography, while Home Depot saw fewer returns during a 360° product-photo A/B test."
+  bullet_starts: [2.5, 13.0, 23.0, 38.0]
 
 narration: |
-  Now the part the buyer cares about — the numbers.
+  So why does this matter?
 
-  A fashion retailer added product video to the PDP and saw
-  conversion go up a hundred and thirty four percent. Same traffic,
-  same catalog, more checkouts.
+  Better product visuals help shoppers understand the product faster,
+  trust what they see, and feel more confident buying online.
 
-  Swap a flat hero image for a 360° rotation and the lift sits
-  around twenty seven percent — that's the spin alone, before
-  anything else changes.
+  360-degree product views have been linked to higher conversions,
+  stronger engagement, and fewer returns across ecommerce case
+  studies.
 
-  Add-to-cart climbs another thirty five percent on pages with a
-  spin. Shoppers commit faster when they can see every angle.
+  Practical Ecommerce reports that 360-degree product photography
+  has been associated with sales lifts ranging from 5 to 40 percent.
+  One cited study suggests a 14 percent increase in sales and a
+  17 percent better shopping experience.
 
-  And returns go down twelve to eighteen percent across six months.
-  Fewer surprises in the box. The math works on both sides of the
-  ledger.
+  In another example, True Value reportedly saw a 22 percent
+  conversion lift after adding 360-degree product photography, while
+  Home Depot saw fewer returns during a 360-degree product-photo
+  A/B test.
 
 sfx:
   - { src: "assets/sfx/whoosh-soft.mp3", start: 0.2,  volume: 0.5 }
   - { src: "assets/sfx/ding-soft.mp3",   start: 2.5,  volume: 0.45 }
-  - { src: "assets/sfx/ding-soft.mp3",   start: 11.0, volume: 0.45 }
-  - { src: "assets/sfx/ding-soft.mp3",   start: 19.5, volume: 0.45 }
-  - { src: "assets/sfx/ding-soft.mp3",   start: 28.0, volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 13.0, volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 23.0, volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 38.0, volume: 0.45 }
 
-# Source log (not rendered — kept in YAML so future editors can verify):
-#   +134% PDP video — kleep.ai fashion retailer case study, 2025
-#   +27%  360° spin — practicalecommerce.com, DueMaternity report
-#   +35%  add-to-cart on 360° — cappasity / yotpo luxury benchmark
-#   -12-18% returns — convertcart fashion CRO report, 6-month window
+# Source log (not rendered, kept in YAML so future editors can verify):
+#   5-40% sales lift, 14% sales / 17% UX  — practicalecommerce.com 360-degree photography report
+#   22% conversion lift (True Value)      — cited via Practical Ecommerce / industry reporting
+#   Fewer returns (Home Depot A/B test)   — cited via Practical Ecommerce / industry reporting
