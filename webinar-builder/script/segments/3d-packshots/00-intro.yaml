@@ -7,7 +7,10 @@ duration: 10.0
 narration: ""
 
 intro:
-  background_video: "assets/avatars/3d-packshots/00-intro-seedance.mp4"
+  # background_video disabled — Seedance MP4 not present locally. Falls back
+  # to the still image. Re-enable when assets/avatars/3d-packshots/00-intro-seedance.mp4
+  # is generated or restored.
+  # background_video: "assets/avatars/3d-packshots/00-intro-seedance.mp4"
   background_image: "assets/avatars/3d-packshots/intro-fullbody-wide.jpg"
   title_html: "ASTRIA"
   subtitle_html: "3D Packshots"

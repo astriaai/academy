@@ -1,0 +1,45 @@
+id: 02-workflow
+title: "Workflow — upload one photo, get a packshot"
+order: 2
+visual: screencast-pip
+
+# Real Astria UI walkthrough. The screencast.mp4 is produced by running
+#   HEADED=1 npm run record-screencast -- --project 3d-packshots 02-workflow
+# which executes scripts/record/3d-packshots/02-workflow.ts inside Playwright.
+screencast:
+  mode: "video"
+  url: "astria.ai/p/backpack"
+  record_script: "scripts/record/3d-packshots/02-workflow.ts"
+
+caption:
+  eyebrow: "WORKFLOW"
+  html: |
+    One photo in.
+    A <span class="accent">packshot</span> out.
+
+slide:
+  bullets:
+    - "Open the 3D-packshot template"
+    - "Upload one product photo (even a phone snap)"
+    - "Click Generate — rotation + stills"
+  bullet_starts: [4.0, 10.0, 24.0]
+
+narration: |
+  Here's the whole flow inside Astria.
+
+  Open the 3D-packshot template. Every pack has a built-in upload — the
+  product photo goes in, the packshot comes out.
+
+  Drop in any reference. Studio shot is ideal, but a messy phone snap
+  on the cutting table works just as well. The cleaner the source, the
+  more faithful the rotation.
+
+  One click on Generate, the queue picks it up, and a few moments later
+  you have the full 360° rotation plus multi-angle stills — ready to
+  drop into a product page, a lookbook, or a Reels grid.
+
+sfx:
+  - { src: "assets/sfx/whoosh-soft.mp3", start: 0.2,  volume: 0.5 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 4.0,  volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 10.0, volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 24.0, volume: 0.45 }

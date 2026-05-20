@@ -18,13 +18,13 @@ defaults:
     src: "assets/music/luxe-pad.mp3"
     volume: 0.12
 
-  # Rotation MP4s pulled from astria.ai/w/fashion-3d-packshots — used as
-  # b-roll behind the FAQ slide + the showcase background layer.
+  # Rotation MP4s pulled from astria.ai workspace ws=503 (Fashion 3d-packshots).
+  # Used as b-roll behind the FAQ slide + the showcase background layer.
   background_videos:
-    - "assets/results/3d-packshots/rotation-bag-burgundy.mp4"
-    - "assets/results/3d-packshots/rotation-backpack-blue.mp4"
-    - "assets/results/3d-packshots/rotation-sneakers-pair.mp4"
-    - "assets/results/3d-packshots/rotation-sneaker-single.mp4"
+    - "assets/results/3d-packshots/rotation-backpack.mp4"
+    - "assets/results/3d-packshots/rotation-handbag.mp4"
+    - "assets/results/3d-packshots/rotation-shoes-front.mp4"
+    - "assets/results/3d-packshots/rotation-shoes-side.mp4"
 
   # Editorial presenter — ivory linen blazer + champagne silk slip + gold
   # chain earring, painted taupe backdrop. Distinct from the VST look so the
@@ -42,7 +42,8 @@ defaults:
 
 segments:
   - 00-intro              # TV-show open with editorial Seedance + serif title (~10s)
-  - 01-showcase           # Side-by-side rotating packshots (~12s)
+  - 01-showcase           # One reference still in → 360° + stills out (~14s)
+  - 02-workflow           # Playwright screencast of /p/backpack upload flow (~40s)
   - 02-before-after       # Ugly iPhone reference vs clean rotating packshot (~18s)
-  # - 03-workflow         # TODO: Playwright recording of Astria packshot UI (~50s)
+  - 03-why-it-matters     # Conversion math — +134% PDP, +27% spin, +35% ATC, −12–18% returns (~36s)
   - 04-faqs               # FAQ slide — what counts as a good source, cost, formats (~30s)

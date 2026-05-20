@@ -1,26 +1,33 @@
 id: 01-showcase
-title: "Result showcase — rotating packshots"
+title: "How simple — one photo in, a campaign out"
 order: 1
 visual: video-showcase
 
+# Scene 1 of the new arc: sell the simplicity of the workflow.
+# Left pane: the single still the studio "uploaded".
+# Right pane: the rotating packshot Astria returned.
+# Narration leans editorial — atelier vocabulary, no engineering speak.
 showcase:
   videos:
-    - src: "assets/results/3d-packshots/rotation-bag-burgundy.mp4"
-      label: "LEATHER HANDBAG"
-    - src: "assets/results/3d-packshots/rotation-backpack-blue.mp4"
-      label: "TECHNICAL BACKPACK"
+    - src: "assets/results/3d-packshots/ref-1d2wianx9ma5dmdee4beo609voen.jpg"
+      label: "ONE REFERENCE STILL"
+    - src: "assets/results/3d-packshots/rotation-backpack.mp4"
+      label: "FULL 360° + STILLS"
 
 caption:
-  eyebrow: "3D PACKSHOTS"
+  eyebrow: "THE WORKFLOW"
   html: |
-    Studio-quality 360° turnarounds
-    from a <span class="accent">single reference</span> photo.
+    One photo in.
+    A <span class="accent">full campaign</span> out.
 
 narration: |
-  Here's what Astria 3D Packshots produces. Two products, two clean
-  studio rotations — generated entirely from a single reference image
-  for each. The same workflow handles bags, footwear, accessories,
-  apparel — anything you'd put on a turntable.
+  Here's the whole workflow. You upload one product still — anything
+  from a polished studio shot to a phone snap on the cutting table.
+  Astria returns a clean 360° rotation plus a sheet of multi-angle
+  stills, ready to drop into the product page, the lookbook, the
+  Reels grid. No light kit. No turntable. No retoucher on standby.
+  One image in. An editorial-grade campaign out.
 
 sfx:
   - { src: "assets/sfx/whoosh-soft.mp3", start: 0.2, volume: 0.55 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 4.5, volume: 0.4 }
