@@ -53,6 +53,5 @@ segments:
   - 02a-artboard-command    # Screencast — assistant → /artboard → 16:9 initial prompt (~60s)
   - 02aa-first-artboard     # Screencast still — first generated artboard in lightbox (~35s)
   - 02b-brief-to-video     # Screencast — same-chat refinement + moody lightbox (~70s)
-  # - 03-switch-to-video   # TODO: screencast — drive a Seedance video from the artboard.
-  #                          Segment authored (planned beats in its yaml); not yet recorded.
+  - 03-switch-to-video     # Screencast — use artboard as video reference, then generate (~60s)
   - 04-faqs                # FAQ slide — shot count, scale rotation, tokens, aspect ratio (~30s)
