@@ -1,0 +1,11 @@
+project: artboard-opening
+
+music:
+  is_instrumental: true
+  target_duration: 12
+  prompt: >
+    Deep electronic bass, rhythmic pulse, polished fashion-tech opening sting,
+    cinematic but restrained, sub-bass groove, tight analog kick, dark glossy
+    synth stabs, airy high texture, confident runway energy, modern editorial
+    tutorial intro, no vocals, clean mix, strong first five seconds, elegant
+    resolve by twelve seconds.

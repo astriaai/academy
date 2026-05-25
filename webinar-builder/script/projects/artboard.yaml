@@ -49,7 +49,8 @@ defaults:
 segments:
   - 00-intro               # TV-show open with serif title (~10s)
   - 01-showcase            # Two finished artboards side-by-side (~14s)
-  - 02-artboard-walkthrough # Screencast — workspace → references → prompts → /artboard chat (~93s)
+  - 02-artboard-walkthrough # Screencast — workspace → references → prompts → /artboard chat (~113s)
+  - 02b-brief-to-video     # Screencast — /artboard hands-on + review two finished artboard→video examples (~100s)
   # - 03-switch-to-video   # TODO: screencast — drive a Seedance video from the artboard.
   #                          Segment authored (planned beats in its yaml); not yet recorded.
   - 04-faqs                # FAQ slide — shot count, scale rotation, tokens, aspect ratio (~30s)

@@ -55,6 +55,11 @@
  *   HEADED=1 npx tsx pipeline/record-screencast.ts --project artboard 02-artboard-walkthrough
  */
 import type { RecordScript } from "../../../pipeline/record-screencast.js";
+import {
+  chatClickButton,
+  chatSend,
+  chatWaitForResponse,
+} from "../../../pipeline/recorder-helpers.js";
 
 // UI hostname — ASTRIA_BASE_URL is the API URL (returns JSON on /prompts).
 // The recorder always drives the browser UI.
@@ -207,21 +212,6 @@ async function clickFirst(
     return true;
   }
   return false;
-}
-
-/** Click into a field at its center so subsequent typing lands cleanly. */
-async function focusField(
-  page: import("playwright").Page,
-  selector: string,
-  sleep: (ms: number) => Promise<void>,
-): Promise<boolean> {
-  const el = page.locator(selector).first();
-  const box = await el.boundingBox({ timeout: 1200 }).catch(() => null);
-  if (!box) return false;
-  await glide(page, box.x + box.width / 2, box.y + box.height / 2);
-  await sleep(150);
-  await el.click({ timeout: 700 }).catch(() => {});
-  return true;
 }
 
 /**
@@ -422,46 +412,56 @@ const script: RecordScript = async ({ page, sleep }) => {
   );
   await sleep(1800); // ≈ t=67
 
-  // ── Beat 5 — Compose the /artboard request ───────────────────────
-  // @65 → 81  "Type slash artboard — that's the artboard skill."
-  await focusField(page, "textarea.aui-composer-input", sleep);
-  await sleep(400);
-  await page.keyboard.type("/artboard", { delay: 55 }).catch(() => {});
-  await sleep(1400); // the skill menu filters to one item — ≈ t=68
+  // ── Beat 5 — Compose & send the /artboard request ───────────────
+  // @65 → 78  "Type slash artboard — that's the artboard skill — and
+  //            describe the film you want storyboarded."
+  // chatSend auto-detects the slash command, clicks the skill picker in
+  // the chat-widget menu, types the body at a natural pace, then submits.
+  // The brief is plain language; the skill resolves the workspace's
+  // faceid tokens itself.
+  await chatSend(page, `/artboard ${ARTBOARD_BRIEF}`);
 
-  // Pick the /artboard skill from the menu. Picking it inserts "/artboard "
-  // into the composer. Fall back to Enter (accepts the highlighted item)
-  // only if the visible menu button can't be found.
-  const picked = await clickFirst(
-    page,
-    [
-      `#chat-widget button:has-text("Build a 16-tile storyboard")`,
-      `#chat-widget button:has-text("/artboard")`,
-    ],
-    sleep,
-    800,
-  );
-  if (!picked) {
-    console.warn("[record] /artboard menu item not found — accepting via Enter");
-    await page.keyboard.press("Enter").catch(() => {});
-  }
-  await sleep(1600); // ≈ t=70
+  // ── Beat 6 — The agent replies & generation fires ────────────────
+  // @78 → end  The assistant first streams a clarifying question — the
+  // aspect-ratio chips. Clicking 16:9 confirms the brief and triggers GPT
+  // Image 2: the skill writes the full sixteen-shot prompt back into the
+  // chat, then the prompt lands as a new entry in the workspace's prompts
+  // feed with a progress bar that fills as the artboard renders. Both
+  // must be visible in the recording — that's the whole "prompt written
+  // before your eyes, artboard generated in your prompt box" moment.
+  await chatClickButton(page, "16:9", { timeoutMs: 60_000 });
 
-  // @70 → 81  "…and describe the film you want storyboarded."
-  // Re-focus the composer (picking the skill can blur it), land the caret at
-  // the end, then type the brief after the "/artboard " prefix.
-  await focusField(page, "textarea.aui-composer-input", sleep);
-  await page.keyboard.press("End").catch(() => {});
-  await sleep(300);
-  await page.keyboard.type(ARTBOARD_BRIEF, { delay: 20 }).catch(() => {});
-  await sleep(1600); // settle on the composed message — ≈ t=81
+  // Hold on the chat while it streams the expanded sixteen-shot prompt —
+  // this is the "artboard prompt" the agent writes back. stabilityMs of
+  // 6s means: wait until the chat innerText has been stable for 6s, i.e.
+  // the agent is done streaming and the chip set is settled.
+  await chatWaitForResponse(page, {
+    stabilityMs: 6000,
+    timeoutMs: 240_000,
+  });
 
-  // ── Beat 6 — Send ────────────────────────────────────────────────
-  // @81 → 89  The composer sends on Enter (Shift+Enter is newline). The
-  // assistant picks up the /artboard skill and starts building the artboard;
-  // we linger while it responds.
-  await page.keyboard.press("Enter").catch(() => {});
-  await sleep(6000); // ≈ t=89 — end
+  // Pop back to the workspace's prompts feed so the audience sees the new
+  // artboard entry land at position 0 with its generation progress bar.
+  await page.goto(`${BASE_URL}/prompts?ws=${WS}`, {
+    waitUntil: "domcontentloaded",
+  });
+  await dismissBanners(page, sleep);
+  await sleep(2200);
+
+  // Wait for the topmost prompt's mp.astria.ai-hosted result image to
+  // surface — that's the artboard, freshly rendered by GPT Image 2.
+  // Tolerant: if the image doesn't surface in 3 minutes we still hold on
+  // the entry so the recording at least shows the generation progress.
+  const newest = page
+    .locator(".prompt")
+    .first()
+    .locator("img.max-w-full[src*='mp.astria.ai']")
+    .first();
+  await newest
+    .waitFor({ state: "visible", timeout: 180_000 })
+    .catch(() => console.warn("[record] artboard image didn't surface in time"));
+  await newest.scrollIntoViewIfNeeded({ timeout: 1500 }).catch(() => {});
+  await sleep(5000); // dwell on the finished artboard
 };
 
 export default script;

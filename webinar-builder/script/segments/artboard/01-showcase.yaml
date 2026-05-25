@@ -19,13 +19,14 @@ caption:
     <span class="accent">one image</span>.
 
 narration: |
-  This is an artboard. One image — a four-by-four grid of sixteen
-  cinematic tiles, each a film still. Together they storyboard a
-  fifteen-second video.
+  This is an artboard: one image that plans a whole short film.
+  It is a four-by-four grid — sixteen cinematic frames — so you can
+  see the story before you spend time animating it.
 
-  One consistent cast, one wardrobe, one location, one color grade
-  across every tile. You generate it once — then hand it to a video
-  model. Here are two, both built from a single Astria workspace.
+  For a fashion campaign, that means one cast, one wardrobe, one
+  location, and one look across every frame. First you make the
+  artboard. Then you use it as the visual plan for video. These two
+  examples both started from the same Astria workspace.
 
 sfx:
   - { src: "assets/sfx/whoosh-soft.mp3", start: 0.2, volume: 0.55 }

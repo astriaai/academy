@@ -145,6 +145,8 @@ interface SegmentYaml {
   sfx?: Array<{ src: string; start: number; duration?: number; volume?: number }>;
   // Optional override of the project-level music bed for this segment.
   music?: { src: string; volume?: number } | null;
+  // Optional gain for the primary narration track; useful when SFX share a beat.
+  narration_volume?: number;
   // Optional pool of background videos to loop behind the foreground content.
   // Used by video-showcase / presenter-slide via their .bg-layer container.
   // Falls back to project defaults.background_videos.
@@ -379,7 +381,7 @@ function renderLayout(project: string, projectCfg: ProjectYaml, segment: Segment
       const start = s.start.toFixed(2);
       const dur = (s.duration ?? 2).toFixed(2);
       const vol = (s.volume ?? 0.6).toFixed(2);
-      return `<audio class="clip" data-start="${start}" data-duration="${dur}" data-track-index="${20 + i}" data-volume="${vol}" src="${s.src}"></audio>`;
+      return `<audio id="sfx-${segment.id}-${i}" class="clip" data-start="${start}" data-duration="${dur}" data-track-index="${20 + i}" data-volume="${vol}" src="${s.src}"></audio>`;
     })
     .join("\n      ");
 
@@ -390,7 +392,7 @@ function renderLayout(project: string, projectCfg: ProjectYaml, segment: Segment
     const music = segment.music ?? projectCfg.defaults?.music;
     if (music?.src) {
       const vol = (music.volume ?? 0.12).toFixed(2);
-      musicAudioHtml = `<audio id="seg-music" class="clip" data-start="0" data-duration="${durationSec.toFixed(2)}" data-track-index="9" data-volume="${vol}" src="${music.src}" loop></audio>`;
+      musicAudioHtml = `<audio id="seg-music-${segment.id}" class="clip" data-start="0" data-duration="${durationSec.toFixed(2)}" data-track-index="9" data-volume="${vol}" src="${music.src}" loop></audio>`;
     }
   }
 
@@ -401,7 +403,7 @@ function renderLayout(project: string, projectCfg: ProjectYaml, segment: Segment
       bgVideos
         .map(
           (src, i) =>
-            `<video class="bg-tile clip" data-start="0" data-duration="${durationSec.toFixed(
+            `<video id="bg-video-${segment.id}-${i}" class="bg-tile clip" data-start="0" data-duration="${durationSec.toFixed(
               2,
             )}" data-track-index="${30 + i}" data-volume="0" muted playsinline autoplay loop src="${src}"></video>`,
         )
@@ -412,6 +414,7 @@ function renderLayout(project: string, projectCfg: ProjectYaml, segment: Segment
   const vars: Record<string, string> = {
     DURATION: durationSec.toFixed(2),
     AUDIO_SRC: audioSrc,
+    NARRATION_VOLUME: (segment.narration_volume ?? 1).toFixed(2),
     AVATAR_MEDIA: avatarMediaHtml(project, segment.id, hasAvatar),
     CAPTIONS_CSS: captionsCss,
     CAPTIONS_HTML: captionsHtml,
@@ -423,11 +426,16 @@ function renderLayout(project: string, projectCfg: ProjectYaml, segment: Segment
   };
 
   if (segment.visual === "presenter-slide" || segment.visual === "avatar-hero") {
+    let slideBulletIndex = 0;
     const renderList = (items: string[], starts?: number[]) =>
       items
         .map((b, i) => {
           const t = starts?.[i];
-          const attr = typeof t === "number" ? ` data-start="${t.toFixed(2)}"` : "";
+          const id = `${segment.id}-slide-bullet-${slideBulletIndex++}`;
+          const attr =
+            typeof t === "number"
+              ? ` id="${id}" class="clip" data-start="${t.toFixed(2)}" data-duration="${(durationSec - t).toFixed(2)}" data-track-index="${60 + slideBulletIndex}"`
+              : "";
           return `<li${attr}>${b}</li>`;
         })
         .join("\n              ");
@@ -550,7 +558,10 @@ function renderLayout(project: string, projectCfg: ProjectYaml, segment: Segment
       const items = pipBullets
         .map((b, i) => {
           const t = pipStarts?.[i];
-          const attr = typeof t === "number" ? ` data-start="${t.toFixed(2)}"` : "";
+          const attr =
+            typeof t === "number"
+              ? ` id="${segment.id}-pip-bullet-${i}" class="clip" data-start="${t.toFixed(2)}" data-duration="${(durationSec - t).toFixed(2)}" data-track-index="${60 + i}"`
+              : "";
           return `<li${attr}>${b}</li>`;
         })
         .join("\n          ");

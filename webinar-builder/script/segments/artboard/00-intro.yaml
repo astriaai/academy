@@ -6,6 +6,9 @@ visual: tv-intro
 # Visual-only segment — no narration. Rides a silent track of this duration.
 duration: 10.0
 narration: ""
+music:
+  src: "assets/music/artboard-opening/track.mp3"
+  volume: 0.36
 
 intro:
   # Reuses Yuli's intro footage from video-style-transfer — the course shares

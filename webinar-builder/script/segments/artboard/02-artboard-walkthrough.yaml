@@ -2,6 +2,7 @@ id: 02-artboard-walkthrough
 title: "From workspace to artboard"
 order: 2
 visual: screencast-pip
+narration_volume: 0.78
 
 screencast:
   mode: "video"
@@ -24,76 +25,106 @@ caption:
 
 slide:
   bullets:
-    - "A campaign workspace — three templates"
-    - "References — filter by Human and Garment"
-    - "Each template holds a worked prompt"
-    - "/artboard, then describe the film"
-  # Paced to the 108s screencast capture. Beat map: packs 0-13, references
-  # 13-40, the three worked prompts 40-76, the AI chat + /artboard 76-108.
-  bullet_starts: [3.0, 15.0, 41.0, 78.0]
+    - "Open a workspace with templates"
+    - "Check cast and wardrobe references"
+    - "Open Astria Assistant"
+    - "Type /artboard and describe the film"
+    - "Choose aspect ratio, then review the artboard"
+  # Paced to the ~150s screencast capture. Beat map: packs 0-13,
+  # references 13-40, the three worked prompts 40-76, the AI chat +
+  # /artboard 76-95, agent reply → 16:9 → generation lands ~95-150.
+  bullet_starts: [3.0, 15.0, 41.0, 78.0, 110.0]
 
 # SFX — soft ding per bullet reveal plus a whoosh under the caption fade-in
-# and a subtle click as the AI assistant opens.
+# and a subtle click as the AI assistant opens. Final ding lands when the
+# artboard image surfaces in the prompts feed.
 sfx:
-  - { src: "assets/sfx/whoosh-soft.mp3",  start: 0.2,  volume: 0.5 }
-  - { src: "assets/sfx/ding-soft.mp3",    start: 3.0,  volume: 0.45 }
-  - { src: "assets/sfx/ding-soft.mp3",    start: 15.0, volume: 0.45 }
-  - { src: "assets/sfx/ding-soft.mp3",    start: 41.0, volume: 0.45 }
-  - { src: "assets/sfx/ding-soft.mp3",    start: 78.0, volume: 0.45 }
-  - { src: "assets/sfx/click-subtle.mp3", start: 77.0, volume: 0.5  }
+  - { src: "assets/sfx/whoosh-soft.mp3",  start: 0.2,   volume: 0.5 }
+  - { src: "assets/sfx/ding-soft.mp3",    start: 3.0,   volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",    start: 15.0,  volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",    start: 41.0,  volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",    start: 78.0,  volume: 0.45 }
+  - { src: "assets/sfx/click-subtle.mp3", start: 77.0,  volume: 0.5  }
+  - { src: "assets/sfx/ding-soft.mp3",    start: 110.0, volume: 0.08 }
+  - { src: "assets/sfx/ding-soft.mp3",    start: 138.0, volume: 0.5  }
 
 # Marker highlights — luxe-gold strokes around the UI element each beat refers
 # to. Coordinates are in Playwright source-pixel space (1600x900). These are
 # eyeball estimates — refine against the actual capture before final render.
 markers:
   # Beat 1 → the row of three template cards on /packs
-  - { start: 3.0,  duration: 5.0, shape: underline, cx: 800,  cy: 540,  w: 1100, style: luxe-gold }
+  - { start: 3.0,   duration: 5.0, shape: underline, cx: 800,  cy: 540, w: 1100, style: luxe-gold }
   # Beat 2 → the Filters button on /tunes (top-left, beside Search)
-  - { start: 14.0, duration: 4.0, shape: circle,    cx: 300,  cy: 165,  r: 60,   style: luxe-gold }
+  - { start: 14.0,  duration: 4.0, shape: circle,    cx: 300,  cy: 165, r: 60,   style: luxe-gold }
   # Beat 4 → the AI assistant button in the top nav (chat opens ~76s)
-  - { start: 74.0, duration: 4.0, shape: circle,    cx: 1360, cy: 26,   r: 70,   style: luxe-gold }
+  - { start: 74.0,  duration: 4.0, shape: circle,    cx: 1360, cy: 26,  r: 70,   style: luxe-gold }
   # Beat 5 → the chat composer where /artboard is typed (~88-101s)
-  - { start: 86.0, duration: 6.0, shape: underline, cx: 1340, cy: 840,  w: 460,  style: luxe-cream }
+  - { start: 86.0,  duration: 6.0, shape: underline, cx: 1340, cy: 840, w: 460,  style: luxe-cream }
+  # Beat 6 → the aspect-ratio chip (the 16:9 confirmation) appearing in chat
+  - { start: 108.0, duration: 5.0, shape: circle,    cx: 1340, cy: 700, r: 60,   style: luxe-gold }
+  # Beat 6 → the topmost prompt tile on /prompts where the new artboard lands
+  - { start: 135.0, duration: 6.0, shape: underline, cx: 600,  cy: 380, w: 700,  style: luxe-cream }
 
 # Narration paced to the 108s screencast — each paragraph tracks one beat so
 # the voice and the screen stay together. See bullet_starts above.
 narration: |
-  Let's build one. Start in your Astria workspace. This is America
-  Basics — a campaign built around three product templates. A shirt.
-  A jacket. A pair of pants. Each one a finished, repeatable
-  photoshoot.
+  Let's build one from scratch. Start in an Astria workspace that
+  already has a few templates. In this workspace, America Basics has
+  a shirt, a jacket, and a pair of pants. Each template is a reusable
+  photoshoot setup.
 
-  Open your References. This is everything the campaign is made of.
-  Use the Filters button to sort the library by class. Filter to
-  Human, and you meet the cast — a girl, a woman, and a man, each one
-  trained as its own face reference.
+  Before you ask for an artboard, check the reference library. Click
+  References, then use Filters. Filter to Human first. These are the
+  people the film can use — the girl, the woman, and the man.
 
-  Now filter to Garment, and the wardrobe appears — the jackets, the
-  shirts, the pants, every piece trained as a reference too. Cast and
-  wardrobe, side by side — that library is what every prompt here
-  draws from.
+  Now filter to Garment. This is the wardrobe: the jackets, shirts,
+  pants, and shoes. For a beginner, this is the key idea: the
+  assistant will build the artboard from the cast and wardrobe that
+  already live in this workspace.
 
-  Open a template, and it already holds a worked prompt. The shirt —
-  on the girl, full length on a tennis court, garment tokens resolved
-  into a real photograph.
+  Open a template and look at a finished prompt. The shirt template
+  shows a complete setup: who is wearing it, where the shot happens,
+  and what kind of image it should make.
 
-  The jacket — on the man, mid-stride through a skate park, carried by
-  the same reference tokens.
+  The jacket template does the same thing for the man. You do not need
+  to copy this prompt. Just notice the pattern: person, garment,
+  setting, and style.
 
-  And the pants — on the woman, framed close on the waistline, the fit
-  shown in fine detail. Three templates, three worked prompts, one
-  shared cast and wardrobe.
+  The pants template shows the woman and a closer product detail.
+  Three templates, one shared workspace. That gives the assistant
+  enough context to plan a consistent film.
 
-  Now the artboard. Up in the corner, open the Astria assistant and
-  start a fresh chat. Instead of writing a long prompt by hand, you
-  reach for a skill — type a slash to see them.
+  Now open Astria Assistant in the corner and start a fresh chat. This
+  is where the artboard starts. You are not going to write sixteen
+  separate shots by hand.
 
-  Type slash artboard. Then simply describe the film you want
-  storyboarded, in plain language — all three models together on a
-  clean seamless studio backdrop, calm and editorial, the full
-  wardrobe on show across sixteen cinematic shots.
+  Type slash artboard, then describe the film in plain language. Say
+  who should appear, what they wear, where they are, the mood, and the
+  format. Here we ask for all three models on a clean studio backdrop,
+  calm and editorial, in sixteen-by-nine.
 
-  You never list a single reference token yourself. The skill resolves
-  the workspace's cast and wardrobe on its own, and lays out the grid
-  with one consistent look. Send it — and it builds the artboard you
-  saw at the very start.
+  That is the repeatable recipe: cast, wardrobe, location, mood, and
+  aspect ratio. The assistant uses the workspace references for you,
+  so the grid stays consistent without you hunting for IDs.
+
+  Send it. If the assistant asks for an aspect ratio, choose the one
+  you want for the final video. For a horizontal tutorial or campaign
+  film, choose sixteen-by-nine.
+
+  Now watch what happens. The assistant expands your short brief into
+  a full sixteen-shot plan. You can see the camera sizes change:
+  close-ups, wide shots, product details, and group shots. That
+  variety is what makes the final video feel edited instead of flat.
+
+  When the artboard is queued, go to Prompts. The newest entry appears
+  at the top, just like any other Astria render. Wait for the progress
+  bar, then open the result and inspect the grid.
+
+  That is the whole workflow: one plain-language brief becomes one
+  sixteen-shot image. If the cast, clothing, or mood looks right, the
+  artboard is ready to drive the video pass.
+
+  If it is not quite right, do not start over. Stay in the same chat
+  and ask for the change: make it moodier, switch the location, or
+  tighten the wardrobe. The assistant keeps the structure and gives
+  you a cleaner next version.

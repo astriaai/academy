@@ -9,25 +9,24 @@ slide:
     Three things that make an
     <span class="accent">artboard</span> work.
   bullets:
-    - "Sixteen tiles ≈ a 15-second video — about one cut per second. A 4x4 grid keeps the geometry tidy."
-    - "Rotate the camera scale every tile — close-up, wide, detail — and never repeat a scale twice in a row."
-    - "Reference the same token every time, and match the artboard's aspect ratio to the final video."
+    - "Use the same cast, wardrobe, location, and mood across the grid."
+    - "Mix shot sizes — wide, medium, close-up, and product detail."
+    - "Match the artboard aspect ratio to the video you want to make."
   bullet_starts: [3.0, 12.0, 21.0]
 
 narration: |
-  Three things that make an artboard work.
+  Three beginner rules make an artboard work.
 
-  First — sixteen tiles is about a fifteen-second video, roughly one
-  cut per second. A four-by-four grid keeps the geometry tidy.
+  First, keep the world consistent. Use the same cast, the same
+  wardrobe, one clear location, and one mood across the whole grid.
 
-  Second — rotate the camera scale every tile. Close-up, wide, a
-  detail macro. Never repeat the same scale twice in a row — that's
-  what makes the cuts feel cinematic.
+  Second, vary the shot sizes. Ask for wide shots, medium shots,
+  close-ups, and product details. That gives the video pass something
+  to cut between.
 
-  Third — reference the same token every time, so the cast and the
-  wardrobe stay consistent across the grid. And set the artboard's
-  aspect ratio to match the final video — sixteen by nine, or nine
-  by sixteen for vertical.
+  Third, choose the aspect ratio before you generate. Use sixteen by
+  nine for horizontal, or nine by sixteen for vertical. Match the
+  artboard to the final video you want.
 
 sfx:
   - { src: "assets/sfx/whoosh-soft.mp3", start: 0.2,  volume: 0.5  }
