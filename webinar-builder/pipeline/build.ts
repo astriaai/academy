@@ -67,7 +67,13 @@ interface SegmentYaml {
   id: string;
   title: string;
   narration: string;
-  visual: "presenter-slide" | "screencast-pip" | "avatar-hero" | "video-showcase" | "tv-intro";
+  visual:
+    | "presenter-slide"
+    | "screencast-pip"
+    | "avatar-hero"
+    | "video-showcase"
+    | "tv-intro"
+    | "artboard-video-review";
   /** Override the audio-derived duration. Used for visual-only segments like the TV intro. */
   duration?: number;
   /** TV-intro layout config — full-bleed image or video with serif title lockup. */
@@ -86,6 +92,18 @@ interface SegmentYaml {
     // the pane (e.g. "DRIVING VIDEO" / "GENERATED RESULT").
     videos: Array<string | { src: string; label?: string }>;
     autoplay?: boolean;
+  };
+  review?: {
+    videos: Array<{ src: string; label?: string; start: number; duration: number }>;
+    artboards: Array<{ src: string; label?: string; start: number; duration: number }>;
+    tile_beats: Array<{
+      start: number;
+      duration: number;
+      artboard: number;
+      tile: number;
+      label: string;
+      note?: string;
+    }>;
   };
   slide?: {
     eyebrow?: string;
@@ -508,6 +526,41 @@ function renderLayout(project: string, projectCfg: ProjectYaml, segment: Segment
       : `<img id="intro-bg-media" src="${intro!.background_image}" alt="" />`;
     vars.INTRO_TITLE_HTML = intro.title_html;
     vars.INTRO_SUBTITLE_HTML = intro.subtitle_html ?? "";
+    vars.AVATAR_MEDIA = "";
+  } else if (segment.visual === "artboard-video-review") {
+    const review = segment.review;
+    if (!review?.videos?.length || !review.artboards?.length || !review.tile_beats?.length) {
+      throw new Error(`segment ${segment.id}: artboard-video-review requires review.videos, review.artboards, and review.tile_beats`);
+    }
+    vars.REVIEW_VIDEO_HTML = review.videos
+      .map((v, i) => {
+        const label = v.label ? `<div class="review-label">${v.label}</div>` : "";
+        return (
+          `<div class="review-video-shell clip" data-start="${v.start.toFixed(2)}" data-duration="${v.duration.toFixed(
+            2,
+          )}" data-track-index="${2 + i}">\n` +
+          `          ${label}\n` +
+          `          <video class="review-video" muted playsinline autoplay loop data-volume="0" src="${v.src}"></video>\n` +
+          `        </div>`
+        );
+      })
+      .join("\n        ");
+    vars.REVIEW_ARTBOARDS_HTML = review.artboards
+      .map((a, i) => {
+        const label = a.label ? `<div class="board-label">${a.label}</div>` : "";
+        return (
+          `<div class="board-layer clip" data-board-index="${i}" data-start="${a.start.toFixed(2)}" data-duration="${a.duration.toFixed(
+            2,
+          )}" data-track-index="${80 + i}">\n` +
+          `          ${label}\n` +
+          `          <img class="board-image" src="${a.src}" alt="" />\n` +
+          `        </div>`
+        );
+      })
+      .join("\n        ");
+    vars.REVIEW_BEATS_JSON = JSON.stringify(review.tile_beats);
+    vars.CAPTION_EYEBROW = segment.caption?.eyebrow ?? "";
+    vars.CAPTION_HTML = segment.caption?.html ?? "";
     vars.AVATAR_MEDIA = "";
   } else if (segment.visual === "screencast-pip") {
     const screencastMediaPath = pickScreencastMedia(project, segment);

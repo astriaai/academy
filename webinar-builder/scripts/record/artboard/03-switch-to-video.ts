@@ -220,10 +220,10 @@ async function clickGenerateIfRequested(
     const box = await el.boundingBox({ timeout: 700 }).catch(() => null);
     if (!box) continue;
     await glide(page, box.x + box.width / 2, box.y + box.height / 2);
-    await sleep(2500);
+    await sleep(1600);
     return;
   }
-  await sleep(2500);
+  await sleep(1600);
 }
 
 const script: RecordScript = async ({ page, sleep }) => {
@@ -261,7 +261,7 @@ const script: RecordScript = async ({ page, sleep }) => {
       referenceInputBox.y + referenceInputBox.height / 2,
     );
   }
-  await sleep(7000);
+  await sleep(3600);
 
   await focusEditable(page, ".video-tribute-prompt-input", sleep);
   await sleep(300);
@@ -269,7 +269,7 @@ const script: RecordScript = async ({ page, sleep }) => {
   await page.keyboard.press("Backspace").catch(() => {});
   await sleep(200);
   await humanType(page, VIDEO_PROMPT, { wpm: 190, thinkProb: 0.02 });
-  await sleep(4500);
+  await sleep(2200);
 
   await chooseVideoModel(page, sleep);
 
