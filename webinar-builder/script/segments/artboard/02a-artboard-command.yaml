@@ -1,0 +1,74 @@
+id: 02a-artboard-command
+title: "Generate the artboard"
+order: 2.1
+visual: screencast-pip
+narration_volume: 0.78
+
+screencast:
+  mode: "video"
+  url: "astria.ai/prompts"
+  record_script: "scripts/record/artboard/02a-artboard-command.ts"
+
+caption:
+  eyebrow: "GENERATE"
+  html: |
+    Ask for the
+    <span class="accent">shot grid</span>.
+
+slide:
+  bullets:
+    - "Open Astria Assistant"
+    - "Type /artboard"
+    - "Describe cast, wardrobe, location, mood"
+    - "Choose 16:9"
+    - "Review the artboard in Prompts"
+  bullet_starts: [3.0, 12.0, 24.0, 48.0, 64.0]
+
+sfx:
+  - { src: "assets/sfx/whoosh-soft.mp3",  start: 0.2,  volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",    start: 3.0,  volume: 0.35 }
+  - { src: "assets/sfx/ding-soft.mp3",    start: 12.0, volume: 0.35 }
+  - { src: "assets/sfx/ding-soft.mp3",    start: 24.0, volume: 0.30 }
+  - { src: "assets/sfx/click-subtle.mp3", start: 47.5, volume: 0.30 }
+  - { src: "assets/sfx/ding-soft.mp3",    start: 64.0, volume: 0.35 }
+
+markers:
+  # Assistant button in the top nav.
+  - { start: 3.0,  duration: 4.0, shape: circle,    cx: 1360, cy: 26,  r: 70,  style: luxe-gold }
+  # Chat composer where /artboard is typed.
+  - { start: 12.0, duration: 6.0, shape: underline, cx: 1340, cy: 840, w: 460, style: luxe-cream }
+  # Aspect-ratio chip in chat.
+  - { start: 48.0, duration: 5.0, shape: circle,    cx: 1340, cy: 700, r: 60,  style: luxe-gold }
+  # Newest prompt tile where the artboard lands.
+  - { start: 64.0, duration: 6.0, shape: underline, cx: 600,  cy: 380, w: 700, style: luxe-cream }
+
+# This is the paid generation step. Keeping it separate makes the prep segment
+# cheap to re-record, and keeps this segment focused on exactly what a beginner
+# should type and verify.
+narration: |
+  Now make the artboard. Open Astria Assistant and start a fresh chat.
+  This is the point where you stop clicking around and describe the film.
+
+  Type slash artboard. Then write the brief in plain language. Use the
+  same simple recipe every time: cast, wardrobe, location, mood, and
+  aspect ratio.
+
+  For this example, ask for all three models together on a clean
+  off-white studio backdrop, calm and editorial, with the full wardrobe
+  visible across the grid.
+
+  Send it. If the assistant asks for an aspect ratio, choose sixteen by
+  nine for a horizontal campaign video. Choose nine by sixteen only
+  when you are planning a vertical cut.
+
+  The assistant expands your short brief into a sixteen-shot plan. Look
+  for variety: wide shots, medium shots, close-ups, product details,
+  and group shots. That is what makes the video pass feel edited.
+
+  When the artboard is queued, open Prompts. The newest entry appears
+  at the top with the normal progress bar. When it finishes, inspect
+  the grid before moving on.
+
+  If the cast, clothing, location, and mood match the brief, you are
+  ready for video. If not, stay in the same chat and ask for the
+  change. Do not start over.

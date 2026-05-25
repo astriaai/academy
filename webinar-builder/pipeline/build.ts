@@ -349,10 +349,7 @@ function avatarMediaHtml(project: string, segmentId: string, hasAvatar: boolean)
   if (hasAvatar) {
     return `<video muted playsinline src="assets/avatars/${project}/${segmentId}.mp4" style="width:100%;height:100%;object-fit:cover;display:block;"></video>`;
   }
-  return `<div class="avatar-placeholder">
-          <div class="avatar-ring"></div>
-          <div class="avatar-label">PRESENTER<br/><span>Yuli · Astria</span></div>
-        </div>`;
+  return `<style>#seg-avatar{display:none!important}</style>`;
 }
 
 function renderLayout(project: string, projectCfg: ProjectYaml, segment: SegmentYaml, hasAvatar: boolean, audioSrc: string, durationSec: number): string {

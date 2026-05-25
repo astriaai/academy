@@ -1,11 +1,11 @@
 /**
- * Astria Artboard walkthrough: workspace → references → prompts → /artboard chat.
+ * Astria Artboard walkthrough, part 1: workspace → references → template prompts.
  *
  * Drives the demo account through the "America Basics" workspace (ws=54) to
- * teach the artboard skill: it presents the workspace, its cast and wardrobe,
- * the worked prompts each template already holds, then opens the AI assistant
- * chat widget and composes a `/artboard` request — the same kind of artboard
- * that drove the America Basics film.
+ * teach the artboard setup: it presents the workspace, its cast and wardrobe,
+ * then shows the worked prompts each template already holds. It intentionally
+ * stops before the AI assistant so this prep segment can be re-recorded
+ * without triggering a paid `/artboard` generation.
  *
  * Astria UI surface (verified live, May 2026 — ws=54):
  *   - Templates list:      /packs?ws=54
@@ -29,7 +29,7 @@
  *   - Skill menu:          typing '/' opens it; '/artboard' is the first item,
  *                          rendered as a <button> inside #chat-widget.
  *
- * Narration anchors (~89s total — approximate; the build paces narration to
+ * Narration anchors (~75s total — approximate; the build paces narration to
  * the real capture):
  *    0.0 s  land on /packs?ws=54
  *    3.0 s  "This is the America Basics workspace — three product templates."
@@ -39,14 +39,7 @@
  *   35.0 s  open the Basic shirt prompts
  *   44.0 s  open the Basic Jacket prompts
  *   53.0 s  open the Basic Pants prompts
- *   63.0 s  open the AI assistant
- *   68.0 s  type /artboard, pick the skill
- *   73.0 s  type the artboard brief
- *   83.0 s  send — the assistant starts building the artboard
- *   89.0 s  end (linger while it responds)
- *
- * NOTE — this script SENDS the chat message: recording it triggers a real
- * `/artboard` generation on the demo account (GPT Image 2, a real cost).
+ *   64.0 s  end on the final worked prompt
  *
  * Auth: replays storageState.json — that session must be the demo account
  * the America Basics workspace (ws=54) is shared with.
@@ -55,11 +48,6 @@
  *   HEADED=1 npx tsx pipeline/record-screencast.ts --project artboard 02-artboard-walkthrough
  */
 import type { RecordScript } from "../../../pipeline/record-screencast.js";
-import {
-  chatClickButton,
-  chatSend,
-  chatWaitForResponse,
-} from "../../../pipeline/recorder-helpers.js";
 
 // UI hostname — ASTRIA_BASE_URL is the API URL (returns JSON on /prompts).
 // The recorder always drives the browser UI.
@@ -77,18 +65,6 @@ const PACK_PANTS = "4051"; // Basic Pants  — Autumn (woman)
 const TUNE_HAZEL = "3982728"; // girl
 const TUNE_AUTUMN = "3979589"; // woman
 const TUNE_DAMIEN = "3979439"; // man
-
-// What gets typed into the chat after the /artboard skill is picked. Plain
-// language — the skill resolves the workspace's faceid tokens itself. Keep it
-// free of ';' (Astria truncates prompts at the first semicolon) and of '/'
-// (a slash re-opens the skill menu mid-type).
-const ARTBOARD_BRIEF =
-  "Build a 4x4 storyboard artboard for a 15-second America Basics studio " +
-  "fashion film, in 16:9. Put all three models together — the girl, the " +
-  "woman and the man — on a clean off-white seamless studio backdrop with " +
-  "soft diffused light. Calm and editorial: gentle weight shifts, warm " +
-  "expressions, soft eye contact, the full wardrobe on show across sixteen " +
-  "cinematic shots.";
 
 // ── Human-like cursor motion ─────────────────────────────────────────────
 // The recorder's synthetic cursor is repositioned directly on every
@@ -383,85 +359,9 @@ const script: RecordScript = async ({ page, sleep }) => {
     await sleep(holdMs);
   };
 
-  await tourPrompt(PACK_SHIRT, 4200); // ≈ t=44
-  await tourPrompt(PACK_JACKET, 4200); // ≈ t=53
-  await tourPrompt(PACK_PANTS, 5200); // ≈ t=60
-
-  // ── Beat 4 — Open the AI assistant chat widget ───────────────────
-  // @60 → 67  "Now open the AI assistant."
-  await clickFirst(
-    page,
-    [
-      `a.btn.btn-primary[aria-label='AI assistant']`,
-      `a[aria-label='AI assistant']`,
-    ],
-    sleep,
-  );
-  await sleep(2000); // panel slides in — ≈ t=62
-  await dismissBanners(page, sleep); // any intro tip strip inside the panel
-
-  // Start a fresh conversation. Chats persist server-side per account, so
-  // without this each recording appends to the previous run's thread. The
-  // "New chat" button (＋ icon) sits in the chat-widget header. Tolerant —
-  // no-op if absent.
-  await clickFirst(
-    page,
-    [`#chat-widget button[aria-label='New chat']`],
-    sleep,
-    600,
-  );
-  await sleep(1800); // ≈ t=67
-
-  // ── Beat 5 — Compose & send the /artboard request ───────────────
-  // @65 → 78  "Type slash artboard — that's the artboard skill — and
-  //            describe the film you want storyboarded."
-  // chatSend auto-detects the slash command, clicks the skill picker in
-  // the chat-widget menu, types the body at a natural pace, then submits.
-  // The brief is plain language; the skill resolves the workspace's
-  // faceid tokens itself.
-  await chatSend(page, `/artboard ${ARTBOARD_BRIEF}`);
-
-  // ── Beat 6 — The agent replies & generation fires ────────────────
-  // @78 → end  The assistant first streams a clarifying question — the
-  // aspect-ratio chips. Clicking 16:9 confirms the brief and triggers GPT
-  // Image 2: the skill writes the full sixteen-shot prompt back into the
-  // chat, then the prompt lands as a new entry in the workspace's prompts
-  // feed with a progress bar that fills as the artboard renders. Both
-  // must be visible in the recording — that's the whole "prompt written
-  // before your eyes, artboard generated in your prompt box" moment.
-  await chatClickButton(page, "16:9", { timeoutMs: 60_000 });
-
-  // Hold on the chat while it streams the expanded sixteen-shot prompt —
-  // this is the "artboard prompt" the agent writes back. stabilityMs of
-  // 6s means: wait until the chat innerText has been stable for 6s, i.e.
-  // the agent is done streaming and the chip set is settled.
-  await chatWaitForResponse(page, {
-    stabilityMs: 6000,
-    timeoutMs: 240_000,
-  });
-
-  // Pop back to the workspace's prompts feed so the audience sees the new
-  // artboard entry land at position 0 with its generation progress bar.
-  await page.goto(`${BASE_URL}/prompts?ws=${WS}`, {
-    waitUntil: "domcontentloaded",
-  });
-  await dismissBanners(page, sleep);
-  await sleep(2200);
-
-  // Wait for the topmost prompt's mp.astria.ai-hosted result image to
-  // surface — that's the artboard, freshly rendered by GPT Image 2.
-  // Tolerant: if the image doesn't surface in 3 minutes we still hold on
-  // the entry so the recording at least shows the generation progress.
-  const newest = page
-    .locator(".prompt")
-    .first()
-    .locator("img.max-w-full[src*='mp.astria.ai']")
-    .first();
-  await newest
-    .waitFor({ state: "visible", timeout: 180_000 })
-    .catch(() => console.warn("[record] artboard image didn't surface in time"));
-  await newest.scrollIntoViewIfNeeded({ timeout: 1500 }).catch(() => {});
-  await sleep(5000); // dwell on the finished artboard
+  await tourPrompt(PACK_SHIRT, 3000); // ≈ t=44
+  await tourPrompt(PACK_JACKET, 3000); // ≈ t=53
+  await tourPrompt(PACK_PANTS, 3800); // ≈ t=64
 };
 
 export default script;
