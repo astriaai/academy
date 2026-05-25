@@ -1,17 +1,10 @@
 id: 02b-brief-to-video
-title: "Brief → prompt → artboard"
+title: "Refine the artboard"
 order: 2.5
 visual: screencast-pip
 
-# Same-chat iteration. The viewer sees:
-#   1. A succinct brief sent in chat (no "artboard" word — just the cast +
-#      vibe). The skill streams the expanded prompt back.
-#   2. The /prompts page — the new prompt landed, the GPT Image 2 generation
-#      progress bar fills, the artboard tile appears.
-#   3. Click the tile — lightbox opens with the full 4K artboard.
-#   4. Back in the SAME chat thread, type just the change ("make it more moody
-#      and color graded"). Send.
-#   5. /prompts again — second prompt, second progress bar, second lightbox.
+# Same-chat refinement. The first board is reviewed in 02aa; this segment
+# focuses only on the follow-up request and the darker generated result.
 #
 # Two paid /artboard generations on the demo workspace (~$10 each, GPT Image 2).
 
@@ -26,19 +19,18 @@ avatar:
   engine: "infinitetalk-fast"
 
 caption:
-  eyebrow: "BRIEF · PROMPT · ARTBOARD"
+  eyebrow: "REFINE"
   html: |
-    One chat. Each message,
-    a <span class="accent">refinement</span>.
+    Same chat. Ask for
+    the <span class="accent">change</span>.
 
 slide:
   bullets:
-    - "Succinct brief — the cast and the vibe"
-    - "Watch the prompt and image generate"
-    - "Open the artboard in the lightbox"
-    - "Refine in the same chat — just the change"
-  # Placeholder pacing — re-pace against the real capture.
-  bullet_starts: [3.0, 22.0, 45.0, 70.0]
+    - "Stay in the same chat"
+    - "Ask for one clear change"
+    - "Wait for the new prompt"
+    - "Open the refined board"
+  bullet_starts: [3.0, 15.0, 31.0, 48.0]
 
 # Marker plans — fill cx/cy once the capture exists (1600x900 source space).
 markers: []
@@ -46,35 +38,27 @@ markers: []
 sfx:
   - { src: "assets/sfx/whoosh-soft.mp3",  start: 0.2,  volume: 0.5 }
   - { src: "assets/sfx/ding-soft.mp3",    start: 3.0,  volume: 0.45 }
-  - { src: "assets/sfx/ding-soft.mp3",    start: 22.0, volume: 0.45 }
-  - { src: "assets/sfx/ding-soft.mp3",    start: 45.0, volume: 0.45 }
-  - { src: "assets/sfx/ding-soft.mp3",    start: 70.0, volume: 0.45 }
-  # Two subtle clicks — one as each brief is sent.
-  - { src: "assets/sfx/click-subtle.mp3", start: 14.0, volume: 0.5 }
-  - { src: "assets/sfx/click-subtle.mp3", start: 64.0, volume: 0.5 }
+  - { src: "assets/sfx/ding-soft.mp3",    start: 15.0, volume: 0.45 }
+  - { src: "assets/sfx/click-subtle.mp3", start: 24.0, volume: 0.35 }
+  - { src: "assets/sfx/ding-soft.mp3",    start: 31.0, volume: 0.40 }
+  - { src: "assets/sfx/ding-soft.mp3",    start: 48.0, volume: 0.40 }
 
 narration: |
-  The best artboard workflow is short and repeatable. Open the
-  assistant, type slash artboard, and write a brief. Keep it simple:
-  the cast, the setting, the mood, and the kind of campaign you want.
-  Then send it.
+  Now refine the board in the same chat. Do not start over and do not
+  paste the whole brief again. Keep the context, and ask for the one
+  change that matters.
 
-  The assistant turns those few words into a full shot plan. Sixteen
-  numbered lines, one for each tile in the grid. You can watch the
-  structure appear: wide shot, close-up, detail, group shot, then
-  another angle.
+  Here the clean studio version works, but the campaign needs more
+  attitude. Type slash artboard and ask for it to be more moody, darker,
+  and surrounded by greenery.
 
-  Go to Prompts and look for the newest entry. The artboard generates
-  there with the normal progress bar. When it lands, open it in the
-  lightbox and check every tile: cast, wardrobe, location, and mood.
+  The assistant keeps the cast and the structure, then writes a new
+  prompt for the updated treatment. You are changing the direction, not
+  rebuilding the workflow.
 
-  Now refine it in the same chat. Do not start over. Just type the
-  change you want: make it more moody and color graded. Send that as
-  the next message.
+  When the new result lands in Prompts, open it in the lightbox. Now the
+  grid has a darker, more cinematic look, while still behaving like the
+  same storyboard.
 
-  The assistant keeps the same cast and structure, but changes the
-  treatment. A new artboard generates with the darker look, so you can
-  compare versions without rebuilding the whole brief.
-
-  That is the loop: brief, review, refine. One chat can carry the idea
-  from rough direction to a video-ready storyboard.
+  That is the repeatable loop: create the first board, inspect it, then
+  refine in the same chat with one clear request.
