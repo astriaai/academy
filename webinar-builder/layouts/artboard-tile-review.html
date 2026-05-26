@@ -79,8 +79,20 @@
         position: relative;
         flex: 1;
         min-height: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 28px;
+      }
+      .tile-window {
+        width: 100%;
+        max-height: 100%;
+        aspect-ratio: 16 / 9;
         background-repeat: no-repeat;
         background-size: 400% 400%;
+        background-position: 0% 0%;
+        background-color: #111;
+        box-shadow: 0 18px 50px rgba(0,0,0,0.34);
       }
       .tile-copy {
         min-height: 170px;
@@ -142,7 +154,9 @@
           <div class="tile-focus" id="tile-focus" aria-hidden="true"></div>
         </div>
         <div class="tile-zoom" id="tile-zoom">
-          <div class="tile-crop" id="tile-crop"></div>
+          <div class="tile-crop" id="tile-crop">
+            <div class="tile-window" id="tile-window"></div>
+          </div>
           <div class="tile-copy">
             <div class="tile-title" id="tile-title"></div>
             <div class="tile-note" id="tile-note"></div>
@@ -163,9 +177,27 @@
       const tl = gsap.timeline({ paused: true });
       const focus = document.getElementById("tile-focus");
       const crop = document.getElementById("tile-crop");
+      const tileWindow = document.getElementById("tile-window");
       const title = document.getElementById("tile-title");
       const note = document.getElementById("tile-note");
       const boardImages = Array.from(document.querySelectorAll(".board-layer .board-image"));
+
+      function containedImageRect(img) {
+        const host = img.closest(".board-overview");
+        const hostRect = host.getBoundingClientRect();
+        const naturalW = img.naturalWidth || hostRect.width;
+        const naturalH = img.naturalHeight || hostRect.height;
+        const scale = Math.min(hostRect.width / naturalW, hostRect.height / naturalH);
+        const width = naturalW * scale;
+        const height = naturalH * scale;
+        return {
+          left: (hostRect.width - width) / 2,
+          top: (hostRect.height - height) / 2,
+          width,
+          height,
+          aspect: naturalW / naturalH,
+        };
+      }
 
       function setBeat(beat) {
         const tile = Math.max(1, Math.min(16, Number(beat.tile || 1))) - 1;
@@ -173,19 +205,21 @@
         const row = Math.floor(tile / 4);
         const img = boardImages[beat.artboard] || boardImages[0];
         const src = img ? img.getAttribute("src") : "";
-        crop.style.backgroundImage = `url("${src}")`;
-        crop.style.backgroundPosition = `${col * 33.3333}% ${row * 33.3333}%`;
+        const rect = img ? containedImageRect(img) : { left: 0, top: 0, width: 0, height: 0, aspect: 16 / 9 };
+        tileWindow.style.aspectRatio = String(rect.aspect || 16 / 9);
+        tileWindow.style.backgroundImage = `url("${src}")`;
+        tileWindow.style.backgroundPosition = `${col * 33.3333}% ${row * 33.3333}%`;
         title.textContent = beat.label || "";
         note.textContent = beat.note || "";
         gsap.to(focus, {
-          left: `${col * 25}%`,
-          top: `${row * 25}%`,
-          width: "25%",
-          height: "25%",
+          left: rect.left + (col * rect.width) / 4,
+          top: rect.top + (row * rect.height) / 4,
+          width: rect.width / 4,
+          height: rect.height / 4,
           duration: 0.55,
           ease: "power3.out",
         });
-        gsap.fromTo(crop, { scale: 1.05 }, { scale: 1, duration: 0.7, ease: "power3.out" });
+        gsap.fromTo(tileWindow, { scale: 1.04 }, { scale: 1, duration: 0.7, ease: "power3.out" });
       }
 
       tl.from(".board-overview", { opacity: 0, y: 24, duration: 0.75, ease: "power3.out" }, 0.15);

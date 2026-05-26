@@ -19,7 +19,7 @@ slide:
   bullets:
     - "Open Astria Assistant"
     - "Type /artboard"
-    - "Describe the film"
+    - "Name each character and garment"
     - "Choose 16:9"
     - "Review the generated prompt"
   bullet_starts: [3.0, 10.0, 18.0, 31.0, 41.0]
@@ -34,8 +34,12 @@ narration: |
   in normal words.
 
   Ask for an editorial fashion video on a white studio background. Name
-  the references you want included: the cast, the shirt, the pants, and
-  the jacket.
+  every character and the exact garment that belongs to them, using the
+  template references as the source of truth.
+
+  Be explicit that looks and outfits should not swap. The girl stays in
+  her template outfit, the woman stays in hers, and the man keeps his
+  own jacket, pants, and shoes.
 
   Choose sixteen by nine. The assistant expands your short brief into a
   detailed artboard prompt, with a mix of wide shots, medium shots,

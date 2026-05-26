@@ -18,7 +18,7 @@ caption:
 slide:
   bullets:
     - "Stay in the same chat"
-    - "Ask for one clear change"
+    - "Do not start a new thread"
     - "Make it outdoor, moody, green"
     - "Review the new prompt"
     - "Open the refined artboard"
@@ -30,11 +30,13 @@ sfx:
   - { src: "assets/sfx/ding-soft.mp3", start: 30.0, volume: 0.25 }
 
 narration: |
-  To edit the direction, stay in the same chat. Do not start over.
+  To edit the direction, stay in the same chat session. Do not click new
+  chat, and do not start the workflow over.
 
   Ask for one clear change: make the same fashion video more moody,
-  darker, outdoor, and surrounded by greenery.
+  darker, outdoor, and surrounded by greenery. Also remind the assistant
+  to keep the same characters in their original template garments.
 
-  The assistant keeps the context, writes a new artboard prompt, and
-  creates a refined grid. This is the loop: create, inspect, then ask
-  for a focused change.
+  Because you are still in the same conversation, the assistant keeps
+  the prior context, writes a new artboard prompt, and creates a refined
+  grid. This is the loop: create, inspect, then ask for a focused change.

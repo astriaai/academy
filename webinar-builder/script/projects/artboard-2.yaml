@@ -31,6 +31,7 @@ defaults:
       steady pose, looking directly at the camera, no hand gestures.
 
 segments:
+  - 00-intro
   - 00-result-promise
   - 01-artboard-roadmap
   - 02-workspace-references

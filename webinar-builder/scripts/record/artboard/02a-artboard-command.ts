@@ -23,10 +23,13 @@ const WS = "54";
 // semicolons (Astria truncates prompts there) and extra slashes.
 const ARTBOARD_BRIEF =
   "Build a 4x4 storyboard artboard for a 15-second America Basics studio " +
-  "fashion film, in 16:9. Put all three models together, the girl, the woman " +
-  "and the man, on a clean off-white seamless studio backdrop with soft " +
-  "diffused light. Calm and editorial, with the full wardrobe on show across " +
-  "sixteen cinematic shots.";
+  "fashion film, in 16:9. Use the workspace templates as the source of " +
+  "truth. Keep each person in their assigned template garments. The girl " +
+  "keeps her outfit, the woman keeps her outfit, and the man keeps his " +
+  "jacket, pants, and shoes. Do not swap garments between characters. Put " +
+  "all three models together on a clean off-white seamless studio backdrop " +
+  "with soft diffused light. Calm and editorial, with the full wardrobe on " +
+  "show across sixteen cinematic shots.";
 
 async function dismissBanners(
   page: import("playwright").Page,

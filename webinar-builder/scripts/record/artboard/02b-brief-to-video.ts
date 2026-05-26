@@ -52,7 +52,10 @@ const BRIEF_INITIAL =
 // /artboard skill (verified live — the chat agent just text-responds and
 // no aspect chip appears), so the recorder re-invokes the skill with the
 // "just-the-change" body — same chat, same continuity, fresh generation.
-const BRIEF_REFINE = "/artboard make it more moody and dark, with greenery";
+const BRIEF_REFINE =
+  "/artboard make the same film more moody and dark, outdoor, with greenery. " +
+  "Keep the same characters and keep each character in the same template garments. " +
+  "Do not swap outfits between people";
 
 // glide, humanType, chat* helpers are all imported from recorder-helpers.
 
