@@ -11,7 +11,7 @@ showcase:
   videos:
     - src: "assets/results/3d-packshots/ref-backpack-blue-ugly.jpg"
       label: "RAW iPHONE PHOTO"
-    - src: "assets/results/3d-packshots/rotation-backpack.mp4"
+    - src: "assets/results/3d-packshots/rotation-backpack-blue.mp4"
       label: "CLEAN AI PACKSHOT"
 
 caption:

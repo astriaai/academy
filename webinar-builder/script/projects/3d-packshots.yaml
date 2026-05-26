@@ -21,10 +21,10 @@ defaults:
   # Rotation MP4s pulled from astria.ai workspace ws=503 (Fashion 3d-packshots).
   # Used as b-roll behind the FAQ slide + the showcase background layer.
   background_videos:
-    - "assets/results/3d-packshots/rotation-backpack.mp4"
-    - "assets/results/3d-packshots/rotation-handbag.mp4"
-    - "assets/results/3d-packshots/rotation-shoes-front.mp4"
-    - "assets/results/3d-packshots/rotation-shoes-side.mp4"
+    - "assets/results/3d-packshots/rotation-backpack-blue.mp4"
+    - "assets/results/3d-packshots/rotation-bag-burgundy.mp4"
+    - "assets/results/3d-packshots/rotation-sneaker-single.mp4"
+    - "assets/results/3d-packshots/rotation-sneakers-pair.mp4"
 
   # Editorial presenter — ivory linen blazer + champagne silk slip + gold
   # chain earring, painted taupe backdrop. Distinct from the VST look so the
