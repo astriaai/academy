@@ -7,11 +7,13 @@ duration: 10.0
 narration: ""
 
 intro:
-  # background_video disabled — Seedance MP4 not present locally. Falls back
-  # to the still image. Re-enable when assets/avatars/3d-packshots/00-intro-seedance.mp4
-  # is generated or restored.
-  # background_video: "assets/avatars/3d-packshots/00-intro-seedance.mp4"
-  background_image: "assets/avatars/3d-packshots/intro-fullbody-wide.jpg"
+  # Reuses Yuli's intro footage from video-style-transfer — the course shares
+  # one presenter and one show-open, so the title sequence stays consistent
+  # across modules. Referenced in place (not copied) so CI restores it from
+  # gh-pages media/ with no per-project seeding. Falls back to the still if
+  # the video is missing.
+  background_video: "assets/avatars/video-style-transfer/00-intro-seedance.mp4"
+  background_image: "assets/avatars/video-style-transfer/intro-fullbody-wide.jpg"
   title_html: "ASTRIA"
   subtitle_html: "3D Packshots"
 
