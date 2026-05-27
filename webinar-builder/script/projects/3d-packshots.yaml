@@ -15,8 +15,12 @@ defaults:
     model: "gemini-3.1-flash-tts-preview"
 
   music:
-    src: "assets/music/luxe-pad.mp3"
-    volume: 0.12
+    # "Acid Jazz Groove" by alex-morgan, Pixabay CC0 (no attribution required):
+    # https://pixabay.com/music/cafe-acid-jazz-groove-517096/
+    # Smooth acid-jazz/funk bed, ~3 min, sits well behind a silent narration track
+    # and leaves headroom for a future TTS pass (volume bumps to the SFX dings).
+    src: "assets/music/acid-jazz-groove.mp3"
+    volume: 0.55
 
   # Rotation MP4s pulled from astria.ai workspace ws=503 (Fashion 3d-packshots).
   # Used as b-roll behind the FAQ slide + the showcase background layer.
