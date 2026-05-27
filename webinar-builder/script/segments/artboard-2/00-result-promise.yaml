@@ -2,7 +2,7 @@ id: 00-result-promise
 title: "Create a cinematic fashion video"
 order: 0
 visual: video-showcase
-duration: 24.0
+duration: 27.5
 
 showcase:
   videos:

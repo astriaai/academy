@@ -62,6 +62,7 @@ const ROOT = resolve(__dirname, "..");
 // hyperframes is run via npx and pinned — see runRenderWithEarlyKill. The
 // version is part of the render-cache key (an engine bump invalidates it).
 const HYPERFRAMES_VERSION = "0.4.9";
+const TIMING_TAIL_PAD_SEC = Number(process.env.TIMING_TAIL_PAD_SEC ?? "0.75");
 
 interface SegmentYaml {
   id: string;
@@ -894,10 +895,26 @@ async function buildOne(project: string, segmentId: string) {
     run("ffmpeg", ["-y", "-i", avatarMp4, "-vn", "-acodec", "libmp3lame", "-q:a", "2", audioMp3]);
   }
 
-  const sourceForDuration = avatarMp4 ?? audioMp3;
-  const audioDuration = Math.ceil(ffprobeDuration(sourceForDuration) * 10) / 10 + 0.2;
-  // Visual-only segments (e.g. tv-intro) can override duration explicitly.
-  const safeDuration = segment.duration ?? audioDuration;
+  const narrationDuration = ffprobeDuration(audioMp3);
+  const avatarDuration = avatarMp4 ? ffprobeDuration(avatarMp4) : 0;
+  const mediaDuration = Math.max(narrationDuration, avatarDuration);
+  const autoDuration = Math.ceil((mediaDuration + (isSilentSegment ? 0.2 : TIMING_TAIL_PAD_SEC)) * 10) / 10;
+  // Explicit YAML durations are treated as a minimum for narrated segments,
+  // not a hard trim. Otherwise a TTS cache refresh can quietly chop the last
+  // words, and stitch.ts may crossfade spoken audio into the next segment.
+  const safeDuration =
+    segment.duration === undefined
+      ? autoDuration
+      : isSilentSegment
+      ? segment.duration
+      : Math.max(segment.duration, autoDuration);
+  if (!isSilentSegment && segment.duration !== undefined && segment.duration < autoDuration) {
+    console.warn(
+      `[timing] ${segmentId}: duration ${segment.duration.toFixed(2)}s < narration/avatar ` +
+        `${mediaDuration.toFixed(2)}s + tail ${TIMING_TAIL_PAD_SEC.toFixed(2)}s; ` +
+        `rendering ${safeDuration.toFixed(2)}s to avoid clipped speech.`,
+    );
+  }
 
   // Screencast recording: only for screencast-pip segments with mode=video.
   // Skipped when the mp4 already exists (cheap iteration) unless --rerecord is passed.
