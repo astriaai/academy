@@ -15,7 +15,7 @@
  *       so an unchanged segment is a cache hit (no paid API call). Partial
  *       fetch — only the cache/media blobs download. No-op on a cold repo.
  *
- *   tsx pipeline/ci/gh-pages.ts publish <root|pr-N> [--update-cache]
+ *   tsx pipeline/ci/gh-pages.ts publish <root|pr-N> [--update-cache] [--no-cache]
  *       Deploy the freshly built `site/` + `out/` + `assets/` to the branch.
  *       Rebuilds gh-pages as ONE fresh orphan commit (force-push) so history
  *       never bloats; git dedupes unchanged blobs by SHA. Sibling `pr-N`
@@ -149,7 +149,7 @@ function restore(overlay?: string) {
 type Entry = { path: string; src: string };
 
 /** What this publish replaces on the branch; everything else is preserved. */
-function buildPlan(target: string, updateCache: boolean): Entry[] {
+function buildPlan(target: string, updateCache: boolean, publishCache: boolean): Entry[] {
   const prefix = target === "root" ? "" : `${target}/`;
   const entries: Entry[] = [];
 
@@ -191,7 +191,7 @@ function buildPlan(target: string, updateCache: boolean): Entry[] {
 
   // 4. shared build cache — root publish always; a PR paid build with
   //    --update-cache also refreshes the canonical root cache/ + media/.
-  if (target === "root" || updateCache) {
+  if (publishCache && (target === "root" || updateCache)) {
     if (existsSync(CACHE)) entries.push({ path: "cache", src: CACHE });
     if (target !== "root" && existsSync(ASSETS)) entries.push({ path: "media", src: ASSETS });
   }
@@ -276,7 +276,7 @@ function commitAndPush(
 /** A preview directory slug — pr-<N>, module-<name>, etc. */
 const SLUG = /^[a-z0-9][a-z0-9._-]*$/;
 
-function publish(target: string, updateCache: boolean) {
+function publish(target: string, updateCache: boolean, publishCache: boolean) {
   if (target !== "root" && !SLUG.test(target)) {
     throw new Error(`publish target must be 'root' or a slug (pr-N, module-X), got '${target}'`);
   }
@@ -285,7 +285,7 @@ function publish(target: string, updateCache: boolean) {
   const stage = join(TMP, "stage");
   mkdirSync(stage, { recursive: true });
 
-  const plan = buildPlan(target, updateCache);
+  const plan = buildPlan(target, updateCache, publishCache);
 
   // Lay new content into the staging work-tree once (re-added each attempt).
   for (const { path, src } of plan) {
@@ -295,11 +295,15 @@ function publish(target: string, updateCache: boolean) {
   }
 
   const paths = plan.map((e) => e.path);
+  const removePaths =
+    target === "root" && !publishCache
+      ? [...paths, "cache"]
+      : paths;
   const msg =
     target === "root"
-      ? `publish: course site${updateCache ? " + cache" : ""}`
-      : `publish: ${target} preview${updateCache ? " + cache" : ""}`;
-  commitAndPush(`published ${target}`, paths, paths, stage, msg);
+      ? `publish: course site${publishCache || updateCache ? " + cache" : ""}`
+      : `publish: ${target} preview${publishCache && updateCache ? " + cache" : ""}`;
+  commitAndPush(`published ${target}`, removePaths, paths, stage, msg);
   rmSync(TMP, { recursive: true, force: true });
 }
 
@@ -322,14 +326,14 @@ function main() {
     restore(rest.find((a) => !a.startsWith("--")));
   } else if (cmd === "publish") {
     const target = rest.find((a) => !a.startsWith("--")) ?? "root";
-    publish(target, rest.includes("--update-cache"));
+    publish(target, rest.includes("--update-cache"), !rest.includes("--no-cache"));
   } else if (cmd === "drop") {
     const target = rest.find((a) => !a.startsWith("--"));
     if (!target) throw new Error("drop requires a pr-<N> target");
     drop(target);
   } else {
     console.error(
-      "usage: gh-pages.ts restore | publish <root|pr-N> [--update-cache] | drop <pr-N>",
+      "usage: gh-pages.ts restore | publish <root|pr-N> [--update-cache] [--no-cache] | drop <pr-N>",
     );
     process.exit(1);
   }
