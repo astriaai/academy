@@ -81,6 +81,27 @@ function ffprobe(file: string): number | null {
   return Number.isFinite(d) ? Math.round(d * 10) / 10 : null;
 }
 
+function thumbnailUrl(pid: string, id: string, videoPath: string): string | null {
+  if (!existsSync(videoPath)) return null;
+  const rel = join("thumbs", pid, `${id}.jpg`);
+  const out = join(SITE, rel);
+  mkdirSync(dirname(out), { recursive: true });
+  const r = spawnSync(
+    "ffmpeg",
+    [
+      "-y",
+      "-ss", "1",
+      "-i", videoPath,
+      "-frames:v", "1",
+      "-vf", "scale=640:-1",
+      "-q:v", "5",
+      out,
+    ],
+    { encoding: "utf-8" },
+  );
+  return r.status === 0 && existsSync(out) ? rel.replaceAll("\\", "/") : null;
+}
+
 /** First existing path under assets/, returned as a site-relative media URL. */
 function mediaUrl(...rel: string[]): string | null {
   const abs = join(ROOT, "assets", ...rel);
@@ -105,6 +126,10 @@ function loadYaml<T>(path: string): T | null {
 }
 
 function main() {
+  rmSync(SITE, { recursive: true, force: true });
+  mkdirSync(SITE, { recursive: true });
+  for (const f of readdirSync(DASHBOARD)) cpSync(join(DASHBOARD, f), join(SITE, f));
+
   const projectIds = readdirSync(join(ROOT, "script", "projects"))
     .filter((f) => f.endsWith(".yaml"))
     .map((f) => f.replace(/\.yaml$/, ""))
@@ -135,6 +160,7 @@ function main() {
         status,
         duration: built ? ffprobe(outMp4) : null,
         videoUrl: status === "failed" ? null : videoUrl,
+        thumbnailUrl: built ? thumbnailUrl(pid, sid, outMp4) : null,
         inputs: {
           avatar: mediaUrl("avatars", pid, `${sid}.mp4`),
           audio: mediaUrl("audio", pid, `${sid}.mp3`),
@@ -156,6 +182,7 @@ function main() {
       failedCount: segments.filter((s) => s.status === "failed").length,
       duration: segments.reduce((t, s) => t + (s.duration || 0), 0),
       fullDraftUrl: servable(fullDraftAbs) ? `videos/${pid}/_full-draft.mp4` : null,
+      thumbnailUrl: servable(fullDraftAbs) ? thumbnailUrl(pid, "_full-draft", fullDraftAbs) : null,
       segments,
     };
   });
@@ -169,9 +196,6 @@ function main() {
     projects,
   };
 
-  rmSync(SITE, { recursive: true, force: true });
-  mkdirSync(SITE, { recursive: true });
-  for (const f of readdirSync(DASHBOARD)) cpSync(join(DASHBOARD, f), join(SITE, f));
   writeFileSync(join(SITE, "manifest.json"), JSON.stringify(manifest, null, 2));
 
   const totalSegs = projects.reduce((t, p) => t + p.segmentCount, 0);
