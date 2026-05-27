@@ -55,7 +55,7 @@ input {
   background: rgba(255, 255, 255, 0.96);
   border-bottom: 1px solid var(--line);
   display: grid;
-  grid-template-columns: 260px minmax(220px, 620px) 1fr;
+  grid-template-columns: 260px minmax(220px, 620px);
   gap: 24px;
   align-items: center;
   backdrop-filter: blur(14px);
@@ -94,23 +94,6 @@ input {
 .search-shell input:focus {
   border-color: #111;
   box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08);
-}
-
-.top-meta {
-  justify-self: end;
-  display: flex;
-  gap: 8px;
-  color: var(--muted);
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-
-.top-meta span {
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  padding: 5px 9px;
-  background: #fff;
 }
 
 .channel,
@@ -298,7 +281,7 @@ p {
 
 .card-row {
   display: grid;
-  grid-template-columns: 1fr 28px;
+  grid-template-columns: 1fr 34px;
   gap: 10px;
   margin-top: 12px;
 }
@@ -316,18 +299,43 @@ p {
   text-decoration: underline;
 }
 
-.kebab {
-  border: 0;
-  background: transparent;
-  font-size: 26px;
-  line-height: 1;
+.icon-button {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--line);
+  padding: 0;
+  background: #fff;
   color: #111;
   cursor: pointer;
   border-radius: 50%;
+  display: grid;
+  place-items: center;
+  transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
 }
 
-.kebab:hover {
+.icon-button svg {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.icon-button:hover {
   background: var(--subtle);
+  border-color: #d0d0d0;
+}
+
+.icon-button:active {
+  transform: scale(0.96);
+}
+
+.icon-button.copied {
+  background: #111;
+  border-color: #111;
+  color: #fff;
 }
 
 .video-meta,
@@ -426,9 +434,18 @@ p {
 .watch-title-row {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
   gap: 18px;
   padding: 20px 0 18px;
   border-bottom: 1px solid var(--line);
+}
+
+.watch-actions {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 4px;
 }
 
 .back-link {
@@ -743,9 +760,6 @@ p {
     gap: 12px;
     padding: 14px 16px;
   }
-  .top-meta {
-    justify-self: start;
-  }
   .channel,
   .watch {
     padding: 18px 14px 70px;
@@ -772,6 +786,10 @@ p {
   .watch-player-head,
   .debug-panel summary {
     display: block;
+  }
+  .watch-actions {
+    margin-top: 14px;
+    padding-top: 0;
   }
   .mode-switch {
     margin-top: 12px;

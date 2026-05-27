@@ -100,6 +100,23 @@ function statusClass(project) {
   return "built";
 }
 
+function shareButton(title, href) {
+  return `
+    <button class="icon-button share-button" type="button" title="Share" aria-label="Share ${attr(title)}" data-share-title="${attr(title)}" data-share-href="${attr(href)}">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7" />
+        <path d="M12 16V4" />
+        <path d="m7 9 5-5 5 5" />
+      </svg>
+    </button>`;
+}
+
+function cardDetails(project) {
+  const details = [fmtDur(project.duration)];
+  if (project.failedCount) details.push(`${project.failedCount} failed`);
+  return details.join(" · ");
+}
+
 function thumbnail(videoUrl, title, duration, status, thumbnailUrl) {
   if (!videoUrl) {
     return `
@@ -124,7 +141,6 @@ function thumbnail(videoUrl, title, duration, status, thumbnailUrl) {
 function channelCard(project, m) {
   const href = `#watch=${encodeURIComponent(project.id)}`;
   const status = statusClass(project);
-  const failed = project.failedCount ? `<span class="warn">${project.failedCount} failed</span>` : "all segments built";
   const section = projectSection(project);
   const searchText = [
     project.title,
@@ -138,10 +154,10 @@ function channelCard(project, m) {
       </a>
       <div class="card-row">
         <a class="video-title" href="${href}">${esc(project.title)}</a>
-        <button class="kebab" type="button" title="More">⋮</button>
+        ${shareButton(project.title, href)}
       </div>
       <div class="video-meta">${countViews(project)} · ${ageLabel(m)}</div>
-      <div class="video-submeta">${project.segmentCount} segments · ${fmtDur(project.duration)} · ${failed}</div>
+      <div class="video-submeta">${cardDetails(project)}</div>
     </article>`;
 }
 
@@ -305,7 +321,7 @@ function relatedRail(projects, currentId) {
           <div class="related-thumb">${thumbnail(p.fullDraftUrl, p.title, p.duration, statusClass(p), p.thumbnailUrl)}</div>
           <div>
             <div class="related-title">${esc(p.title)}</div>
-            <div class="related-meta">${p.segmentCount} segments · ${fmtDur(p.duration)}</div>
+            <div class="related-meta">${fmtDur(p.duration)}</div>
           </div>
         </a>`,
     )
@@ -323,7 +339,7 @@ function route() {
   };
 }
 
-function topBar(m, title = "Astria Academy", q = "") {
+function topBar(_m, title = "Astria Academy", q = "") {
   return `
     <header class="channel-top">
       <a class="brand" href="#">
@@ -333,11 +349,62 @@ function topBar(m, title = "Astria Academy", q = "") {
       <div class="search-shell">
         <input type="search" id="search" placeholder="Search tutorials" aria-label="Search tutorials" value="${attr(q)}" />
       </div>
-      <div class="top-meta">
-        <span>${esc(m.buildMode)}</span>
-        ${m.commit ? `<span>${esc(m.commit)}</span>` : ""}
-      </div>
     </header>`;
+}
+
+function shareUrl(href) {
+  const url = new URL(location.href);
+  url.hash = href.replace(/^#/, "");
+  return url.toString();
+}
+
+function copyShareUrl(url) {
+  if (navigator.clipboard?.writeText) return navigator.clipboard.writeText(url);
+  const input = document.createElement("textarea");
+  input.value = url;
+  input.setAttribute("readonly", "");
+  input.style.position = "fixed";
+  input.style.top = "-999px";
+  document.body.appendChild(input);
+  input.select();
+  document.execCommand("copy");
+  input.remove();
+  return Promise.resolve();
+}
+
+function flashShared(button) {
+  const label = button.dataset.originalLabel || button.getAttribute("aria-label") || "Share";
+  button.dataset.originalLabel = label;
+  button.classList.add("copied");
+  button.setAttribute("aria-label", "Link copied");
+  window.clearTimeout(button.shareTimer);
+  button.shareTimer = window.setTimeout(() => {
+    button.classList.remove("copied");
+    button.setAttribute("aria-label", label);
+  }, 1600);
+}
+
+function wireShareButtons() {
+  for (const button of document.querySelectorAll("[data-share-href]")) {
+    button.addEventListener("click", async (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      const title = button.dataset.shareTitle || document.title;
+      const url = shareUrl(button.dataset.shareHref || "#");
+      try {
+        if (navigator.share) {
+          await navigator.share({ title, url });
+        } else {
+          await copyShareUrl(url);
+        }
+        flashShared(button);
+      } catch (err) {
+        if (err?.name === "AbortError") return;
+        await copyShareUrl(url);
+        flashShared(button);
+      }
+    });
+  }
 }
 
 function sectionTabs(q, activeSection) {
@@ -423,6 +490,7 @@ function renderChannel(m, q = "", section = "all") {
     </main>`;
 
   wireSearch(q, false, activeSection);
+  wireShareButtons();
 }
 
 function renderWatch(m, projectId, segmentId, q = "") {
@@ -451,6 +519,9 @@ function renderWatch(m, projectId, segmentId, q = "") {
                 : `${countViews(project)} · ${ageLabel(m)} · ${project.segmentCount} segments · ${fmtDur(project.duration)}`
             }</p>
           </div>
+          <div class="watch-actions">
+            ${shareButton(isSegmentMode ? `${project.title}: ${activeSegment.title}` : project.title, isSegmentMode ? watchHref(project, activeSegment) : watchHref(project))}
+          </div>
         </div>
         ${debugPanel(project, activeSegment, isSegmentMode)}
       </section>
@@ -468,6 +539,7 @@ function renderWatch(m, projectId, segmentId, q = "") {
   if (isSegmentMode) document.querySelector(`[data-segment-id="${CSS.escape(activeSegment.id)}"]`)?.classList.add("active");
   wireWatchPlayer(project, activeSegment, isSegmentMode);
   wireSearch(q, true);
+  wireShareButtons();
 }
 
 function render(m) {
