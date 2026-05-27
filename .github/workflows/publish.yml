@@ -12,6 +12,8 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 concurrency:
   group: course-publish
@@ -75,3 +77,24 @@ jobs:
         if: ${{ !cancelled() }}
         working-directory: webinar-builder
         run: npm run ci:publish -- root
+
+      - name: Assemble Pages artifact
+        if: ${{ !cancelled() }}
+        working-directory: webinar-builder
+        run: |
+          rm -rf _site
+          mkdir -p _site
+          cp -a site/. _site/
+          cp -a out _site/videos
+          touch _site/.nojekyll
+
+      - name: Upload Pages artifact
+        if: ${{ !cancelled() }}
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: webinar-builder/_site
+
+      - name: Deploy to GitHub Pages
+        if: ${{ !cancelled() }}
+        id: deployment
+        uses: actions/deploy-pages@v4
