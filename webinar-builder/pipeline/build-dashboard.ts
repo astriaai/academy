@@ -19,6 +19,7 @@
  *   AFFECTED_PROJECTS  JSON array / list of projects rebuilt in this run
  *   GIT_SHA            commit being built
  *   PAGES_BASE_URL     site root, used to link unchanged modules to main
+ *   DASHBOARD_PROJECTS comma/list filter for a focused publish
  */
 import { spawnSync } from "node:child_process";
 import {
@@ -48,6 +49,10 @@ const pagesBaseUrl = (env.PAGES_BASE_URL || "").replace(/\/+$/, "");
 // When unset (local runs, main publish) every module counts as in-build.
 const affectedSet = env.AFFECTED_PROJECTS !== undefined;
 const affected = (env.AFFECTED_PROJECTS || "")
+  .replace(/[[\]"]/g, " ")
+  .split(/[,\s]+/)
+  .filter(Boolean);
+const dashboardProjectFilter = (env.DASHBOARD_PROJECTS || "")
   .replace(/[[\]"]/g, " ")
   .split(/[,\s]+/)
   .filter(Boolean);
@@ -103,6 +108,7 @@ function main() {
   const projectIds = readdirSync(join(ROOT, "script", "projects"))
     .filter((f) => f.endsWith(".yaml"))
     .map((f) => f.replace(/\.yaml$/, ""))
+    .filter((pid) => dashboardProjectFilter.length === 0 || dashboardProjectFilter.includes(pid))
     .sort();
 
   const projects = projectIds.map((pid) => {

@@ -15,7 +15,7 @@
  *       so an unchanged segment is a cache hit (no paid API call). Partial
  *       fetch — only the cache/media blobs download. No-op on a cold repo.
  *
- *   tsx pipeline/ci/gh-pages.ts publish <root|pr-N> [--update-cache] [--no-cache]
+ *   tsx pipeline/ci/gh-pages.ts publish <root|pr-N> [--update-cache] [--no-cache] [--no-media] [--only-project <id>]
  *       Deploy the freshly built `site/` + `out/` + `assets/` to the branch.
  *       Rebuilds gh-pages as ONE fresh orphan commit (force-push) so history
  *       never bloats; git dedupes unchanged blobs by SHA. Sibling `pr-N`
@@ -71,7 +71,7 @@ function git(args: string[], env?: NodeJS.ProcessEnv): string {
 }
 
 /** The projects that have rendered output worth publishing. */
-function projectsWithOutput(): string[] {
+function projectsWithOutput(onlyProject?: string): string[] {
   const manifests = [
     ...readdirSync(join(ROOT, "script", "projects")),
     ...(existsSync(join(ROOT, "script", "music-videos"))
@@ -82,7 +82,7 @@ function projectsWithOutput(): string[] {
     .map((f) => f.replace(/\.yaml$/, ""));
   return [...new Set(manifests)].filter(
     (p) => existsSync(join(OUT, p)) && readdirSync(join(OUT, p)).some((f) => f.endsWith(".mp4")),
-  );
+  ).filter((p) => !onlyProject || p === onlyProject);
 }
 
 // ─── restore ────────────────────────────────────────────────────────────────
@@ -149,7 +149,7 @@ function restore(overlay?: string) {
 type Entry = { path: string; src: string };
 
 /** What this publish replaces on the branch; everything else is preserved. */
-function buildPlan(target: string, updateCache: boolean, publishCache: boolean): Entry[] {
+function buildPlan(target: string, updateCache: boolean, publishCache: boolean, publishMedia: boolean, onlyProject?: string): Entry[] {
   const prefix = target === "root" ? "" : `${target}/`;
   const entries: Entry[] = [];
 
@@ -171,7 +171,7 @@ function buildPlan(target: string, updateCache: boolean, publishCache: boolean):
   // oversized videos so the publish push can't die on one — stitch.ts keeps
   // full-draft cuts under this, so in practice nothing is skipped.
   const MAX_PUSH_BYTES = 99 * 1024 * 1024;
-  for (const p of projectsWithOutput()) {
+  for (const p of projectsWithOutput(onlyProject)) {
     mkdirSync(join(vids, p), { recursive: true });
     for (const f of readdirSync(join(OUT, p))) {
       // .mp4 = the video; .mp4.key = its render-cache key (skips re-render).
@@ -187,13 +187,13 @@ function buildPlan(target: string, updateCache: boolean, publishCache: boolean):
   if (existsSync(vids) && readdirSync(vids).length) entries.push({ path: prefix + "videos", src: vids });
 
   // 3. input media the GUI links to (= assets/, the gitignored generated dirs)
-  if (existsSync(ASSETS)) entries.push({ path: prefix + "media", src: ASSETS });
+  if (publishMedia && existsSync(ASSETS)) entries.push({ path: prefix + "media", src: ASSETS });
 
   // 4. shared build cache — root publish always; a PR paid build with
   //    --update-cache also refreshes the canonical root cache/ + media/.
   if (publishCache && (target === "root" || updateCache)) {
     if (existsSync(CACHE)) entries.push({ path: "cache", src: CACHE });
-    if (target !== "root" && existsSync(ASSETS)) entries.push({ path: "media", src: ASSETS });
+    if (target !== "root" && publishMedia && existsSync(ASSETS)) entries.push({ path: "media", src: ASSETS });
   }
   return entries;
 }
@@ -276,7 +276,7 @@ function commitAndPush(
 /** A preview directory slug — pr-<N>, module-<name>, etc. */
 const SLUG = /^[a-z0-9][a-z0-9._-]*$/;
 
-function publish(target: string, updateCache: boolean, publishCache: boolean) {
+function publish(target: string, updateCache: boolean, publishCache: boolean, publishMedia: boolean, onlyProject?: string) {
   if (target !== "root" && !SLUG.test(target)) {
     throw new Error(`publish target must be 'root' or a slug (pr-N, module-X), got '${target}'`);
   }
@@ -285,7 +285,7 @@ function publish(target: string, updateCache: boolean, publishCache: boolean) {
   const stage = join(TMP, "stage");
   mkdirSync(stage, { recursive: true });
 
-  const plan = buildPlan(target, updateCache, publishCache);
+  const plan = buildPlan(target, updateCache, publishCache, publishMedia, onlyProject);
 
   // Lay new content into the staging work-tree once (re-added each attempt).
   for (const { path, src } of plan) {
@@ -296,8 +296,8 @@ function publish(target: string, updateCache: boolean, publishCache: boolean) {
 
   const paths = plan.map((e) => e.path);
   const removePaths =
-    target === "root" && !publishCache
-      ? [...paths, "cache"]
+    target === "root"
+      ? [...paths, ...(!publishCache ? ["cache"] : []), ...(!publishMedia ? ["media"] : [])]
       : paths;
   const msg =
     target === "root"
@@ -326,14 +326,21 @@ function main() {
     restore(rest.find((a) => !a.startsWith("--")));
   } else if (cmd === "publish") {
     const target = rest.find((a) => !a.startsWith("--")) ?? "root";
-    publish(target, rest.includes("--update-cache"), !rest.includes("--no-cache"));
+    const onlyProjectIdx = rest.indexOf("--only-project");
+    publish(
+      target,
+      rest.includes("--update-cache"),
+      !rest.includes("--no-cache"),
+      !rest.includes("--no-media"),
+      onlyProjectIdx === -1 ? undefined : rest[onlyProjectIdx + 1],
+    );
   } else if (cmd === "drop") {
     const target = rest.find((a) => !a.startsWith("--"));
     if (!target) throw new Error("drop requires a pr-<N> target");
     drop(target);
   } else {
     console.error(
-      "usage: gh-pages.ts restore | publish <root|pr-N> [--update-cache] [--no-cache] | drop <pr-N>",
+      "usage: gh-pages.ts restore | publish <root|pr-N> [--update-cache] [--no-cache] [--no-media] [--only-project <id>] | drop <pr-N>",
     );
     process.exit(1);
   }
