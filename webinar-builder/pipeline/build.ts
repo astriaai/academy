@@ -34,6 +34,7 @@ import {
   unlinkSync,
   copyFileSync,
 } from "node:fs";
+import { createHash } from "node:crypto";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import yaml from "js-yaml";
@@ -58,11 +59,23 @@ import {
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "..");
 
+// hyperframes is run via npx and pinned — see runRenderWithEarlyKill. The
+// version is part of the render-cache key (an engine bump invalidates it).
+const HYPERFRAMES_VERSION = "0.4.9";
+const TIMING_TAIL_PAD_SEC = Number(process.env.TIMING_TAIL_PAD_SEC ?? "0.75");
+
 interface SegmentYaml {
   id: string;
   title: string;
   narration: string;
-  visual: "presenter-slide" | "screencast-pip" | "avatar-hero" | "video-showcase" | "tv-intro";
+  visual:
+    | "presenter-slide"
+    | "screencast-pip"
+    | "avatar-hero"
+    | "video-showcase"
+    | "tv-intro"
+    | "artboard-video-review"
+    | "artboard-tile-review";
   /** Override the audio-derived duration. Used for visual-only segments like the TV intro. */
   duration?: number;
   /** TV-intro layout config — full-bleed image or video with serif title lockup. */
@@ -81,6 +94,18 @@ interface SegmentYaml {
     // the pane (e.g. "DRIVING VIDEO" / "GENERATED RESULT").
     videos: Array<string | { src: string; label?: string }>;
     autoplay?: boolean;
+  };
+  review?: {
+    videos: Array<{ src: string; label?: string; start: number; duration: number }>;
+    artboards: Array<{ src: string; label?: string; start: number; duration: number }>;
+    tile_beats: Array<{
+      start: number;
+      duration: number;
+      artboard: number;
+      tile: number;
+      label: string;
+      note?: string;
+    }>;
   };
   slide?: {
     eyebrow?: string;
@@ -140,6 +165,8 @@ interface SegmentYaml {
   sfx?: Array<{ src: string; start: number; duration?: number; volume?: number }>;
   // Optional override of the project-level music bed for this segment.
   music?: { src: string; volume?: number } | null;
+  // Optional gain for the primary narration track; useful when SFX share a beat.
+  narration_volume?: number;
   // Optional pool of background videos to loop behind the foreground content.
   // Used by video-showcase / presenter-slide via their .bg-layer container.
   // Falls back to project defaults.background_videos.
@@ -285,6 +312,20 @@ function mp3FileToDataUri(path: string): string {
   return `data:audio/mp3;base64,${b64}`;
 }
 
+/**
+ * Resolve an avatar `image_url` to something the lipsync APIs accept. An
+ * http(s) URL passes through; a repo-relative path is inlined as a base64
+ * data URI so the presenter source can live in-repo with no dependency on an
+ * external image host. OmniHuman / InfiniteTalk both accept a data URI.
+ */
+function resolveAvatarImage(imageRef: string): string {
+  if (/^(https?:|data:)/.test(imageRef)) return imageRef;
+  const abs = resolve(ROOT, imageRef);
+  if (!existsSync(abs)) throw new Error(`avatar image_url not found: ${imageRef}`);
+  const ext = abs.toLowerCase().endsWith(".png") ? "png" : "jpeg";
+  return `data:image/${ext};base64,${readFileSync(abs).toString("base64")}`;
+}
+
 function sanitizeForSay(text: string) {
   return text.replace(/[—–]/g, " - ").replace(/["']/g, "").replace(/\s+/g, " ").trim();
 }
@@ -299,6 +340,15 @@ function ensureSayNarration(project: string, segmentId: string, narration: strin
   if (!stale) {
     console.log(`[say] ${segmentId}: narration cached`);
     return mp3;
+  }
+  // macOS `say` is the local-dev fallback and has no Linux equivalent. CI must
+  // either run DRAFT (silent placeholder audio) or supply a TTS API key —
+  // fail loudly here instead of with an opaque `spawn say ENOENT`.
+  if (process.platform !== "darwin") {
+    throw new Error(
+      `[say] ${segmentId}: macOS \`say\` is unavailable on ${process.platform}. ` +
+        `Run with DRAFT=1, or set a TTS API key (VERTEX_API_KEY / WAVESPEED_API_KEY / HEYGEN_API_KEY).`,
+    );
   }
   console.log(`[say] ${segmentId}: running macOS say`);
   run("say", ["-v", "Daniel", "-r", "175", "-o", aiff, sanitizeForSay(narration)]);
@@ -319,10 +369,7 @@ function avatarMediaHtml(project: string, segmentId: string, hasAvatar: boolean)
   if (hasAvatar) {
     return `<video muted playsinline src="assets/avatars/${project}/${segmentId}.mp4" style="width:100%;height:100%;object-fit:cover;display:block;"></video>`;
   }
-  return `<div class="avatar-placeholder">
-          <div class="avatar-ring"></div>
-          <div class="avatar-label">PRESENTER<br/><span>Yuli · Astria</span></div>
-        </div>`;
+  return `<style>#seg-avatar{display:none!important}</style>`;
 }
 
 function renderLayout(project: string, projectCfg: ProjectYaml, segment: SegmentYaml, hasAvatar: boolean, audioSrc: string, durationSec: number): string {
@@ -351,7 +398,7 @@ function renderLayout(project: string, projectCfg: ProjectYaml, segment: Segment
       const start = s.start.toFixed(2);
       const dur = (s.duration ?? 2).toFixed(2);
       const vol = (s.volume ?? 0.6).toFixed(2);
-      return `<audio class="clip" data-start="${start}" data-duration="${dur}" data-track-index="${20 + i}" data-volume="${vol}" src="${s.src}"></audio>`;
+      return `<audio id="sfx-${segment.id}-${i}" class="clip" data-start="${start}" data-duration="${dur}" data-track-index="${20 + i}" data-volume="${vol}" src="${s.src}"></audio>`;
     })
     .join("\n      ");
 
@@ -362,7 +409,7 @@ function renderLayout(project: string, projectCfg: ProjectYaml, segment: Segment
     const music = segment.music ?? projectCfg.defaults?.music;
     if (music?.src) {
       const vol = (music.volume ?? 0.12).toFixed(2);
-      musicAudioHtml = `<audio id="seg-music" class="clip" data-start="0" data-duration="${durationSec.toFixed(2)}" data-track-index="9" data-volume="${vol}" src="${music.src}" loop></audio>`;
+      musicAudioHtml = `<audio id="seg-music-${segment.id}" class="clip" data-start="0" data-duration="${durationSec.toFixed(2)}" data-track-index="9" data-volume="${vol}" src="${music.src}" loop></audio>`;
     }
   }
 
@@ -373,7 +420,7 @@ function renderLayout(project: string, projectCfg: ProjectYaml, segment: Segment
       bgVideos
         .map(
           (src, i) =>
-            `<video class="bg-tile clip" data-start="0" data-duration="${durationSec.toFixed(
+            `<video id="bg-video-${segment.id}-${i}" class="bg-tile clip" data-start="0" data-duration="${durationSec.toFixed(
               2,
             )}" data-track-index="${30 + i}" data-volume="0" muted playsinline autoplay loop src="${src}"></video>`,
         )
@@ -384,6 +431,7 @@ function renderLayout(project: string, projectCfg: ProjectYaml, segment: Segment
   const vars: Record<string, string> = {
     DURATION: durationSec.toFixed(2),
     AUDIO_SRC: audioSrc,
+    NARRATION_VOLUME: (segment.narration_volume ?? 1).toFixed(2),
     AVATAR_MEDIA: avatarMediaHtml(project, segment.id, hasAvatar),
     CAPTIONS_CSS: captionsCss,
     CAPTIONS_HTML: captionsHtml,
@@ -395,11 +443,16 @@ function renderLayout(project: string, projectCfg: ProjectYaml, segment: Segment
   };
 
   if (segment.visual === "presenter-slide" || segment.visual === "avatar-hero") {
+    let slideBulletIndex = 0;
     const renderList = (items: string[], starts?: number[]) =>
       items
         .map((b, i) => {
           const t = starts?.[i];
-          const attr = typeof t === "number" ? ` data-start="${t.toFixed(2)}"` : "";
+          const id = `${segment.id}-slide-bullet-${slideBulletIndex++}`;
+          const attr =
+            typeof t === "number"
+              ? ` id="${id}" class="clip" data-start="${t.toFixed(2)}" data-duration="${(durationSec - t).toFixed(2)}" data-track-index="${60 + slideBulletIndex}"`
+              : "";
           return `<li${attr}>${b}</li>`;
         })
         .join("\n              ");
@@ -476,6 +529,63 @@ function renderLayout(project: string, projectCfg: ProjectYaml, segment: Segment
     vars.INTRO_TITLE_HTML = intro.title_html;
     vars.INTRO_SUBTITLE_HTML = intro.subtitle_html ?? "";
     vars.AVATAR_MEDIA = "";
+  } else if (segment.visual === "artboard-video-review") {
+    const review = segment.review;
+    if (!review?.videos?.length || !review.artboards?.length || !review.tile_beats?.length) {
+      throw new Error(`segment ${segment.id}: artboard-video-review requires review.videos, review.artboards, and review.tile_beats`);
+    }
+    vars.REVIEW_VIDEO_HTML = review.videos
+      .map((v, i) => {
+        const label = v.label ? `<div class="review-label">${v.label}</div>` : "";
+        return (
+          `<div class="review-video-shell clip" data-start="${v.start.toFixed(2)}" data-duration="${v.duration.toFixed(
+            2,
+          )}" data-track-index="${2 + i}">\n` +
+          `          ${label}\n` +
+          `          <video class="review-video" muted playsinline autoplay loop data-volume="0" src="${v.src}"></video>\n` +
+          `        </div>`
+        );
+      })
+      .join("\n        ");
+    vars.REVIEW_ARTBOARDS_HTML = review.artboards
+      .map((a, i) => {
+        const label = a.label ? `<div class="board-label">${a.label}</div>` : "";
+        return (
+          `<div class="board-layer clip" data-board-index="${i}" data-start="${a.start.toFixed(2)}" data-duration="${a.duration.toFixed(
+            2,
+          )}" data-track-index="${80 + i}">\n` +
+          `          ${label}\n` +
+          `          <img class="board-image" src="${a.src}" alt="" />\n` +
+          `        </div>`
+        );
+      })
+      .join("\n        ");
+    vars.REVIEW_BEATS_JSON = JSON.stringify(review.tile_beats);
+    vars.CAPTION_EYEBROW = segment.caption?.eyebrow ?? "";
+    vars.CAPTION_HTML = segment.caption?.html ?? "";
+    vars.AVATAR_MEDIA = "";
+  } else if (segment.visual === "artboard-tile-review") {
+    const review = segment.review;
+    if (!review?.artboards?.length || !review.tile_beats?.length) {
+      throw new Error(`segment ${segment.id}: artboard-tile-review requires review.artboards and review.tile_beats`);
+    }
+    vars.REVIEW_ARTBOARDS_HTML = review.artboards
+      .map((a, i) => {
+        const label = a.label ? `<div class="board-label">${a.label}</div>` : "";
+        return (
+          `<div class="board-layer clip" data-board-index="${i}" data-start="${a.start.toFixed(2)}" data-duration="${a.duration.toFixed(
+            2,
+          )}" data-track-index="${80 + i}">\n` +
+          `          ${label}\n` +
+          `          <img class="board-image" src="${a.src}" alt="" />\n` +
+          `        </div>`
+        );
+      })
+      .join("\n        ");
+    vars.REVIEW_BEATS_JSON = JSON.stringify(review.tile_beats);
+    vars.CAPTION_EYEBROW = segment.caption?.eyebrow ?? "";
+    vars.CAPTION_HTML = segment.caption?.html ?? "";
+    vars.AVATAR_MEDIA = "";
   } else if (segment.visual === "screencast-pip") {
     const screencastMediaPath = pickScreencastMedia(project, segment);
     if (screencastMediaPath?.endsWith(".mp4")) {
@@ -522,7 +632,10 @@ function renderLayout(project: string, projectCfg: ProjectYaml, segment: Segment
       const items = pipBullets
         .map((b, i) => {
           const t = pipStarts?.[i];
-          const attr = typeof t === "number" ? ` data-start="${t.toFixed(2)}"` : "";
+          const attr =
+            typeof t === "number"
+              ? ` id="${segment.id}-pip-bullet-${i}" class="clip" data-start="${t.toFixed(2)}" data-duration="${(durationSec - t).toFixed(2)}" data-track-index="${60 + i}"`
+              : "";
           return `<li${attr}>${b}</li>`;
         })
         .join("\n          ");
@@ -586,6 +699,41 @@ function renderLayout(project: string, projectCfg: ProjectYaml, segment: Segment
   return workDir;
 }
 
+/**
+ * Content hash of everything that determines a segment's rendered mp4: the
+ * composition HTML and every local file it references (audio, video, images).
+ * Lets the build skip the slow hyperframes render when an identical mp4
+ * already exists — see the render-cache check in buildOne(). Disable with
+ * NO_RENDER_CACHE=1.
+ */
+function computeRenderKey(workDir: string): string {
+  const html = readFileSync(join(workDir, "index.html"), "utf-8");
+  const refs = new Set<string>();
+  const collect = (re: RegExp) => {
+    for (const m of html.matchAll(re)) {
+      const p = m[1];
+      if (p && !/^(https?:|data:|#|\/\/)/.test(p)) refs.add(p);
+    }
+  };
+  collect(/(?:src|data-composition-src)\s*=\s*"([^"]+)"/g);
+  collect(/url\(\s*['"]?([^'")]+)['"]?\s*\)/g);
+
+  const h = createHash("sha256");
+  h.update(`engine:hyperframes@${HYPERFRAMES_VERSION}\n`);
+  h.update(`html:${createHash("sha256").update(html).digest("hex")}\n`);
+  for (const ref of [...refs].sort()) {
+    let fileHash = "absent";
+    try {
+      const abs = join(workDir, ref);
+      if (statSync(abs).isFile()) {
+        fileHash = createHash("sha256").update(readFileSync(abs)).digest("hex");
+      }
+    } catch {}
+    h.update(`ref:${ref}:${fileHash}\n`);
+  }
+  return h.digest("hex");
+}
+
 let anySegmentHasAvatarMp4 = false;
 
 async function buildOne(project: string, segmentId: string) {
@@ -616,9 +764,10 @@ async function buildOne(project: string, segmentId: string) {
     segment.visual === "avatar-hero";
   type AvatarDefaults = NonNullable<SegmentYaml["avatar"]>;
   const projectAvatar = (projectCfg.defaults?.avatar ?? undefined) as Partial<AvatarDefaults> | undefined;
-  const imageUrl = noAvatar || !visualSupportsAvatar
+  const imageRef = noAvatar || !visualSupportsAvatar
     ? undefined
     : (segment.avatar?.image_url ?? projectAvatar?.image_url);
+  const imageUrl = imageRef ? resolveAvatarImage(imageRef) : undefined;
 
   const engine = segment.avatar?.engine ?? projectAvatar?.engine ?? "omnihuman";
   // Default resolution depends on engine: Pruna only supports 720p/1080p,
@@ -746,17 +895,40 @@ async function buildOne(project: string, segmentId: string) {
     run("ffmpeg", ["-y", "-i", avatarMp4, "-vn", "-acodec", "libmp3lame", "-q:a", "2", audioMp3]);
   }
 
-  const sourceForDuration = avatarMp4 ?? audioMp3;
-  const audioDuration = Math.ceil(ffprobeDuration(sourceForDuration) * 10) / 10 + 0.2;
-  // Visual-only segments (e.g. tv-intro) can override duration explicitly.
-  const safeDuration = segment.duration ?? audioDuration;
+  const narrationDuration = ffprobeDuration(audioMp3);
+  const avatarDuration = avatarMp4 ? ffprobeDuration(avatarMp4) : 0;
+  const mediaDuration = Math.max(narrationDuration, avatarDuration);
+  const autoDuration = Math.ceil((mediaDuration + (isSilentSegment ? 0.2 : TIMING_TAIL_PAD_SEC)) * 10) / 10;
+  // Explicit YAML durations are treated as a minimum for narrated segments,
+  // not a hard trim. Otherwise a TTS cache refresh can quietly chop the last
+  // words, and stitch.ts may crossfade spoken audio into the next segment.
+  const safeDuration =
+    segment.duration === undefined
+      ? autoDuration
+      : isSilentSegment
+      ? segment.duration
+      : Math.max(segment.duration, autoDuration);
+  if (!isSilentSegment && segment.duration !== undefined && segment.duration < autoDuration) {
+    console.warn(
+      `[timing] ${segmentId}: duration ${segment.duration.toFixed(2)}s < narration/avatar ` +
+        `${mediaDuration.toFixed(2)}s + tail ${TIMING_TAIL_PAD_SEC.toFixed(2)}s; ` +
+        `rendering ${safeDuration.toFixed(2)}s to avoid clipped speech.`,
+    );
+  }
 
   // Screencast recording: only for screencast-pip segments with mode=video.
   // Skipped when the mp4 already exists (cheap iteration) unless --rerecord is passed.
   if (segment.visual === "screencast-pip" && segment.screencast?.mode === "video") {
     const mp4 = join(ROOT, "assets", "captures", project, `${segmentId}.mp4`);
     const rerecord = process.argv.includes("--rerecord");
-    if (!existsSync(mp4) || rerecord) {
+    // Screencast recording drives a logged-in Astria browser session
+    // (storageState.json) and cannot run unattended in CI. NO_SCREENCAST=1
+    // (set automatically whenever CI is set) skips recording; pickScreencastMedia()
+    // then falls back to screencast.fallback_image / screencast.src.
+    const noScreencast = process.env.NO_SCREENCAST === "1" || Boolean(process.env.CI);
+    if (noScreencast && !existsSync(mp4) && !rerecord) {
+      console.log(`[record] ${segmentId}: NO_SCREENCAST — skipping recording, using fallback image`);
+    } else if (!existsSync(mp4) || rerecord) {
       await recordScreencast(project, segmentId);
     } else {
       console.log(`[record] ${segmentId}: using cached ${mp4} (pass --rerecord to refresh)`);
@@ -773,18 +945,36 @@ async function buildOne(project: string, segmentId: string) {
   const outputDir = join(ROOT, "out", project);
   mkdirSync(outputDir, { recursive: true });
   const output = join("out", project, `${segmentId}.mp4`);
+  const outAbs = join(ROOT, output);
+  const keyPath = `${outAbs}.key`;
+
+  // Render cache — the hyperframes render is the slowest step. Skip it when
+  // this exact composition + assets already produced an mp4 (key restored
+  // from gh-pages by `ci:restore`). This is what makes a re-run cheap.
+  const renderKey = computeRenderKey(workDir);
+  if (
+    process.env.NO_RENDER_CACHE !== "1" &&
+    existsSync(outAbs) &&
+    existsSync(keyPath) &&
+    readFileSync(keyPath, "utf-8").trim() === renderKey
+  ) {
+    console.log(`[build] ${segmentId}: render cached (${renderKey.slice(0, 12)}) — skipped`);
+    return;
+  }
+
   const workers = process.env.HF_WORKERS ?? (avatarMp4 ? "2" : "4");
   console.log(`[build] ${segmentId}: rendering → ${output} (workers=${workers})`);
   // Pin to 0.4.9 — newer hyperframes (0.4.45+) bumped sharp to 0.34.5, which
   // fails to install on this Mac (sharp falls through to node-gyp build and
   // errors on missing node-addon-api). Bump again once the dep tree settles.
   await runRenderWithEarlyKill([
-    "hyperframes@0.4.9", "render",
+    `hyperframes@${HYPERFRAMES_VERSION}`, "render",
     workDir,
     "--output", output,
     "--quality", "draft",
     "--workers", workers,
   ]);
+  writeFileSync(keyPath, `${renderKey}\n`);
   console.log(`[build] ${segmentId}: done → ${join(ROOT, output)}`);
 }
 

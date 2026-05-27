@@ -15,6 +15,8 @@
     "inspect-webinar": "tsx pipeline/inspect-webinar.ts",
     "gemini-inspect": "tsx pipeline/gemini-inspect.ts",
     "inspect-webinar-all": "tsx pipeline/inspect-webinar-all.ts",
+    "timing:audit": "tsx pipeline/timing-audit.ts",
+    "timing:fix": "tsx pipeline/timing-fix.ts",
     "stitch": "tsx pipeline/stitch.ts",
     "stitch:vst": "tsx pipeline/stitch.ts --project video-style-transfer",
     "music": "tsx pipeline/generate-music-wavespeed.ts",
@@ -23,7 +25,11 @@
     "music-video": "tsx pipeline/build-music-video.ts",
     "preview": "hyperframes preview",
     "render": "hyperframes render",
-    "lint": "hyperframes lint"
+    "lint": "hyperframes lint",
+    "dashboard": "tsx pipeline/build-dashboard.ts",
+    "ci:affected": "tsx pipeline/ci/affected.ts",
+    "ci:restore": "tsx pipeline/ci/gh-pages.ts restore",
+    "ci:publish": "tsx pipeline/ci/gh-pages.ts publish"
   },
   "keywords": [],
   "author": "",

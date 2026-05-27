@@ -1,0 +1,27 @@
+id: 00-intro
+title: "Astria — Artboard (TV intro)"
+order: 0
+visual: tv-intro
+
+# Visual-only segment — no narration. Rides a silent track of this duration.
+duration: 10.0
+narration: ""
+music:
+  src: "assets/music/artboard-opening/track.mp3"
+  volume: 0.36
+
+intro:
+  # Reuses Yuli's intro footage from video-style-transfer — the course shares
+  # one presenter and one show-open, so the title sequence stays consistent
+  # across modules. Referenced in place (not copied) so CI restores it from
+  # gh-pages media/ with no per-project seeding. Falls back to the still if
+  # the video is missing.
+  background_video: "assets/avatars/video-style-transfer/00-intro-seedance.mp4"
+  background_image: "assets/avatars/video-style-transfer/intro-fullbody-wide.jpg"
+  title_html: "ASTRIA"
+  subtitle_html: "Artboard"
+
+# Whoosh under the title sweep + ding when the subtitle locks in.
+sfx:
+  - { src: "assets/sfx/whoosh-soft.mp3", start: 0.6, volume: 0.6 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 2.0, volume: 0.4 }

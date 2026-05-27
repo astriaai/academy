@@ -1,0 +1,94 @@
+name: Render one module
+
+# On-demand build of a single course module — for spot-checks and the initial
+# CI smoke test, without opening a PR or republishing the whole course.
+# Run from Actions → Render one module → Run workflow (pick branch + inputs),
+# or: gh workflow run render-module.yml --ref <branch> -f project=3d-packshots -f mode=paid
+
+on:
+  workflow_dispatch:
+    inputs:
+      project:
+        description: Course module to render
+        type: choice
+        default: 3d-packshots
+        options:
+          - 3d-packshots
+          - video-style-transfer
+          - edit-image
+          - artboard
+          - webinar
+      mode:
+        description: draft (free, silent) or paid (real APIs)
+        type: choice
+        default: draft
+        options:
+          - draft
+          - paid
+
+permissions:
+  contents: write
+
+concurrency:
+  group: course-publish
+  cancel-in-progress: false
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up build environment
+        uses: ./.github/actions/setup-build
+
+      - name: Restore artifact cache from gh-pages
+        working-directory: webinar-builder
+        run: npm run ci:restore -- module-${{ inputs.project }}
+
+      - name: Render ${{ inputs.project }} (${{ inputs.mode }})
+        working-directory: webinar-builder
+        env:
+          DRAFT: ${{ inputs.mode == 'draft' && '1' || '' }}
+          NO_SCREENCAST: "1"
+          VERTEX_API_KEY: ${{ secrets.VERTEX_API_KEY }}
+          WAVESPEED_API_KEY: ${{ secrets.WAVESPEED_API_KEY }}
+          HEYGEN_API_KEY: ${{ secrets.HEYGEN_API_KEY }}
+          BYTEPLUS_ACCESS_KEY_ID: ${{ secrets.BYTEPLUS_ACCESS_KEY_ID }}
+          BYTEPLUS_SECRET_ACCESS_KEY: ${{ secrets.BYTEPLUS_SECRET_ACCESS_KEY }}
+          REPLICATE_API_KEY: ${{ secrets.REPLICATE_API_KEY }}
+          ASTRIA_AUTH_TOKEN: ${{ secrets.ASTRIA_AUTH_TOKEN }}
+          GEMINI_TUNE_ID: ${{ secrets.GEMINI_TUNE_ID }}
+          WORKSPACE_ID: ${{ secrets.WORKSPACE_ID }}
+          ASTRIA_BASE_URL: ${{ secrets.ASTRIA_BASE_URL }}
+        run: |
+          export HF_WORKERS=$(nproc)
+          echo "rendering: HF_WORKERS=$HF_WORKERS, one segment at a time"
+          npx tsx pipeline/build.ts --project "${{ inputs.project }}" --all --parallel 1
+
+      - name: Lint compositions
+        working-directory: webinar-builder
+        run: npx hyperframes@0.4.9 lint --json > lint.json || true
+
+      - name: Build debug dashboard
+        if: ${{ !cancelled() }}
+        working-directory: webinar-builder
+        env:
+          BUILD_MODE: ${{ inputs.mode }}
+          AFFECTED_PROJECTS: '["${{ inputs.project }}"]'
+          GIT_SHA: ${{ github.sha }}
+          PAGES_BASE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+        run: npm run dashboard
+
+      - name: Publish module preview
+        if: ${{ !cancelled() }}
+        working-directory: webinar-builder
+        run: npm run ci:publish -- module-${{ inputs.project }} ${{ inputs.mode == 'paid' && '--update-cache' || '' }}
+
+      - name: Preview link
+        if: ${{ !cancelled() }}
+        run: |
+          URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/module-${{ inputs.project }}/"
+          echo "### 🎬 Module preview" >> "$GITHUB_STEP_SUMMARY"
+          echo "[$URL]($URL) — ${{ inputs.project }} (${{ inputs.mode }})" >> "$GITHUB_STEP_SUMMARY"

@@ -52,6 +52,40 @@ https://hyperframes.heygen.com/llms.txt
 
 Override behavior with env flags rather than editing keys: `DRAFT=1` skips paid APIs, `NO_AVATAR=1` skips talking heads, `TTS_PROVIDER=inworld` switches off the default Gemini path, `HF_WORKERS=1` serializes hyperframes rendering.
 
+## CI & previews
+
+This repo runs in GitHub Actions (`.github/workflows/`). When acting on a PR:
+
+- **PRs build in DRAFT** — `pr-build.yml` renders affected modules with
+  `DRAFT=1 NO_SCREENCAST=1` (silent placeholder audio, burned-in captions, no
+  paid APIs) and deploys a preview to GitHub Pages at `pr-<N>/`.
+- **`/render-paid`** — a PR comment from a maintainer triggers `pr-render-paid.yml`,
+  a real paid render. Don't run paid builds yourself.
+- **The artifact cache is restored from the `gh-pages` branch** before every
+  build (`npm run ci:restore`) and saved back after a paid build — so an
+  unchanged segment is a free cache hit. Never hand-edit files under `.cache/`
+  or the generated `assets/` dirs; let the content-hash cache manage them.
+- A change to a segment's `narration` / prompt **must** change the generator's
+  cache key (it hashes the text) — that's expected and correct.
+- See `docs/CI.md` for the full workflow map.
+
+## Presenter — one face for the whole course
+
+Every module uses the **same** recurring presenter, **Yuli**. Never generate,
+cast, or restyle a new presenter per video — a new face breaks series
+continuity.
+
+- `defaults.avatar.image_url` is always `assets/avatars/yuli.jpg` — the
+  committed in-repo headshot. `build.ts` inlines any repo-relative `image_url`
+  as a base64 data URI for the lipsync API, so never use an external
+  image-host URL (`mp.astria.ai`, `tmpfiles.org`, …) here.
+- Intro footage is Yuli's, reused: point `intro.background_video` /
+  `background_image` straight at `assets/avatars/video-style-transfer/00-intro-seedance.mp4`
+  + `intro-fullbody-wide.jpg` (reference in place — don't copy, or CI must
+  seed the gitignored .mp4 onto gh-pages). Her source images (headshot,
+  microphone shots, full-body frames) live in `assets/avatars/video-style-transfer/`.
+- Only `subtitle_html` changes per module — the presenter and show-open stay identical.
+
 ## Project Structure
 
 - `index.html` — main composition (root timeline)

@@ -1,0 +1,64 @@
+id: 02b-brief-to-video
+title: "Refine the artboard"
+order: 2.5
+visual: screencast-pip
+
+# Same-chat refinement. The first board is reviewed in 02aa; this segment
+# focuses only on the follow-up request and the darker generated result.
+#
+# Two paid /artboard generations on the demo workspace (~$10 each, GPT Image 2).
+
+screencast:
+  mode: "video"
+  url: "astria.ai/packs"
+  record_script: "scripts/record/artboard/02b-brief-to-video.ts"
+
+# Long screencast with a small avatar PiP — fast variant so the InfiniteTalk
+# render finishes within the poll window.
+avatar:
+  engine: "infinitetalk-fast"
+
+caption:
+  eyebrow: "REFINE"
+  html: |
+    Same chat. Ask for
+    the <span class="accent">change</span>.
+
+slide:
+  bullets:
+    - "Stay in the same chat"
+    - "Ask for one clear change"
+    - "Wait for the new prompt"
+    - "Open the refined board"
+  bullet_starts: [3.0, 15.0, 31.0, 48.0]
+
+# Marker plans — fill cx/cy once the capture exists (1600x900 source space).
+markers: []
+
+sfx:
+  - { src: "assets/sfx/whoosh-soft.mp3",  start: 0.2,  volume: 0.5 }
+  - { src: "assets/sfx/ding-soft.mp3",    start: 3.0,  volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",    start: 15.0, volume: 0.45 }
+  - { src: "assets/sfx/click-subtle.mp3", start: 24.0, volume: 0.35 }
+  - { src: "assets/sfx/ding-soft.mp3",    start: 31.0, volume: 0.40 }
+  - { src: "assets/sfx/ding-soft.mp3",    start: 48.0, volume: 0.40 }
+
+narration: |
+  Now refine the board in the same chat. Do not start over and do not
+  paste the whole brief again. Keep the context, and ask for the one
+  change that matters.
+
+  Here the clean studio version works, but the campaign needs more
+  attitude. Type slash artboard and ask for it to be more moody, darker,
+  and surrounded by greenery.
+
+  The assistant keeps the cast and the structure, then writes a new
+  prompt for the updated treatment. You are changing the direction, not
+  rebuilding the workflow.
+
+  When the new result lands in Prompts, open it in the lightbox. Now the
+  grid has a darker, more cinematic look, while still behaving like the
+  same storyboard.
+
+  That is the repeatable loop: create the first board, inspect it, then
+  refine in the same chat with one clear request.

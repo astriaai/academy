@@ -1,0 +1,55 @@
+id: 02aa-first-artboard
+title: "Review the first artboard"
+order: 2.2
+visual: screencast-pip
+narration_volume: 0.78
+
+screencast:
+  mode: "image"
+  url: "astria.ai/prompts"
+  src: "assets/captures/artboard/02aa-first-artboard-lightbox.jpg"
+  pan_seconds: 18
+  pan_distance: 0
+
+caption:
+  eyebrow: "FIRST RESULT"
+  html: |
+    Open the generated board
+    in the <span class="accent">lightbox</span>.
+
+slide:
+  bullets:
+    - "Open the newest prompt"
+    - "Check the full 4x4 grid"
+    - "Look for cast, wardrobe, mood"
+    - "Decide what to refine"
+  bullet_starts: [3.0, 10.0, 18.0, 27.0]
+
+sfx:
+  - { src: "assets/sfx/whoosh-soft.mp3",  start: 0.2,  volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",    start: 3.0,  volume: 0.35 }
+  - { src: "assets/sfx/click-subtle.mp3", start: 5.0,  volume: 0.25 }
+  - { src: "assets/sfx/ding-soft.mp3",    start: 10.0, volume: 0.35 }
+  - { src: "assets/sfx/ding-soft.mp3",    start: 18.0, volume: 0.30 }
+  - { src: "assets/sfx/ding-soft.mp3",    start: 27.0, volume: 0.30 }
+
+markers:
+  - { start: 9.5,  duration: 5.0, shape: underline, cx: 800, cy: 780, w: 1200, style: luxe-cream }
+  - { start: 18.0, duration: 5.0, shape: circle,    cx: 845, cy: 382, r: 115,  style: luxe-gold }
+  - { start: 27.0, duration: 5.0, shape: circle,    cx: 1110, cy: 592, r: 115, style: luxe-gold }
+
+narration: |
+  When the first artboard finishes, open it from the newest prompt. Use
+  the lightbox so you can see the whole four-by-four grid at once.
+
+  This first version is the clean studio board from the initial prompt.
+  It should show the three models, the wardrobe, and a mix of shot
+  types: portraits, full-body frames, group shots, and product details.
+
+  Review it like a checklist. Are the right people there? Is the
+  wardrobe visible? Does the location match the brief? Is there enough
+  variety for a video editor to cut with?
+
+  If the answer is almost yes, do not rebuild from scratch. Keep the
+  same chat open and ask for one clear change. In the next step, we turn
+  this clean board into a moodier creative direction.

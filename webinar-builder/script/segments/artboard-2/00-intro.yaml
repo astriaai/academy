@@ -1,0 +1,20 @@
+id: 00-intro
+title: "Astria — Artboard (TV intro)"
+order: -1
+visual: tv-intro
+
+duration: 10.0
+narration: ""
+music:
+  src: "assets/music/artboard-opening/track.mp3"
+  volume: 0.36
+
+intro:
+  background_video: "assets/avatars/video-style-transfer/00-intro-seedance.mp4"
+  background_image: "assets/avatars/video-style-transfer/intro-fullbody-wide.jpg"
+  title_html: "ASTRIA"
+  subtitle_html: "Artboard"
+
+sfx:
+  - { src: "assets/sfx/whoosh-soft.mp3", start: 0.6, volume: 0.6 }
+  - { src: "assets/sfx/ding-soft.mp3", start: 2.0, volume: 0.4 }

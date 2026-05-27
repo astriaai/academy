@@ -1,0 +1,58 @@
+# Project manifest — Astria Artboard feature tutorial.
+# Standalone tutorial under the bi-weekly cadence. Teaches the /artboard skill:
+# a single GPT Image 2 image holding a 4x4 grid of 16 cinematic tiles that
+# storyboards a ~15s video — then how to hand that artboard to a video model.
+#
+# Aesthetic: pre-production / director's-table — distinct from VST (elegant
+# studio), edit-image (hipster loft) and 3d-packshots (editorial product
+# studio), so the series reads as a curated collection.
+
+meta:
+  title: "Astria · Artboard"
+  presenter: "Astria"
+  resolution: "1920x1080"
+  fps: 30
+
+defaults:
+  # Gemini TTS via VERTEX_API_KEY (same setup as the rest of the series).
+  tts:
+    provider: "gemini"
+    voice: "Aoede"
+    model: "gemini-3.1-flash-tts-preview"
+
+  # Ambient pad ducked beneath the narration.
+  music:
+    src: "assets/music/luxe-pad.mp3"
+    volume: 0.12
+
+  # B-roll behind the FAQ slide / showcase background layer — the finished
+  # America Basics clips (the video pass that an artboard drives).
+  # NOTE: re-encode silent + GOP-30 if the build's background prep complains.
+  background_videos:
+    - "assets/results/america-basics/clip-act1.mp4"
+    - "assets/results/america-basics/clip-act2.mp4"
+
+  # Presenter avatar — Yuli, the course's recurring presenter. The whole
+  # series uses ONE presenter; never invent a new face per module. Her source
+  # headshot is committed in-repo at assets/avatars/yuli.jpg — build.ts inlines
+  # it as a base64 data URI for the lipsync API, so there is no dependency on
+  # an external image host. Lipsynced via WaveSpeed InfiniteTalk at 720p.
+  avatar:
+    image_url: "assets/avatars/yuli.jpg"
+    engine: "infinitetalk"
+    resolution: "720p"
+    video_prompt: >-
+      Subtle natural micro-expressions and very small head movements, calm
+      steady pose, looking directly at the camera with quiet confidence, no
+      hand gestures, minimal upper-body motion.
+
+segments:
+  - 00-intro               # TV-show open with serif title (~10s)
+  - 01-showcase            # Two finished artboards side-by-side (~14s)
+  - 02-artboard-walkthrough # Screencast — workspace → references → template prompts (~75s)
+  - 02a-artboard-command    # Screencast — assistant → /artboard → 16:9 initial prompt (~60s)
+  - 02aa-first-artboard     # Screencast still — first generated artboard in lightbox (~35s)
+  - 02b-brief-to-video     # Screencast — same-chat refinement + moody lightbox (~70s)
+  - 03-switch-to-video     # Screencast — submit artboard as video reference (~40s)
+  - 03b-review-video-results # Review — generated clips against timed artboard tiles (~35s)
+  - 04-faqs                # FAQ slide — shot count, scale rotation, tokens, aspect ratio (~30s)

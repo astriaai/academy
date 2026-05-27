@@ -11,7 +11,7 @@ showcase:
   videos:
     - src: "assets/results/3d-packshots/ref-1d2wianx9ma5dmdee4beo609voen.jpg"
       label: "ONE REFERENCE STILL"
-    - src: "assets/results/3d-packshots/rotation-backpack.mp4"
+    - src: "assets/results/3d-packshots/rotation-backpack-blue.mp4"
       label: "FULL 360° + STILLS"
 
 caption:

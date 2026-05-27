@@ -1,0 +1,73 @@
+id: 02-artboard-walkthrough
+title: "Prepare the workspace"
+order: 2
+visual: screencast-pip
+narration_volume: 0.78
+
+screencast:
+  mode: "video"
+  url: "astria.ai/packs"
+  record_script: "scripts/record/artboard/02-artboard-walkthrough.ts"
+
+caption:
+  eyebrow: "PREP"
+  html: |
+    Get the workspace
+    <span class="accent">ready</span>.
+
+slide:
+  bullets:
+    - "Open a workspace with templates"
+    - "Check cast and wardrobe references"
+    - "Open a template prompt"
+    - "Notice the recipe: person, garment, place, style"
+  bullet_starts: [3.0, 15.0, 39.0, 55.0]
+
+# SFX — soft ding per bullet reveal plus a whoosh under the caption fade-in
+# and a subtle click on the template review beat.
+sfx:
+  - { src: "assets/sfx/whoosh-soft.mp3",  start: 0.2,   volume: 0.5 }
+  - { src: "assets/sfx/ding-soft.mp3",    start: 3.0,   volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",    start: 15.0,  volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",    start: 39.0,  volume: 0.35 }
+  - { src: "assets/sfx/click-subtle.mp3", start: 39.3,  volume: 0.35 }
+  - { src: "assets/sfx/ding-soft.mp3",    start: 55.0,  volume: 0.35 }
+
+# Marker highlights — luxe-gold strokes around the UI element each beat refers
+# to. Coordinates are in Playwright source-pixel space (1600x900). These are
+# eyeball estimates — refine against the actual capture before final render.
+markers:
+  # Beat 1 → the row of three template cards on /packs
+  - { start: 3.0,   duration: 5.0, shape: underline, cx: 800,  cy: 540, w: 1100, style: luxe-gold }
+  # Beat 2 → the Filters button on /tunes (top-left, beside Search)
+  - { start: 14.0,  duration: 4.0, shape: circle,    cx: 300,  cy: 165, r: 60,   style: luxe-gold }
+  # Beat 3 → template prompt details panel
+  - { start: 39.0,  duration: 5.0, shape: underline, cx: 1130, cy: 365, w: 420,  style: luxe-cream }
+
+# Narration paced to the short prep screencast. This segment intentionally
+# stops before the assistant so it is easy to re-record without triggering a
+# paid /artboard generation.
+narration: |
+  First, prepare the workspace. Start in Astria with a workspace that
+  already has product templates. Here, America Basics has a shirt, a
+  jacket, and a pair of pants. Each one is a reusable photoshoot setup.
+
+  Before you ask for an artboard, check the reference library. Click
+  References, then use Filters. Filter to Human. These are the people
+  your film can use: the girl, the woman, and the man.
+
+  Now filter to Garment. This is the wardrobe: jackets, shirts,
+  pants, and shoes. The beginner idea is simple: cast plus wardrobe is
+  the raw material for the artboard.
+
+  Open a template and look at a finished prompt. You are not copying
+  it. You are learning the shape of a good request: who is in the
+  shot, what they wear, where they are, and what style the image has.
+
+  Check the other templates the same way. The jacket uses the man. The
+  pants use the woman and a closer product detail. Three templates,
+  one shared cast and wardrobe.
+
+  Once you can see those ingredients, the workspace is ready. In the
+  next step, you will open the assistant and turn this into a
+  sixteen-shot artboard.

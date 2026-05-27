@@ -1,0 +1,58 @@
+id: 03-switch-to-video
+title: "Switch the artboard to video"
+order: 3
+visual: screencast-pip
+duration: 42.0
+
+# Live probe verified on May 25, 2026:
+#   - Video mode uses the same `input#prompt_input_image` as a reference image.
+#   - `input#prompt_video_first_frame` remains empty for this flow.
+#   - Video prompt input is `.video-tribute-prompt-input`.
+#   - Seedance2 Fast 720p value is `seedance2_fast_720p`.
+
+screencast:
+  mode: "video"
+  url: "astria.ai/prompts"
+  record_script: "scripts/record/artboard/03-switch-to-video.ts"
+
+caption:
+  eyebrow: "ARTBOARD → VIDEO"
+  html: |
+    Use the artboard as
+    a <span class="accent">reference</span>.
+
+slide:
+  bullets:
+    - "Switch to the Video tab"
+    - "Attach the artboard as a reference"
+    - "Paste the same prompt, minus artboard"
+    - "Choose Seedance2 Fast 720p, then generate"
+  bullet_starts: [3.0, 11.0, 22.0, 34.0]
+
+sfx:
+  - { src: "assets/sfx/whoosh-soft.mp3", start: 0.2,  volume: 0.5  }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 3.0,  volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 11.0, volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 22.0, volume: 0.40 }
+  - { src: "assets/sfx/click-subtle.mp3", start: 34.0, volume: 0.35 }
+
+markers:
+  - { start: 3.0,  duration: 4.0, shape: circle,    cx: 445,  cy: 118, r: 70,  style: luxe-gold }
+  - { start: 11.0, duration: 5.0, shape: underline, cx: 815,  cy: 245, w: 880, style: luxe-cream }
+  - { start: 22.0, duration: 6.0, shape: underline, cx: 845,  cy: 575, w: 980, style: luxe-cream }
+  - { start: 34.0, duration: 5.0, shape: circle,    cx: 1110, cy: 255, r: 90,  style: luxe-gold }
+
+narration: |
+  Now turn the artboard into video. Stay on the same prompts page, but
+  switch from Image to Video.
+
+  Attach the artboard as a reference image. It is not the first frame.
+  It is the visual plan: cast, wardrobe, framing, and mood.
+
+  For the text, reuse the same idea from the image prompt, but remove
+  the word artboard. Now ask for the actual film: a short America Basics
+  fashion video with the same cast, wardrobe, location, mood, and
+  sixteen-by-nine format.
+
+  Choose Seedance2 Fast 720p, keep the duration short, and generate.
+  Then move on. Do not make the viewer watch the render wait.

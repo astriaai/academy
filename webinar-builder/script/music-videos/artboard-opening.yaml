@@ -1,0 +1,11 @@
+project: artboard-opening
+
+music:
+  is_instrumental: true
+  target_duration: 15
+  prompt: >
+    Slow melodic bass, warm acoustic drums, restrained cinematic tutorial
+    opening, mellow live kick and brushed snare, soft bass guitar motif, gentle
+    analog pad, polished fashion editorial mood, relaxed confidence, spacious
+    clean mix, no vocals, no aggressive synth stabs, no EDM pulse, elegant
+    resolve by fifteen seconds.

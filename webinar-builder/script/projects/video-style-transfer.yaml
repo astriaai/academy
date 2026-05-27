@@ -45,9 +45,6 @@ defaults:
 segments:
   - 00-intro               # TV-show open with avatar + serif title (~6s)
   - 01-result-showcase     # Side-by-side finished examples (~12s)
-  # - 02-workflow          # Screencast of the 4-step Astria UI flow (~47s)
-                           # Blocked: needs storageState.json from `npm run login`.
-                           # Same Google SSO bot-detection issue as the 3d-packshots
-                           # workflow segment. Re-enable once a valid session is saved.
+  - 02-workflow            # Screencast of the 4-step Astria UI flow (~47s)
   - 02b-first-frame-match  # Visual side-by-side teaching the first-frame concept (~22s)
-  - 03-faqs                # FAQ slide: duration cap + prompting tips (~30s)
+  - 03-faqs                # FAQ slide — duration cap + prompting tips (~30s)

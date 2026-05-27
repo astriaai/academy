@@ -1,0 +1,59 @@
+id: 03b-review-video-results
+title: "Review the generated videos"
+order: 3.5
+visual: artboard-video-review
+duration: 36.0
+
+review:
+  videos:
+    - src: "assets/results/america-basics/clip-act1-gop30.mp4"
+      label: "Generated Video · Pass 1"
+      start: 0.0
+      duration: 17.5
+    - src: "assets/results/america-basics/clip-act2-gop30.mp4"
+      label: "Generated Video · Pass 2"
+      start: 17.5
+      duration: 18.5
+  artboards:
+    - src: "assets/artboard/america-basics/artboard-act2.jpg"
+      label: "Reference artboard"
+      start: 0.0
+      duration: 36.0
+  tile_beats:
+    - { start: 0.8,  duration: 4.8, artboard: 0, tile: 1,  label: "Opening energy", note: "The first tile establishes cast, wardrobe, sunlight, and court location." }
+    - { start: 5.6,  duration: 4.8, artboard: 0, tile: 4,  label: "Walking motion", note: "The video should feel like these frames could connect." }
+    - { start: 10.4, duration: 5.0, artboard: 0, tile: 16, label: "Group payoff", note: "Look for the same cast coming together in the wide shot." }
+    - { start: 17.8, duration: 4.8, artboard: 0, tile: 7,  label: "Action beat", note: "The second pass should borrow movement from the board, not invent a new campaign." }
+    - { start: 22.6, duration: 4.8, artboard: 0, tile: 12, label: "Continuity check", note: "Cast, wardrobe, location, and mood should stay consistent." }
+    - { start: 27.4, duration: 5.2, artboard: 0, tile: 15, label: "Useful insert", note: "A good artboard gives the video model close, medium, and wide options." }
+
+caption:
+  eyebrow: "REVIEW THE RESULT"
+  html: |
+    Compare motion to
+    the <span class="accent">tiles</span>.
+
+sfx:
+  - { src: "assets/sfx/whoosh-soft.mp3", start: 0.2,  volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 0.8,  volume: 0.32 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 5.6,  volume: 0.28 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 10.4, volume: 0.28 }
+  - { src: "assets/sfx/whoosh-soft.mp3", start: 17.4, volume: 0.36 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 22.6, volume: 0.28 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 27.4, volume: 0.28 }
+
+narration: |
+  After the render is done, review the videos against the artboard. Do
+  not judge only whether the clip looks cool. Check whether it follows
+  the plan.
+
+  On the first pass, look for the opening energy, the walking shots,
+  the same court, and the same wardrobe. The artboard tiles give you
+  the shot list.
+
+  Now compare the second pass. It can make different motion choices,
+  but it should still feel like the same campaign: same cast, same
+  wardrobe, same location, same warm athletic mood.
+
+  This is the handoff: the artboard is the director's reference, and the
+  video prompt tells the model how those frames should move.

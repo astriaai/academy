@@ -3,9 +3,11 @@ node_modules/
 .DS_Store
 renders/
 out/
+site/
 .hyperframes/
 .cache/
 .work/
+.gh-pages-tmp/
 transcript.json
 storageState.json
 # Generated media artifacts — all regenerable, never commit.

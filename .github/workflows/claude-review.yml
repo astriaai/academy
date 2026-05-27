@@ -1,0 +1,48 @@
+name: Claude review
+
+# Automatic Claude Code review on every opened / updated PR.
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Run Claude review
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            Review this pull request to the astria-course video harness.
+            Use `gh pr diff` to read the changes and post review feedback
+            with inline comments where useful.
+
+            This repo builds tutorial videos under webinar-builder/ from
+            YAML scripts (script/projects, script/segments) through a TS
+            pipeline (pipeline/*.ts) rendered with hyperframes.
+
+            Focus on:
+            - Narration / script YAML: clarity, tone, factual claims about
+              Astria features, timing (bullet_starts vs narration length).
+            - Pipeline code: correctness, the content-hash cache contract
+              (a changed input must change the cache key), no hardcoded
+              absolute paths, CI-safety (no macOS-only binaries on the
+              non-DRAFT path).
+            - Composition HTML / layouts: the hyperframes rules in
+              webinar-builder/CLAUDE.md (clip timing attributes, paused
+              timelines, deterministic logic).
+
+            Be concise. Skip nitpicks. If the PR only edits narration text,
+            keep the review short.
+          claude_args: "--max-turns 20"

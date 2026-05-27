@@ -1,0 +1,100 @@
+name: Publish course
+
+# On every push to main: render every course module for real, stitch the
+# full-length cuts, regenerate the debug dashboard, and publish it to the
+# gh-pages site root. The artifact cache is restored first and saved back, so
+# segments already rendered in a PR (`/render-paid`) cost nothing here.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: course-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up build environment
+        uses: ./.github/actions/setup-build
+
+      - name: Restore artifact cache from gh-pages
+        working-directory: webinar-builder
+        run: npm run ci:restore
+
+      - name: Render + stitch every module (PAID — cache-gated)
+        working-directory: webinar-builder
+        env:
+          NO_SCREENCAST: "1"
+          VERTEX_API_KEY: ${{ secrets.VERTEX_API_KEY }}
+          WAVESPEED_API_KEY: ${{ secrets.WAVESPEED_API_KEY }}
+          HEYGEN_API_KEY: ${{ secrets.HEYGEN_API_KEY }}
+          BYTEPLUS_ACCESS_KEY_ID: ${{ secrets.BYTEPLUS_ACCESS_KEY_ID }}
+          BYTEPLUS_SECRET_ACCESS_KEY: ${{ secrets.BYTEPLUS_SECRET_ACCESS_KEY }}
+          REPLICATE_API_KEY: ${{ secrets.REPLICATE_API_KEY }}
+          ASTRIA_AUTH_TOKEN: ${{ secrets.ASTRIA_AUTH_TOKEN }}
+          GEMINI_TUNE_ID: ${{ secrets.GEMINI_TUNE_ID }}
+          WORKSPACE_ID: ${{ secrets.WORKSPACE_ID }}
+          ASTRIA_BASE_URL: ${{ secrets.ASTRIA_BASE_URL }}
+        run: |
+          export HF_WORKERS=$(nproc)
+          echo "rendering: HF_WORKERS=$HF_WORKERS, one segment at a time"
+          for f in script/projects/*.yaml; do
+            p=$(basename "$f" .yaml)
+            echo "::group::render $p"
+            npx tsx pipeline/build.ts --project "$p" --all --parallel 1
+            npx tsx pipeline/stitch.ts --project "$p" || echo "stitch skipped for $p"
+            echo "::endgroup::"
+          done
+
+      - name: Lint compositions
+        working-directory: webinar-builder
+        run: npx hyperframes@0.4.9 lint --json > lint.json || true
+
+      - name: Build debug dashboard
+        if: ${{ !cancelled() }}
+        working-directory: webinar-builder
+        env:
+          BUILD_MODE: main
+          GIT_SHA: ${{ github.sha }}
+          PAGES_BASE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+        run: npm run dashboard
+
+      - name: Publish to gh-pages site root + save cache
+        if: ${{ !cancelled() }}
+        working-directory: webinar-builder
+        run: npm run ci:publish -- root
+
+      - name: Assemble Pages artifact
+        if: ${{ !cancelled() }}
+        working-directory: webinar-builder
+        run: |
+          rm -rf _site
+          mkdir -p _site
+          cp -a site/. _site/
+          cp -a out _site/videos
+          touch _site/.nojekyll
+
+      - name: Upload Pages artifact
+        if: ${{ !cancelled() }}
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: webinar-builder/_site
+
+      - name: Deploy to GitHub Pages
+        if: ${{ !cancelled() }}
+        id: deployment
+        uses: actions/deploy-pages@v4

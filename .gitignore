@@ -15,9 +15,3 @@
 
 # Large transcripts
 transcript.json
-
-# Claude Code per-machine settings (permissions, allowlists, local toggles)
-.claude/settings.local.json
-
-# Pipeline build logs (stdout dumps from background npm run build runs)
-*.log

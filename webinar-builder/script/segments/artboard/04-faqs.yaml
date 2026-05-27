@@ -1,0 +1,35 @@
+id: 04-faqs
+title: "FAQs"
+order: 4
+visual: presenter-slide
+
+slide:
+  eyebrow: "FAQ"
+  title_html: |
+    Three things that make an
+    <span class="accent">artboard</span> work.
+  bullets:
+    - "Use the same cast, wardrobe, location, and mood across the grid."
+    - "Mix shot sizes — wide, medium, close-up, and product detail."
+    - "Match the artboard aspect ratio to the video you want to make."
+  bullet_starts: [3.0, 12.0, 21.0]
+
+narration: |
+  Three beginner rules make an artboard work.
+
+  First, keep the world consistent. Use the same cast, the same
+  wardrobe, one clear location, and one mood across the whole grid.
+
+  Second, vary the shot sizes. Ask for wide shots, medium shots,
+  close-ups, and product details. That gives the video pass something
+  to cut between.
+
+  Third, choose the aspect ratio before you generate. Use sixteen by
+  nine for horizontal, or nine by sixteen for vertical. Match the
+  artboard to the final video you want.
+
+sfx:
+  - { src: "assets/sfx/whoosh-soft.mp3", start: 0.2,  volume: 0.5  }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 3.0,  volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 12.0, volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 21.0, volume: 0.45 }
