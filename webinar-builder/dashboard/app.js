@@ -190,7 +190,7 @@ function topBar(m, title = "Astria Academy") {
   return `
     <header class="channel-top">
       <a class="brand" href="#">
-        <span class="play-mark"></span>
+        <img class="brand-logo" src="brand/astria-logo.png" alt="Astria" />
         <span>${esc(title)}</span>
       </a>
       <div class="search-shell">

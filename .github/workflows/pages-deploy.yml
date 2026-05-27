@@ -30,6 +30,7 @@ jobs:
             app.js
             style.css
             manifest.json
+            brand
             thumbs
             videos
 
@@ -44,6 +45,7 @@ jobs:
           for f in .nojekyll index.html app.js style.css manifest.json; do
             [ -f "$f" ] && cp "$f" "_site/$f"
           done
+          [ -d brand ] && cp -a brand _site/brand
           [ -d thumbs ] && cp -a thumbs _site/thumbs
           [ -d videos ] && cp -a videos _site/videos
 

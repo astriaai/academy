@@ -128,7 +128,9 @@ function loadYaml<T>(path: string): T | null {
 function main() {
   rmSync(SITE, { recursive: true, force: true });
   mkdirSync(SITE, { recursive: true });
-  for (const f of readdirSync(DASHBOARD)) cpSync(join(DASHBOARD, f), join(SITE, f));
+  for (const f of readdirSync(DASHBOARD)) {
+    cpSync(join(DASHBOARD, f), join(SITE, f), { recursive: true });
+  }
 
   const projectIds = readdirSync(join(ROOT, "script", "projects"))
     .filter((f) => f.endsWith(".yaml"))

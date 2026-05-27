@@ -64,28 +64,16 @@ input {
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   font-weight: 750;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
 }
 
-.play-mark {
-  width: 34px;
-  height: 24px;
-  border-radius: 7px;
-  background: var(--accent);
-  position: relative;
-  box-shadow: 0 8px 22px rgba(255, 0, 51, 0.22);
-}
-
-.play-mark::after {
-  content: "";
-  position: absolute;
-  top: 7px;
-  left: 13px;
-  border-left: 9px solid #fff;
-  border-top: 5px solid transparent;
-  border-bottom: 5px solid transparent;
+.brand-logo {
+  width: 32px;
+  height: 32px;
+  display: block;
+  object-fit: contain;
 }
 
 .search-shell {
