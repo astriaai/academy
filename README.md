@@ -9,7 +9,7 @@ pipeline**, so a one-line narration tweak re-renders only what changed.
 
 The whole course is published as a browsable debug dashboard:
 
-**https://astriaai.github.io/astria-course/**
+**http://www.astria.ai/academy**
 
 Every module, every segment — the rendered video, the narration script, and
 the input artifacts side by side. Built so an editor or non-technical reviewer
