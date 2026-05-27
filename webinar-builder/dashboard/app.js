@@ -2,6 +2,12 @@
    Static router over site/manifest.json: channel grid + per-video watch pages. */
 
 const STATUS_LABEL = { built: "Built", failed: "Render failed", unchanged: "Unchanged" };
+const SHORTS_MAX_SECONDS = 10 * 60;
+const CHANNEL_SECTIONS = [
+  { id: "all", label: "All" },
+  { id: "shorts", label: "Shorts" },
+  { id: "videos", label: "Videos" },
+];
 
 let manifest = null;
 
@@ -20,6 +26,46 @@ function routeHash(params) {
   }
   const next = qs.toString();
   return next ? `#${next}` : "#";
+}
+
+function normalizeSection(section) {
+  return CHANNEL_SECTIONS.some((item) => item.id === section) ? section : "all";
+}
+
+function sectionParam(section) {
+  const normalized = normalizeSection(section);
+  return normalized === "all" ? "" : normalized;
+}
+
+function projectSection(project) {
+  const duration = Number(project.duration);
+  if (!Number.isFinite(duration) || duration <= 0) return "unknown";
+  return duration < SHORTS_MAX_SECONDS ? "shorts" : "videos";
+}
+
+function emptyStateCopy(section, hasSearch) {
+  if (hasSearch) {
+    return {
+      title: "No tutorials found",
+      body: "Try another search term.",
+    };
+  }
+  if (section === "shorts") {
+    return {
+      title: "No shorts yet",
+      body: "Shorts are tutorials under 10 minutes.",
+    };
+  }
+  if (section === "videos") {
+    return {
+      title: "No videos yet",
+      body: "Videos are tutorials 10 minutes or longer.",
+    };
+  }
+  return {
+    title: "No tutorials found",
+    body: "There are no course videos in this build yet.",
+  };
 }
 
 function fmtDur(sec) {
@@ -79,13 +125,14 @@ function channelCard(project, m) {
   const href = `#watch=${encodeURIComponent(project.id)}`;
   const status = statusClass(project);
   const failed = project.failedCount ? `<span class="warn">${project.failedCount} failed</span>` : "all segments built";
+  const section = projectSection(project);
   const searchText = [
     project.title,
     project.id,
     project.segments.map((seg) => [seg.title, seg.visual, seg.id, seg.script].join(" ")).join(" "),
   ].join(" ");
   return `
-    <article class="video-card" data-search="${attr(searchText.toLowerCase())}">
+    <article class="video-card" data-search="${attr(searchText.toLowerCase())}" data-section="${attr(section)}">
       <a class="thumb-link" href="${href}" aria-label="Open ${attr(project.title)}">
         ${thumbnail(project.fullDraftUrl, project.title, project.duration, status, project.thumbnailUrl)}
       </a>
@@ -271,6 +318,7 @@ function route() {
   return {
     watch: params.get("watch"),
     segment: params.get("segment"),
+    section: normalizeSection(params.get("section")),
     q: params.get("q") || "",
   };
 }
@@ -292,34 +340,65 @@ function topBar(m, title = "Astria Academy", q = "") {
     </header>`;
 }
 
-function applySearch(q) {
+function sectionTabs(q, activeSection) {
+  const selected = normalizeSection(activeSection);
+  return `
+      <nav class="tabs" aria-label="Channel sections">
+        ${CHANNEL_SECTIONS.map((section) => {
+          const active = section.id === selected;
+          return `<a href="${attr(routeHash({ section: sectionParam(section.id), q }))}" data-section-filter="${attr(section.id)}"${
+            active ? ` class="active" aria-current="page"` : ""
+          }>${esc(section.label)}</a>`;
+        }).join("")}
+      </nav>`;
+}
+
+function updateSectionLinks(q) {
+  for (const link of document.querySelectorAll("[data-section-filter]")) {
+    link.setAttribute("href", routeHash({ section: sectionParam(link.dataset.sectionFilter), q }));
+  }
+}
+
+function applyFilters(q, section = "all") {
   const needle = q.trim().toLowerCase();
+  const selected = normalizeSection(section);
   let shown = 0;
   for (const card of document.querySelectorAll(".video-card")) {
-    const match = !needle || card.dataset.search.includes(needle);
+    const sectionMatch = selected === "all" || card.dataset.section === selected;
+    const searchMatch = !needle || card.dataset.search.includes(needle);
+    const match = sectionMatch && searchMatch;
     card.hidden = !match;
     if (match) shown += 1;
   }
   const empty = document.getElementById("no-results");
-  if (empty) empty.hidden = shown > 0;
+  if (empty) {
+    const copy = emptyStateCopy(selected, Boolean(needle));
+    empty.querySelector("h2").textContent = copy.title;
+    empty.querySelector("p").textContent = copy.body;
+    empty.hidden = shown > 0;
+  }
 }
 
-function wireSearch(q, isWatchPage) {
+function wireSearch(q, isWatchPage, section = "all") {
   const search = document.getElementById("search");
   if (!search) return;
   search.addEventListener("input", () => {
     const next = search.value.trim();
     if (isWatchPage) {
-      location.hash = routeHash({ q: next }).slice(1);
+      const current = route();
+      location.hash = routeHash({ watch: current.watch, segment: current.segment, q: next }).slice(1);
       return;
     }
-    history.replaceState(null, "", routeHash({ q: next }));
-    applySearch(next);
+    const selected = normalizeSection(section);
+    history.replaceState(null, "", routeHash({ section: sectionParam(selected), q: next }));
+    updateSectionLinks(next);
+    applyFilters(next, selected);
   });
-  if (!isWatchPage) applySearch(q);
+  if (!isWatchPage) applyFilters(q, section);
 }
 
-function renderChannel(m, q = "") {
+function renderChannel(m, q = "", section = "all") {
+  const activeSection = normalizeSection(section);
   const totalDuration = m.projects.reduce((sum, p) => sum + (p.duration || 0), 0);
   document.title = "Astria Academy";
   document.getElementById("app").innerHTML = `
@@ -333,10 +412,7 @@ function renderChannel(m, q = "") {
           <p>${m.projects.length} tutorials · ${fmtDur(totalDuration)} total · ${ageLabel(m)}</p>
         </div>
       </section>
-      <nav class="tabs" aria-label="Channel sections">
-        <a class="active" href="#">Videos</a>
-        <a href="#debug">Debug</a>
-      </nav>
+      ${sectionTabs(q, activeSection)}
       <section class="video-grid" id="video-grid">
         ${m.projects.map((p) => channelCard(p, m)).join("")}
       </section>
@@ -344,26 +420,9 @@ function renderChannel(m, q = "") {
         <h2>No tutorials found</h2>
         <p>Try another search term.</p>
       </div>
-      <section class="debug-index" id="debug">
-        <div class="section-title">Build Debug</div>
-        <div class="debug-table">
-          ${m.projects
-            .map(
-              (p) => `
-                <a href="#watch=${encodeURIComponent(p.id)}" class="debug-row">
-                  <span class="status-dot ${statusClass(p)}"></span>
-                  <b>${esc(p.title)}</b>
-                  <span>${p.builtCount}/${p.segmentCount} segments</span>
-                  <span>${fmtDur(p.duration)}</span>
-                  <span>${p.fullDraftUrl ? esc(p.fullDraftUrl) : "no full draft"}</span>
-                </a>`,
-            )
-            .join("")}
-        </div>
-      </section>
     </main>`;
 
-  wireSearch(q, false);
+  wireSearch(q, false, activeSection);
 }
 
 function renderWatch(m, projectId, segmentId, q = "") {
@@ -414,7 +473,7 @@ function renderWatch(m, projectId, segmentId, q = "") {
 function render(m) {
   const r = route();
   if (r.watch) renderWatch(m, r.watch, r.segment, r.q);
-  else renderChannel(m, r.q);
+  else renderChannel(m, r.q, r.section);
 }
 
 fetch("manifest.json", { cache: "no-store" })
