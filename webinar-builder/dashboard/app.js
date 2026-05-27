@@ -138,8 +138,8 @@ function artifactLink(label, url) {
 function debugPanel(project, activeSegment, isSegmentMode) {
   if (!isSegmentMode) {
     return `
-      <section class="debug-panel">
-        <div class="panel-head">
+      <details class="debug-panel">
+        <summary>
           <div>
             <div class="panel-kicker">Full Video</div>
             <h2>${esc(project.title)}</h2>
@@ -149,7 +149,7 @@ function debugPanel(project, activeSegment, isSegmentMode) {
             <span class="pill">${fmtDur(project.duration)}</span>
             <span class="pill mono">${esc(project.id)}</span>
           </div>
-        </div>
+        </summary>
         <div class="debug-grid">
           <div class="script-box">
             <div class="label">Playback</div>
@@ -161,13 +161,13 @@ function debugPanel(project, activeSegment, isSegmentMode) {
             ${artifactLink("Thumbnail", project.thumbnailUrl)}
           </div>
         </div>
-      </section>`;
+      </details>`;
   }
   const seg = activeSegment;
   if (!seg) return "";
   return `
-    <section class="debug-panel">
-      <div class="panel-head">
+    <details class="debug-panel">
+      <summary>
         <div>
           <div class="panel-kicker">Selected Segment</div>
           <h2>${esc(seg.title)}</h2>
@@ -178,7 +178,7 @@ function debugPanel(project, activeSegment, isSegmentMode) {
           <span class="pill">${fmtDur(seg.duration)}</span>
           <span class="pill mono">${esc(seg.id)}</span>
         </div>
-      </div>
+      </summary>
       <div class="debug-grid">
         <div class="script-box">
           <div class="label">Script / on-screen text</div>
@@ -192,7 +192,7 @@ function debugPanel(project, activeSegment, isSegmentMode) {
           ${artifactLink("Screencast capture", seg.inputs?.capture)}
         </div>
       </div>
-    </section>`;
+    </details>`;
 }
 
 function playerMarkup(project, activeSegment, isSegmentMode) {
@@ -331,7 +331,6 @@ function renderWatch(m, projectId, segmentId) {
   if (!project) return renderChannel(m);
   const activeSegment = segmentId ? project.segments.find((s) => s.id === segmentId && s.videoUrl) || firstPlayableSegment(project) : null;
   const isSegmentMode = Boolean(segmentId && activeSegment);
-  const currentVideoUrl = isSegmentMode ? activeSegment.videoUrl : project.fullDraftUrl;
   document.title = `${project.title} · Astria Academy`;
   document.getElementById("app").innerHTML = `
     ${topBar(m, "Astria Academy")}
@@ -353,7 +352,6 @@ function renderWatch(m, projectId, segmentId) {
                 : `${countViews(project)} · ${ageLabel(m)} · ${project.segmentCount} segments · ${fmtDur(project.duration)}`
             }</p>
           </div>
-          <a class="open-button" href="${esc(currentVideoUrl || "#")}" target="_blank" rel="noreferrer">Open MP4</a>
         </div>
         ${debugPanel(project, activeSegment, isSegmentMode)}
       </section>

@@ -448,17 +448,6 @@ p {
   font-size: clamp(26px, 3vw, 38px);
 }
 
-.open-button {
-  height: 40px;
-  align-self: flex-start;
-  border-radius: 999px;
-  padding: 9px 16px;
-  background: var(--ink);
-  color: #fff;
-  font-weight: 750;
-  white-space: nowrap;
-}
-
 .watch-side {
   display: grid;
   gap: 18px;
@@ -545,13 +534,38 @@ p {
   margin-top: 18px;
 }
 
-.panel-head {
+.debug-panel summary {
   display: flex;
   justify-content: space-between;
   gap: 18px;
   align-items: flex-start;
+  cursor: pointer;
+  list-style: none;
+}
+
+.debug-panel summary::-webkit-details-marker {
+  display: none;
+}
+
+.debug-panel summary::after {
+  content: "Show details";
+  flex: 0 0 auto;
+  align-self: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--chip);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.debug-panel[open] summary {
   padding-bottom: 14px;
   border-bottom: 1px solid var(--line);
+}
+
+.debug-panel[open] summary::after {
+  content: "Hide details";
 }
 
 .panel-kicker {
@@ -611,6 +625,10 @@ p {
   grid-template-columns: minmax(0, 1fr) minmax(280px, 0.8fr);
   gap: 18px;
   padding-top: 16px;
+}
+
+.debug-panel:not([open]) .debug-grid {
+  display: none;
 }
 
 .script-box p {
@@ -730,7 +748,7 @@ p {
   }
   .watch-title-row,
   .watch-player-head,
-  .panel-head {
+  .debug-panel summary {
     display: block;
   }
   .mode-switch {
@@ -742,9 +760,9 @@ p {
     flex: 1;
     min-width: 0;
   }
-  .open-button {
+  .debug-panel summary::after {
     display: inline-block;
-    margin-top: 14px;
+    margin-top: 12px;
   }
   .queue-item {
     grid-template-columns: 24px 120px 1fr;
