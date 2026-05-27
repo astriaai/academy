@@ -88,12 +88,24 @@ function segmentStatus(seg) {
   return `<span class="badge ${seg.status}">${STATUS_LABEL[seg.status] || seg.status}</span>`;
 }
 
+function playableSegments(project) {
+  return project.segments.filter((seg) => Boolean(seg.videoUrl));
+}
+
+function firstPlayableSegment(project) {
+  return playableSegments(project)[0] || null;
+}
+
+function watchHref(project, seg) {
+  const base = `#watch=${encodeURIComponent(project.id)}`;
+  return seg ? `${base}&segment=${encodeURIComponent(seg.id)}` : base;
+}
+
 function segmentList(project) {
   return project.segments
     .map((seg, index) => {
-      const href = `#watch=${encodeURIComponent(project.id)}&segment=${encodeURIComponent(seg.id)}`;
-      return `
-        <a class="queue-item is-${seg.status}" href="${href}" data-segment-id="${attr(seg.id)}">
+      const playable = Boolean(seg.videoUrl);
+      const inner = `
           <div class="queue-index">${String(index + 1).padStart(2, "0")}</div>
           <div class="queue-thumb">
             ${
@@ -103,13 +115,17 @@ function segmentList(project) {
                 ? `<video muted playsinline preload="metadata" src="${esc(seg.videoUrl)}#t=0.5"></video>`
                 : ""
             }
-            <span>${fmtDur(seg.duration)}</span>
+            <span>${playable ? fmtDur(seg.duration) : "N/A"}</span>
           </div>
           <div class="queue-copy">
             <div class="queue-title">${esc(seg.title)}</div>
-            <div class="queue-meta">${esc(seg.visual)} · ${esc(seg.id)}</div>
+            <div class="queue-meta">${esc(seg.visual)} · ${esc(seg.id)}${playable ? "" : " · unavailable"}</div>
           </div>
-        </a>`;
+        `;
+      if (!playable) {
+        return `<div class="queue-item is-${seg.status} disabled" aria-disabled="true" data-segment-id="${attr(seg.id)}">${inner}</div>`;
+      }
+      return `<a class="queue-item is-${seg.status}" href="${watchHref(project, seg)}" data-segment-id="${attr(seg.id)}">${inner}</a>`;
     })
     .join("");
 }
@@ -119,8 +135,35 @@ function artifactLink(label, url) {
   return `<a class="artifact" href="${esc(url)}" target="_blank" rel="noreferrer"><span>${esc(label)}</span><b>${esc(url)}</b></a>`;
 }
 
-function debugPanel(project, activeSegment) {
-  const seg = activeSegment || project.segments[0];
+function debugPanel(project, activeSegment, isSegmentMode) {
+  if (!isSegmentMode) {
+    return `
+      <section class="debug-panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">Full Video</div>
+            <h2>${esc(project.title)}</h2>
+          </div>
+          <div class="segment-pills">
+            <span class="badge built">Full cut</span>
+            <span class="pill">${fmtDur(project.duration)}</span>
+            <span class="pill mono">${esc(project.id)}</span>
+          </div>
+        </div>
+        <div class="debug-grid">
+          <div class="script-box">
+            <div class="label">Playback</div>
+            <p>Complete stitched tutorial cut. Switch to Segments to review individual chapters as a playlist.</p>
+          </div>
+          <div class="artifact-box">
+            <div class="label">Build artifacts</div>
+            ${artifactLink("Full draft video", project.fullDraftUrl)}
+            ${artifactLink("Thumbnail", project.thumbnailUrl)}
+          </div>
+        </div>
+      </section>`;
+  }
+  const seg = activeSegment;
   if (!seg) return "";
   return `
     <section class="debug-panel">
@@ -152,13 +195,44 @@ function debugPanel(project, activeSegment) {
     </section>`;
 }
 
-function segmentPlayer(project, activeSegment) {
-  if (!activeSegment?.videoUrl) return "";
+function playerMarkup(project, activeSegment, isSegmentMode) {
+  const source = isSegmentMode ? activeSegment?.videoUrl : project.fullDraftUrl;
+  const poster = isSegmentMode ? activeSegment?.thumbnailUrl : project.thumbnailUrl;
+  const title = isSegmentMode ? activeSegment?.title : "Full video";
+  if (!source) return `<div class="player-placeholder">No video available for this selection.</div>`;
+  return `<video id="watch-video" controls autoplay playsinline preload="metadata" ${
+    poster ? `poster="${esc(poster)}"` : ""
+  } src="${esc(source)}" data-mode="${isSegmentMode ? "segment" : "full"}" aria-label="${attr(title)}"></video>`;
+}
+
+function modeSwitch(project, activeSegment, isSegmentMode) {
+  const firstSegment = activeSegment || firstPlayableSegment(project);
   return `
-    <section class="segment-player">
-      <div class="section-title">Segment Player</div>
-      <video controls preload="metadata" playsinline ${activeSegment.thumbnailUrl ? `poster="${esc(activeSegment.thumbnailUrl)}"` : ""} src="${esc(activeSegment.videoUrl)}"></video>
-    </section>`;
+    <div class="mode-switch" aria-label="Playback mode">
+      <a class="${isSegmentMode ? "" : "active"}" href="${watchHref(project)}">Full video</a>
+      ${
+        firstSegment
+          ? `<a class="${isSegmentMode ? "active" : ""}" href="${watchHref(project, firstSegment)}">Segments</a>`
+          : `<span class="disabled">Segments</span>`
+      }
+    </div>`;
+}
+
+function nextSegmentHref(project, activeSegment) {
+  if (!activeSegment) return "";
+  const segments = playableSegments(project);
+  const index = segments.findIndex((seg) => seg.id === activeSegment.id);
+  return index >= 0 && segments[index + 1] ? watchHref(project, segments[index + 1]) : "";
+}
+
+function wireWatchPlayer(project, activeSegment, isSegmentMode) {
+  const video = document.getElementById("watch-video");
+  if (!video || !isSegmentMode) return;
+  const nextHref = nextSegmentHref(project, activeSegment);
+  if (!nextHref) return;
+  video.addEventListener("ended", () => {
+    location.hash = nextHref.slice(1);
+  });
 }
 
 function relatedRail(projects, currentId) {
@@ -255,32 +329,33 @@ function renderChannel(m) {
 function renderWatch(m, projectId, segmentId) {
   const project = m.projects.find((p) => p.id === projectId) || m.projects[0];
   if (!project) return renderChannel(m);
-  const activeSegment =
-    project.segments.find((s) => s.id === segmentId) ||
-    project.segments.find((s) => s.status === "built") ||
-    project.segments[0];
+  const activeSegment = segmentId ? project.segments.find((s) => s.id === segmentId && s.videoUrl) || firstPlayableSegment(project) : null;
+  const isSegmentMode = Boolean(segmentId && activeSegment);
+  const currentVideoUrl = isSegmentMode ? activeSegment.videoUrl : project.fullDraftUrl;
   document.title = `${project.title} · Astria Academy`;
   document.getElementById("app").innerHTML = `
     ${topBar(m, "Astria Academy")}
     <main class="watch">
       <section class="watch-main">
+        <div class="watch-player-head">
+          <a class="back-link" href="#">← Back to videos</a>
+          ${modeSwitch(project, activeSegment, isSegmentMode)}
+        </div>
         <div class="main-player">
-          ${
-            project.fullDraftUrl
-              ? `<video controls autoplay playsinline preload="metadata" ${project.thumbnailUrl ? `poster="${esc(project.thumbnailUrl)}"` : ""} src="${esc(project.fullDraftUrl)}"></video>`
-              : `<div class="player-placeholder">No full draft rendered for this video.</div>`
-          }
+          ${playerMarkup(project, activeSegment, isSegmentMode)}
         </div>
         <div class="watch-title-row">
           <div>
-            <a class="back-link" href="#">← Back to videos</a>
             <h1>${esc(project.title)}</h1>
-            <p>${countViews(project)} · ${ageLabel(m)} · ${project.segmentCount} segments · ${fmtDur(project.duration)}</p>
+            <p>${
+              isSegmentMode
+                ? `Segment: ${esc(activeSegment.title)} · ${fmtDur(activeSegment.duration)} · ${esc(activeSegment.id)}`
+                : `${countViews(project)} · ${ageLabel(m)} · ${project.segmentCount} segments · ${fmtDur(project.duration)}`
+            }</p>
           </div>
-          <a class="open-button" href="${esc(project.fullDraftUrl || "#")}" target="_blank" rel="noreferrer">Open MP4</a>
+          <a class="open-button" href="${esc(currentVideoUrl || "#")}" target="_blank" rel="noreferrer">Open MP4</a>
         </div>
-        ${debugPanel(project, activeSegment)}
-        ${segmentPlayer(project, activeSegment)}
+        ${debugPanel(project, activeSegment, isSegmentMode)}
       </section>
       <aside class="watch-side">
         <div class="side-card">
@@ -293,7 +368,8 @@ function renderWatch(m, projectId, segmentId) {
         </div>
       </aside>
     </main>`;
-  document.querySelector(`[data-segment-id="${CSS.escape(activeSegment?.id || "")}"]`)?.classList.add("active");
+  if (isSegmentMode) document.querySelector(`[data-segment-id="${CSS.escape(activeSegment.id)}"]`)?.classList.add("active");
+  wireWatchPlayer(project, activeSegment, isSegmentMode);
 }
 
 function render(m) {

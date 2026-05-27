@@ -209,7 +209,6 @@ p {
 .thumb video,
 .thumb img,
 .main-player video,
-.segment-player video,
 .queue-thumb video,
 .queue-thumb img {
   width: 100%;
@@ -375,6 +374,14 @@ p {
   gap: 26px;
 }
 
+.watch-player-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
 .main-player {
   aspect-ratio: 16 / 9;
   background: #000;
@@ -404,9 +411,37 @@ p {
 
 .back-link {
   display: inline-block;
-  margin-bottom: 10px;
   color: var(--muted);
   font-weight: 650;
+}
+
+.mode-switch {
+  display: inline-flex;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--chip);
+}
+
+.mode-switch a,
+.mode-switch span {
+  min-width: 104px;
+  padding: 7px 13px;
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.mode-switch a.active {
+  background: #111;
+  color: #fff;
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.14);
+}
+
+.mode-switch .disabled {
+  opacity: 0.45;
 }
 
 .watch-title-row h1 {
@@ -431,8 +466,7 @@ p {
 }
 
 .side-card,
-.debug-panel,
-.segment-player {
+.debug-panel {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 16px;
@@ -457,6 +491,19 @@ p {
 .queue-item:hover,
 .queue-item.active {
   background: var(--subtle);
+}
+
+.queue-item.active {
+  box-shadow: inset 4px 0 0 #111;
+}
+
+.queue-item.disabled {
+  cursor: not-allowed;
+  opacity: 0.52;
+}
+
+.queue-item.disabled:hover {
+  background: transparent;
 }
 
 .queue-index {
@@ -611,17 +658,6 @@ p {
   opacity: 0.58;
 }
 
-.segment-player {
-  margin-top: 18px;
-}
-
-.segment-player video {
-  margin-top: 12px;
-  aspect-ratio: 16 / 9;
-  background: #000;
-  border-radius: 10px;
-}
-
 .related-list {
   display: grid;
   gap: 14px;
@@ -693,8 +729,18 @@ p {
     display: none;
   }
   .watch-title-row,
+  .watch-player-head,
   .panel-head {
     display: block;
+  }
+  .mode-switch {
+    margin-top: 12px;
+    width: 100%;
+  }
+  .mode-switch a,
+  .mode-switch span {
+    flex: 1;
+    min-width: 0;
   }
   .open-button {
     display: inline-block;
