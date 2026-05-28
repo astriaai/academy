@@ -10,6 +10,23 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
+    <script>
+      (() => {
+        const { protocol, pathname } = window.location;
+        const lastPathPart = pathname.split("/").pop();
+        if (
+          /^https?:$/.test(protocol) &&
+          pathname !== "/" &&
+          !pathname.endsWith("/") &&
+          lastPathPart &&
+          !lastPathPart.includes(".")
+        ) {
+          const base = document.createElement("base");
+          base.href = `${pathname}/`;
+          document.head.prepend(base);
+        }
+      })();
+    </script>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
