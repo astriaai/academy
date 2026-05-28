@@ -12,10 +12,34 @@
  * raw ffmpeg `-f concat`.
  */
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, readFileSync, renameSync, statSync, writeFileSync } from "node:fs";
+import {
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  renameSync,
+  statSync,
+  unlinkSync,
+  writeFileSync,
+} from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import yaml from "js-yaml";
+
+interface ProjectMusic {
+  src: string;
+  volume?: number;
+  /**
+   * Opt-in: skip per-segment music injection (build.ts) and mix the bed in
+   * once, post-concat, with sidechain compression so the music ducks under
+   * the narration. Keeps music continuous across segment boundaries and
+   * gives proper ducking without per-segment volume automation.
+   */
+  mix_at_stitch?: boolean;
+}
+interface ProjectYaml {
+  segments: string[];
+  defaults?: { music?: ProjectMusic };
+}
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "..");
@@ -117,6 +141,57 @@ function runXfadeStitch(clips: string[], outPath: string, fadeDur: number) {
 }
 
 /**
+ * Mix a music bed into the already-stitched draft with sidechain ducking
+ * keyed off the existing audio (narration + SFX). Replaces the audio track;
+ * leaves the video stream untouched (-c:v copy).
+ *
+ *   - Music volume = configured project volume (default 0.55).
+ *   - Sidechain compressor: threshold 0.05, ratio 8:1, attack 20 ms,
+ *     release 300 ms. Pulls the music ~8 dB lower whenever the narration
+ *     rises above the threshold and lets it back up quickly after.
+ *   - Voice weight in the final amix is 2.5× to keep dialog dominant.
+ *   - dynaudnorm normalizes the perceived loudness so the result plays
+ *     well at typical playback levels without clipping.
+ *   - Music fades in over 1.0 s at the head and out over 1.8 s before the
+ *     last frame so the bed doesn't hard-cut.
+ *
+ * Only runs when the project's `defaults.music.mix_at_stitch` flag is set.
+ */
+function mixMusicWithDucking(stitched: string, musicPath: string, volume: number) {
+  const dur = ffprobeDuration(stitched);
+  const fadeOut = Math.max(0, dur - 1.8);
+  const tmp = stitched.replace(/\.mp4$/, ".pre-mix.mp4");
+  renameSync(stitched, tmp);
+  const filter = [
+    `[1:a]volume=${volume.toFixed(2)},afade=t=in:st=0:d=1.0,afade=t=out:st=${fadeOut.toFixed(2)}:d=1.8[music]`,
+    `[music][0:a]sidechaincompress=threshold=0.05:ratio=8:attack=20:release=300[music_ducked]`,
+    `[music_ducked][0:a]amix=inputs=2:duration=longest:weights=1 2.5,dynaudnorm=f=150:g=15[mix]`,
+  ].join(";");
+  console.log(
+    `[stitch] mixing music ${musicPath} @ ${(volume * 100).toFixed(0)}% with sidechain ducking`,
+  );
+  const r = spawnSync(
+    "ffmpeg",
+    [
+      "-y",
+      "-i", tmp,
+      "-i", musicPath,
+      "-filter_complex", filter,
+      "-map", "0:v",
+      "-map", "[mix]",
+      "-c:v", "copy",
+      "-c:a", "aac",
+      "-b:a", "192k",
+      "-movflags", "+faststart",
+      stitched,
+    ],
+    { stdio: "inherit" },
+  );
+  if (r.status !== 0) throw new Error("[stitch] music mix failed");
+  try { unlinkSync(tmp); } catch {}
+}
+
+/**
  * GitHub rejects any pushed file over 100 MB (GH001), so a long stitched cut
  * can't reach the gh-pages course site. Re-encode to a computed bitrate when
  * the file runs over ~90 MB — review quality, but publishable.
@@ -157,7 +232,7 @@ function main() {
 
   const cfg = yaml.load(
     readFileSync(join(ROOT, "script", "projects", `${project}.yaml`), "utf-8"),
-  ) as { segments: string[] };
+  ) as ProjectYaml;
 
   const clips: string[] = [];
   const missing: string[] = [];
@@ -180,6 +255,19 @@ function main() {
     runConcatStitch(clips, outPath, listPath);
   } else {
     runXfadeStitch(clips, outPath, fadeDur);
+  }
+
+  // Opt-in: post-concat music mix with sidechain ducking. The project YAML
+  // sets `defaults.music.mix_at_stitch: true` to enable; other projects keep
+  // their current per-segment music behavior with no behavior change here.
+  const music = cfg.defaults?.music;
+  if (music?.mix_at_stitch && music.src) {
+    const musicAbs = join(ROOT, music.src);
+    if (existsSync(musicAbs)) {
+      mixMusicWithDucking(outPath, musicAbs, music.volume ?? 0.55);
+    } else {
+      console.warn(`[stitch] mix_at_stitch set but music file not found: ${musicAbs}`);
+    }
   }
 
   fitForPages(outPath);

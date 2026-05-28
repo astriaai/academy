@@ -17,10 +17,14 @@ defaults:
   music:
     # "Acid Jazz Groove" by alex-morgan, Pixabay CC0 (no attribution required):
     # https://pixabay.com/music/cafe-acid-jazz-groove-517096/
-    # Smooth acid-jazz/funk bed, ~3 min, sits well behind a silent narration track
-    # and leaves headroom for a future TTS pass (volume bumps to the SFX dings).
+    # Smooth acid-jazz/funk bed, ~3 min.
     src: "assets/music/acid-jazz-groove.mp3"
     volume: 0.55
+    # Opt-in: skip the per-segment music <audio> element and mix the bed in
+    # once at the stitch stage with sidechain ducking against the narration.
+    # Keeps music continuous across segment boundaries and pulls it ~8 dB
+    # under whenever Yuli speaks. Implemented in pipeline/stitch.ts.
+    mix_at_stitch: true
 
   # Rotation MP4s pulled from astria.ai workspace ws=503 (Fashion 3d-packshots).
   # Used as b-roll behind the FAQ slide + the showcase background layer.

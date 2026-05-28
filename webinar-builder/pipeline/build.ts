@@ -404,10 +404,17 @@ function renderLayout(project: string, projectCfg: ProjectYaml, segment: Segment
 
   // Music bed — single track looped under everything. Segment override wins;
   // null explicitly disables. Project default fills in otherwise.
+  //
+  // When the project opts into `music.mix_at_stitch: true`, the per-segment
+  // <audio> element is skipped — stitch.ts mixes the music into the final
+  // concat with sidechain ducking against the narration track instead. This
+  // keeps the music continuous across segment boundaries and lets it duck
+  // automatically under the voiceover without per-segment volume juggling.
   let musicAudioHtml = "";
   if (segment.music !== null) {
     const music = segment.music ?? projectCfg.defaults?.music;
-    if (music?.src) {
+    const mixAtStitch = (music as any)?.mix_at_stitch === true;
+    if (music?.src && !mixAtStitch) {
       const vol = (music.volume ?? 0.12).toFixed(2);
       musicAudioHtml = `<audio id="seg-music-${segment.id}" class="clip" data-start="0" data-duration="${durationSec.toFixed(2)}" data-track-index="9" data-volume="${vol}" src="${music.src}" loop></audio>`;
     }
