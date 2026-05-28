@@ -116,6 +116,8 @@ export async function generateInfiniteTalk(
     `[${tag}] ${segmentId}: submitting${variant === "regular" ? ` (resolution=${resolution})` : ""}${promptSummary}`,
   );
   const resultUrl = await submit(audioUrl, imageUrl, resolution, variant, prompt);
+  const jobId = resultUrl.match(/\/predictions\/([^/]+)\/result/)?.[1];
+  console.log(`[${tag}] ${segmentId}: submitted${jobId ? ` job=${jobId}` : ` result=${resultUrl}`}`);
   const videoUrl = await poll(resultUrl, (s) =>
     process.stdout.write(`\r[${tag}] ${segmentId}: ${s}           `)
   );
