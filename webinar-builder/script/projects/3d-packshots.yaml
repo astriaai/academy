@@ -3,7 +3,9 @@
 # aesthetic; distinct presenter look from the VST project.
 
 meta:
-  title: "Astria · 3D Packshots"
+  title: "3D Packshots"
+  tags:
+    - packshots
   presenter: "Astria"
   resolution: "1920x1080"
   fps: 30

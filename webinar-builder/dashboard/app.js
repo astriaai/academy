@@ -7,6 +7,7 @@ const CHANNEL_SECTIONS = [
   { id: "all", label: "All" },
   { id: "shorts", label: "Shorts" },
   { id: "videos", label: "Videos" },
+  { id: "archived", label: "Archived" },
 ];
 
 let manifest = null;
@@ -37,7 +38,24 @@ function sectionParam(section) {
   return normalized === "all" ? "" : normalized;
 }
 
+function projectTags(project) {
+  return Array.isArray(project.tags) ? project.tags.map((tag) => String(tag).toLowerCase()) : [];
+}
+
+function hasProjectTag(project, tag) {
+  return projectTags(project).includes(tag);
+}
+
+function isArchivedProject(project) {
+  return hasProjectTag(project, "archived");
+}
+
+function activeProjects(projects) {
+  return projects.filter((project) => !isArchivedProject(project));
+}
+
 function projectSection(project) {
+  if (isArchivedProject(project)) return "archived";
   const duration = Number(project.duration);
   if (!Number.isFinite(duration) || duration <= 0) return "unknown";
   return duration < SHORTS_MAX_SECONDS ? "shorts" : "videos";
@@ -62,6 +80,12 @@ function emptyStateCopy(section, hasSearch) {
       body: "Videos are tutorials 10 minutes or longer.",
     };
   }
+  if (section === "archived") {
+    return {
+      title: "No archived tutorials",
+      body: "Archived tutorials will appear here.",
+    };
+  }
   return {
     title: "No tutorials found",
     body: "There are no course videos in this build yet.",
@@ -84,14 +108,27 @@ function countViews(project) {
   return `${Math.max(71, project.builtCount * 63 + seed)} views`;
 }
 
-function ageLabel(m) {
-  const generated = new Date(m.generatedAt).getTime();
-  if (!Number.isFinite(generated)) return "latest build";
-  const days = Math.max(0, Math.round((Date.now() - generated) / 86400000));
-  if (days === 0) return "today";
-  if (days === 1) return "yesterday";
-  if (days < 30) return `${days} days ago`;
-  return `${Math.round(days / 30)} months ago`;
+function dateLabel(value) {
+  const dateParts = String(value ?? "").match(/^(\d{4})-(\d{2})-(\d{2})/);
+  const date = dateParts
+    ? new Date(Number(dateParts[1]), Number(dateParts[2]) - 1, Number(dateParts[3]))
+    : new Date(value);
+  if (!Number.isFinite(date.getTime())) return "";
+  return new Intl.DateTimeFormat(undefined, {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  }).format(date);
+}
+
+function buildDateLabel(m) {
+  const label = dateLabel(m.generatedAt);
+  return label ? `Updated ${label}` : "Latest build";
+}
+
+function addedDateLabel(project) {
+  const label = dateLabel(project.addedAt);
+  return label ? `Added ${label}` : "Added date unavailable";
 }
 
 function statusClass(project) {
@@ -113,6 +150,7 @@ function shareButton(title, href) {
 
 function cardDetails(project) {
   const details = [fmtDur(project.duration)];
+  if (isArchivedProject(project)) details.push("Archived");
   if (project.failedCount) details.push(`${project.failedCount} failed`);
   return details.join(" · ");
 }
@@ -138,17 +176,21 @@ function thumbnail(videoUrl, title, duration, status, thumbnailUrl) {
     </div>`;
 }
 
-function channelCard(project, m) {
+function channelCard(project) {
   const href = `#watch=${encodeURIComponent(project.id)}`;
   const status = statusClass(project);
   const section = projectSection(project);
+  const tags = projectTags(project);
   const searchText = [
     project.title,
     project.id,
+    tags.join(" "),
+    project.addedAt,
+    project.addedCommit,
     project.segments.map((seg) => [seg.title, seg.visual, seg.id, seg.script].join(" ")).join(" "),
   ].join(" ");
   return `
-    <article class="video-card" data-search="${attr(searchText.toLowerCase())}" data-section="${attr(section)}">
+    <article class="video-card" data-search="${attr(searchText.toLowerCase())}" data-section="${attr(section)}" data-tags="${attr(tags.join(" "))}" data-archived="${isArchivedProject(project) ? "true" : "false"}">
       <a class="thumb-link" href="${href}" aria-label="Open ${attr(project.title)}">
         ${thumbnail(project.fullDraftUrl, project.title, project.duration, status, project.thumbnailUrl)}
       </a>
@@ -156,7 +198,7 @@ function channelCard(project, m) {
         <a class="video-title" href="${href}">${esc(project.title)}</a>
         ${shareButton(project.title, href)}
       </div>
-      <div class="video-meta">${countViews(project)} · ${ageLabel(m)}</div>
+      <div class="video-meta">${countViews(project)} · ${addedDateLabel(project)}</div>
       <div class="video-submeta">${cardDetails(project)}</div>
     </article>`;
 }
@@ -314,7 +356,7 @@ function wireWatchPlayer(project, activeSegment, isSegmentMode) {
 
 function relatedRail(projects, currentId) {
   return projects
-    .filter((p) => p.id !== currentId)
+    .filter((p) => p.id !== currentId && !isArchivedProject(p))
     .map(
       (p) => `
         <a class="related" href="#watch=${encodeURIComponent(p.id)}">
@@ -431,7 +473,7 @@ function applyFilters(q, section = "all") {
   const selected = normalizeSection(section);
   let shown = 0;
   for (const card of document.querySelectorAll(".video-card")) {
-    const sectionMatch = selected === "all" || card.dataset.section === selected;
+    const sectionMatch = selected === "all" ? card.dataset.archived !== "true" : card.dataset.section === selected;
     const searchMatch = !needle || card.dataset.search.includes(needle);
     const match = sectionMatch && searchMatch;
     card.hidden = !match;
@@ -466,7 +508,8 @@ function wireSearch(q, isWatchPage, section = "all") {
 
 function renderChannel(m, q = "", section = "all") {
   const activeSection = normalizeSection(section);
-  const totalDuration = m.projects.reduce((sum, p) => sum + (p.duration || 0), 0);
+  const visibleProjects = activeProjects(m.projects);
+  const totalDuration = visibleProjects.reduce((sum, p) => sum + (p.duration || 0), 0);
   document.title = "Astria Academy";
   document.getElementById("app").innerHTML = `
     ${topBar(m, "Astria Academy", q)}
@@ -476,12 +519,12 @@ function renderChannel(m, q = "", section = "all") {
         <div>
           <div class="eyebrow">Astria Academy</div>
           <h1>Course Videos</h1>
-          <p>${m.projects.length} tutorials · ${fmtDur(totalDuration)} total · ${ageLabel(m)}</p>
+          <p>${visibleProjects.length} tutorials · ${fmtDur(totalDuration)} total · ${buildDateLabel(m)}</p>
         </div>
       </section>
       ${sectionTabs(q, activeSection)}
       <section class="video-grid" id="video-grid">
-        ${m.projects.map((p) => channelCard(p, m)).join("")}
+        ${m.projects.map((p) => channelCard(p)).join("")}
       </section>
       <div class="no-results" id="no-results" hidden>
         <h2>No tutorials found</h2>
@@ -516,7 +559,7 @@ function renderWatch(m, projectId, segmentId, q = "") {
             <p>${
               isSegmentMode
                 ? `Segment: ${esc(activeSegment.title)} · ${fmtDur(activeSegment.duration)} · ${esc(activeSegment.id)}`
-                : `${countViews(project)} · ${ageLabel(m)} · ${project.segmentCount} segments · ${fmtDur(project.duration)}`
+                : `${countViews(project)} · ${addedDateLabel(project)} · ${project.segmentCount} segments · ${fmtDur(project.duration)}`
             }</p>
           </div>
           <div class="watch-actions">

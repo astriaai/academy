@@ -2,7 +2,9 @@
 # Standalone from the webinar series; same harness, separate content.
 
 meta:
-  title: "Astria · Video Style Transfer"
+  title: "Video Style Transfer"
+  tags:
+    - style-transfer
   presenter: "Astria"
   resolution: "1920x1080"
   fps: 30

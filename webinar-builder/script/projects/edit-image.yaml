@@ -4,7 +4,9 @@
 # (high-fashion editorial).
 
 meta:
-  title: "Astria · Edit"
+  title: "Edit Image"
+  tags:
+    - edit-image
   presenter: "Astria"
   resolution: "1920x1080"
   fps: 30

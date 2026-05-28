@@ -8,7 +8,10 @@
 # studio), so the series reads as a curated collection.
 
 meta:
-  title: "Astria · Artboard"
+  title: "Artboard"
+  tags:
+    - artboard
+    - archived
   presenter: "Astria"
   resolution: "1920x1080"
   fps: 30

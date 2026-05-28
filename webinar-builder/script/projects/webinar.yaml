@@ -2,7 +2,10 @@
 # Each entry references a file under script/segments/<id>.yaml.
 
 meta:
-  title: "Scaling Fashion Lookbooks with Astria"
+  title: "Scaling Fashion Lookbooks"
+  tags:
+    - webinar
+    - lookbooks
   presenter: "Yuli (Astria)"
   resolution: "1920x1080"
   fps: 30

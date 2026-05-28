@@ -58,7 +58,7 @@ const dashboardProjectFilter = (env.DASHBOARD_PROJECTS || "")
   .filter(Boolean);
 
 interface ProjectManifest {
-  meta?: { title?: string };
+  meta?: { title?: string; tags?: string[] };
   segments?: string[];
 }
 interface SegmentYaml {
@@ -68,6 +68,10 @@ interface SegmentYaml {
   visual?: string;
   caption?: { html?: string };
   intro?: { title_html?: string; subtitle_html?: string };
+}
+interface ProjectGitInfo {
+  addedAt: string | null;
+  addedCommit: string | null;
 }
 
 function ffprobe(file: string): number | null {
@@ -125,6 +129,31 @@ function loadYaml<T>(path: string): T | null {
   }
 }
 
+function cleanProjectTitle(title: string): string {
+  return title.replace(/^Astria\s*[·•\-–—:]\s*/i, "").trim();
+}
+
+function normalizeTags(tags: unknown): string[] {
+  if (!Array.isArray(tags)) return [];
+  return [...new Set(tags.map((tag) => String(tag).trim().toLowerCase()).filter(Boolean))];
+}
+
+function projectGitInfo(pid: string): ProjectGitInfo {
+  const rel = join("script", "projects", `${pid}.yaml`);
+  const r = spawnSync(
+    "git",
+    ["log", "--follow", "--diff-filter=A", "--date=iso-strict", "--format=%cI%x09%h", "--", rel],
+    { cwd: ROOT, encoding: "utf-8" },
+  );
+  if (r.status !== 0) return { addedAt: null, addedCommit: null };
+  const lines = r.stdout.trim().split(/\r?\n/).filter(Boolean);
+  const [addedAt, addedCommit] = (lines[lines.length - 1] || "").split("\t");
+  return {
+    addedAt: addedAt || null,
+    addedCommit: addedCommit || null,
+  };
+}
+
 function main() {
   rmSync(SITE, { recursive: true, force: true });
   mkdirSync(SITE, { recursive: true });
@@ -140,6 +169,7 @@ function main() {
 
   const projects = projectIds.map((pid) => {
     const manifest = loadYaml<ProjectManifest>(join(ROOT, "script", "projects", `${pid}.yaml`));
+    const gitInfo = projectGitInfo(pid);
     const segIds = manifest?.segments ?? [];
     // In a `main` build every module is rendered; in a PR only the affected
     // ones — others are shown as "unchanged" pointing at the live main site.
@@ -177,7 +207,10 @@ function main() {
     const builtCount = segments.filter((s) => s.status === "built").length;
     return {
       id: pid,
-      title: manifest?.meta?.title || pid,
+      title: cleanProjectTitle(manifest?.meta?.title || pid) || pid,
+      tags: normalizeTags(manifest?.meta?.tags),
+      addedAt: gitInfo.addedAt,
+      addedCommit: gitInfo.addedCommit,
       inBuild,
       segmentCount: segments.length,
       builtCount,

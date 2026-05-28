@@ -3,7 +3,9 @@
 # same-chat mood edit → second video, without avatar rendering during review.
 
 meta:
-  title: "Astria · Artboard 2"
+  title: "Artboard 2"
+  tags:
+    - artboard
   presenter: "Astria"
   resolution: "1920x1080"
   fps: 30

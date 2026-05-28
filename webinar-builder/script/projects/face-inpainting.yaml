@@ -7,7 +7,9 @@
 # Editorial portrait/beauty register — close-up faces, atelier vocabulary.
 
 meta:
-  title: "Astria · Face Inpainting"
+  title: "Face Inpainting"
+  tags:
+    - face-inpainting
   presenter: "Astria"
   resolution: "1920x1080"
   fps: 30
