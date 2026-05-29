@@ -1,32 +1,33 @@
 id: 03-faqs
 title: "FAQs"
-order: 3
+order: 4
 visual: presenter-slide
 
 slide:
   eyebrow: "FAQ"
   title_html: |
-    Two things to
-    <span class="accent">know</span>.
+    What changes when
+    <span class="accent">you enable it?</span>
   bullets:
-    - "When to use it. Face portraits, fashion, beauty — anywhere there is a human face in the frame, you turn it on for a more authentic look."
-    - "What stays the same. Pose, wardrobe, lighting, and the camera notes you wrote into the prompt. Only the face is rebuilt. Identity references stay pinned."
-  bullet_starts: [3.0, 14.0]
+    - "It runs a second Nano Banana pass over the face area."
+    - "Use it when the face will be inspected: fashion, beauty, ecommerce, profile crops."
+    - "Budget for extra processing time and roughly double image generation work."
+    - "Use 4K, then inspect the face crop before shipping."
+  bullet_starts: [2.0, 6.5, 12.0, 17.0]
 
 narration: |
-  Two things to know.
+  Rule: Inpaint faces is not a separate identity engine. It is a second
+  Nano Banana pass over the detected face area.
 
-  When to use it. Face portraits, fashion, beauty — anywhere there
-  is a human face in the frame, you turn Inpaint faces on for a
-  more authentic look. It is the difference between a face that
-  reads as a person and a face that reads as a render.
+  Use it when the face will be inspected: fashion, beauty, ecommerce, profile
+  crops. Budget extra processing time and double generation work.
 
-  What stays the same. Pose, wardrobe, lighting, and the camera
-  notes you wrote into the prompt all hold. Only the face area is
-  rebuilt. Identity references stay pinned, so the person you
-  chose is the person Astria keeps.
+  Use 4K, enable Inpaint faces, then inspect Final against the Original debug
+  layer before shipping.
 
 sfx:
   - { src: "assets/sfx/whoosh-soft.mp3", start: 0.2,  volume: 0.5 }
-  - { src: "assets/sfx/ding-soft.mp3",   start: 3.0,  volume: 0.45 }
-  - { src: "assets/sfx/ding-soft.mp3",   start: 14.0, volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 2.0,  volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 6.5,  volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 12.0, volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 17.0, volume: 0.45 }

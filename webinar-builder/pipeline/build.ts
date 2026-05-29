@@ -73,6 +73,7 @@ interface SegmentYaml {
     | "screencast-pip"
     | "avatar-hero"
     | "video-showcase"
+    | "face-detail-showcase"
     | "tv-intro"
     | "artboard-video-review"
     | "artboard-tile-review";
@@ -94,6 +95,19 @@ interface SegmentYaml {
     // the pane (e.g. "DRIVING VIDEO" / "GENERATED RESULT").
     videos: Array<string | { src: string; label?: string }>;
     autoplay?: boolean;
+  };
+  face_showcase?: {
+    examples: Array<{
+      raw: string;
+      final: string;
+      label: string;
+      raw_callout: string;
+      final_callout: string;
+      focus_x?: number;
+      focus_y?: number;
+      start: number;
+      duration: number;
+    }>;
   };
   review?: {
     videos: Array<{ src: string; label?: string; start: number; duration: number }>;
@@ -524,6 +538,35 @@ function renderLayout(project: string, projectCfg: ProjectYaml, segment: Segment
     vars.CAPTION_HTML = segment.caption?.html ?? "";
     // No avatar / no PIP variant for this layout.
     vars.AVATAR_MEDIA = "";
+  } else if (segment.visual === "face-detail-showcase") {
+    const examples = segment.face_showcase?.examples ?? [];
+    if (examples.length === 0) {
+      throw new Error(`segment ${segment.id}: face-detail-showcase requires face_showcase.examples[]`);
+    }
+    vars.FACE_EXAMPLES_HTML = examples
+      .map((example, i) => {
+        const start = example.start.toFixed(2);
+        const dur = example.duration.toFixed(2);
+        const focusX = (example.focus_x ?? 50).toFixed(1);
+        const focusY = (example.focus_y ?? 31).toFixed(1);
+        return (
+          `<section class="face-example clip" id="face-example-${i}" data-start="${start}" data-duration="${dur}" data-track-index="${10 + i}" data-focus-x="${focusX}" data-focus-y="${focusY}">\n` +
+          `        <div class="example-label">${example.label}</div>\n` +
+          `        <div class="face-stage">\n` +
+          `          <img class="face-image raw" src="${example.raw}" alt="" />\n` +
+          `          <img class="face-image final" src="${example.final}" alt="" />\n` +
+          `          <div class="zoom-meter"><b>300%</b><span>zoom check</span></div>\n` +
+          `          <div class="eye-target" aria-hidden="true"><span>EYE</span></div>\n` +
+          `          <div class="scan-line" aria-hidden="true"></div>\n` +
+          `        </div>\n` +
+          `        <div class="callout callout-raw"><span>RAW PASS</span>${example.raw_callout}</div>\n` +
+          `        <div class="callout callout-final"><span>SECOND PASS</span>${example.final_callout}</div>\n` +
+          `      </section>`
+        );
+      })
+      .join("\n      ");
+    vars.CAPTION_EYEBROW = segment.caption?.eyebrow ?? "";
+    vars.CAPTION_HTML = segment.caption?.html ?? "";
   } else if (segment.visual === "tv-intro") {
     const intro = segment.intro;
     const bgSrc = intro?.background_video ?? intro?.background_image;
@@ -768,6 +811,7 @@ async function buildOne(project: string, segmentId: string) {
   const visualSupportsAvatar =
     segment.visual === "presenter-slide" ||
     segment.visual === "screencast-pip" ||
+    segment.visual === "face-detail-showcase" ||
     segment.visual === "avatar-hero";
   type AvatarDefaults = NonNullable<SegmentYaml["avatar"]>;
   const projectAvatar = (projectCfg.defaults?.avatar ?? undefined) as Partial<AvatarDefaults> | undefined;

@@ -42,6 +42,9 @@ export type RecordScript = (api: RecordApi) => Promise<void>;
  * A record module may export an optional `viewport` to override the default
  * 16:9 capture size. Useful when the target layout slot is more portrait —
  * `object-fit: contain` would otherwise letterbox the result.
+ *
+ * It may also export `trimStartSeconds` to discard recorder warm-up, login
+ * flicker, or first-load flashes after Playwright has captured the webm.
  */
 export interface Viewport { width: number; height: number }
 
@@ -50,7 +53,13 @@ function run(cmd: string, args: string[]) {
   if (r.status !== 0) throw new Error(`${cmd} ${args.join(" ")} exited with ${r.status}`);
 }
 
-async function runRecording(project: string, segmentId: string, script: RecordScript, viewport: Viewport = DEFAULT_VIEWPORT) {
+async function runRecording(
+  project: string,
+  segmentId: string,
+  script: RecordScript,
+  viewport: Viewport = DEFAULT_VIEWPORT,
+  trimStartSeconds = 0,
+) {
   const capturesDir = join(ROOT, "assets", "captures", project);
   mkdirSync(capturesDir, { recursive: true });
   const workDir = join(capturesDir, `${segmentId}.work`);
@@ -188,9 +197,16 @@ async function runRecording(project: string, segmentId: string, script: RecordSc
 
   // Transcode to mp4 with dense keyframes (fixes HyperFrames' sparse-keyframe warning)
   const mp4Path = join(capturesDir, `${segmentId}.mp4`);
-  console.log(`[record] ${segmentId}: transcoding webm → mp4 with GOP=30`);
-  run("ffmpeg", [
+  const trim = Math.max(0, trimStartSeconds);
+  console.log(
+    `[record] ${segmentId}: transcoding webm → mp4 with GOP=30` +
+      (trim > 0 ? `, trim=${trim.toFixed(2)}s` : ""),
+  );
+  const ffmpegArgs = [
     "-y",
+  ];
+  if (trim > 0) ffmpegArgs.push("-ss", trim.toFixed(3));
+  ffmpegArgs.push(
     "-i", webmPath,
     "-c:v", "libx264",
     "-r", "30",
@@ -200,7 +216,8 @@ async function runRecording(project: string, segmentId: string, script: RecordSc
     "-movflags", "+faststart",
     "-an",                          // strip audio — narration comes from <audio> track
     mp4Path,
-  ]);
+  );
+  run("ffmpeg", ffmpegArgs);
 
   rmSync(workDir, { recursive: true, force: true });
   console.log(`[record] ${segmentId}: wrote ${mp4Path}`);
@@ -218,7 +235,8 @@ export async function recordScreencast(project: string, segmentId: string): Prom
     throw new Error(`${scriptPath} must export a default async function (api) => ...`);
   }
   const viewport: Viewport | undefined = mod.viewport;
-  return runRecording(project, segmentId, script, viewport);
+  const trimStartSeconds: number | undefined = mod.trimStartSeconds;
+  return runRecording(project, segmentId, script, viewport, trimStartSeconds);
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {

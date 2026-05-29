@@ -2,7 +2,7 @@
 # Standalone module under the bi-weekly cadence. The whole video lives inside
 # the Astria prompts UI: enable the "Inpaint faces" toggle on a generation and
 # compare the two output versions ("1 Final" with face inpaint applied vs
-# "2 Inpaint Woman Original" — the raw face from the base model).
+# "2 Inpaint Woman/Man Original" — the raw face from the base model).
 #
 # Editorial portrait/beauty register — close-up faces, atelier vocabulary.
 
@@ -33,19 +33,20 @@ defaults:
     mix_at_stitch: true
 
   # Presenter — Yuli, the course's recurring presenter. One face for the
-  # whole series. Same headshot, same engine, same look as every other module.
+  # whole series. Keep her alive in the frame: small pointing motions,
+  # beauty-review energy, and natural emphasis timed to the face details.
   avatar:
     image_url: "assets/avatars/yuli.jpg"
     engine: "infinitetalk"
     resolution: "720p"
     video_prompt: >-
-      Subtle natural micro-expressions and very small head movements, calm
-      steady pose, looking directly at the camera with quiet confidence, no
-      hand gestures, minimal upper-body motion.
+      Engaged studio presenter with natural micro-expressions, small hand
+      gestures, light pointing motions toward the examples, direct eye contact,
+      warm beauty-review energy, subtle upper-body motion, calm confidence.
 
 segments:
-  - 00-intro              # TV-show open with editorial Seedance + serif title (~10s)
-  - 01-overview           # Yuli + caption: "real faces, real skin, no AI look" (~26s)
-  - 02-before-after       # Close-up side-by-side: 1 Final (Inpaint on) vs 2 Original (~22s)
-  - 02-workflow           # UI slideshow: prompts page → Inpaint faces toggle → 1 vs 2 (~55s)
-  - 03-faqs               # FAQ slide — when to use it, what stays the same (~45s)
+  - 00-intro              # TV-show open with Yuli presenter + face-detail panels (~10s)
+  - 01-overview           # Business/use-case preface: when the second pass pays off (~28s)
+  - 02-before-after       # Workspace 553 debug-layer proof, 4 examples, 100/300/600 zoom (~41s)
+  - 02-workflow           # UI recording: workspace 553 → 4K → toggle → existing layers (~45s)
+  - 03-faqs               # FAQ slide — second Nano Banana pass, time/cost, 4K (~35s)

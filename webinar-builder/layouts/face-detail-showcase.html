@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500&family=Inter:ital,wght@0,400;0,500;0,600;1,400&display=swap" />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #0B0B0C;
+        font-family: "Inter", system-ui, sans-serif;
+        color: #F4F1EC;
+      }
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background:
+          linear-gradient(90deg, rgba(11,11,12,1) 0%, rgba(11,11,12,0.94) 54%, rgba(30,29,28,0.90) 100%),
+          #0B0B0C;
+      }
+      .grain {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        opacity: 0.12;
+        background-image:
+          linear-gradient(0deg, rgba(244,241,236,0.04) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(244,241,236,0.03) 1px, transparent 1px);
+        background-size: 68px 68px;
+      }
+      #seg-caption {
+        position: absolute;
+        top: 48px;
+        left: 72px;
+        width: 900px;
+        z-index: 5;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .caption-eyebrow {
+        font-size: 15px;
+        letter-spacing: 0.32em;
+        color: #A8A39A;
+        font-weight: 500;
+        padding-left: 28px;
+        position: relative;
+      }
+      .caption-eyebrow::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 10px;
+        width: 16px;
+        height: 1px;
+        background: #E06A4E;
+      }
+      .caption-text {
+        font-family: "Playfair Display", Georgia, serif;
+        font-size: 62px;
+        line-height: 1.05;
+        font-weight: 400;
+        letter-spacing: 0.005em;
+      }
+      .caption-text .accent {
+        color: #D9B97A;
+        font-style: italic;
+      }
+
+      .face-example {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        pointer-events: none;
+      }
+      .example-label {
+        position: absolute;
+        top: 170px;
+        left: 82px;
+        font-size: 18px;
+        letter-spacing: 0.22em;
+        color: #A8A39A;
+        text-transform: uppercase;
+        z-index: 4;
+      }
+      .face-stage {
+        position: absolute;
+        top: 205px;
+        left: 72px;
+        width: 1060px;
+        height: 780px;
+        overflow: hidden;
+        background: #1E1D1C;
+        box-shadow: 0 30px 90px rgba(0,0,0,0.58), 0 0 0 1px rgba(244,241,236,0.08);
+      }
+      .face-stage::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        box-shadow: inset 0 0 0 1px rgba(244,241,236,0.06);
+        pointer-events: none;
+        z-index: 5;
+      }
+      .face-image {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: 50% 20%;
+        display: block;
+        will-change: transform, opacity;
+      }
+      .face-image.final {
+        opacity: 0;
+      }
+      .scan-line {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 52%;
+        width: 2px;
+        background: #D9B97A;
+        box-shadow: 0 0 24px rgba(217,185,122,0.55);
+        opacity: 0;
+        z-index: 4;
+      }
+      .zoom-meter {
+        position: absolute;
+        left: 28px;
+        bottom: 28px;
+        z-index: 5;
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        padding: 14px 18px;
+        background: rgba(11,11,12,0.72);
+        border: 1px solid rgba(217,185,122,0.32);
+        color: #F4F1EC;
+        box-shadow: 0 18px 50px rgba(0,0,0,0.36);
+      }
+      .zoom-meter b {
+        font-size: 38px;
+        line-height: 1;
+        color: #D9B97A;
+        font-weight: 600;
+      }
+      .zoom-meter span {
+        font-size: 13px;
+        letter-spacing: 0.24em;
+        color: #A8A39A;
+        text-transform: uppercase;
+      }
+      .eye-target {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 132px;
+        height: 72px;
+        margin-left: -66px;
+        margin-top: -36px;
+        z-index: 6;
+        opacity: 0;
+        border: 1px solid rgba(217,185,122,0.86);
+        box-shadow: 0 0 28px rgba(217,185,122,0.28), inset 0 0 18px rgba(11,11,12,0.34);
+        pointer-events: none;
+      }
+      .eye-target::before,
+      .eye-target::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        width: 34px;
+        height: 1px;
+        background: #D9B97A;
+      }
+      .eye-target::before { right: 100%; }
+      .eye-target::after { left: 100%; }
+      .eye-target span {
+        position: absolute;
+        left: 50%;
+        bottom: -32px;
+        transform: translateX(-50%);
+        font-size: 12px;
+        letter-spacing: 0.28em;
+        color: #D9B97A;
+      }
+      .callout {
+        position: absolute;
+        right: 410px;
+        width: 330px;
+        padding: 22px 24px;
+        background: rgba(30,29,28,0.86);
+        border: 1px solid rgba(244,241,236,0.09);
+        box-shadow: 0 22px 60px rgba(0,0,0,0.36);
+        font-size: 25px;
+        line-height: 1.22;
+        color: #F4F1EC;
+        z-index: 4;
+      }
+      .callout span {
+        display: block;
+        margin-bottom: 12px;
+        font-size: 13px;
+        letter-spacing: 0.28em;
+        color: #A8A39A;
+      }
+      .callout-raw {
+        top: 255px;
+      }
+      .callout-final {
+        top: 540px;
+      }
+      .callout-final span {
+        color: #D9B97A;
+      }
+      .truth-strip {
+        position: absolute;
+        right: 410px;
+        bottom: 76px;
+        width: 330px;
+        display: flex;
+        gap: 14px;
+        align-items: center;
+        color: #A8A39A;
+        font-size: 18px;
+        line-height: 1.26;
+        z-index: 4;
+      }
+      .truth-strip b {
+        color: #F4F1EC;
+        font-weight: 600;
+      }
+      .truth-strip::before {
+        content: "";
+        width: 40px;
+        height: 1px;
+        background: #E06A4E;
+        flex: 0 0 auto;
+      }
+
+      #seg-avatar {
+        position: absolute;
+        right: 58px;
+        bottom: 76px;
+        width: 300px;
+        height: 440px;
+        overflow: hidden;
+        background: #1E1D1C;
+        box-shadow: 0 22px 58px rgba(0,0,0,0.58), 0 0 0 1px rgba(244,241,236,0.09);
+        z-index: 6;
+      }
+      #seg-avatar video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      #presenter-line {
+        position: absolute;
+        right: 355px;
+        bottom: 332px;
+        width: 84px;
+        height: 1px;
+        background: #D9B97A;
+        transform-origin: right center;
+        z-index: 5;
+      }
+      {{CAPTIONS_CSS}}
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="{{DURATION}}" data-width="1920" data-height="1080">
+      <audio id="seg-narration" class="clip" data-start="0" data-duration="{{DURATION}}" data-track-index="0" src="{{AUDIO_SRC}}" data-volume="{{NARRATION_VOLUME}}"></audio>
+      {{MUSIC_AUDIO_HTML}}
+      {{SFX_AUDIOS_HTML}}
+      <div class="grain" aria-hidden="true"></div>
+
+      <div id="seg-caption" class="clip" data-start="0" data-duration="{{DURATION}}" data-track-index="2">
+        <div class="caption-eyebrow" id="caption-eyebrow">{{CAPTION_EYEBROW}}</div>
+        <div class="caption-text" id="caption-text">{{CAPTION_HTML}}</div>
+      </div>
+
+      {{FACE_EXAMPLES_HTML}}
+
+      <div class="truth-strip" id="truth-strip">
+        <span><b>Inpaint faces</b> runs a second Nano Banana pass over the face area.</span>
+      </div>
+      <div id="presenter-line" aria-hidden="true"></div>
+      <div id="seg-avatar" class="clip" data-start="0" data-duration="{{DURATION}}" data-track-index="5">
+        {{AVATAR_MEDIA}}
+      </div>
+      {{CAPTIONS_HTML}}
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      tl.from("#caption-eyebrow", { opacity: 0, x: -20, duration: 0.5, ease: "power2.out" }, 0.25);
+      tl.from("#caption-text", { opacity: 0, y: 20, duration: 0.7, ease: "expo.out" }, 0.45);
+      tl.from("#seg-avatar", { opacity: 0, y: 40, duration: 0.75, ease: "power3.out" }, 0.9);
+      tl.from("#presenter-line", { opacity: 0, scaleX: 0, duration: 0.5, ease: "power2.out" }, 1.2);
+      tl.from("#truth-strip", { opacity: 0, x: 24, duration: 0.6, ease: "power2.out" }, 1.35);
+
+      const examples = Array.from(document.querySelectorAll(".face-example"));
+      examples.forEach((example) => {
+        const start = parseFloat(example.dataset.start || "0");
+        const duration = parseFloat(example.dataset.duration || "8");
+        const stage = example.querySelector(".face-stage");
+        const raw = example.querySelector(".face-image.raw");
+        const final = example.querySelector(".face-image.final");
+        const scan = example.querySelector(".scan-line");
+        const zoomMeter = example.querySelector(".zoom-meter");
+        const zoomValue = example.querySelector(".zoom-meter b");
+        const zoomLabel = example.querySelector(".zoom-meter span");
+        const eyeTarget = example.querySelector(".eye-target");
+        const rawCallout = example.querySelector(".callout-raw");
+        const finalCallout = example.querySelector(".callout-final");
+        const label = example.querySelector(".example-label");
+        const focusX = parseFloat(example.dataset.focusX || "50");
+        const focusY = parseFloat(example.dataset.focusY || "31");
+        const stageWidth = 1060;
+        const stageHeight = 780;
+        const eyeShiftX = (50 - focusX) * stageWidth / 100;
+        const eyeShiftY = (50 - focusY) * stageHeight / 100;
+        const focusOrigin = `${focusX}% ${focusY}%`;
+
+        tl.set(final, { opacity: 0 }, start);
+        tl.set([raw, final], { scale: 1.08, x: 0, y: 0, transformOrigin: focusOrigin }, start);
+        tl.set(zoomMeter, { opacity: 0 }, start);
+        tl.set(eyeTarget, { opacity: 0, scale: 0.92 }, start);
+        tl.from(stage, { opacity: 0, scale: 0.965, duration: 0.55, ease: "power3.out" }, start + 0.05);
+        tl.from(label, { opacity: 0, y: -8, duration: 0.4, ease: "power2.out" }, start + 0.25);
+        tl.from(rawCallout, { opacity: 0, x: 28, duration: 0.45, ease: "power2.out" }, start + 0.9);
+        tl.call(() => { zoomValue.textContent = "100%"; }, [], start + 1.05);
+        tl.call(() => { zoomLabel.textContent = "layer compare"; }, [], start + 1.05);
+        tl.to(zoomMeter, { opacity: 1, y: -4, duration: 0.28, ease: "power2.out" }, start + 1.05);
+        tl.to(final, { opacity: 1, duration: 0.16, ease: "power1.out" }, start + 2.05);
+        tl.fromTo(scan, { opacity: 0, x: -260 }, { opacity: 1, x: 260, duration: 0.85, ease: "power3.inOut" }, start + 1.92);
+        tl.to(scan, { opacity: 0, duration: 0.25, ease: "power1.out" }, start + 2.72);
+        tl.from(finalCallout, { opacity: 0, x: 28, duration: 0.45, ease: "power2.out" }, start + 2.85);
+        tl.call(() => { zoomValue.textContent = "300%"; }, [], start + 3.45);
+        tl.to([raw, final], { scale: 3, duration: 0.7, ease: "power3.inOut" }, start + 3.35);
+        tl.to(final, { opacity: 0, duration: 0.12, ease: "none" }, start + 4.45);
+        tl.to(final, { opacity: 1, duration: 0.12, ease: "none" }, start + 4.82);
+        tl.call(() => { zoomValue.textContent = "600%"; }, [], start + 5.7);
+        tl.to([raw, final], { scale: 6, x: eyeShiftX * 0.5, y: eyeShiftY * 0.5, duration: 0.7, ease: "power3.inOut" }, start + 5.55);
+        tl.to(final, { opacity: 0, duration: 0.10, ease: "none" }, start + 6.72);
+        tl.to(final, { opacity: 1, duration: 0.18, ease: "power1.out" }, start + 7.05);
+      });
+
+      {{CAPTIONS_GSAP}}
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

@@ -7,9 +7,9 @@ duration: 10.0
 narration: ""
 
 intro:
-  # Reuse Yuli's shared course intro footage so the module can publish from
-  # the cache without requiring a face-inpainting-specific generated clip.
-  background_video: "assets/avatars/video-style-transfer/00-intro-seedance.mp4"
+  # Yuli-presenter artboard intro. The old non-Yuli board/video was rejected;
+  # this version keeps Yuli visually separate from the anonymous face panels.
+  background_video: "assets/avatars/face-inpainting/00-intro-seedance.mp4"
   background_image: "assets/avatars/video-style-transfer/intro-fullbody-wide.jpg"
   title_html: "ASTRIA"
   subtitle_html: "Face Inpainting"

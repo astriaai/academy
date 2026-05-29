@@ -32,6 +32,18 @@ function run(cmd: string, args: string[]) {
   }
 }
 
+function probeDurationSeconds(file: string): number | null {
+  const r = spawnSync("ffprobe", [
+    "-v", "error",
+    "-show_entries", "format=duration",
+    "-of", "default=nw=1:nk=1",
+    file,
+  ], { stdio: ["ignore", "pipe", "pipe"] });
+  if (r.status !== 0) return null;
+  const value = Number.parseFloat(r.stdout.toString().trim());
+  return Number.isFinite(value) ? value : null;
+}
+
 /**
  * Write a silent MP3 of the target duration.
  *
@@ -42,10 +54,13 @@ export function ensureSilentNarration(rootDir: string, segmentId: string, durati
   mkdirSync(dir, { recursive: true });
   const out = join(dir, `${segmentId}.mp3`);
   if (existsSync(out)) {
-    // Re-generate only if the duration has drifted (different narration → different length)
-    const currentBytes = statSync(out).size;
-    const expectedBytesApprox = durationSec * 8000;  // ~64 kbps silent mp3
-    const withinTolerance = Math.abs(currentBytes - expectedBytesApprox) < expectedBytesApprox * 0.15;
+    // Re-generate only if the duration has drifted (different narration → different length).
+    // MP3 byte size is too coarse for short script edits, so probe real duration first.
+    const currentDuration = probeDurationSeconds(out);
+    const withinTolerance =
+      currentDuration !== null
+        ? Math.abs(currentDuration - durationSec) < 0.25
+        : Math.abs(statSync(out).size - durationSec * 8000) < durationSec * 8000 * 0.05;
     if (withinTolerance) return out;
   }
   run("ffmpeg", [
@@ -113,7 +128,7 @@ export function renderCaptionsHtml(beats: CaptionBeat[]): { html: string; gsap: 
     beats
       .map(
         (b, i) =>
-          `<div class="cap" id="cap-${i}" data-start="${b.start.toFixed(2)}" data-duration="${b.duration.toFixed(2)}">${b.text.replace(/</g, "&lt;")}</div>`
+          `<div class="cap clip" id="cap-${i}" data-start="${b.start.toFixed(2)}" data-duration="${b.duration.toFixed(2)}">${b.text.replace(/</g, "&lt;")}</div>`
       )
       .join("") +
     `</div>`;

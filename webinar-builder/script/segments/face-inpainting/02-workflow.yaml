@@ -1,63 +1,60 @@
 id: 02-workflow
-title: "Workflow — write, pick a model, toggle Inpaint, generate, compare"
-order: 2
+title: "Workflow — prompt, 4K, Inpaint faces, compare"
+order: 3
 visual: screencast-pip
 
-# Bulk of the video. The screencast.mp4 is produced by running
-#   HEADED=1 npm run record-screencast -- --project face-inpainting 02-workflow
-# which executes scripts/record/face-inpainting/02-workflow.ts inside Playwright.
-#
-# Recording flow (~38s) — every beat is the live Astria UI:
-#   0–5s     open the real prompt box with Freya + clothing references
-#   5–8s     open the cog wheel and enable Inpaint faces
-#   8–14s    zoom into the prompt box and enabled setting
-#   14–21s   click Generate, then trim the processing wait
-#   21–38s   open the finished prompt lightbox and switch Final / Original
+# Recording flow (~42s):
+#   0–8s     start on a loaded workspace 553 page filtered to Inpaint faces prompts
+#   8–15s    zoom into the prompt box and resolution row
+#   15–22s   set/confirm 4K, open the cog, enable Inpaint faces
+#   22–29s   hover Generate without submitting a fresh generation
+#   29–45s   jump to prompt 43213326, zoom, hold-drag to the face, compare layers
 screencast:
   mode: "video"
-  url: "astria.ai/prompts?ws=6"
+  url: "astria.ai/prompts?ws=553&inpaint_faces=true"
   record_script: "scripts/record/face-inpainting/02-workflow.ts"
 
 caption:
   eyebrow: "WORKFLOW"
   html: |
-    Write. Pick a model.
-    Enable <span class="accent">Inpaint faces</span>.
-    Open the lightbox. Compare 1 vs 2.
+    Prompt.
+    4K.
+    <span class="accent">Inpaint faces.</span>
+    Compare the layers.
 
 slide:
   bullets:
-    - "Use a real prompt with Freya plus shirt, jeans, and shoes references."
-    - "Pick the model — Nano Banana, Gemini, whichever fits the brief."
+    - "Start with a simple Nano Banana lookbook prompt."
+    - "Set the resolution dropdown to 4K."
     - "Open the cog wheel and turn Inpaint faces on."
-    - "Generate, then skip the waiting room."
-    - "Compare 1 vs 2."
-  bullet_starts: [4.0, 10.0, 15.0, 21.0, 30.0]
+    - "Compare Final and Original at 100%, 300%, and 600%."
+  bullet_starts: [3.0, 10.0, 16.0, 30.0]
 
 narration: |
-  Here is the whole flow, top to bottom, inside Astria.
+  Workflow inside Astria.
 
-  Start with a real prompt. Here we use Freya from the face library,
-  plus shirt, jeans, and shoes references, all pinned directly in the
-  prompt box.
+  Start with a simple Nano Banana lookbook prompt. We care about Nano Banana,
+  4K, and the face pass, not switching models.
 
-  Pick the model. Nano Banana, Gemini, whichever you have been
-  working with.
+  Set resolution to 4K. Open the cog wheel and turn on Inpaint faces.
 
-  Open the cog wheel, and turn Inpaint faces on.
+  When you run it, Astria generates the image with Nano Banana, then runs a
+  second Nano Banana pass over the detected face area. That is the extra cost
+  and time.
 
-  Hit generate. The queue picks it up; we will skip the waiting room
-  and jump to the finished prompt.
+  For proof, jump to completed prompt four three two one three three two six.
+  Open the lightbox and compare Final with the Original debug layer at one
+  hundred, three hundred, and six hundred percent.
 
-  Now open the image in the lightbox and compare the two layers. One
-  is the inpainted final. Two is the raw generation from the base
-  model. Same pose, same wardrobe, same light. A noticeably more
-  photographic face.
+markers:
+  - { start: 5.0,  duration: 3.2, shape: "underline", cx: 720, cy: 315, w: 620, style: "luxe-gold" }
+  - { start: 10.0, duration: 3.0, shape: "circle",    cx: 970, cy: 285, r: 64,  style: "luxe-cream" }
+  - { start: 15.8, duration: 3.4, shape: "circle",    cx: 1015, cy: 250, r: 58, style: "luxe-gold" }
+  - { start: 31.0, duration: 4.0, shape: "arrow",     cx: 1030, cy: 790, w: 190, h: 34, style: "luxe-gold" }
 
 sfx:
   - { src: "assets/sfx/whoosh-soft.mp3", start: 0.2,  volume: 0.5 }
-  - { src: "assets/sfx/ding-soft.mp3",   start: 6.0,  volume: 0.4 }
-  - { src: "assets/sfx/ding-soft.mp3",   start: 18.0, volume: 0.4 }
-  - { src: "assets/sfx/ding-soft.mp3",   start: 26.0, volume: 0.4 }
-  - { src: "assets/sfx/ding-soft.mp3",   start: 36.0, volume: 0.4 }
-  - { src: "assets/sfx/ding-soft.mp3",   start: 44.0, volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 10.0, volume: 0.4 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 17.0, volume: 0.4 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 31.0, volume: 0.4 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 38.0, volume: 0.45 }
