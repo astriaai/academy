@@ -559,7 +559,7 @@ function renderWatch(m, projectId, segmentId, q = "") {
             <p>${
               isSegmentMode
                 ? `Segment: ${esc(activeSegment.title)} · ${fmtDur(activeSegment.duration)} · ${esc(activeSegment.id)}`
-                : `${countViews(project)} · ${addedDateLabel(project)} · ${project.segmentCount} segments · ${fmtDur(project.duration)}`
+                : `${countViews(project)} · ${publishDateLabel(project)} · ${project.segmentCount} segments · ${fmtDur(project.duration)}`
             }</p>
           </div>
           <div class="watch-actions">
