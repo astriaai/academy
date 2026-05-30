@@ -67,7 +67,7 @@ jobs:
         run: npx hyperframes@0.4.9 lint --json > lint.json || true
 
       - name: Build debug dashboard
-        if: ${{ !cancelled() }}
+        if: ${{ success() }}
         working-directory: webinar-builder
         env:
           BUILD_MODE: main
@@ -76,12 +76,12 @@ jobs:
         run: npm run dashboard
 
       - name: Publish to gh-pages site root + save cache
-        if: ${{ !cancelled() }}
+        if: ${{ success() }}
         working-directory: webinar-builder
         run: npm run ci:publish -- root
 
       - name: Assemble Pages artifact
-        if: ${{ !cancelled() }}
+        if: ${{ success() }}
         working-directory: webinar-builder
         run: |
           rm -rf _site
@@ -91,12 +91,12 @@ jobs:
           touch _site/.nojekyll
 
       - name: Upload Pages artifact
-        if: ${{ !cancelled() }}
+        if: ${{ success() }}
         uses: actions/upload-pages-artifact@v3
         with:
           path: webinar-builder/_site
 
       - name: Deploy to GitHub Pages
-        if: ${{ !cancelled() }}
+        if: ${{ success() }}
         id: deployment
         uses: actions/deploy-pages@v4

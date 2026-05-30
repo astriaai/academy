@@ -1,7 +1,7 @@
 name: Set up build environment
 description: >
-  Node + npm deps + ffmpeg + headless Chromium for the webinar-builder
-  pipeline. Assumes the repo is already checked out.
+  Node + npm deps + ffmpeg + system Chrome for the webinar-builder pipeline.
+  Assumes the repo is already checked out.
 
 runs:
   using: composite
@@ -13,46 +13,42 @@ runs:
         cache: npm
         cache-dependency-path: webinar-builder/package-lock.json
 
-    - name: Cache Playwright browsers
-      id: playwright-cache
-      uses: actions/cache@v4
-      with:
-        path: ~/.cache/ms-playwright
-        key: ${{ runner.os }}-ms-playwright-${{ hashFiles('webinar-builder/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-ms-playwright-
-
     - name: Install npm dependencies
       shell: bash
       working-directory: webinar-builder
+      env:
+        PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
       run: |
         set -euxo pipefail
         timeout 15m npm ci --prefer-offline --no-audit --fund=false
-
-    - name: Install Chromium system dependencies
-      shell: bash
-      working-directory: webinar-builder
-      # Keep this separate from the browser download so setup logs show where
-      # the time is going, and so the browser binary cache can do its job.
-      run: |
-        set -euxo pipefail
-        timeout 20m npx playwright install-deps chromium
 
     - name: Install ffmpeg
       shell: bash
       run: |
         set -euxo pipefail
-        timeout 10m sudo apt-get install -y --no-install-recommends ffmpeg
+        if command -v ffmpeg >/dev/null 2>&1; then
+          ffmpeg -version | head -1
+        else
+          sudo apt-get update
+          timeout 10m sudo apt-get install -y --no-install-recommends ffmpeg
+        fi
 
-    - name: Install headless Chromium
+    - name: Use system Chrome for HyperFrames
       shell: bash
-      working-directory: webinar-builder
-      # hyperframes render + Playwright both drive Chromium. This should be a
-      # quick verification on cache hits, and a bounded download on misses.
       run: |
         set -euxo pipefail
-        echo "Playwright cache hit: ${{ steps.playwright-cache.outputs.cache-hit }}"
-        timeout 15m npx playwright install chromium
+        chrome_path="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser || true)"
+        if [[ -z "$chrome_path" ]]; then
+          sudo apt-get update
+          timeout 10m sudo apt-get install -y --no-install-recommends google-chrome-stable
+          chrome_path="$(command -v google-chrome || command -v google-chrome-stable || true)"
+        fi
+        if [[ -z "$chrome_path" ]]; then
+          echo "::error::No system Chrome found for HyperFrames rendering"
+          exit 1
+        fi
+        echo "HYPERFRAMES_BROWSER_PATH=$chrome_path" >> "$GITHUB_ENV"
+        "$chrome_path" --version
 
     - name: Verify hyperframes renderer
       shell: bash

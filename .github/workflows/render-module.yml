@@ -73,7 +73,7 @@ jobs:
         run: npx hyperframes@0.4.9 lint --json > lint.json || true
 
       - name: Build debug dashboard
-        if: ${{ !cancelled() }}
+        if: ${{ success() }}
         working-directory: webinar-builder
         env:
           BUILD_MODE: ${{ inputs.mode }}
@@ -83,12 +83,12 @@ jobs:
         run: npm run dashboard
 
       - name: Publish module preview
-        if: ${{ !cancelled() }}
+        if: ${{ success() }}
         working-directory: webinar-builder
         run: npm run ci:publish -- module-${{ inputs.project }} ${{ inputs.mode == 'paid' && '--update-cache' || '' }}
 
       - name: Preview link
-        if: ${{ !cancelled() }}
+        if: ${{ success() }}
         run: |
           URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/module-${{ inputs.project }}/"
           echo "### 🎬 Module preview" >> "$GITHUB_STEP_SUMMARY"
