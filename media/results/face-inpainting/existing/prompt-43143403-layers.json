@@ -1,0 +1,21 @@
+{
+  "promptId": "43143403",
+  "index": 7,
+  "promptUrl": "https://www.astria.ai/tunes/4180298/prompts/43143403?ws=373",
+  "final": "https://mp.astria.ai/gr0izgh6rf5scibdv6en1wlu2zkl",
+  "original": {
+    "src": "https://www.astria.ai/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCTnEzQncwPSIsImV4cCI6IjIwMjYtMDUtMjlUMTQ6MjA6MDkuOTAyWiIsInB1ciI6ImJsb2JfaWQifX0=--3cb6d8f614255a4cb4c52647f35bbb5ec9c21565/43143403-0-0.jpeg?ws=373",
+    "label": "Inpaint Woman Original"
+  },
+  "layers": [
+    {
+      "src": "https://www.astria.ai/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCTnEzQncwPSIsImV4cCI6IjIwMjYtMDUtMjlUMTQ6MjA6MDkuOTAyWiIsInB1ciI6ImJsb2JfaWQifX0=--3cb6d8f614255a4cb4c52647f35bbb5ec9c21565/43143403-0-0.jpeg?ws=373",
+      "label": "Inpaint Woman Original"
+    }
+  ],
+  "files": {
+    "final": "/Users/burg/git/astria-course/webinar-builder/assets/results/face-inpainting/existing/prompt-43143403-final-source.png",
+    "raw": "/Users/burg/git/astria-course/webinar-builder/assets/results/face-inpainting/existing/prompt-43143403-raw-source.jpg"
+  },
+  "meta": "Luxury lookbook studio image of <faceid:4929165:1.0> woman wearing <faceid:4987538:1.0> outfit with <faceid:4963000:1.0> sandals , placed against <faceid:4920969:1.0> background . <faceid:4042985:1.0> pose Adult fashion model, steady front pose, relaxed shoulders, direct calm gaze, eye-level lens, bit elegant natural fabric and accessory detail.Created: 2026-05-28 07:50:21 CI898 STUDIO4K3:4Inpaint Faces Nano Banana 2 - Gemini 3.1 FlashOrderFrom Template: 4k dressCream floral trellis button-down shirt and shorts ( outfit )Light pink leather thong sandals with circular ankle straps ( sandals )Anika ( woman )Textured beige wall meeting concrete floor ( background )45 angle view ( pose )"
+}

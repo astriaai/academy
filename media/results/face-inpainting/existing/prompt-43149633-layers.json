@@ -1,0 +1,21 @@
+{
+  "promptId": "43149633",
+  "index": 0,
+  "promptUrl": "https://www.astria.ai/tunes/4180298/prompts/43149633?ws=373",
+  "final": "https://mp.astria.ai/sp9i29v5mc26hudda5n9osk8pass",
+  "original": {
+    "src": "https://www.astria.ai/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCRC9xQncwPSIsImV4cCI6IjIwMjYtMDUtMjlUMTQ6MjA6MDAuMzA1WiIsInB1ciI6ImJsb2JfaWQifX0=--0e85ed2d06963e2690c7d048eef4814943689634/43149633-0-0.jpeg?ws=373",
+    "label": "Inpaint Woman Original"
+  },
+  "layers": [
+    {
+      "src": "https://www.astria.ai/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCRC9xQncwPSIsImV4cCI6IjIwMjYtMDUtMjlUMTQ6MjA6MDAuMzA1WiIsInB1ciI6ImJsb2JfaWQifX0=--0e85ed2d06963e2690c7d048eef4814943689634/43149633-0-0.jpeg?ws=373",
+      "label": "Inpaint Woman Original"
+    }
+  ],
+  "files": {
+    "final": "/Users/burg/git/astria-course/webinar-builder/assets/results/face-inpainting/existing/prompt-43149633-final-source.png",
+    "raw": "/Users/burg/git/astria-course/webinar-builder/assets/results/face-inpainting/existing/prompt-43149633-raw-source.jpg"
+  },
+  "meta": "Luxury lookbook studio image of 185 cm tall <faceid:4968890:1.0> woman wearing <faceid:4988349:1.0> swimsuit with <faceid:4975784:1.0> sandals , placed against <faceid:4920969:1.0> background . Adult fashion model, steady front pose, relaxed shoulders, direct calm gaze, eye-level lens, elegant brand catalog composition, natural fabric and accessory detail.Created: 2026-05-28 10:41:00 CI898 STUDIO4K3:4Inpaint Faces Nano Banana 2 - Gemini 3.1 FlashOrderFrom Template: 4k dressOlive green halter bikini with gold front centerpiece ( swimsuit )Tan leather thong sandal with gold beaded lace-up detailing ( sandals )Nadia ( woman )Textured beige wall meeting concrete floor ( background )"
+}

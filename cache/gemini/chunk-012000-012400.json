@@ -1,0 +1,211 @@
+{
+  "summary": "The presenter demonstrates the Astria fashion-AI platform. Initially, they generate an image based on a detailed text prompt. They then convert this generated image into a reference image for further AI generation, and refine the text prompt by removing specific descriptive tags. After clearing the reference image and tags, the presenter navigates to the 'Generate' section, which features a grid of clothing categories (e.g., Pose, Face, Jacket, Top) and an AI chat assistant. They use the chat to request a 'Zara top,' and the AI responds with a detailed prompt suggestion in Hebrew, with an English translation provided. The presenter then interacts with various clothing category buttons. The demonstration concludes with a brief navigation to an external e-commerce website (Noizz) and then to an Astria AI Fashion Editorial page, followed by a specific product page within Astria (Zara Pants), where multiple AI-generated images of pants on models from different angles are displayed.",
+  "urls_visible": [
+    "https://astria.aiprompts/",
+    "https://www.google.com/search?q=noizz",
+    "https://noizz.co.il/",
+    "https://astria.aifashion",
+    "https://astria.aiprompts/zara-pants"
+  ],
+  "ui_state": "Astria platform, initially in the Lookbook view showing generated images and a prompt input field. It then transitions to a 'Generate' view featuring a grid of clothing categories (Pose, Face, Accessories, Jacket, Top, Footwear, Bottom, Background) and an AI chat interface. Finally, it shows an external e-commerce site, an Astria AI Fashion Editorial page, and an Astria product page displaying generated images.",
+  "interactions": [
+    {
+      "t": "00:47",
+      "action": "hover",
+      "target_description": "generated image thumbnail in the left panel",
+      "outcome": "A small menu with 'Edit', 'Super Resolution', and 'Convert to Reference' options appears over the thumbnail."
+    },
+    {
+      "t": "00:50",
+      "action": "click",
+      "target_text": "Convert to Reference",
+      "target_description": "button in the image thumbnail menu",
+      "outcome": "The image is added as a reference image thumbnail in the main prompt area."
+    },
+    {
+      "t": "01:13",
+      "action": "click",
+      "target_text": "unique Israeli",
+      "target_description": "text 'unique Israeli' within the main prompt input field",
+      "outcome": "The text 'unique Israeli' is highlighted."
+    },
+    {
+      "t": "01:18",
+      "action": "click",
+      "target_description": "close button ('x') next to the highlighted 'unique Israeli' text in the prompt input field",
+      "outcome": "The text 'unique Israeli' is removed from the prompt, changing it to 'woman, with French and Japanese decent, fair skin, studio white background, shoulders up, in clothing'."
+    },
+    {
+      "t": "01:21",
+      "action": "click",
+      "target_description": "close button ('x') on the 'final Israeli' tag above the prompt input field",
+      "outcome": "The 'final Israeli' tag is removed from the prompt area."
+    },
+    {
+      "t": "01:46",
+      "action": "click",
+      "target_description": "close button ('x') on the reference image thumbnail in the prompt area",
+      "outcome": "The reference image is removed from the prompt area."
+    },
+    {
+      "t": "01:50",
+      "action": "click",
+      "target_text": "Generate",
+      "target_description": "button in the top right corner of the application header",
+      "outcome": "The UI switches from the Lookbook view to a grid of clothing categories and a chat interface appears on the right."
+    },
+    {
+      "t": "02:17",
+      "action": "type",
+      "target_description": "chat input field labeled 'Ask about Astria'",
+      "outcome": "The text 'Zara top' is typed into the chat input field."
+    },
+    {
+      "t": "02:22",
+      "action": "keypress",
+      "target_description": "Enter key (implied by sending the chat message)",
+      "outcome": "The message 'Zara top' is sent in the chat, and the AI begins processing the request."
+    },
+    {
+      "t": "02:41",
+      "action": "scroll",
+      "target_description": "chat panel on the right",
+      "outcome": "The chat content scrolls down, revealing more of the AI's response."
+    },
+    {
+      "t": "02:47",
+      "action": "scroll",
+      "target_description": "chat panel on the right",
+      "outcome": "The chat content scrolls further down, revealing the English translation of the AI's prompt suggestion."
+    },
+    {
+      "t": "02:51",
+      "action": "click",
+      "target_text": "Top",
+      "target_description": "clothing category button in the grid",
+      "outcome": "The 'Top' category button is highlighted/selected."
+    },
+    {
+      "t": "02:56",
+      "action": "click",
+      "target_text": "Jacket",
+      "target_description": "clothing category button in the grid",
+      "outcome": "The 'Jacket' category button is highlighted/selected."
+    },
+    {
+      "t": "03:01",
+      "action": "click",
+      "target_text": "Pose",
+      "target_description": "clothing category button in the grid",
+      "outcome": "The 'Pose' category button is highlighted/selected."
+    },
+    {
+      "t": "03:06",
+      "action": "click",
+      "target_text": "Jacket",
+      "target_description": "clothing category button in the grid",
+      "outcome": "The 'Jacket' category button is highlighted/selected."
+    },
+    {
+      "t": "03:11",
+      "action": "click",
+      "target_text": "Top",
+      "target_description": "clothing category button in the grid",
+      "outcome": "The 'Top' category button is highlighted/selected."
+    },
+    {
+      "t": "03:16",
+      "action": "click",
+      "target_text": "Jacket",
+      "target_description": "clothing category button in the grid",
+      "outcome": "The 'Jacket' category button is highlighted/selected."
+    },
+    {
+      "t": "03:21",
+      "action": "click",
+      "target_text": "Top",
+      "target_description": "clothing category button in the grid",
+      "outcome": "The 'Top' category button is highlighted/selected."
+    },
+    {
+      "t": "03:26",
+      "action": "navigate",
+      "target_description": "new browser tab and Google search for 'noizz'",
+      "outcome": "The browser opens a new tab, searches for 'noizz', and then navigates to the Noizz website."
+    },
+    {
+      "t": "03:32",
+      "action": "scroll",
+      "target_description": "Noizz website page",
+      "outcome": "The Noizz website content scrolls down."
+    },
+    {
+      "t": "03:37",
+      "action": "navigate",
+      "target_description": "browser URL bar, typing 'astria.aifashion'",
+      "outcome": "The browser navigates to the Astria AI Fashion Editorial page."
+    },
+    {
+      "t": "03:41",
+      "action": "scroll",
+      "target_description": "Astria AI Fashion Editorial page",
+      "outcome": "The page scrolls down, revealing more model images."
+    },
+    {
+      "t": "03:45",
+      "action": "navigate",
+      "target_description": "browser URL bar, typing 'astria.aiprompts/zara-pants'",
+      "outcome": "The browser navigates to the Astria product page for 'Zara Pants'."
+    },
+    {
+      "t": "03:50",
+      "action": "click",
+      "target_text": "Generate anyway",
+      "target_description": "button in a yellow warning box on the 'Zara Pants' page",
+      "outcome": "The warning box disappears, and more generated images of pants are displayed."
+    },
+    {
+      "t": "03:57",
+      "action": "scroll",
+      "target_description": "image results panel on the 'Zara Pants' page",
+      "outcome": "The panel scrolls down, revealing additional generated images of pants."
+    }
+  ],
+  "notable_ui_affordances": [
+    "Lookbook tab",
+    "Image tab",
+    "Video tab",
+    "Search prompts input field",
+    "Pack dropdown",
+    "Base pack dropdown",
+    "User dropdown",
+    "Filters button",
+    "Liked button",
+    "Nano Banana 2 - Genesis 3.1 Flash Image Presets dropdown (model selection)",
+    "Custom dropdown (image generation settings)",
+    "2K dropdown (image resolution)",
+    "1+ dropdown (number of images)",
+    "Describe button",
+    "My packs button",
+    "Generate button (top right)",
+    "Ask about Astria chat input field",
+    "Create product images chat option",
+    "AI Photoshoot chat option",
+    "Account help chat option",
+    "Pose category button ('Add front, back, side')",
+    "Face category button ('Add face, hair, skin')",
+    "Accessories category button ('Add glasses, sunglasses')",
+    "Jacket category button ('Add shirt, jacket, coat')",
+    "Top category button ('Add shirt, sweater, vest')",
+    "Accessories category button ('Add bag, hat, belt')",
+    "Footwear category button ('Add shoes, sandals, boots')",
+    "Bottom category button ('Add pants, shorts, skirt')",
+    "Background category button ('Pick a color')",
+    "Switch to Zara button (on Zara Pants page)"
+  ],
+  "open_questions": [
+    "The exact content and full translation of the Hebrew AI chat response, beyond the English prompt suggestion, is not provided.",
+    "The specific reason or effect of repeatedly clicking the 'Top', 'Jacket', and 'Pose' category buttons is not explicitly demonstrated or explained.",
+    "The meaning and implications of the 'Tribe' concept mentioned in the yellow warning box on the 'Zara Pants' page are not explained."
+  ]
+}

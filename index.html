@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Astria Academy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      (() => {
+        const { protocol, pathname } = window.location;
+        const lastPathPart = pathname.split("/").pop();
+        if (
+          /^https?:$/.test(protocol) &&
+          pathname !== "/" &&
+          !pathname.endsWith("/") &&
+          lastPathPart &&
+          !lastPathPart.includes(".")
+        ) {
+          const base = document.createElement("base");
+          base.href = `${pathname}/`;
+          document.head.prepend(base);
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="style.css?v=20260530-layout-controls" />
+  </head>
+  <body>
+    <div id="app">
+      <div class="boot">Loading course…</div>
+    </div>
+    <script src="app.js?v=20260530-layout-controls"></script>
+  </body>
+</html>

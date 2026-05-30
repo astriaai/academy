@@ -1,0 +1,164 @@
+{
+  "summary": "The presenter demonstrates the Astria fashion-AI platform, focusing on customizing a model's pose and face. They cycle through different poses for a stick figure model, then select and deselect various faces from a reference library. The platform allows users to combine different elements like pose, face, clothing (tank top, jeans), and background to generate images. The generated images are displayed below the input grid, and the presenter briefly shows a context menu for editing or deleting these images.",
+  "urls_visible": [
+    "astria.astria.prompts",
+    "scaling.ai",
+    "how-to-use-astria",
+    "Zara Men",
+    "Zara Women",
+    "Socks",
+    "Zara Men",
+    "astria.ai/prompts"
+  ],
+  "ui_state": "The dominant view is a 3x3 grid of content slots for image generation parameters (pose, face, clothing, background), with a prompt text area and generated image thumbnails below. A 'Search references' modal appears when selecting a face.",
+  "interactions": [
+    {
+      "t": "00:04",
+      "action": "click",
+      "target_text": "back view",
+      "target_description": "pose slot with a stick figure showing a back view",
+      "outcome": "The pose changes to '45 angle view' with a corresponding stick figure."
+    },
+    {
+      "t": "00:14",
+      "action": "click",
+      "target_text": "45 angle view",
+      "target_description": "pose slot with a stick figure showing a 45-degree angle view",
+      "outcome": "The pose changes to 'Add front, back, side', and the stick figure disappears."
+    },
+    {
+      "t": "00:15",
+      "action": "click",
+      "target_text": "Add front, back, side",
+      "target_description": "pose slot labeled 'Add front, back, side'",
+      "outcome": "The pose changes to '45 angle view' with a corresponding stick figure."
+    },
+    {
+      "t": "00:20",
+      "action": "click",
+      "target_text": "45 angle view",
+      "target_description": "pose slot with a stick figure showing a 45-degree angle view",
+      "outcome": "The pose changes to 'back view' with a corresponding stick figure."
+    },
+    {
+      "t": "00:21",
+      "action": "click",
+      "target_text": "back view",
+      "target_description": "pose slot with a stick figure showing a back view",
+      "outcome": "The pose changes to '45 angle view' with a corresponding stick figure."
+    },
+    {
+      "t": "00:35",
+      "action": "click",
+      "target_text": "A low-angle shot, looking slightly up at the woman.",
+      "target_description": "face slot displaying a woman's face",
+      "outcome": "A 'Search references' modal appears, showing a list of faces."
+    },
+    {
+      "t": "00:36",
+      "action": "scroll",
+      "target_text": "(none)",
+      "target_description": "list of faces in the 'Search references' modal",
+      "outcome": "The list of faces scrolls, revealing more options."
+    },
+    {
+      "t": "00:40",
+      "action": "click",
+      "target_text": "Colette",
+      "target_description": "Colette's name in the list of faces",
+      "outcome": "Colette's face is selected and replaces the previous face in the face slot; the modal closes."
+    },
+    {
+      "t": "00:58",
+      "action": "click",
+      "target_text": "(none)",
+      "target_description": "face slot displaying Colette's face",
+      "outcome": "Colette's face is removed from the face slot, which now shows 'Face'."
+    },
+    {
+      "t": "01:06",
+      "action": "click",
+      "target_text": "45 angle view",
+      "target_description": "pose slot with a stick figure showing a 45-degree angle view",
+      "outcome": "The pose changes to 'back view' with a corresponding stick figure."
+    },
+    {
+      "t": "01:07",
+      "action": "scroll",
+      "target_text": "(none)",
+      "target_description": "main content area below the input grid",
+      "outcome": "The page scrolls down, revealing more generated images."
+    },
+    {
+      "t": "01:16",
+      "action": "scroll",
+      "target_text": "(none)",
+      "target_description": "main content area",
+      "outcome": "The page scrolls up."
+    },
+    {
+      "t": "01:17",
+      "action": "scroll",
+      "target_text": "(none)",
+      "target_description": "main content area",
+      "outcome": "The page scrolls down."
+    },
+    {
+      "t": "01:45",
+      "action": "click",
+      "target_text": "Face",
+      "target_description": "face slot labeled 'Face'",
+      "outcome": "A 'Search references' modal appears, showing a list of faces."
+    },
+    {
+      "t": "01:47",
+      "action": "click",
+      "target_text": "Milo",
+      "target_description": "Milo's name in the list of faces",
+      "outcome": "Milo's face is selected and replaces the previous face in the face slot; the modal closes."
+    },
+    {
+      "t": "01:50",
+      "action": "click",
+      "target_text": "(none)",
+      "target_description": "face slot displaying Milo's face",
+      "outcome": "Milo's face is removed from the face slot, which now shows 'Face'."
+    },
+    {
+      "t": "01:51",
+      "action": "hover",
+      "target_text": "(none)",
+      "target_description": "first generated image thumbnail (woman from the back)",
+      "outcome": "A context menu appears with options like 'Crop', 'Remove Background', and 'Edit with Nano Banana 2'."
+    }
+  ],
+  "notable_ui_affordances": [
+    "Jacket slot",
+    "Footwear slot",
+    "Accessories slot",
+    "Background slot with 'Pick a color' and 'Desaturation of blues and greens...' options",
+    "Generate button",
+    "Describe button",
+    "Lookbook tab",
+    "Image tab",
+    "Video tab",
+    "Search prompts input field",
+    "Filters button",
+    "Liked button",
+    "Nano Banana 2 - Genesis 3.1 Flash Image Pres... dropdown",
+    "2K, 3K, 4K resolution options",
+    "Advanced toggle",
+    "My packs button",
+    "Crop option in context menu",
+    "Remove Background option in context menu",
+    "Edit with Nano Banana 2 4K option in context menu",
+    "Edit with Nano Banana 2 2K option in context menu",
+    "Edit with Nano Banana 2 TK option in context menu",
+    "Delete option in context menu"
+  ],
+  "open_questions": [
+    "The specific meaning and functionality of 'pose_short_description' in the prompt text area.",
+    "The exact differences and implications of 'Nano Banana 2 - Genesis 3.1 Flash Image Pres...' and its '2K', '4K', and 'TK' variants.",
+    "The full functionality of 'My packs' and 'astria.ai/prompts' links."
+  ]
+}

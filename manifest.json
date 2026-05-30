@@ -1,0 +1,992 @@
+{
+  "generatedAt": "2026-05-30T16:01:17.893Z",
+  "buildMode": "draft",
+  "commit": null,
+  "pr": null,
+  "pagesBaseUrl": null,
+  "projects": [
+    {
+      "id": "face-inpainting",
+      "title": "Face Inpainting",
+      "tags": [
+        "face-inpainting"
+      ],
+      "addedAt": "2026-05-28T19:18:43+03:00",
+      "addedCommit": "9aae78a",
+      "inBuild": true,
+      "segmentCount": 5,
+      "builtCount": 5,
+      "failedCount": 0,
+      "duration": 147.2,
+      "fullDraftUrl": "videos/face-inpainting/_full-draft.04d6b02b.mp4",
+      "thumbnailUrl": "thumbs/face-inpainting/_full-draft.75814663.jpg",
+      "segments": [
+        {
+          "id": "00-intro",
+          "title": "Astria — Face Inpainting (TV intro)",
+          "visual": "tv-intro",
+          "script": "(visual segment) ASTRIA — Face Inpainting",
+          "status": "built",
+          "duration": 10,
+          "videoUrl": "videos/face-inpainting/00-intro.637b9b61.mp4",
+          "thumbnailUrl": "thumbs/face-inpainting/00-intro.43dddb4b.jpg",
+          "inputs": {
+            "avatar": null,
+            "audio": "media/audio/face-inpainting/00-intro.mp3",
+            "capture": null
+          }
+        },
+        {
+          "id": "02-before-after",
+          "title": "Before / after — Final vs Original",
+          "visual": "face-detail-showcase",
+          "script": "Start with a few existing lookbook examples.\n\nOriginal is the first Nano Banana image. Final is after Inpaint faces runs a\nsecond Nano Banana pass over the detected face area. No separate model, and\nno wardrobe or lighting story here. We are checking the face itself.\n\nIf the original turns smooth or glassy and the final keeps pores, lashes,\npigmentation, and eye detail, that is the cost earning its keep.\n\nThe best result should also preserve identity. It should refine the face from\nthe same identity reference, not push the person into a generic\nskin-enhanced look.",
+          "status": "built",
+          "duration": 40.8,
+          "videoUrl": "videos/face-inpainting/02-before-after.6fbf5354.mp4",
+          "thumbnailUrl": "thumbs/face-inpainting/02-before-after.7dbed706.jpg",
+          "inputs": {
+            "avatar": "media/avatars/face-inpainting/02-before-after.mp4",
+            "audio": "media/audio/face-inpainting/02-before-after.mp3",
+            "capture": null
+          }
+        },
+        {
+          "id": "01-overview",
+          "title": "Why Face Inpainting matters",
+          "visual": "presenter-slide",
+          "script": "Now why it matters.\n\nUse Face Inpainting when identity has to survive the final crop: lookbook\npages, product detail zoom, campaign crops, or client review.\n\nIt is not a separate model. It is a second Nano Banana pass over the\ndetected face area.\n\nUnlike a generic skin enhancer, it works with the identity reference, so the\ngoal is the same person with better pores, pigmentation, lashes, and eye\ndetail.\n\nBudget extra processing time and roughly double generation work.",
+          "status": "built",
+          "duration": 28.9,
+          "videoUrl": "videos/face-inpainting/01-overview.a23a4aa3.mp4",
+          "thumbnailUrl": "thumbs/face-inpainting/01-overview.9a8591c1.jpg",
+          "inputs": {
+            "avatar": "media/avatars/face-inpainting/01-overview.mp4",
+            "audio": "media/audio/face-inpainting/01-overview.mp3",
+            "capture": null
+          }
+        },
+        {
+          "id": "02-workflow",
+          "title": "Workflow — 4K + Inpaint faces",
+          "visual": "screencast-pip",
+          "script": "Workflow inside Astria.\n\nStart with a simple lookbook brief. We care about Nano Banana, 4K, and the\nface pass.\n\nSet resolution to 4K. Open the cog wheel and turn on Inpaint faces.\n\nWhen you run it, Astria creates the image, then runs a second Nano Banana\npass over the detected face area. That is the extra cost and time.\n\nFor the comparison, open a completed result, pan into the face, and compare\nFinal with Original.",
+          "status": "built",
+          "duration": 40.3,
+          "videoUrl": "videos/face-inpainting/02-workflow.db006fb0.mp4",
+          "thumbnailUrl": "thumbs/face-inpainting/02-workflow.bfd97c0b.jpg",
+          "inputs": {
+            "avatar": "media/avatars/face-inpainting/02-workflow.mp4",
+            "audio": "media/audio/face-inpainting/02-workflow.mp3",
+            "capture": "media/captures/face-inpainting/02-workflow.mp4"
+          }
+        },
+        {
+          "id": "03-faqs",
+          "title": "FAQs",
+          "visual": "presenter-slide",
+          "script": "Rule: Inpaint faces is not a separate model. It is a second Nano Banana pass\nover the detected face area.\n\nIt should not smooth everyone into the same face. Because the generation uses\nan identity reference, the face pass should preserve the person while\nimproving detail.\n\nUse it for inspected faces, budget extra time and double generation work, and\nreview Final against Original at 4K before shipping.",
+          "status": "built",
+          "duration": 27.2,
+          "videoUrl": "videos/face-inpainting/03-faqs.a4a08b38.mp4",
+          "thumbnailUrl": "thumbs/face-inpainting/03-faqs.35e22cb0.jpg",
+          "inputs": {
+            "avatar": "media/avatars/face-inpainting/03-faqs.mp4",
+            "audio": "media/audio/face-inpainting/03-faqs.mp3",
+            "capture": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "artboard-2",
+      "title": "Artboard 2",
+      "tags": [
+        "artboard"
+      ],
+      "addedAt": "2026-05-26T09:08:31+03:00",
+      "addedCommit": "b28b1eb",
+      "inBuild": true,
+      "segmentCount": 12,
+      "builtCount": 12,
+      "failedCount": 0,
+      "duration": 405.9,
+      "fullDraftUrl": "videos/artboard-2/_full-draft.mp4",
+      "thumbnailUrl": "thumbs/artboard-2/_full-draft.jpg",
+      "segments": [
+        {
+          "id": "00-intro",
+          "title": "Astria — Artboard (TV intro)",
+          "visual": "tv-intro",
+          "script": "(visual segment) ASTRIA — Artboard",
+          "status": "built",
+          "duration": 10,
+          "videoUrl": "videos/artboard-2/00-intro.mp4",
+          "thumbnailUrl": "thumbs/artboard-2/00-intro.jpg",
+          "inputs": {
+            "avatar": null,
+            "audio": "media/audio/artboard-2/00-intro.mp3",
+            "capture": null
+          }
+        },
+        {
+          "id": "00-result-promise",
+          "title": "Create a cinematic fashion video",
+          "visual": "video-showcase",
+          "script": "Today we are going to create a cinematic fashion video with fast-paced\nshots, consistent characters, and real wardrobe references.\n\nThe goal is not one random clip. The goal is a repeatable workflow:\nstart from references, plan the shots with an artboard, then use that\nsame artboard to guide video.\n\nWe will make a first version, then edit the atmosphere into a darker\noutdoor mood with greenery.",
+          "status": "built",
+          "duration": 27.5,
+          "videoUrl": "videos/artboard-2/00-result-promise.mp4",
+          "thumbnailUrl": "thumbs/artboard-2/00-result-promise.jpg",
+          "inputs": {
+            "avatar": null,
+            "audio": "media/audio/artboard-2/00-result-promise.mp3",
+            "capture": null
+          }
+        },
+        {
+          "id": "01-artboard-roadmap",
+          "title": "Artboards are the shot plan",
+          "visual": "video-showcase",
+          "script": "To get there, we use artboards created by ChatGPT in a single image.\nEach artboard is a four by four grid. Sixteen frames, one image.\n\nThis gives us a quick preview of the movie before we generate the\nvideo. We can check the cast, the wardrobe, the location, the mood,\nand the camera variety.\n\nFor beginners, this is the important idea: the artboard is your shot\nplan. It tells the video model what world it should preserve.",
+          "status": "built",
+          "duration": 31.7,
+          "videoUrl": "videos/artboard-2/01-artboard-roadmap.mp4",
+          "thumbnailUrl": "thumbs/artboard-2/01-artboard-roadmap.jpg",
+          "inputs": {
+            "avatar": null,
+            "audio": "media/audio/artboard-2/01-artboard-roadmap.mp3",
+            "capture": null
+          }
+        },
+        {
+          "id": "02-workspace-references",
+          "title": "Review the workspace references",
+          "visual": "screencast-pip",
+          "script": "Let's get to work. Start in the workspace that already has the product\ntemplates and references you want to use.\n\nFirst check the cast. These are the people the video should keep\nconsistent from shot to shot.\n\nThen check the wardrobe. These garment references are the clothes we\nwant visible across the final film.\n\nWhen you write the prompt, mention the references in plain language:\nthe girl, the woman, the man, the shirt, the pants, and the jacket.",
+          "status": "built",
+          "duration": 48,
+          "videoUrl": "videos/artboard-2/02-workspace-references.mp4",
+          "thumbnailUrl": "thumbs/artboard-2/02-workspace-references.jpg",
+          "inputs": {
+            "avatar": "media/avatars/artboard-2/02-workspace-references.mp4",
+            "audio": "media/audio/artboard-2/02-workspace-references.mp3",
+            "capture": "media/captures/artboard-2/02-workspace-references.mp4"
+          }
+        },
+        {
+          "id": "03-create-studio-artboard",
+          "title": "Ask the assistant for an artboard",
+          "visual": "screencast-pip",
+          "script": "Open Astria Assistant and type slash artboard. Then describe the film\nin normal words.\n\nAsk for an editorial fashion video on a white studio background. Name\nevery character and the exact garment that belongs to them, using the\ntemplate references as the source of truth.\n\nBe explicit that looks and outfits should not swap. The girl stays in\nher template outfit, the woman stays in hers, and the man keeps his\nown jacket, pants, and shoes.\n\nChoose sixteen by nine. The assistant expands your short brief into a\ndetailed artboard prompt, with a mix of wide shots, medium shots,\nclose-ups, and product details.\n\nThat generated prompt is what creates the first artboard.",
+          "status": "built",
+          "duration": 52,
+          "videoUrl": "videos/artboard-2/03-create-studio-artboard.mp4",
+          "thumbnailUrl": "thumbs/artboard-2/03-create-studio-artboard.jpg",
+          "inputs": {
+            "avatar": "media/avatars/artboard-2/03-create-studio-artboard.mp4",
+            "audio": "media/audio/artboard-2/03-create-studio-artboard.mp3",
+            "capture": "media/captures/artboard-2/03-create-studio-artboard.mp4"
+          }
+        },
+        {
+          "id": "04-review-studio-artboard",
+          "title": "Review the first artboard tiles",
+          "visual": "artboard-tile-review",
+          "script": "Once the artboard is ready, open it and review the tiles before you\ngenerate video.\n\nA good fashion video needs camera variety. Look for long shots that\nestablish the full group, medium shots that show wardrobe, close-ups\nfor emotion, and detail shots for fast cutaways.\n\nIf the artboard already has that range, it is ready to become a video\nreference.",
+          "status": "built",
+          "duration": 34,
+          "videoUrl": "videos/artboard-2/04-review-studio-artboard.mp4",
+          "thumbnailUrl": "thumbs/artboard-2/04-review-studio-artboard.jpg",
+          "inputs": {
+            "avatar": null,
+            "audio": "media/audio/artboard-2/04-review-studio-artboard.mp3",
+            "capture": null
+          }
+        },
+        {
+          "id": "05-generate-video",
+          "title": "Generate video from the artboard",
+          "visual": "screencast-pip",
+          "script": "When you are happy with the artboard, use it to generate video.\n\nCopy the same artboard prompt into the Video tab, but remove the word\nartboard. Attach the artboard image as a reference image, not as a\nfirst frame.\n\nChoose Seedance2 Fast, either 480p or 720p, set the duration to\nfifteen seconds, and generate.",
+          "status": "built",
+          "duration": 40,
+          "videoUrl": "videos/artboard-2/05-generate-video.mp4",
+          "thumbnailUrl": "thumbs/artboard-2/05-generate-video.jpg",
+          "inputs": {
+            "avatar": "media/avatars/artboard-2/05-generate-video.mp4",
+            "audio": "media/audio/artboard-2/05-generate-video.mp3",
+            "capture": "media/captures/artboard-2/05-generate-video.mp4"
+          }
+        },
+        {
+          "id": "06-review-first-video",
+          "title": "Review the first video",
+          "visual": "artboard-video-review",
+          "script": "Now review the video. Do not only ask if it looks cool. Ask if it\nfollows the artboard.\n\nCheck whether the same characters and garments stay visible, whether\nthe cuts feel fast enough, and whether the shots still feel like one\ncampaign.",
+          "status": "built",
+          "duration": 28,
+          "videoUrl": "videos/artboard-2/06-review-first-video.mp4",
+          "thumbnailUrl": "thumbs/artboard-2/06-review-first-video.jpg",
+          "inputs": {
+            "avatar": null,
+            "audio": "media/audio/artboard-2/06-review-first-video.mp3",
+            "capture": null
+          }
+        },
+        {
+          "id": "07-edit-moody-artboard",
+          "title": "Refine the atmosphere",
+          "visual": "screencast-pip",
+          "script": "To edit the direction, stay in the same chat session. Do not click new\nchat, and do not start the workflow over.\n\nAsk for one clear change: make the same fashion video more moody,\ndarker, outdoor, and surrounded by greenery. Also remind the assistant\nto keep the same characters in their original template garments.\n\nBecause you are still in the same conversation, the assistant keeps\nthe prior context, writes a new artboard prompt, and creates a refined\ngrid. This is the loop: create, inspect, then ask for a focused change.",
+          "status": "built",
+          "duration": 48,
+          "videoUrl": "videos/artboard-2/07-edit-moody-artboard.mp4",
+          "thumbnailUrl": "thumbs/artboard-2/07-edit-moody-artboard.jpg",
+          "inputs": {
+            "avatar": "media/avatars/artboard-2/07-edit-moody-artboard.mp4",
+            "audio": "media/audio/artboard-2/07-edit-moody-artboard.mp3",
+            "capture": "media/captures/artboard-2/07-edit-moody-artboard.mp4"
+          }
+        },
+        {
+          "id": "08-review-moody-artboard",
+          "title": "Review the moody artboard",
+          "visual": "artboard-tile-review",
+          "script": "Review the refined artboard the same way. Look for the new mood, but\nalso check that the original references did not disappear.\n\nThe best refinement changes the atmosphere without losing the people,\nthe clothes, or the shot variety.",
+          "status": "built",
+          "duration": 30,
+          "videoUrl": "videos/artboard-2/08-review-moody-artboard.mp4",
+          "thumbnailUrl": "thumbs/artboard-2/08-review-moody-artboard.jpg",
+          "inputs": {
+            "avatar": null,
+            "audio": "media/audio/artboard-2/08-review-moody-artboard.mp3",
+            "capture": null
+          }
+        },
+        {
+          "id": "09-review-moody-video",
+          "title": "Review the moody video",
+          "visual": "artboard-video-review",
+          "script": "Generate the second video from the refined board and review it the\nsame way.\n\nThe new clip should feel darker and more atmospheric, but still match\nthe references. The artboard is how we keep the model from drifting\naway from the campaign.",
+          "status": "built",
+          "duration": 28,
+          "videoUrl": "videos/artboard-2/09-review-moody-video.mp4",
+          "thumbnailUrl": "thumbs/artboard-2/09-review-moody-video.jpg",
+          "inputs": {
+            "avatar": null,
+            "audio": "media/audio/artboard-2/09-review-moody-video.mp3",
+            "capture": null
+          }
+        },
+        {
+          "id": "10-closing-tips",
+          "title": "Closing tips",
+          "visual": "presenter-slide",
+          "script": "Here are the rules to remember.\n\nFirst, name the references. Tell the assistant which cast, garments,\nand location should appear.\n\nSecond, ask for camera variety. A fast video needs wide shots, medium\nshots, close-ups, and details.\n\nThird, refine in the same chat. Do not rebuild from scratch. Ask for\none change, review the new artboard, and then generate the next video.",
+          "status": "built",
+          "duration": 28.7,
+          "videoUrl": "videos/artboard-2/10-closing-tips.mp4",
+          "thumbnailUrl": "thumbs/artboard-2/10-closing-tips.jpg",
+          "inputs": {
+            "avatar": "media/avatars/artboard-2/10-closing-tips.mp4",
+            "audio": "media/audio/artboard-2/10-closing-tips.mp3",
+            "capture": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "artboard",
+      "title": "Artboard",
+      "tags": [
+        "artboard",
+        "archived"
+      ],
+      "addedAt": "2026-05-19T14:13:59+03:00",
+      "addedCommit": "d29672f",
+      "inBuild": true,
+      "segmentCount": 9,
+      "builtCount": 9,
+      "failedCount": 0,
+      "duration": 384.7,
+      "fullDraftUrl": "videos/artboard/_full-draft.mp4",
+      "thumbnailUrl": "thumbs/artboard/_full-draft.jpg",
+      "segments": [
+        {
+          "id": "00-intro",
+          "title": "Astria — Artboard (TV intro)",
+          "visual": "tv-intro",
+          "script": "(visual segment) ASTRIA — Artboard",
+          "status": "built",
+          "duration": 10,
+          "videoUrl": "videos/artboard/00-intro.mp4",
+          "thumbnailUrl": "thumbs/artboard/00-intro.jpg",
+          "inputs": {
+            "avatar": null,
+            "audio": "media/audio/artboard/00-intro.mp3",
+            "capture": null
+          }
+        },
+        {
+          "id": "01-showcase",
+          "title": "What the artboard skill makes",
+          "visual": "video-showcase",
+          "script": "This is an artboard: one image that plans a whole short film.\nIt is a four-by-four grid — sixteen cinematic frames — so you can\nsee the story before you spend time animating it.\n\nFor a fashion campaign, that means one cast, one wardrobe, one\nlocation, and one look across every frame. First you make the\nartboard. Then you use it as the visual plan for video. These two\nexamples both started from the same Astria workspace.",
+          "status": "built",
+          "duration": 30.1,
+          "videoUrl": "videos/artboard/01-showcase.mp4",
+          "thumbnailUrl": "thumbs/artboard/01-showcase.jpg",
+          "inputs": {
+            "avatar": null,
+            "audio": "media/audio/artboard/01-showcase.mp3",
+            "capture": null
+          }
+        },
+        {
+          "id": "02-artboard-walkthrough",
+          "title": "Prepare the workspace",
+          "visual": "screencast-pip",
+          "script": "First, prepare the workspace. Start in Astria with a workspace that\nalready has product templates. Here, America Basics has a shirt, a\njacket, and a pair of pants. Each one is a reusable photoshoot setup.\n\nBefore you ask for an artboard, check the reference library. Click\nReferences, then use Filters. Filter to Human. These are the people\nyour film can use: the girl, the woman, and the man.\n\nNow filter to Garment. This is the wardrobe: jackets, shirts,\npants, and shoes. The beginner idea is simple: cast plus wardrobe is\nthe raw material for the artboard.\n\nOpen a template and look at a finished prompt. You are not copying\nit. You are learning the shape of a good request: who is in the\nshot, what they wear, where they are, and what style the image has.\n\nCheck the other templates the same way. The jacket uses the man. The\npants use the woman and a closer product detail. Three templates,\none shared cast and wardrobe.\n\nOnce you can see those ingredients, the workspace is ready. In the\nnext step, you will open the assistant and turn this into a\nsixteen-shot artboard.",
+          "status": "built",
+          "duration": 69.5,
+          "videoUrl": "videos/artboard/02-artboard-walkthrough.mp4",
+          "thumbnailUrl": "thumbs/artboard/02-artboard-walkthrough.jpg",
+          "inputs": {
+            "avatar": "media/avatars/artboard/02-artboard-walkthrough.mp4",
+            "audio": "media/audio/artboard/02-artboard-walkthrough.mp3",
+            "capture": "media/captures/artboard/02-artboard-walkthrough.mp4"
+          }
+        },
+        {
+          "id": "02a-artboard-command",
+          "title": "Generate the artboard",
+          "visual": "screencast-pip",
+          "script": "Now make the artboard. Open Astria Assistant and start a fresh chat.\nThis is the point where you stop clicking around and describe the film.\n\nType slash artboard. Then write the brief in plain language. Use the\nsame simple recipe every time: cast, wardrobe, location, mood, and\naspect ratio.\n\nFor this first version, ask for all three models together on a clean\noff-white studio backdrop, calm and editorial, with the full wardrobe\nvisible across the grid. This is the starting board, not the final\nmood pass.\n\nSend it. If the assistant asks for an aspect ratio, choose sixteen by\nnine for a horizontal campaign video. Choose nine by sixteen only\nwhen you are planning a vertical cut.\n\nThe assistant expands your short brief into a sixteen-shot plan. Look\nfor variety: wide shots, medium shots, close-ups, product details,\nand group shots. That is what makes the video pass feel edited.\n\nStop here and let the first board finish. The next step is review:\nopen the generated artboard in the lightbox and check whether the\nfirst version matches the brief.",
+          "status": "built",
+          "duration": 70.1,
+          "videoUrl": "videos/artboard/02a-artboard-command.mp4",
+          "thumbnailUrl": "thumbs/artboard/02a-artboard-command.jpg",
+          "inputs": {
+            "avatar": null,
+            "audio": "media/audio/artboard/02a-artboard-command.mp3",
+            "capture": "media/captures/artboard/02a-artboard-command.mp4"
+          }
+        },
+        {
+          "id": "02aa-first-artboard",
+          "title": "Review the first artboard",
+          "visual": "screencast-pip",
+          "script": "When the first artboard finishes, open it from the newest prompt. Use\nthe lightbox so you can see the whole four-by-four grid at once.\n\nThis first version is the clean studio board from the initial prompt.\nIt should show the three models, the wardrobe, and a mix of shot\ntypes: portraits, full-body frames, group shots, and product details.\n\nReview it like a checklist. Are the right people there? Is the\nwardrobe visible? Does the location match the brief? Is there enough\nvariety for a video editor to cut with?\n\nIf the answer is almost yes, do not rebuild from scratch. Keep the\nsame chat open and ask for one clear change. In the next step, we turn\nthis clean board into a moodier creative direction.",
+          "status": "built",
+          "duration": 44.4,
+          "videoUrl": "videos/artboard/02aa-first-artboard.mp4",
+          "thumbnailUrl": "thumbs/artboard/02aa-first-artboard.jpg",
+          "inputs": {
+            "avatar": null,
+            "audio": "media/audio/artboard/02aa-first-artboard.mp3",
+            "capture": null
+          }
+        },
+        {
+          "id": "02b-brief-to-video",
+          "title": "Refine the artboard",
+          "visual": "screencast-pip",
+          "script": "Now refine the board in the same chat. Do not start over and do not\npaste the whole brief again. Keep the context, and ask for the one\nchange that matters.\n\nHere the clean studio version works, but the campaign needs more\nattitude. Type slash artboard and ask for it to be more moody, darker,\nand surrounded by greenery.\n\nThe assistant keeps the cast and the structure, then writes a new\nprompt for the updated treatment. You are changing the direction, not\nrebuilding the workflow.\n\nWhen the new result lands in Prompts, open it in the lightbox. Now the\ngrid has a darker, more cinematic look, while still behaving like the\nsame storyboard.\n\nThat is the repeatable loop: create the first board, inspect it, then\nrefine in the same chat with one clear request.",
+          "status": "built",
+          "duration": 48.7,
+          "videoUrl": "videos/artboard/02b-brief-to-video.mp4",
+          "thumbnailUrl": "thumbs/artboard/02b-brief-to-video.jpg",
+          "inputs": {
+            "avatar": "media/avatars/artboard/02b-brief-to-video.mp4",
+            "audio": "media/audio/artboard/02b-brief-to-video.mp3",
+            "capture": "media/captures/artboard/02b-brief-to-video.mp4"
+          }
+        },
+        {
+          "id": "03-switch-to-video",
+          "title": "Switch the artboard to video",
+          "visual": "screencast-pip",
+          "script": "Now turn the artboard into video. Stay on the same prompts page, but\nswitch from Image to Video.\n\nAttach the artboard as a reference image. It is not the first frame.\nIt is the visual plan: cast, wardrobe, framing, and mood.\n\nFor the text, reuse the same idea from the image prompt, but remove\nthe word artboard. Now ask for the actual film: a short America Basics\nfashion video with the same cast, wardrobe, location, mood, and\nsixteen-by-nine format.\n\nChoose Seedance2 Fast 720p, keep the duration short, and generate.\nThen move on. Do not make the viewer watch the render wait.",
+          "status": "built",
+          "duration": 42,
+          "videoUrl": "videos/artboard/03-switch-to-video.mp4",
+          "thumbnailUrl": "thumbs/artboard/03-switch-to-video.jpg",
+          "inputs": {
+            "avatar": null,
+            "audio": "media/audio/artboard/03-switch-to-video.mp3",
+            "capture": "media/captures/artboard/03-switch-to-video.mp4"
+          }
+        },
+        {
+          "id": "03b-review-video-results",
+          "title": "Review the generated videos",
+          "visual": "artboard-video-review",
+          "script": "After the render is done, review the videos against the artboard. Do\nnot judge only whether the clip looks cool. Check whether it follows\nthe plan.\n\nOn the first pass, look for the opening energy, the walking shots,\nthe same court, and the same wardrobe. The artboard tiles give you\nthe shot list.\n\nNow compare the second pass. It can make different motion choices,\nbut it should still feel like the same campaign: same cast, same\nwardrobe, same location, same warm athletic mood.\n\nThis is the handoff: the artboard is the director's reference, and the\nvideo prompt tells the model how those frames should move.",
+          "status": "built",
+          "duration": 36,
+          "videoUrl": "videos/artboard/03b-review-video-results.mp4",
+          "thumbnailUrl": "thumbs/artboard/03b-review-video-results.jpg",
+          "inputs": {
+            "avatar": null,
+            "audio": "media/audio/artboard/03b-review-video-results.mp3",
+            "capture": null
+          }
+        },
+        {
+          "id": "04-faqs",
+          "title": "FAQs",
+          "visual": "presenter-slide",
+          "script": "Three beginner rules make an artboard work.\n\nFirst, keep the world consistent. Use the same cast, the same\nwardrobe, one clear location, and one mood across the whole grid.\n\nSecond, vary the shot sizes. Ask for wide shots, medium shots,\nclose-ups, and product details. That gives the video pass something\nto cut between.\n\nThird, choose the aspect ratio before you generate. Use sixteen by\nnine for horizontal, or nine by sixteen for vertical. Match the\nartboard to the final video you want.",
+          "status": "built",
+          "duration": 33.9,
+          "videoUrl": "videos/artboard/04-faqs.mp4",
+          "thumbnailUrl": "thumbs/artboard/04-faqs.jpg",
+          "inputs": {
+            "avatar": "media/avatars/artboard/04-faqs.mp4",
+            "audio": "media/audio/artboard/04-faqs.mp3",
+            "capture": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "edit-image",
+      "title": "Edit Image",
+      "tags": [
+        "edit-image"
+      ],
+      "addedAt": "2026-05-18T09:56:03+03:00",
+      "addedCommit": "36ec2df",
+      "inBuild": true,
+      "segmentCount": 5,
+      "builtCount": 5,
+      "failedCount": 0,
+      "duration": 137.6,
+      "fullDraftUrl": "videos/edit-image/_full-draft.mp4",
+      "thumbnailUrl": "thumbs/edit-image/_full-draft.jpg",
+      "segments": [
+        {
+          "id": "00-intro",
+          "title": "Astria — Edit (TV intro)",
+          "visual": "tv-intro",
+          "script": "(visual segment) ASTRIA — Edit",
+          "status": "built",
+          "duration": 10,
+          "videoUrl": "videos/edit-image/00-intro.mp4",
+          "thumbnailUrl": "thumbs/edit-image/00-intro.jpg",
+          "inputs": {
+            "avatar": null,
+            "audio": "media/audio/edit-image/00-intro.mp3",
+            "capture": null
+          }
+        },
+        {
+          "id": "01-showcase",
+          "title": "Two clean-input edits",
+          "visual": "video-showcase",
+          "script": "Astria Edit isn't a creative tool. It's a prep tool. Two examples.\nOn the left — an editorial shot with the shoes stripped out. On the\nright — a phone snapshot of a bag, cleaned into a studio packshot.\nSame image, minus the noise. Ready for whatever you generate next.",
+          "status": "built",
+          "duration": 19.3,
+          "videoUrl": "videos/edit-image/01-showcase.mp4",
+          "thumbnailUrl": "thumbs/edit-image/01-showcase.jpg",
+          "inputs": {
+            "avatar": null,
+            "audio": "media/audio/edit-image/01-showcase.mp3",
+            "capture": null
+          }
+        },
+        {
+          "id": "02-strip-shoes",
+          "title": "Strip the styling",
+          "visual": "screencast-pip",
+          "script": "Edit is for cleaning inputs. Watch.\n\nDrop an image into Astria. Here — a fashion shot, woman on a pink\nchair, black heels.\n\nType one sentence. Remove the shoes. Keep her barefoot. Preserve\neverything else.\n\nHit generate.\n\nSame pose, same dress, same chair, same light — shoes gone. This is\nwhat makes a reference clean. When you train a face or generate from\nthis image later, the heels won't travel with it.",
+          "status": "built",
+          "duration": 33.8,
+          "videoUrl": "videos/edit-image/02-strip-shoes.mp4",
+          "thumbnailUrl": "thumbs/edit-image/02-strip-shoes.jpg",
+          "inputs": {
+            "avatar": "media/avatars/edit-image/02-strip-shoes.mp4",
+            "audio": "media/audio/edit-image/02-strip-shoes.mp3",
+            "capture": "media/captures/edit-image/02-strip-shoes.mp4"
+          }
+        },
+        {
+          "id": "03-packshot-cleanup",
+          "title": "One-sentence packshot cleanup",
+          "visual": "screencast-pip",
+          "script": "Same tool, different job.\n\nHere's a phone snapshot of a bag — kitchen table, keys, receipts,\nharsh flash. Now we want a clean studio packshot.\n\nThe full packshot pack we showed you last video runs to two hundred\nlines of prompt. With Edit, you can say it in one sentence — clean\nstudio packshot, plain background, flat lighting, no shadows.\n\nSame bag, same color, same logo. Production-ready in one shot.",
+          "status": "built",
+          "duration": 32.1,
+          "videoUrl": "videos/edit-image/03-packshot-cleanup.mp4",
+          "thumbnailUrl": "thumbs/edit-image/03-packshot-cleanup.jpg",
+          "inputs": {
+            "avatar": "media/avatars/edit-image/03-packshot-cleanup.mp4",
+            "audio": "media/audio/edit-image/03-packshot-cleanup.mp3",
+            "capture": "media/captures/edit-image/03-packshot-cleanup.mp4"
+          }
+        },
+        {
+          "id": "04-faqs",
+          "title": "FAQs",
+          "visual": "presenter-slide",
+          "script": "Three things worth knowing.\n\nSurgical, not creative. Edit's strongest move is removing or\nreplacing one thing — a pair of shoes, a kitchen table, a logo.\nDon't ask it to reimagine the whole image.\n\nMinimal prompts win. Say what changes. Remove X, keep everything\nelse exact. The longer the prompt, the more the model has to ignore.\n\nUse it as a prep step. Strip styling before training a face.\nClean references before generating packshots. Isolate subjects\nbefore video. Edit is the first link in the chain — the rest of\nAstria starts working better when the inputs are clean.",
+          "status": "built",
+          "duration": 42.4,
+          "videoUrl": "videos/edit-image/04-faqs.mp4",
+          "thumbnailUrl": "thumbs/edit-image/04-faqs.jpg",
+          "inputs": {
+            "avatar": "media/avatars/edit-image/04-faqs.mp4",
+            "audio": "media/audio/edit-image/04-faqs.mp3",
+            "capture": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "3d-packshots",
+      "title": "3D Packshots",
+      "tags": [
+        "packshots"
+      ],
+      "addedAt": "2026-05-14T08:23:48+03:00",
+      "addedCommit": "1cc32c7",
+      "inBuild": true,
+      "segmentCount": 6,
+      "builtCount": 6,
+      "failedCount": 0,
+      "duration": 180,
+      "fullDraftUrl": "videos/3d-packshots/_full-draft.mp4",
+      "thumbnailUrl": "thumbs/3d-packshots/_full-draft.jpg",
+      "segments": [
+        {
+          "id": "00-intro",
+          "title": "Astria — 3D Packshots (TV intro)",
+          "visual": "tv-intro",
+          "script": "(visual segment) ASTRIA — 3D Packshots",
+          "status": "built",
+          "duration": 10,
+          "videoUrl": "videos/3d-packshots/00-intro.mp4",
+          "thumbnailUrl": "thumbs/3d-packshots/00-intro.jpg",
+          "inputs": {
+            "avatar": null,
+            "audio": "media/audio/3d-packshots/00-intro.mp3",
+            "capture": null
+          }
+        },
+        {
+          "id": "01-showcase",
+          "title": "How simple — one photo in, a campaign out",
+          "visual": "video-showcase",
+          "script": "Here's the whole workflow. You upload one product still. It can be\na polished studio shot or a phone snap on the cutting table.\nAstria returns a clean 360° rotation plus a sheet of multi-angle\nstills, ready to drop into the product page, the lookbook, the\nReels grid. No light kit. No turntable. No retoucher on standby.\nOne image in. An editorial-grade campaign out.",
+          "status": "built",
+          "duration": 29.5,
+          "videoUrl": "videos/3d-packshots/01-showcase.mp4",
+          "thumbnailUrl": "thumbs/3d-packshots/01-showcase.jpg",
+          "inputs": {
+            "avatar": null,
+            "audio": "media/audio/3d-packshots/01-showcase.mp3",
+            "capture": null
+          }
+        },
+        {
+          "id": "02-workflow",
+          "title": "Workflow — upload one photo, get a packshot",
+          "visual": "screencast-pip",
+          "script": "Here's the whole flow inside Astria.\n\nOpen the 3D Packshot template. Every pack has a built-in upload, so\nthe product image goes in and the packshot comes out.\n\nUpload a single product image. A clean studio shot is ideal, but\neven a phone shot works. The cleaner the source, the more faithful\nthe rotation.\n\nClick Generate. The queue picks it up, and a few moments later you\nhave a full 3D rotation plus a set of high-quality stills, ready\nto drop into a product page, a lookbook, or a Reels grid.",
+          "status": "built",
+          "duration": 33.2,
+          "videoUrl": "videos/3d-packshots/02-workflow.mp4",
+          "thumbnailUrl": "thumbs/3d-packshots/02-workflow.jpg",
+          "inputs": {
+            "avatar": "media/avatars/3d-packshots/02-workflow.mp4",
+            "audio": "media/audio/3d-packshots/02-workflow.mp3",
+            "capture": "media/captures/3d-packshots/02-workflow.mp4"
+          }
+        },
+        {
+          "id": "02-before-after",
+          "title": "Before / after — phone snap vs clean packshot",
+          "visual": "video-showcase",
+          "script": "You don't need a studio. This backpack on the left was shot on a\ncluttered kitchen table at midnight, harsh phone flash, coffee ring\non the wood. Basically the worst possible reference. Astria takes\nthat single ugly snapshot and turns it into the clean studio rotation\non the right. Same backpack, same straps, same hardware, production\nquality without the production.",
+          "status": "built",
+          "duration": 25.3,
+          "videoUrl": "videos/3d-packshots/02-before-after.mp4",
+          "thumbnailUrl": "thumbs/3d-packshots/02-before-after.jpg",
+          "inputs": {
+            "avatar": null,
+            "audio": "media/audio/3d-packshots/02-before-after.mp3",
+            "capture": null
+          }
+        },
+        {
+          "id": "03-why-it-matters",
+          "title": "Why it matters — the conversion math",
+          "visual": "presenter-slide",
+          "script": "So why does this matter?\n\nBetter product visuals help shoppers understand the product faster,\ntrust what they see, and feel more confident buying online.\n\n360-degree product views have been linked to higher conversions,\nstronger engagement, and fewer returns across ecommerce case\nstudies.\n\nPractical Ecommerce reports that 360-degree product photography\nhas been associated with sales lifts ranging from 5 to 40 percent.\nOne cited study suggests a 14 percent increase in sales and a\n17 percent better shopping experience.\n\nIn another example, True Value reportedly saw a 22 percent\nconversion lift after adding 360-degree product photography, while\nHome Depot saw fewer returns during a 360-degree product-photo\nA/B test.",
+          "status": "built",
+          "duration": 50.4,
+          "videoUrl": "videos/3d-packshots/03-why-it-matters.mp4",
+          "thumbnailUrl": "thumbs/3d-packshots/03-why-it-matters.jpg",
+          "inputs": {
+            "avatar": "media/avatars/3d-packshots/03-why-it-matters.mp4",
+            "audio": "media/audio/3d-packshots/03-why-it-matters.mp3",
+            "capture": null
+          }
+        },
+        {
+          "id": "04-faqs",
+          "title": "FAQs",
+          "visual": "presenter-slide",
+          "script": "Three things to know.\n\nReference image. Any clean product shot works. A studio capture is\nideal, but a clear phone photo can work too. The cleaner the source,\nthe more faithful the rotation.\n\nFormat and finish. Studio-quality three-by-four visuals, ready for\nPDPs, lookbooks, and Reels.\n\nProduction efficiency. Much more affordable than a traditional\nproduct shoot, so you can test backdrops, angles, and styling\noptions before locking the final visuals.",
+          "status": "built",
+          "duration": 31.6,
+          "videoUrl": "videos/3d-packshots/04-faqs.mp4",
+          "thumbnailUrl": "thumbs/3d-packshots/04-faqs.jpg",
+          "inputs": {
+            "avatar": "media/avatars/3d-packshots/04-faqs.mp4",
+            "audio": "media/audio/3d-packshots/04-faqs.mp3",
+            "capture": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "video-style-transfer",
+      "title": "Video Style Transfer",
+      "tags": [
+        "style-transfer"
+      ],
+      "addedAt": "2026-05-13T22:31:12+03:00",
+      "addedCommit": "4bde9eb",
+      "inBuild": true,
+      "segmentCount": 5,
+      "builtCount": 5,
+      "failedCount": 0,
+      "duration": 119.20000000000002,
+      "fullDraftUrl": "videos/video-style-transfer/_full-draft.mp4",
+      "thumbnailUrl": "thumbs/video-style-transfer/_full-draft.jpg",
+      "segments": [
+        {
+          "id": "00-intro",
+          "title": "Astria — Video Style Transfer (TV intro)",
+          "visual": "tv-intro",
+          "script": "(visual segment) ASTRIA — Video Style Transfer",
+          "status": "built",
+          "duration": 10,
+          "videoUrl": "videos/video-style-transfer/00-intro.mp4",
+          "thumbnailUrl": "thumbs/video-style-transfer/00-intro.jpg",
+          "inputs": {
+            "avatar": null,
+            "audio": "media/audio/video-style-transfer/00-intro.mp3",
+            "capture": null
+          }
+        },
+        {
+          "id": "01-result-showcase",
+          "title": "Result showcase",
+          "visual": "video-showcase",
+          "script": "Here is what you can build with Astria's video style transfer.\nTwo finished clips, both driven by the same reference video,\neach styled with a single prompt.",
+          "status": "built",
+          "duration": 11.6,
+          "videoUrl": "videos/video-style-transfer/01-result-showcase.mp4",
+          "thumbnailUrl": "thumbs/video-style-transfer/01-result-showcase.jpg",
+          "inputs": {
+            "avatar": null,
+            "audio": "media/audio/video-style-transfer/01-result-showcase.mp3",
+            "capture": null
+          }
+        },
+        {
+          "id": "02-workflow",
+          "title": "Four-step workflow",
+          "visual": "screencast-pip",
+          "script": "Here's the whole flow inside Astria.\n\nStep one. Build the image with your own assets. Clothes, shoes,\nmodels, jewelry. Drop in everything you want the video to feature.\n\nStep two. Upload a reference video and a single simple prompt.\nThe reference is your motion source. The prompt is your style\ndirection. Both fit in a few short lines.\n\nStep three. Pick the resolution. Four-eighty for a fast preview,\nseven-twenty for the daily driver, ten-eighty for the final cut.\nYour call.\n\nThat's it. A few minutes later the finished video lands, with your\nstyle and your garments, ready to drop into a campaign.",
+          "status": "built",
+          "duration": 47.3,
+          "videoUrl": "videos/video-style-transfer/02-workflow.mp4",
+          "thumbnailUrl": "thumbs/video-style-transfer/02-workflow.jpg",
+          "inputs": {
+            "avatar": "media/avatars/video-style-transfer/02-workflow.mp4",
+            "audio": "media/audio/video-style-transfer/02-workflow.mp3",
+            "capture": "media/captures/video-style-transfer/02-workflow.mp4"
+          }
+        },
+        {
+          "id": "02b-first-frame-match",
+          "title": "First-frame match",
+          "visual": "video-showcase",
+          "script": "Here's the trick. The model locks the look from the driving video's\nfirst frame: the face, the pose, the garments, the background. So\nbefore you spend credits on a full video, generate just the still\nin the image tab. Iterate the prompt until the first frame matches\nwhat you want. Then switch to video mode and render. Way faster,\nway cheaper.",
+          "status": "built",
+          "duration": 22.9,
+          "videoUrl": "videos/video-style-transfer/02b-first-frame-match.mp4",
+          "thumbnailUrl": "thumbs/video-style-transfer/02b-first-frame-match.jpg",
+          "inputs": {
+            "avatar": null,
+            "audio": "media/audio/video-style-transfer/02b-first-frame-match.mp3",
+            "capture": null
+          }
+        },
+        {
+          "id": "03-faqs",
+          "title": "FAQs",
+          "visual": "presenter-slide",
+          "script": "Two more things worth knowing.\n\nEach clip runs up to fifteen seconds. For anything longer, just\nconcat a handful together into one continuous cut.\n\nAnd the prompt is your director. Shape the motion you want, the\nbackground, the lighting, the camera angle, the mood. Specific\nphrases like natural relaxed pose, fumbling her eyes, or\nmicro-expressions help the model land the exact look you want.\nThe more you direct, the closer the result.",
+          "status": "built",
+          "duration": 27.4,
+          "videoUrl": "videos/video-style-transfer/03-faqs.mp4",
+          "thumbnailUrl": "thumbs/video-style-transfer/03-faqs.jpg",
+          "inputs": {
+            "avatar": "media/avatars/video-style-transfer/03-faqs.mp4",
+            "audio": "media/audio/video-style-transfer/03-faqs.mp3",
+            "capture": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "webinar",
+      "title": "Scaling Fashion Lookbooks",
+      "tags": [
+        "webinar",
+        "lookbooks"
+      ],
+      "addedAt": "2026-04-19T11:34:54+03:00",
+      "addedCommit": "209229c",
+      "inBuild": true,
+      "segmentCount": 15,
+      "builtCount": 15,
+      "failedCount": 0,
+      "duration": 769.1,
+      "fullDraftUrl": "videos/webinar/_full-draft.mp4",
+      "thumbnailUrl": "thumbs/webinar/_full-draft.jpg",
+      "segments": [
+        {
+          "id": "01-opening",
+          "title": "Scaling AI photoshoots",
+          "visual": "avatar-hero",
+          "script": "Thanks for having me. Today we're going to cover how to scale up lookbooks,\neditorials, social content, and campaigns for fashion, e-commerce, and\ndirect-to-consumer brands. The goal is to build a methodic system that will\nallow us to repeatably and consistently simulate an on-brand photoshoot day:\nto bring up all the creative knowledge, brand requirement and implement the \nbrief designs into an automated system.",
+          "status": "built",
+          "duration": 26.2,
+          "videoUrl": "videos/webinar/01-opening.mp4",
+          "thumbnailUrl": "thumbs/webinar/01-opening.jpg",
+          "inputs": {
+            "avatar": "media/avatars/webinar/01-opening.mp4",
+            "audio": "media/audio/webinar/01-opening.mp3",
+            "capture": null
+          }
+        },
+        {
+          "id": "02-outline",
+          "title": "Outline — what we'll cover today",
+          "visual": "presenter-slide",
+          "script": "Let me quickly outline what we'll cover today. First, we will review the current state of \ntraditional photoshoots, and how things look today.\n\nThen we will see what AI photoshoots look like today, and see few examples for\nmajor brands who have implemented AI. \n\nThen we will dive into brand identity and how we can translate it into AI: how to apply\nit, how to work as a creative director inside Astria, and how to use\nreal-world references. \n\nFrom there we'll get into prompt editing and\nrefinement — making sure you consistently get strong outputs with fewer\nbugs and artifacts. \n\nOnce stable and ready, we will templatize our work so that\nyou can run looks faster — that's the core of the \"scale up.\" \n\nWe'll also\ncover the Describe tool for bringing existing client assets into the AI\nworld.\n\nFinally we will deliver a digital product to a client: not just images,\nbut a template the brand's studio can run themselves.",
+          "status": "built",
+          "duration": 55.2,
+          "videoUrl": "videos/webinar/02-outline.mp4",
+          "thumbnailUrl": "thumbs/webinar/02-outline.jpg",
+          "inputs": {
+            "avatar": "media/avatars/webinar/02-outline.mp4",
+            "audio": "media/audio/webinar/02-outline.mp3",
+            "capture": null
+          }
+        },
+        {
+          "id": "03-traditional-photoshoot",
+          "title": "Traditional photoshoot",
+          "visual": "presenter-slide",
+          "script": "Let's start by reviewing how do these currently work pre-AI?\nWhat does does traditional photoshoot look like?\nUsually this would involve logistics such as\ncoordinating models, locations, shipping inventory, making sure product arrives from production to the studio on time.\n\nStylists, makeup, hair — all of this logistics exists, ultimately, to serve the brand's DNA.\nThe entire photoshoot is there to convey the brand's identity,\nand we need to somehow implement and communicate that. Now let's see how we can do that with AI.",
+          "status": "built",
+          "duration": 36.6,
+          "videoUrl": "videos/webinar/03-traditional-photoshoot.mp4",
+          "thumbnailUrl": "thumbs/webinar/03-traditional-photoshoot.jpg",
+          "inputs": {
+            "avatar": "media/avatars/webinar/03-traditional-photoshoot.mp4",
+            "audio": "media/audio/webinar/03-traditional-photoshoot.mp3",
+            "capture": null
+          }
+        },
+        {
+          "id": "04-brands-verticals",
+          "title": "Who this is for — brands & verticals",
+          "visual": "presenter-slide",
+          "script": "Before we go further, let me clarify who this is actually for.\n\nOn the brand side, we work with three types of business.\nE-commerce — companies selling product online. DTC brands —\ngoing directly to the consumer, with or without a store. And\ntraditional retailers who need scalable visual content for\ntheir catalogs.\n\nThe verticals where this really shines are fashion and apparel,\nfootwear, outdoor and professional gear, jewelry, glasses, and\nbeauty. If your product lives on a model or on a body, AI\nphotoshoots are going to change how you produce imagery.",
+          "status": "built",
+          "duration": 36.5,
+          "videoUrl": "videos/webinar/04-brands-verticals.mp4",
+          "thumbnailUrl": "thumbs/webinar/04-brands-verticals.jpg",
+          "inputs": {
+            "avatar": "media/avatars/webinar/04-brands-verticals.mp4",
+            "audio": "media/audio/webinar/04-brands-verticals.mp3",
+            "capture": null
+          }
+        },
+        {
+          "id": "05-real-world-examples",
+          "title": "Real brands already using AI",
+          "visual": "screencast-pip",
+          "script": "Let's see a few examples of brands already using AI.\n\nSACKS rebuilt their entire homepage. The hero imagery,\nthe model shots, the product page lookbooks — all done by the professional photographer \nShai Yechezkel & Miki Turgeman who have formed an AI studio called CI898. Shai and Miki helped\nsteer the brand's creative direction together, built\nthe brand's avatars and template set, and then ran hundreds of looks through it.\nThey're already done two collections with AI.\n\nRonny Kobo is another example of a Paris based designer. You can see the difference in styling\nand how the branding gets applied translated into the visuals.\n\nFinally the big players such as Mango, H&M, Zara — are all doing the same\nthing, producing both campaigns and lookbooks with AI. The world is\nalready implementing AI. What remains is to direct it well, scale it\nup, and do it precisely and custom to each brand's identity.",
+          "status": "built",
+          "duration": 58.8,
+          "videoUrl": "videos/webinar/05-real-world-examples.mp4",
+          "thumbnailUrl": "thumbs/webinar/05-real-world-examples.jpg",
+          "inputs": {
+            "avatar": "media/avatars/webinar/05-real-world-examples.mp4",
+            "audio": "media/audio/webinar/05-real-world-examples.mp3",
+            "capture": "media/captures/webinar/05-real-world-examples.mp4"
+          }
+        },
+        {
+          "id": "06-brand-implementations",
+          "title": "Brand identity in Astria — three real implementations",
+          "visual": "screencast-pip",
+          "script": "Here's how we actually implement brand identity in Astria.\n\nEvery brand has its own visual language — its own hex colors, its own\nmodels, expressions, and atmosphere. Off-the-shelf templates don't\nwork because a brand will always say \"this is beautiful, but it's\nnot me.\"\n\nSo we build a workspace for each brand, with their models,\nbackgrounds, lighting, and template set defined once — and reused\nacross every collection.\n\nHere is an example of fashion brand modeled after Zara — editorial fashion, outdoor shoots, European aesthetic.\nA set of templates across casual, formal, and nightwear.\n\nGreat Sports — Adidas-style. Higher intensity expressions, athletic\nenergy, a completely different set of models and templates.\n\nAnd America Basics — a Uniqlo-style brand. Soft neutrals, friendly\nexpressions. Clean, everyday. Completely different DNA from the\nother two.\n\nFor each brand we deliver a workspace with a set of templates — one\nper garment type. The studio uploads a product and gets the full\nlookbook in a single click.",
+          "status": "built",
+          "duration": 67.9,
+          "videoUrl": "videos/webinar/06-brand-implementations.mp4",
+          "thumbnailUrl": "thumbs/webinar/06-brand-implementations.jpg",
+          "inputs": {
+            "avatar": "media/avatars/webinar/06-brand-implementations.mp4",
+            "audio": "media/audio/webinar/06-brand-implementations.mp3",
+            "capture": "media/captures/webinar/06-brand-implementations.mp4"
+          }
+        },
+        {
+          "id": "07-platform-partner",
+          "title": "The platform is the partner",
+          "visual": "screencast-pip",
+          "script": "Here's what we've learned working with brands: they need constant\nhelp keeping up with AI. Brands are busy with their core business: design, logistics, fashion. \nThey do not have time to write prompts, and they don't need to.\n\nThat's exactly what we're trying to solve. Six months ago we used Flux LoRA. \nThen it was Nano Banana. Today it's Nano Banana 2. In two\nmonths it will be Nano Banana 3, Seedance or WAN 2.7.\nThe brand doesn't need to know.\n\nThe brand receives a template. The brand's studio can then\nupload a simple packshot photo, and get a full lookbook in a\nsingle click. The framework was defined for them: the models, the\nlighting, the framing, and so now they can scale it up and run looks in bulks.\n\nSometimes the brand may way to do small customizations. The Brief box allow to specify a customization\nlike \"this time she's sitting on an armchair,\" or \"make her pose more dynamic\" —\nand it runs the entire template which keeps results consistent and tell a coherent story.\n\nFinally, it's important to explain that brands need a set of templates — one for jackets, one for\nshoes, one for outdoor shots. Each garment type needs different\ncrops, framing and poses. The brand can then pick a template, and upload a bulk of \ngarments to run the lookbook in a single click.",
+          "status": "built",
+          "duration": 82.1,
+          "videoUrl": "videos/webinar/07-platform-partner.mp4",
+          "thumbnailUrl": "thumbs/webinar/07-platform-partner.jpg",
+          "inputs": {
+            "avatar": "media/avatars/webinar/07-platform-partner.mp4",
+            "audio": "media/audio/webinar/07-platform-partner.mp3",
+            "capture": "media/captures/webinar/07-platform-partner.mp4"
+          }
+        },
+        {
+          "id": "08-start-creating",
+          "title": "Your turn — start creating",
+          "visual": "presenter-slide",
+          "script": "Alright — your turn.\n\nFirst thing, let's open a Workspace. Think of it as a shared\nroom — your team, creatives, CMOs, photographers, all working\nside by side. Every prompt, reference, and template you create\nshows up live for everyone in there.\n\nTo set one up, click the Workspace selector at the top-left,\nnext to the logo, and pick \"New workspace\". Name it after\nthe brand you're working with, and hit \"Create\".\n\nNow — pick a brand you actually love. Skip the made-up exercise\nand grab something real. A designer you admire, a brand you've\nworked with, maybe something local you've been watching.\n\nPull up their current material. Look at the poses, the faces,\nthe hair, the makeup, the expressions — what makes the look\ntheirs.\n\nLet's get our hands dirty.",
+          "status": "built",
+          "duration": 52.1,
+          "videoUrl": "videos/webinar/08-start-creating.mp4",
+          "thumbnailUrl": "thumbs/webinar/08-start-creating.jpg",
+          "inputs": {
+            "avatar": "media/avatars/webinar/08-start-creating.mp4",
+            "audio": "media/audio/webinar/08-start-creating.mp3",
+            "capture": null
+          }
+        },
+        {
+          "id": "09a-open-workspace",
+          "title": "Open a Workspace for the brand",
+          "visual": "screencast-pip",
+          "script": "Let's start by opening a new workspace. Click the Workspace selector\nnext to the logo, pick \"New workspace\", and name it after the brand\nyou're working with. I'll name mine Bobo Choses.",
+          "status": "built",
+          "duration": 11.5,
+          "videoUrl": "videos/webinar/09a-open-workspace.mp4",
+          "thumbnailUrl": "thumbs/webinar/09a-open-workspace.jpg",
+          "inputs": {
+            "avatar": "media/avatars/webinar/09a-open-workspace.mp4",
+            "audio": "media/audio/webinar/09a-open-workspace.mp3",
+            "capture": "media/captures/webinar/09a-open-workspace.mp4"
+          }
+        },
+        {
+          "id": "09b-brand-research",
+          "title": "Brand research — what makes the brand recognizable",
+          "visual": "screencast-pip",
+          "script": "Here's the Bobo Choses website. Let's think about the brand's\nidentity. How does the lookbook look — white studio, gray, concrete\nfloor, or outdoor? How do the models look — age group, expression,\nhair? And the poses — strict front, back, 45-side, detail view, or\nsomething more dynamic?\n\nThe adult faces have a neutral expression while the kids look a\nlittle brighter. The women's hair is parted, the skin is pale.\nAdult ages are around 22 to 26, kids around 8.\n\nNow let's examine the lookbook itself. On the kids' product page, a\nmedium upper-torso waist-up view with very little headroom. The\nfull-body view leaves a lot of whitespace, with socks and flip-flops,\n45-degree front, hands relaxed at the side.\n\nThe women's lookbook follows the same pattern — medium shot, upper\ntorso, head cropped, waist up. The full-body view has plenty of\nwhitespace, 45 degrees, legs in a V, hands at the side. And a\ndynamic shot rotated, with hands behind the head.\n\nThe aspect ratio across the lookbook is 3:4 — quite common.\n\nNow let's go back to Astria and simulate a photoshoot day. We'll try\na kids lookbook — one of the main pain points for brands, and where\nthey're usually happy to start migrating to AI. For starters, let's\nget a baseline image to get things going.",
+          "status": "built",
+          "duration": 86,
+          "videoUrl": "videos/webinar/09b-brand-research.mp4",
+          "thumbnailUrl": "thumbs/webinar/09b-brand-research.jpg",
+          "inputs": {
+            "avatar": "media/avatars/webinar/09b-brand-research.mp4",
+            "audio": "media/audio/webinar/09b-brand-research.mp3",
+            "capture": null
+          }
+        },
+        {
+          "id": "09c-technicalities",
+          "title": "Technicalities — model, resolution, aspect, count",
+          "visual": "screencast-pip",
+          "script": "Now for a few technicalities.\n\nModel — make sure Nano Banana 2 is selected.\n\nResolution — 2K for iterating quickly. Once you're happy with the\nlook, switch to 4K.\n\nAspect ratio — 3:4. Most lookbooks are 3:4.\n\nAnd for quicker iteration, two images per prompt. Later, bump it to\nfour if you want more variation.",
+          "status": "built",
+          "duration": 24.5,
+          "videoUrl": "videos/webinar/09c-technicalities.mp4",
+          "thumbnailUrl": "thumbs/webinar/09c-technicalities.jpg",
+          "inputs": {
+            "avatar": "media/avatars/webinar/09c-technicalities.mp4",
+            "audio": "media/audio/webinar/09c-technicalities.mp3",
+            "capture": "media/captures/webinar/09c-technicalities.mp4"
+          }
+        },
+        {
+          "id": "09d-build-look",
+          "title": "Build the look — Lookbook references one cube at a time",
+          "visual": "screencast-pip",
+          "script": "Let's click the Lookbook button and start adding references. We'll\ngo through each cube — one at a time.\n\nBackground.\n\nThe Background cube has a color picker built in. I'll pick white —\nclean studio look, good for product images.\n\nPose.\n\nClick the Pose cube and the picker opens. You'll see options like\nback view, front pose, full body, 45 angle, back medium, front\nmedium. I'll go with Front medium — straightforward, waist up,\nclassic catalog framing.\n\nFace.\n\nClick the Face cube. Same picker pattern, but here we get the\npublic library — every face was generated by Astria and is free to\nuse. I'll search for \"boy\" and watch how the list filters down.\nFelix looks right for our look.\n\nTop.\n\nFor garments, the fastest path is to copy a packshot straight from\nthe brand's site. Right-click copy, then back to Astria, focus the\nprompt box, and Command-V. The image uploads instantly and lands in\nthe Top cube.\n\nBottom.\n\nSame flow with the shorts.\n\nFootwear.\n\nThe public library has shoes too. I'll search for \"flip\" — and\nthere's our Minimalist black flip-flops. Click, and it's added.",
+          "status": "built",
+          "duration": 75.7,
+          "videoUrl": "videos/webinar/09d-build-look.mp4",
+          "thumbnailUrl": "thumbs/webinar/09d-build-look.jpg",
+          "inputs": {
+            "avatar": "media/avatars/webinar/09d-build-look.mp4",
+            "audio": "media/audio/webinar/09d-build-look.mp3",
+            "capture": "media/captures/webinar/09d-build-look.mp4"
+          }
+        },
+        {
+          "id": "10-refine-and-templatize",
+          "title": "Refine prompts, describe, templatize",
+          "visual": "screencast-pip",
+          "script": "Most bugs you'll hit aren't the model being wrong — they're conflicts\nbetween the crop you asked for and the references you loaded. A medium\nshot with a shoe reference tries to cram a face and shoes into one\nframe and distorts. Keep the crop, the references, and the prompt\ntelling the same story.\n\nWhen you need finer control than the Lookbook gives you, go to the\nprompt box. A handful of high-impact keywords goes a long way —\ndiffused lighting, realistic skin, soft expression. That's where brand\nDNA lives: serious or pleased, high-end or low-cost.\n\nThe Describe tool closes the loop between references and prompts. Let\nme grab a reference from Unsplash — a search for fashion photography\npulls scenes close to what we want. Copy one, back to Astria, click\nPaste from clipboard, then Describe. The tool extracts a prompt, but\nit listens to the references you already have and avoids describing\nthem. No more white shirt in the prompt fighting a yellow dress in\nthe reference.\n\nOnce a look works — model, pose, lighting, expression — stop iterating\nand templatize. Turn the pack into a template. From there it's a\ndigital product: the brand's studio picks a template, uploads a\npackshot, and runs the lookbook. Build once, scale forever.",
+          "status": "built",
+          "duration": 79.8,
+          "videoUrl": "videos/webinar/10-refine-and-templatize.mp4",
+          "thumbnailUrl": "thumbs/webinar/10-refine-and-templatize.jpg",
+          "inputs": {
+            "avatar": "media/avatars/webinar/10-refine-and-templatize.mp4",
+            "audio": "media/audio/webinar/10-refine-and-templatize.mp3",
+            "capture": "media/captures/webinar/10-refine-and-templatize.mp4"
+          }
+        },
+        {
+          "id": "11-templates-concept",
+          "title": "Deliver the template — the brand runs at scale",
+          "visual": "screencast-pip",
+          "script": "Once a look is working — the model, the background, the lighting,\nthe framing — we stop iterating and lock it in. Open the hamburger\non a generation, click Template, and save a New Template. From that\npoint, no matter what garment you drop in, it will keep the model,\nthe background, and the lighting you originally defined.\n\nThis template is what we deliver to the brand. It's not a folder of\nimages; it's a recipe. The brand opens My Templates, picks the one\nwe built for them, swaps in a new garment — and everything else stays\nconsistent: the same angle, the same model, the same scene.\n\nThe template itself holds a collection of prompts — front, side, back,\ndetail. That's what makes this scale. A brand gets a hundred shirts\nfrom the manufacturer; they select thirty at once, click Generate,\nand the template runs them across four models in the same angles\nand the same look. That's the end of the workflow: we build the\ntemplate, the brand runs the lookbook.",
+          "status": "built",
+          "duration": 59.9,
+          "videoUrl": "videos/webinar/11-templates-concept.mp4",
+          "thumbnailUrl": "thumbs/webinar/11-templates-concept.jpg",
+          "inputs": {
+            "avatar": "media/avatars/webinar/11-templates-concept.mp4",
+            "audio": "media/audio/webinar/11-templates-concept.mp3",
+            "capture": "media/captures/webinar/11-templates-concept.mp4"
+          }
+        },
+        {
+          "id": "12-closing",
+          "title": "Wrap-up",
+          "visual": "presenter-slide",
+          "script": "The short version: train the brand, ship the template, let the brand\nrun the looks. Creatives stay in the directing chair — the template\ndoes the cranking. If that model fits what you're trying to build,\nstart at astria.ai. Thanks for listening.",
+          "status": "built",
+          "duration": 16.3,
+          "videoUrl": "videos/webinar/12-closing.mp4",
+          "thumbnailUrl": "thumbs/webinar/12-closing.jpg",
+          "inputs": {
+            "avatar": "media/avatars/webinar/12-closing.mp4",
+            "audio": "media/audio/webinar/12-closing.mp3",
+            "capture": null
+          }
+        }
+      ]
+    }
+  ]
+}

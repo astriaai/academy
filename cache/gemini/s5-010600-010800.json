@@ -1,0 +1,55 @@
+{
+  "summary": "The presenter demonstrates how to modify a fashion model's pose within the Astria AI platform. Starting from a pre-configured look, they click on the 'Pose' slot to open a selection modal. From the available options, they choose a 'back view' pose, which updates the main interface. Finally, they initiate the image generation process to create a new image incorporating the selected back view pose.",
+  "urls_visible": [
+    "astria.aprompts"
+  ],
+  "ui_state": "Astria AI platform showing a grid of fashion item slots (Pose, Jacket, Footwear, Accessories, Background) and a Lookbook section with previous image generations and their prompts. A modal window for pose selection is opened and closed during the demonstration, followed by a loading screen for image generation.",
+  "interactions": [
+    {
+      "t": "00:56",
+      "action": "click",
+      "target_text": "Pose",
+      "target_description": "A square slot labeled 'Pose' in the main grid, with a placeholder image of a woman's face.",
+      "outcome": "A modal window titled 'Searching' appears, displaying various pose options as stick figures (front pose, all angle view, back view, front full body pose)."
+    },
+    {
+      "t": "01:32",
+      "action": "click",
+      "target_text": "back view",
+      "target_description": "A text label 'back view' with a stick figure icon, listed as a pose option in the modal window.",
+      "outcome": "The 'back view' pose is selected and appears in the 'Pose' slot in the main grid. The modal window closes. The prompt text below updates to include 'back view (pose)'."
+    },
+    {
+      "t": "01:52",
+      "action": "click",
+      "target_text": "Generate",
+      "target_description": "A button labeled 'Generate' in the top right corner of the interface.",
+      "outcome": "The main content area displays 'Searching' and then 'Loading' indicators, followed by the Lookbook view updating with a new image generation in progress."
+    }
+  ],
+  "notable_ui_affordances": [
+    "My packs button",
+    "astria.ai link",
+    "Tribe dropdown",
+    "Search prompts input",
+    "User dropdown",
+    "Filters button",
+    "Liked button",
+    "Describe button",
+    "Nano Banana 2 - Genesis 3.1 Flash Image Prom...",
+    "Lookbook tab",
+    "Image tab",
+    "Video tab",
+    "Add front, back, side (placeholder for Pose)",
+    "Add bag, hat, jewel (placeholder for Accessories)",
+    "Add jacket, pants, jacket (placeholder for Jacket)",
+    "Add shoes, sneakers (placeholder for Footwear)",
+    "Pick a color (placeholder for Background)",
+    "Desaturation of blues and g (background description)",
+    "A low-angle shot, looking slightly up at the woman. (prompt for pose)",
+    "The texture of the dress fabric is visible, with subtle folds and creases. (prompt for tank top)",
+    "Here's the revised prompt, following your instructions: (prompt for jeans)",
+    "Desaturation of blues and greens in the background to enhance the focus on the subject. (prompt for background)"
+  ],
+  "open_questions": []
+}

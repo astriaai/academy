@@ -1,0 +1,21 @@
+{
+  "promptId": "43164986",
+  "index": 2,
+  "promptUrl": "https://www.astria.ai/tunes/4180298/prompts/43164986?ws=553",
+  "final": "https://mp.astria.ai/kuy6k1njq4xut0xgb1a5lrwcx6yn",
+  "original": {
+    "src": "https://www.astria.ai/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCRXhnQ0EwPSIsImV4cCI6IjIwMjYtMDUtMjlUMTk6MDM6NDIuMzEyWiIsInB1ciI6ImJsb2JfaWQifX0=--52b6140156e873cdc5259b65e930e5224de0ff36/43164986-0.jpg?ws=553",
+    "label": "Inpaint Man Original"
+  },
+  "layers": [
+    {
+      "src": "https://www.astria.ai/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCRXhnQ0EwPSIsImV4cCI6IjIwMjYtMDUtMjlUMTk6MDM6NDIuMzEyWiIsInB1ciI6ImJsb2JfaWQifX0=--52b6140156e873cdc5259b65e930e5224de0ff36/43164986-0.jpg?ws=553",
+      "label": "Inpaint Man Original"
+    }
+  ],
+  "files": {
+    "final": "/Users/burg/git/astria-course/webinar-builder/assets/results/face-inpainting/ws-553/prompt-43164986-final-source.png",
+    "raw": "/Users/burg/git/astria-course/webinar-builder/assets/results/face-inpainting/ws-553/prompt-43164986-raw-source.jpg"
+  },
+  "meta": "<faceid:4094449:1.0> pose legs and face same skin <faceid:4988542:1.0> man model tall shhot low angel<faceid:4989554:1.0> shirt <faceid:4989560:1.0> shoes <faceid:4989578:1.0> shorts The shorts are worn slightly low on the waist <faceid:4009884:1.0> background clean white background --background_color #e2e2e2Created: 2026-05-28 16:09:35 Shai Yehezkel4K3:4Inpaint Faces Gemini 3 - Nano Banana Pro Gordon-sebo-final ( man )front pose ( pose )"
+}

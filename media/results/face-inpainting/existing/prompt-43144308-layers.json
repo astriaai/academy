@@ -1,0 +1,21 @@
+{
+  "promptId": "43144308",
+  "index": 2,
+  "promptUrl": "https://www.astria.ai/tunes/4180298/prompts/43144308?ws=373",
+  "final": "https://mp.astria.ai/kse63wzhk89lat7sjwa03u7dr7jk",
+  "original": {
+    "src": "https://www.astria.ai/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCRFcvQncwPSIsImV4cCI6IjIwMjYtMDUtMjlUMTQ6MjA6MDIuNjcxWiIsInB1ciI6ImJsb2JfaWQifX0=--f628126ad49c0bf3d04c6819ea7388336bf18f61/43144308-1.jpg?ws=373",
+    "label": "Inpaint Woman Original"
+  },
+  "layers": [
+    {
+      "src": "https://www.astria.ai/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCRFcvQncwPSIsImV4cCI6IjIwMjYtMDUtMjlUMTQ6MjA6MDIuNjcxWiIsInB1ciI6ImJsb2JfaWQifX0=--f628126ad49c0bf3d04c6819ea7388336bf18f61/43144308-1.jpg?ws=373",
+      "label": "Inpaint Woman Original"
+    }
+  ],
+  "files": {
+    "final": "/Users/burg/git/astria-course/webinar-builder/assets/results/face-inpainting/existing/prompt-43144308-final-source.png",
+    "raw": "/Users/burg/git/astria-course/webinar-builder/assets/results/face-inpainting/existing/prompt-43144308-raw-source.jpg"
+  },
+  "meta": "<faceid:4094449:1.0> pose look to the camera one leg band a bit <faceid:4929165:1.0> woman 185cm tall slender figure, model height proportions, realistic skin texture, visible pores <faceid:4987538:1.0> outfit <faceid:4963000:1.0> sandals <faceid:4920969:1.0> background slightly low-angle shot --create_crops 70Created: 2026-05-28 08:25:40 CI898 STUDIO4K3:4Inpaint Faces Nano Banana 2 - Gemini 3.1 FlashCream floral trellis button-down shirt and shorts ( outfit )Light pink leather thong sandals with circular ankle straps ( sandals )Anika ( woman )Textured beige wall meeting concrete floor ( background )front pose ( pose )"
+}

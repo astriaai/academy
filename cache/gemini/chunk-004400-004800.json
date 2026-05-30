@@ -1,0 +1,197 @@
+{
+  "summary": "The presenter demonstrates how to create a look using the Astria AI platform. They select a female model's face, then choose a white tank top, blue jeans, and brown Nike sneakers. They also experiment with setting and removing a plain light grey background. Finally, they adjust the output image resolution and the number of images to be generated.",
+  "urls_visible": [
+    "https://www.astria.ai/workspace/new"
+  ],
+  "ui_state": "The Astria AI platform's main workspace, featuring a 3x3 grid for selecting fashion elements, a 'Lookbook' panel on the left, and a prompt input area at the bottom.",
+  "interactions": [
+    {
+      "t": "00:26",
+      "action": "click",
+      "target_text": "Face",
+      "target_description": "Face slot in the 3x3 grid",
+      "outcome": "A modal window appears, showing a list of public models and a large image of a boy."
+    },
+    {
+      "t": "00:33",
+      "action": "click",
+      "target_text": "Elara",
+      "target_description": "Name 'Elara' in the list of public models",
+      "outcome": "The large image in the modal changes to a woman (Elara)."
+    },
+    {
+      "t": "00:36",
+      "action": "click",
+      "target_description": "Area outside the modal window",
+      "outcome": "The modal window closes, and Elara's face is displayed in the 'Face' slot of the 3x3 grid. 'Elara (woman)' is added to the Lookbook."
+    },
+    {
+      "t": "00:54",
+      "action": "click",
+      "target_text": "Top",
+      "target_description": "Top slot in the 3x3 grid",
+      "outcome": "A modal window appears, showing a list of references and a large image of a white tank top."
+    },
+    {
+      "t": "00:56",
+      "action": "click",
+      "target_text": "tank top",
+      "target_description": "Reference 'tank top' in the modal list",
+      "outcome": "The modal window closes, and the white tank top is displayed in the 'Top' slot. 'tank top (shirt)' is added to the Lookbook."
+    },
+    {
+      "t": "00:58",
+      "action": "click",
+      "target_text": "Bottom",
+      "target_description": "Bottom slot in the 3x3 grid",
+      "outcome": "A modal window appears, showing a list of references and a large image of blue jeans."
+    },
+    {
+      "t": "01:00",
+      "action": "click",
+      "target_text": "Jeans",
+      "target_description": "Reference 'Jeans' in the modal list",
+      "outcome": "The modal window closes, and the blue jeans are displayed in the 'Bottom' slot. 'Jeans (pants)' is added to the Lookbook."
+    },
+    {
+      "t": "02:12",
+      "action": "click",
+      "target_text": "Footwear",
+      "target_description": "Footwear slot in the 3x3 grid",
+      "outcome": "A modal window appears, showing a list of references and a large image of white Reebok shoes."
+    },
+    {
+      "t": "02:19",
+      "action": "click",
+      "target_text": "white Reebok shoes with blue logos",
+      "target_description": "Reference 'white Reebok shoes with blue logos' in the modal list",
+      "outcome": "The modal window closes, and the white Reebok shoes are displayed in the 'Footwear' slot. 'white Reebok shoes with blue logos (shoes)' is added to the Lookbook."
+    },
+    {
+      "t": "02:33",
+      "action": "click",
+      "target_text": "x",
+      "target_description": "Remove button next to 'white Reebok shoes with blue logos (shoes)' in the Lookbook",
+      "outcome": "The white Reebok shoes are removed from the 'Footwear' slot and the Lookbook."
+    },
+    {
+      "t": "02:35",
+      "action": "click",
+      "target_text": "Footwear",
+      "target_description": "Footwear slot in the 3x3 grid",
+      "outcome": "A modal window appears, showing a list of references and a large image of brown Nike sneakers."
+    },
+    {
+      "t": "02:39",
+      "action": "click",
+      "target_text": "brown Nike sneakers with...",
+      "target_description": "Reference 'brown Nike sneakers with...' in the modal list",
+      "outcome": "The modal window closes, and the brown Nike sneakers are displayed in the 'Footwear' slot. 'brown Nike sneakers with... (shoes)' is added to the Lookbook."
+    },
+    {
+      "t": "02:44",
+      "action": "click",
+      "target_text": "Background",
+      "target_description": "Background slot in the 3x3 grid",
+      "outcome": "A color picker appears."
+    },
+    {
+      "t": "02:46",
+      "action": "click",
+      "target_description": "Light grey color swatch in the color picker",
+      "outcome": "The color picker closes, and the background color is set to light grey (#D3D3D3). 'plain Background #D3D3D3 - background_color #D3D3D3' is added to the Lookbook."
+    },
+    {
+      "t": "03:15",
+      "action": "click",
+      "target_text": "x",
+      "target_description": "Remove button next to 'plain Background #D3D3D3 - background_color #D3D3D3' in the Lookbook",
+      "outcome": "The background color is removed from the 'Background' slot and the Lookbook."
+    },
+    {
+      "t": "03:17",
+      "action": "click",
+      "target_text": "2K",
+      "target_description": "Image resolution selector",
+      "outcome": "A dropdown menu appears with resolution options."
+    },
+    {
+      "t": "03:19",
+      "action": "click",
+      "target_text": "4",
+      "target_description": "Option '4' in the resolution dropdown",
+      "outcome": "The dropdown closes, and the selected resolution changes to 4K."
+    },
+    {
+      "t": "03:31",
+      "action": "click",
+      "target_text": "4K",
+      "target_description": "Image resolution selector",
+      "outcome": "A dropdown menu appears with resolution options."
+    },
+    {
+      "t": "03:33",
+      "action": "click",
+      "target_text": "2K",
+      "target_description": "Option '2K' in the resolution dropdown",
+      "outcome": "The dropdown closes, and the selected resolution changes to 2K."
+    },
+    {
+      "t": "03:35",
+      "action": "click",
+      "target_text": "4",
+      "target_description": "Number of images to generate selector",
+      "outcome": "A dropdown menu appears with options for the number of images."
+    },
+    {
+      "t": "03:37",
+      "action": "click",
+      "target_text": "2",
+      "target_description": "Option '2' in the number of images dropdown",
+      "outcome": "The dropdown closes, and the number of images to generate changes to 2."
+    },
+    {
+      "t": "03:53",
+      "action": "click",
+      "target_text": "2",
+      "target_description": "Number of images to generate selector",
+      "outcome": "A dropdown menu appears with options for the number of images."
+    },
+    {
+      "t": "03:55",
+      "action": "click",
+      "target_text": "4",
+      "target_description": "Option '4' in the number of images dropdown",
+      "outcome": "The dropdown closes, and the number of images to generate changes to 4."
+    }
+  ],
+  "notable_ui_affordances": [
+    "Pose",
+    "Jacket",
+    "Accessories (top right)",
+    "Accessories (middle right)",
+    "My packs",
+    "Generate",
+    "astria.ai/username",
+    "Lookbook (tab)",
+    "Image (tab)",
+    "Video (tab)",
+    "Describe your image. Type / to add a reference (input field)",
+    "Nano Banana 3 - Demos 3.1 Flash Image Pens... (model selection dropdown)",
+    "Search prompts (input field)",
+    "User (tab)",
+    "Filters (button)",
+    "Liked (button)",
+    "Describe (button)",
+    "Toggle Advanced (link)"
+  ],
+  "open_questions": [
+    "The full text for the 'brown Nike sneakers with...' reference is truncated in the video.",
+    "The full text for the 'white Reebok shoes with blue logos' reference is truncated in the video.",
+    "The full text for 'tank top (shirt)' in the Lookbook is truncated in the video.",
+    "The full text for 'Jeans (pants)' in the Lookbook is truncated in the video.",
+    "The full text for 'white Reebok shoes with blue logos (shoes)' in the Lookbook is truncated in the video.",
+    "The full text for 'brown Nike sneakers with... (shoes)' in the Lookbook is truncated in the video.",
+    "The full text for 'plain Background #D3D3D3 - background_color #D3D3D3' in the Lookbook is truncated in the video."
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "summary": "The presenter demonstrates the Astria AI platform, focusing on its \"Lookbook\" feature for generating fashion images. They navigate to the Lookbook, which displays a grid of categories for image customization. The presenter adds a male model reference named Henrik and repeatedly clicks on the \"Top\" category within the Lookbook. The clip concludes with an attempt to navigate to a new workspace URL, though the page content does not visibly change.",
+  "urls_visible": [
+    "https://astria.ai/prompts",
+    "https://www.astria.ai/workspaces/new"
+  ],
+  "ui_state": "Lookbook cube grid expanded with nine slots for image generation categories (Pose, Face, Accessories, Jacket, Top, Accessories, Footwear, Bottom, Background), with 'Top' slot highlighted.",
+  "interactions": [
+    {
+      "t": "02:36",
+      "action": "click",
+      "target_text": "Lookbook",
+      "target_description": "Tab on the left sidebar",
+      "outcome": "The main content area changes from a prompt input field to a 3x3 grid of image generation categories, with 'Top' highlighted."
+    },
+    {
+      "t": "02:45",
+      "action": "click",
+      "target_text": "+",
+      "target_description": "Add reference button next to the 'Lookbook' tab",
+      "outcome": "A 'Search references' modal/panel appears, displaying a list of user profiles with associated images."
+    },
+    {
+      "t": "03:00",
+      "action": "click",
+      "target_text": "Henrik",
+      "target_description": "A user profile in the 'Search references' panel",
+      "outcome": "The 'Search references' panel closes, and a small thumbnail of Henrik's face appears next to the 'Lookbook' tab, indicating he has been added as a reference."
+    },
+    {
+      "t": "03:05",
+      "action": "click",
+      "target_text": "Top",
+      "target_description": "A square representing the 'Top' category in the 3x3 grid",
+      "outcome": "The 'Top' square remains highlighted, indicating selection or confirmation."
+    },
+    {
+      "t": "03:15",
+      "action": "click",
+      "target_text": "Top",
+      "target_description": "A square representing the 'Top' category in the 3x3 grid",
+      "outcome": "The 'Top' square remains highlighted, indicating selection or confirmation."
+    },
+    {
+      "t": "03:36",
+      "action": "click",
+      "target_text": "Top",
+      "target_description": "A square representing the 'Top' category in the 3x3 grid",
+      "outcome": "The 'Top' square remains highlighted, indicating selection or confirmation."
+    },
+    {
+      "t": "03:45",
+      "action": "type",
+      "target_text": "https://www.astria.ai/workspaces/new",
+      "target_description": "Browser URL bar",
+      "outcome": "The URL in the browser bar changes to 'https://www.astria.ai/workspaces/new', but the visible page content does not change."
+    }
+  ],
+  "notable_ui_affordances": [
+    "Describe your image. Type / to add a reference (text input field)",
+    "Nano Banana 2 - Games 3.1 Flash Image Pres... (image model selector)",
+    "1:1 (aspect ratio selector)",
+    "3:4 (aspect ratio selector)",
+    "1K+ (resolution selector)",
+    "4+ (resolution selector)",
+    "Describe (button)",
+    "Generate (button)",
+    "Account (menu item)",
+    "API (menu item)",
+    "My packs (menu item)",
+    "References (menu item)",
+    "Orders (menu item)",
+    "Payment history (menu item)",
+    "Add to balance (menu item)",
+    "Pricing (menu item)",
+    "Support (menu item)",
+    "Sign-out (menu item)",
+    "Image (left sidebar tab)",
+    "Video (left sidebar tab)",
+    "Tiles: 0.000000 (credit display)",
+    "Pose (category slot in grid)",
+    "Face (category slot in grid)",
+    "Accessories (category slot in grid)",
+    "Jacket (category slot in grid)",
+    "Footwear (category slot in grid)",
+    "Bottom (category slot in grid)",
+    "Background (category slot in grid)"
+  ],
+  "open_questions": [
+    "The exact purpose of repeatedly clicking the 'Top' category without visible changes is unclear; it might be a confirmation or a non-responsive UI element.",
+    "The navigation to '/workspaces/new' at the end of the clip does not result in a visible change to the page content, making it unclear if the navigation was successful or if the new workspace UI is identical to the current view.",
+    "The specific function of the 'Nano Banana 2 - Games 3.1 Flash Image Pres...' dropdown and the numerical selectors (1:1, 3:4, 1K+, 4+) is not demonstrated.",
+    "The meaning of 'Tiles: 0.000000' is not explicitly stated but likely represents a credit or usage metric."
+  ]
+}

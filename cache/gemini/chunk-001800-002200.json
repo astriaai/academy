@@ -1,0 +1,88 @@
+{
+  "summary": "The presenter demonstrates Astria.ai's capabilities in generating diverse fashion images while maintaining brand identity. The demonstration begins by showing a traditional product page from Ronny Kobo. Then, the presenter navigates through Astria.ai's 'explore' section, showcasing AI-generated lookbooks for various products like 'Zara Boots heels', 'Zara Yellow dress', and 'Sport shoes'. The platform is shown to generate multiple poses and angles for a single product, adhering to a specific brand aesthetic. The presentation also includes slides illustrating different brand identities and how templates are used to implement them.",
+  "urls_visible": [
+    "https://ronnykobo.com/products/mcdermott-dress",
+    "https://astria.ai/explore",
+    "https://astria.ai/explore/zara-boots-heels",
+    "https://astria.ai/explore/zara-yellow-dress",
+    "https://astria.ai/explore/sport-shoes"
+  ],
+  "ui_state": "Astria.ai explore page, displaying various AI-generated fashion lookbooks and product-specific image grids.",
+  "interactions": [
+    {
+      "t": "00:47",
+      "action": "scroll",
+      "target_text": null,
+      "target_description": "main content area of the Astria.ai explore page",
+      "outcome": "More lookbook sections and images become visible, including 'Zara Lookbook'."
+    },
+    {
+      "t": "01:11",
+      "action": "click",
+      "target_text": "Zara Boots heels",
+      "target_description": "A card/link for 'Zara Boots heels' within the 'Zara Lookbook' section",
+      "outcome": "The browser navigates to the product page for 'Zara Boots heels' on Astria.ai, displaying a grid of generated images."
+    },
+    {
+      "t": "01:20",
+      "action": "scroll",
+      "target_text": null,
+      "target_description": "main content area of the 'Zara Boots heels' product page",
+      "outcome": "More generated images of 'Zara Boots heels' become visible."
+    },
+    {
+      "t": "01:27",
+      "action": "click",
+      "target_text": "Zara Yellow dress",
+      "target_description": "A card/link for 'Zara Yellow dress' in the 'More Zara' section",
+      "outcome": "The browser navigates to the product page for 'Zara Yellow dress' on Astria.ai, displaying a grid of generated images."
+    },
+    {
+      "t": "01:58",
+      "action": "scroll",
+      "target_text": null,
+      "target_description": "main content area of the Astria.ai explore page",
+      "outcome": "More lookbook sections and images become visible, including 'Great Sports'."
+    },
+    {
+      "t": "02:01",
+      "action": "scroll",
+      "target_text": null,
+      "target_description": "main content area of the Astria.ai explore page",
+      "outcome": "More lookbook sections and images become visible, including 'Run'."
+    },
+    {
+      "t": "02:08",
+      "action": "click",
+      "target_text": "Sport shoes",
+      "target_description": "A card/link for 'Sport shoes' within the 'Run' section",
+      "outcome": "The browser navigates to the product page for 'Sport shoes' on Astria.ai, displaying a grid of generated images."
+    },
+    {
+      "t": "02:15",
+      "action": "scroll",
+      "target_text": null,
+      "target_description": "main content area of the 'Sport shoes' product page",
+      "outcome": "More generated images of 'Sport shoes' become visible."
+    },
+    {
+      "t": "02:19",
+      "action": "scroll",
+      "target_text": null,
+      "target_description": "main content area of the Astria.ai explore page",
+      "outcome": "More lookbook sections and images become visible, including 'Train' and 'Play'."
+    }
+  ],
+  "notable_ui_affordances": [
+    "Preview",
+    "Generate",
+    "Add reference",
+    "Generate 64 images $15.04",
+    "Switch to Zara",
+    "Generate more images",
+    "My looks",
+    "My assets",
+    "Personal"
+  ],
+  "open_questions": []
+}

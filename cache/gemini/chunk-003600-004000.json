@@ -1,0 +1,41 @@
+{
+  "summary": "The presenter is demonstrating the Astria AI platform, specifically the 'Prompts' section. The user interface for generating images is visible, featuring an input field for image descriptions, options for selecting AI models, aspect ratios, and resolutions. A sidebar on the right provides navigation to account-related features. The presenter speaks in Hebrew throughout the clip, but no direct interaction with the UI is observed.",
+  "urls_visible": [
+    "astria.ai/prompts"
+  ],
+  "ui_state": "The Astria platform's 'Prompts' page is displayed, showing the image generation interface. The 'Image' tab is selected, presenting a large input field for image description and reference, along with dropdowns for model selection, aspect ratio, and resolution. A right-hand sidebar provides navigation to account settings and other platform features.",
+  "interactions": [],
+  "notable_ui_affordances": [
+    "Image tab",
+    "Video tab",
+    "Add image reference button (large plus icon)",
+    "Text input field: \"Describe your image. Type /R to add a reference\"",
+    "Model selection dropdown: \"Nano Banana 2 - Games 5.1 Flash image Pres...\"",
+    "Quantity selector: \"1x\"",
+    "Aspect ratio dropdown: \"3:4\"",
+    "Resolution dropdown: \"1K+\"",
+    "Describe button",
+    "Toggle: \"Advanced\"",
+    "Search prompts input field",
+    "User button",
+    "Filters button",
+    "Liked button",
+    "My packs button",
+    "Generate button",
+    "Account link",
+    "API link",
+    "My packs link (in sidebar)",
+    "References link",
+    "Orders link",
+    "Payment History link",
+    "Add to balance link",
+    "Pricing link",
+    "Support link",
+    "Sign-out link"
+  ],
+  "open_questions": [
+    "The specific function of '1x' next to the model selection dropdown is unclear.",
+    "The exact purpose of the 'Advanced' toggle is not demonstrated.",
+    "The content or functionality of 'My packs' is not shown."
+  ]
+}

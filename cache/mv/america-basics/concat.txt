@@ -1,0 +1,2 @@
+file '/Users/burg/git/astria-course/webinar-builder/.cache/mv/america-basics/seg-act1.mp4'
+file '/Users/burg/git/astria-course/webinar-builder/.cache/mv/america-basics/seg-act2.mp4'

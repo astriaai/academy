@@ -1,0 +1,251 @@
+{
+  "summary": "The presenter demonstrates the Astria fashion AI platform, showcasing how to customize a virtual model's outfit and background. They adjust the background color using a HEX code, initiate an image generation, and then interact with the 'Top' clothing slot, demonstrating how to lock and unlock specific clothing items in the prompt to control their generation.",
+  "urls_visible": [
+    "https://www.astria.ai/workplaces/new",
+    "https://stream.astria.ai"
+  ],
+  "ui_state": "Astria platform displaying a 3x3 grid for fashion item selection, with a model's face, white tank top, brown Nike sneakers, and blue jeans pre-selected in their respective slots. A prompt input field is visible below, along with image generation controls (model, resolution, image count), and a right-hand sidebar showing generation history.",
+  "interactions": [
+    {
+      "t": "00:09",
+      "action": "click",
+      "target_text": "1+",
+      "target_description": "Dropdown for number of images to generate",
+      "outcome": "Dropdown menu opens"
+    },
+    {
+      "t": "00:12",
+      "action": "click",
+      "target_text": "2K",
+      "target_description": "Dropdown for image resolution",
+      "outcome": "Dropdown menu opens"
+    },
+    {
+      "t": "00:15",
+      "action": "click",
+      "target_text": "1+",
+      "target_description": "Dropdown for number of images to generate",
+      "outcome": "Dropdown menu closes"
+    },
+    {
+      "t": "00:20",
+      "action": "click",
+      "target_text": "2K",
+      "target_description": "Dropdown for image resolution",
+      "outcome": "Dropdown menu closes"
+    },
+    {
+      "t": "00:26",
+      "action": "click",
+      "target_text": "1+",
+      "target_description": "Dropdown for number of images to generate",
+      "outcome": "Dropdown menu opens"
+    },
+    {
+      "t": "00:30",
+      "action": "click",
+      "target_text": "2K",
+      "target_description": "Dropdown for image resolution",
+      "outcome": "Dropdown menu opens"
+    },
+    {
+      "t": "00:37",
+      "action": "click",
+      "target_text": "1+",
+      "target_description": "Dropdown for number of images to generate",
+      "outcome": "Dropdown menu closes"
+    },
+    {
+      "t": "00:41",
+      "action": "click",
+      "target_text": "2K",
+      "target_description": "Dropdown for image resolution",
+      "outcome": "Dropdown menu closes"
+    },
+    {
+      "t": "00:48",
+      "action": "click",
+      "target_text": "1+",
+      "target_description": "Dropdown for number of images to generate",
+      "outcome": "Dropdown menu opens"
+    },
+    {
+      "t": "00:52",
+      "action": "click",
+      "target_text": "2K",
+      "target_description": "Dropdown for image resolution",
+      "outcome": "Dropdown menu opens"
+    },
+    {
+      "t": "00:57",
+      "action": "click",
+      "target_text": "1+",
+      "target_description": "Dropdown for number of images to generate",
+      "outcome": "Dropdown menu closes"
+    },
+    {
+      "t": "01:00",
+      "action": "click",
+      "target_text": "2K",
+      "target_description": "Dropdown for image resolution",
+      "outcome": "Dropdown menu closes"
+    },
+    {
+      "t": "01:04",
+      "action": "click",
+      "target_text": "Background",
+      "target_description": "Grid slot for background selection",
+      "outcome": "The 'Background' slot is highlighted, and a 'Pick a color' button appears within it."
+    },
+    {
+      "t": "01:08",
+      "action": "click",
+      "target_text": "Pick a color",
+      "target_description": "Button to open color picker",
+      "outcome": "A color picker widget appears, showing RGB, HSL, and HEX inputs, with the current HEX value as 'FFFFFF'."
+    },
+    {
+      "t": "01:16",
+      "action": "click",
+      "target_text": "HEX",
+      "target_description": "HEX color input field in the color picker",
+      "outcome": "The HEX input field is focused."
+    },
+    {
+      "t": "01:17",
+      "action": "type",
+      "target_text": "HEX",
+      "target_description": "HEX color input field in the color picker",
+      "outcome": "The HEX value changes to '#F8F8F8'. The prompt text 'plain background #F8F8F8 - background_color #F8F8F8' remains unchanged as it already had this value."
+    },
+    {
+      "t": "01:32",
+      "action": "click",
+      "target_text": null,
+      "target_description": "Implied click outside the color picker",
+      "outcome": "The color picker widget disappears."
+    },
+    {
+      "t": "01:41",
+      "action": "click",
+      "target_text": "Generate",
+      "target_description": "Button to generate images",
+      "outcome": "Image generation process starts, a loading spinner appears in the image preview area, and a 'Processing' status is shown in the right sidebar."
+    },
+    {
+      "t": "02:15",
+      "action": "click",
+      "target_text": "Top",
+      "target_description": "Grid slot for top clothing item selection",
+      "outcome": "The 'Top' slot is highlighted. The image preview area updates to show a model wearing a white tank top."
+    },
+    {
+      "t": "02:18",
+      "action": "click",
+      "target_text": "Tank top (shirt)",
+      "target_description": "Text representing the tank top in the prompt list",
+      "outcome": "The text 'Tank top (shirt)' is highlighted, and an 'unlocked shirt' icon appears next to it."
+    },
+    {
+      "t": "02:39",
+      "action": "click",
+      "target_text": null,
+      "target_description": "Unlocked shirt icon next to 'Tank top (shirt)' in the prompt list",
+      "outcome": "The icon changes to a 'locked shirt' icon, indicating the item is now locked."
+    },
+    {
+      "t": "02:47",
+      "action": "type",
+      "target_text": "Describe your image. Type to add a reference.",
+      "target_description": "Prompt input field",
+      "outcome": "The text 'smiling' is added to the prompt."
+    },
+    {
+      "t": "02:52",
+      "action": "click",
+      "target_text": "Top",
+      "target_description": "Grid slot for top clothing item selection",
+      "outcome": "The 'Top' slot is highlighted."
+    },
+    {
+      "t": "03:00",
+      "action": "click",
+      "target_text": null,
+      "target_description": "Locked shirt icon next to 'Tank top (shirt)' in the prompt list",
+      "outcome": "The icon changes back to an 'unlocked shirt' icon."
+    },
+    {
+      "t": "03:07",
+      "action": "click",
+      "target_text": null,
+      "target_description": "Unlocked shirt icon next to 'Tank top (shirt)' in the prompt list",
+      "outcome": "The icon changes to a 'locked shirt' icon."
+    },
+    {
+      "t": "03:14",
+      "action": "click",
+      "target_text": null,
+      "target_description": "Locked shirt icon next to 'Tank top (shirt)' in the prompt list",
+      "outcome": "The icon changes back to an 'unlocked shirt' icon."
+    },
+    {
+      "t": "03:21",
+      "action": "click",
+      "target_text": null,
+      "target_description": "Unlocked shirt icon next to 'Tank top (shirt)' in the prompt list",
+      "outcome": "The icon changes to a 'locked shirt' icon."
+    },
+    {
+      "t": "03:28",
+      "action": "click",
+      "target_text": null,
+      "target_description": "Locked shirt icon next to 'Tank top (shirt)' in the prompt list",
+      "outcome": "The icon changes back to an 'unlocked shirt' icon."
+    },
+    {
+      "t": "03:35",
+      "action": "click",
+      "target_text": null,
+      "target_description": "Unlocked shirt icon next to 'Tank top (shirt)' in the prompt list",
+      "outcome": "The icon changes to a 'locked shirt' icon."
+    },
+    {
+      "t": "03:42",
+      "action": "click",
+      "target_text": null,
+      "target_description": "Locked shirt icon next to 'Tank top (shirt)' in the prompt list",
+      "outcome": "The icon changes back to an 'unlocked shirt' icon."
+    },
+    {
+      "t": "03:46",
+      "action": "click",
+      "target_text": null,
+      "target_description": "Unlocked shirt icon next to 'Tank top (shirt)' in the prompt list",
+      "outcome": "The icon changes to a 'locked shirt' icon."
+    }
+  ],
+  "notable_ui_affordances": [
+    "My packs button",
+    "Generate button (top right)",
+    "stream.astria.ai link",
+    "Lookbook tab",
+    "Image tab",
+    "Video tab",
+    "Search prompts input field",
+    "Filters button",
+    "Liked button",
+    "Describe button",
+    "Advanced toggle",
+    "Recent generations list in the right sidebar",
+    "Pose slot",
+    "Face slot",
+    "Jacket slot",
+    "Accessories slots",
+    "Footwear slot",
+    "Bottom slot"
+  ],
+  "open_questions": [
+    "The exact purpose of repeatedly opening and closing the '1+' and '2K' dropdowns without selecting new values is unclear.",
+    "The exact mechanism for closing the color picker at 01:32 (e.g., click outside, pressing Enter) is not explicitly shown."
+  ]
+}

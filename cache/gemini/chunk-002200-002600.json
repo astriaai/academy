@@ -1,0 +1,64 @@
+{
+  "summary": "The presenter demonstrates the Astria fashion AI platform, showcasing its template-based approach to generating product images. They begin by displaying a 'Zara Yellow dress' template, which initially shows a model wearing a yellow dress in a bar setting. The presenter then changes the reference product image to a different yellow dress, causing the generated images to update and feature the new dress on a model in a studio setting. Finally, they add a text brief to specify additional styling, illustrating the platform's capability to incorporate detailed instructions for image generation.",
+  "urls_visible": [
+    "about:blank",
+    "astria.app/zara-yellow-dress"
+  ],
+  "ui_state": "Astria platform displaying the 'Zara Yellow dress' template. The left panel features a dropdown for selecting packs, a product image slot showing a yellow dress, an 'Add reference' button, a 'Brief' text input field, a 'Generate 48 images' button with a price, and other settings. The main content area shows a grid of 12 generated images of a model wearing the yellow dress in various poses in a studio setting.",
+  "interactions": [
+    {
+      "t": "01:00",
+      "action": "hover",
+      "target_text": "Zara Yellow dress",
+      "target_description": "Dropdown menu for selecting a pack/template",
+      "outcome": "A dropdown menu appears showing various pack options like 'Zara Boots', 'Zara Knit sweater', etc."
+    },
+    {
+      "t": "01:42",
+      "action": "click",
+      "target_text": "0029128735-e0",
+      "target_description": "Input field displaying the current product ID for the dress",
+      "outcome": "A product selection modal appears, showing various product images."
+    },
+    {
+      "t": "01:46",
+      "action": "click",
+      "target_text": "0029128735-e0",
+      "target_description": "A product image thumbnail in the product selection modal, visually different from the previously displayed dress",
+      "outcome": "The product image in the left panel updates to the new dress, and the preview images on the right change to show models wearing this new dress in a studio setting."
+    },
+    {
+      "t": "02:21",
+      "action": "click",
+      "target_text": "Add reference",
+      "target_description": "Button to add a reference image or brief",
+      "outcome": "A text input field labeled 'Brief' appears below the 'Add reference' button."
+    },
+    {
+      "t": "02:28",
+      "action": "type",
+      "target_text": "make her wear dark navy linen pants add a shirt",
+      "target_description": "Text input field for a brief/prompt",
+      "outcome": "The text 'make her wear dark navy linen pants add a shirt' is entered into the brief field."
+    }
+  ],
+  "notable_ui_affordances": [
+    "My Packs",
+    "Dropdown for selecting different templates/packs",
+    "Generate 48 images - $15.84",
+    "Switch to free mode",
+    "Preview",
+    "Results",
+    "My credits",
+    "Generate button (top right)",
+    "astria.ai link (top right)",
+    "Images per prompt setting",
+    "Aspect ratio setting",
+    "Bag checkbox",
+    "Shoes checkbox",
+    "Woman checkbox"
+  ],
+  "open_questions": [
+    "The product ID '0029128735-e0' is displayed for two visually distinct dresses, suggesting it might be a generic identifier or a demo-specific behavior rather than a unique product SKU."
+  ]
+}

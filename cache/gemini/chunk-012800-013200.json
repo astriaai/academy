@@ -1,0 +1,169 @@
+{
+  "summary": "The presenter demonstrates features of the Astria fashion-AI platform. They start by showing a list of generated images on the 'prompts' page, then add one of these images to a 'basic' pack. They navigate to the 'My packs' section to view the newly updated pack, and also briefly show another pack containing images of a yellow dress. Finally, they navigate to the 'Generate' interface, which presents a grid of clothing and pose slots for creating new images. The presenter also switches to a local video file and plays a short clip.",
+  "urls_visible": [
+    "astria.app/prompts",
+    "astria.app/packs",
+    "astria.app/basic-c1387fee",
+    "astria.app/tara-yellow-dress",
+    "astria.app/basic-c1387fee",
+    "file:///Users/zisenburg/Downloads/dall2022.mp4",
+    "astria.app/basic-c1387fee",
+    "astria.app/prompts",
+    "file:///Users/zisenburg/Downloads/dall2022.mp4"
+  ],
+  "ui_state": "The dominant UI state is the Astria web application, showcasing various pages: the 'prompts' page with generated images and their details, the 'packs' page listing image collections, a specific 'pack details' page displaying images within a pack, and the 'generate' page with a grid of customizable fashion elements (pose, face, clothing items, background). Towards the end, a local video player is shown.",
+  "interactions": [
+    {
+      "t": "00:00",
+      "action": "scroll",
+      "target_text": "",
+      "target_description": "Scrollbar on the right side of the page",
+      "outcome": "The page content scrolls down, revealing more generated images."
+    },
+    {
+      "t": "00:07",
+      "action": "click",
+      "target_text": "Pack",
+      "target_description": "Dropdown button labeled 'Pack' next to an image",
+      "outcome": "A dropdown menu appears with options like 'New Pack' and existing pack names."
+    },
+    {
+      "t": "00:09",
+      "action": "click",
+      "target_text": "basic",
+      "target_description": "Option 'basic' in the 'Pack' dropdown menu",
+      "outcome": "The image is added to the 'basic' pack, and a small 'Added to basic' toast notification appears briefly."
+    },
+    {
+      "t": "00:12",
+      "action": "click",
+      "target_text": "Pack",
+      "target_description": "Dropdown button labeled 'Pack' next to an image",
+      "outcome": "A dropdown menu appears."
+    },
+    {
+      "t": "00:13",
+      "action": "click",
+      "target_text": "basic",
+      "target_description": "Option 'basic' in the 'Pack' dropdown menu",
+      "outcome": "No visible change, likely a redundant action or confirmation."
+    },
+    {
+      "t": "00:15",
+      "action": "click",
+      "target_text": "Pack",
+      "target_description": "Dropdown button labeled 'Pack' next to an image",
+      "outcome": "A dropdown menu appears."
+    },
+    {
+      "t": "00:17",
+      "action": "click",
+      "target_text": "basic",
+      "target_description": "Option 'basic' in the 'Pack' dropdown menu",
+      "outcome": "No visible change."
+    },
+    {
+      "t": "00:22",
+      "action": "click",
+      "target_text": "My packs",
+      "target_description": "Button in the top navigation bar",
+      "outcome": "The browser navigates to the 'Packs' page (astria.app/packs)."
+    },
+    {
+      "t": "00:28",
+      "action": "click",
+      "target_text": "basic",
+      "target_description": "Card representing the 'basic' image pack",
+      "outcome": "The browser navigates to the 'basic' pack details page (astria.app/basic-c1387fee)."
+    },
+    {
+      "t": "00:51",
+      "action": "navigate",
+      "target_text": "",
+      "target_description": "Browser tab switch",
+      "outcome": "The browser switches to a tab displaying 'astria.app/tara-yellow-dress', showing a gallery of images of a yellow dress."
+    },
+    {
+      "t": "01:05",
+      "action": "navigate",
+      "target_text": "",
+      "target_description": "Browser tab switch",
+      "outcome": "The browser switches back to the 'basic' pack details page (astria.app/basic-c1387fee)."
+    },
+    {
+      "t": "01:37",
+      "action": "navigate",
+      "target_text": "",
+      "target_description": "Browser tab switch",
+      "outcome": "The browser switches to a tab displaying a local video file (file:///Users/zisenburg/Downloads/dall2022.mp4)."
+    },
+    {
+      "t": "01:53",
+      "action": "navigate",
+      "target_text": "",
+      "target_description": "Browser tab switch",
+      "outcome": "The browser switches back to the 'basic' pack details page (astria.app/basic-c1387fee)."
+    },
+    {
+      "t": "01:54",
+      "action": "click",
+      "target_text": "Generate",
+      "target_description": "Button in the top navigation bar",
+      "outcome": "The browser navigates to the image generation interface (astria.app/prompts), showing a grid of clothing and pose slots."
+    },
+    {
+      "t": "02:27",
+      "action": "navigate",
+      "target_text": "",
+      "target_description": "Browser tab switch",
+      "outcome": "The browser switches to the tab displaying the local video file."
+    },
+    {
+      "t": "02:34",
+      "action": "click",
+      "target_text": "",
+      "target_description": "Play button on the video player",
+      "outcome": "The video starts playing."
+    }
+  ],
+  "notable_ui_affordances": [
+    "Tribe: $155.99938",
+    "Generate button (on prompts page)",
+    "Reuse button",
+    "Variation button",
+    "Copy button",
+    "Download button",
+    "Community button",
+    "New Review button",
+    "Workspace button",
+    "Search bar (on packs page)",
+    "Public toggle (on packs page)",
+    "Filters button (on packs page)",
+    "Docs link (on packs page)",
+    "Gallery link (on packs page)",
+    "Coupons link (on packs page)",
+    "Orders link (on packs page)",
+    "New Pack button (on packs page)",
+    "Add reference button (on pack details page)",
+    "Generate 2 images $0.66 button (on pack details page)",
+    "Preview tab (on pack details page)",
+    "Results tab (on pack details page)",
+    "Lookbook tab (on generate page)",
+    "Image tab (on generate page)",
+    "Video tab (on generate page)",
+    "Describe button (on generate page)",
+    "Toggle Advanced (on generate page)",
+    "Pose slot (on generate page)",
+    "Face slot (on generate page)",
+    "Accessories slot (on generate page)",
+    "Jacket slot (on generate page)",
+    "Top slot (on generate page)",
+    "Bottom slot (on generate page)",
+    "Footwear slot (on generate page)",
+    "Background slot (on generate page)"
+  ],
+  "open_questions": [
+    "The exact purpose of clicking 'Pack' and 'basic' multiple times between 00:12 and 00:17 is unclear, as no visible change occurred after the first successful addition.",
+    "The method of navigation to 'astria.app/tara-yellow-dress' and back to 'astria.app/basic-c1387fee' (00:51 and 01:05) is not explicitly shown, but appears to be a browser tab switch rather than an in-app navigation."
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "promptId": "43203173",
+  "promptUrl": "https://www.astria.ai/tunes/3618064/prompts/43203173?ws=373",
+  "imageIndex": 0,
+  "final": "https://mp.astria.ai/v26732ul03h8gbmpdnqvh5otv4en",
+  "raw": {
+    "src": "https://www.astria.ai/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCRHFsQ1EwPSIsImV4cCI6IjIwMjYtMDUtMjlUMTQ6MTY6NDYuOTc5WiIsInB1ciI6ImJsb2JfaWQifX0=--96018ee887c0f480756dca40edce7617720fc914/43203173-0.jpg?ws=373",
+    "label": "Inpaint Woman Original"
+  },
+  "layers": [
+    {
+      "src": "https://www.astria.ai/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCRHFsQ1EwPSIsImV4cCI6IjIwMjYtMDUtMjlUMTQ6MTY6NDYuOTc5WiIsInB1ciI6ImJsb2JfaWQifX0=--96018ee887c0f480756dca40edce7617720fc914/43203173-0.jpg?ws=373",
+      "label": "Inpaint Woman Original"
+    }
+  ],
+  "files": {
+    "final": "/Users/burg/git/astria-course/webinar-builder/assets/results/face-inpainting/fresh/ines-final-source.png",
+    "raw": "/Users/burg/git/astria-course/webinar-builder/assets/results/face-inpainting/fresh/ines-raw-source.jpg"
+  }
+}

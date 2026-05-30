@@ -1,0 +1,206 @@
+{
+  "summary": "The presenter demonstrates how to use the Astria AI platform for fashion photoshoots, focusing on generating images using text prompts and reference images. They show how to input text, use the 'Describe' tool to generate detailed prompts from images, and integrate external image sources like Pexels for inspiration. The process involves selecting clothing items, providing a textual description, and then generating new images based on these inputs. The video also briefly shows navigating to a Google Slides presentation and a YouTube tutorial on creating images without writing prompts, as well as a failed attempt to access Pinterest.",
+  "urls_visible": [
+    "astria.app/prompts",
+    "docs.google.com/presentation/d/137154B-pl",
+    "youtube.com/watch?v=fu154B-pl",
+    "pinterest.com",
+    "astria.app/zara-yellow-dress",
+    "pexels.com",
+    "pexels.com/search/bar%20woman/"
+  ],
+  "ui_state": "The dominant on-screen view is the Astria AI 'Generate' tab, featuring a 3x3 grid of slots for fashion items (e.g., Jacket, Top, Bottom, Footwear, Accessories, Pose, Background). Below this grid is a prompt input box, an image reference area, and a display area for generated images. At various points, the browser navigates to external websites like YouTube and Pexels, or displays a 'site can't be reached' error.",
+  "interactions": [
+    {
+      "t": "00:06",
+      "action": "type",
+      "target_text": "in a dark bar in England, teak wood",
+      "target_description": "text input field for the prompt",
+      "outcome": "The text 'in a dark bar in England, teak wood' is added to the prompt input field."
+    },
+    {
+      "t": "00:07",
+      "action": "click",
+      "target_text": "Describe",
+      "target_description": "button to generate a description or image",
+      "outcome": "The system starts processing, indicated by a loading animation."
+    },
+    {
+      "t": "00:09",
+      "action": "click",
+      "target_text": "Describe",
+      "target_description": "button to generate a description or image",
+      "outcome": "The system continues processing."
+    },
+    {
+      "t": "00:12",
+      "action": "click",
+      "target_text": "Describe",
+      "target_description": "button to generate a description or image",
+      "outcome": "The system continues processing, and then generated images appear below the prompt box."
+    },
+    {
+      "t": "00:39",
+      "action": "scroll",
+      "target_text": "",
+      "target_description": "scroll bar on the right side of the content area",
+      "outcome": "More generated images become visible."
+    },
+    {
+      "t": "00:43",
+      "action": "click",
+      "target_text": "",
+      "target_description": "a generated image of a woman in a white tank top and blue jeans",
+      "outcome": "The selected image expands to a larger view."
+    },
+    {
+      "t": "00:44",
+      "action": "click",
+      "target_text": "",
+      "target_description": "the expanded image",
+      "outcome": "The expanded image closes, returning to the gallery view."
+    },
+    {
+      "t": "00:46",
+      "action": "scroll",
+      "target_text": "",
+      "target_description": "scroll bar on the right side of the content area",
+      "outcome": "The view scrolls up, showing the prompt input area and the lookbook grid."
+    },
+    {
+      "t": "00:53",
+      "action": "click",
+      "target_text": "How to create images without writing prompts",
+      "target_description": "YouTube video thumbnail embedded in a Google Slides presentation",
+      "outcome": "A new browser tab opens, navigating to the YouTube video."
+    },
+    {
+      "t": "01:06",
+      "action": "click",
+      "target_text": "Play",
+      "target_description": "YouTube video play button",
+      "outcome": "The YouTube video starts playing."
+    },
+    {
+      "t": "01:46",
+      "action": "click",
+      "target_text": "Paste from clipboard",
+      "target_description": "button next to the 'Describe' button",
+      "outcome": "An image is pasted from the clipboard into the image reference area below the prompt box."
+    },
+    {
+      "t": "01:54",
+      "action": "right-click",
+      "target_text": "",
+      "target_description": "an image of a woman in a white blazer within the YouTube video",
+      "outcome": "A context menu appears with options like 'Copy image'."
+    },
+    {
+      "t": "01:55",
+      "action": "click",
+      "target_text": "Copy image",
+      "target_description": "option in the right-click context menu",
+      "outcome": "The image is copied to the clipboard."
+    },
+    {
+      "t": "02:09",
+      "action": "type",
+      "target_text": "pinterest.com",
+      "target_description": "browser URL bar",
+      "outcome": "The text 'pinterest.com' is entered into the URL bar."
+    },
+    {
+      "t": "02:10",
+      "action": "keypress",
+      "target_text": "Enter",
+      "target_description": "keyboard Enter key",
+      "outcome": "The browser attempts to navigate to pinterest.com but displays a 'This site can't be reached' error."
+    },
+    {
+      "t": "02:42",
+      "action": "type",
+      "target_text": "pexels.com",
+      "target_description": "browser URL bar",
+      "outcome": "The text 'pexels.com' is entered into the URL bar."
+    },
+    {
+      "t": "02:43",
+      "action": "keypress",
+      "target_text": "Enter",
+      "target_description": "keyboard Enter key",
+      "outcome": "The browser navigates to pexels.com."
+    },
+    {
+      "t": "02:48",
+      "action": "type",
+      "target_text": "bar woman",
+      "target_description": "search input field on Pexels.com",
+      "outcome": "The text 'bar woman' is entered into the search field."
+    },
+    {
+      "t": "02:50",
+      "action": "keypress",
+      "target_text": "Enter",
+      "target_description": "keyboard Enter key",
+      "outcome": "Search results for 'bar woman' are displayed on Pexels.com."
+    },
+    {
+      "t": "03:03",
+      "action": "right-click",
+      "target_text": "",
+      "target_description": "an image of a woman sitting at a bar on Pexels.com",
+      "outcome": "A context menu appears with options like 'Copy image'."
+    },
+    {
+      "t": "03:04",
+      "action": "click",
+      "target_text": "Copy image",
+      "target_description": "option in the right-click context menu",
+      "outcome": "The image is copied to the clipboard."
+    },
+    {
+      "t": "03:16",
+      "action": "click",
+      "target_text": "Paste from clipboard",
+      "target_description": "button next to the 'Describe' button on Astria AI",
+      "outcome": "The copied image of the woman at the bar is pasted into the image reference area below the prompt box."
+    },
+    {
+      "t": "03:29",
+      "action": "click",
+      "target_text": "Describe",
+      "target_description": "button to generate a description or image",
+      "outcome": "A detailed text prompt, describing the pasted image, is generated and fills the prompt input field."
+    }
+  ],
+  "notable_ui_affordances": [
+    "Lookbook tab",
+    "Image tab",
+    "Video tab",
+    "Search prompts input field",
+    "Users filter",
+    "Filters button",
+    "Liked tab",
+    "My packs button",
+    "Generate button",
+    "Jacket slot",
+    "Top slot",
+    "Accessories slot",
+    "Footwear slot",
+    "Bottom slot",
+    "Background slot",
+    "Pose slot",
+    "Pick a color button",
+    "Nano Banana 2 - Genesis 3.1 Flash Image Prompts model selector",
+    "Toggle Advanced button",
+    "Rename button (for generated images)",
+    "Delete button (for generated images)",
+    "Total cost display",
+    "Created timestamp",
+    "Processing... status indicator"
+  ],
+  "open_questions": [
+    "The full content of the initial prompt text before the first 'Describe' click is not entirely visible, only the last phrase 'in a dark bar in England, teak wood'.",
+    "It is unclear why the 'Describe' button was clicked multiple times at the beginning (00:07, 00:09, 00:12) without a visible change in the prompt text or immediate image generation after each click, suggesting potential retries or a delayed server response."
+  ]
+}

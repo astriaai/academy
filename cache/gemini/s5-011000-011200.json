@@ -1,0 +1,236 @@
+{
+  "summary": "The presenter demonstrates the Astria AI platform for generating fashion images. They show how to apply pre-defined prompt enhancements (Nano Banana options) and how to manually edit prompt descriptions for different clothing items and model attributes. After initiating image generation multiple times using the 'Describe' tool, the presenter navigates through presentation slides and then returns to the Astria platform to organize a generated image by creating a new 'Pack' to save it as a template.",
+  "urls_visible": [
+    "astria.apprompts",
+    "docs.google.com/presentation/d/13731jpx-04778/edit#slide=id.g24297013_0_4778",
+    "docs.google.com/presentation/d/13731jpx-04778/edit#slide=id.g24297013_0_4778",
+    "astria.apprompts"
+  ],
+  "ui_state": "Initially, the Astria platform is shown with the 'Lookbook' tab selected, displaying a grid of empty slots for model pose, face, clothing items (jacket, tank top, footwear, jeans, accessories), and background. Below this is a prompt input area with checkboxes for 'Remove Background' and 'Edit with Nano Banana' options. After clicking 'Describe', the UI transitions to displaying a grid of generated images with a sidebar for image details and actions. During tab navigation, Google Slides presentation slides are shown.",
+  "interactions": [
+    {
+      "t": "00:03",
+      "action": "click",
+      "target_text": "Edit with Nano Banana 2 4K",
+      "target_description": "Checkbox next to 'Edit with Nano Banana 2 4K'",
+      "outcome": "Checkbox is checked; text 'The texture of the dress fabric is visible, with subtle folds and creases.' appears in the 'tank top' prompt field."
+    },
+    {
+      "t": "00:05",
+      "action": "click",
+      "target_text": "Edit with Nano Banana 2 2K",
+      "target_description": "Checkbox next to 'Edit with Nano Banana 2 2K'",
+      "outcome": "Checkbox is checked; text 'Here's the revised prompt, following your instructions.' appears in the 'jeans' prompt field."
+    },
+    {
+      "t": "00:07",
+      "action": "click",
+      "target_text": "Edit with Nano Banana 2 TK",
+      "target_description": "Checkbox next to 'Edit with Nano Banana 2 TK'",
+      "outcome": "Checkbox is checked; text 'Desaturation of blues and greens in the background to enhance the focus on the subject.' appears in the 'background' prompt field."
+    },
+    {
+      "t": "00:09",
+      "action": "click",
+      "target_text": "Remove Background",
+      "target_description": "Checkbox next to 'Remove Background'",
+      "outcome": "Checkbox is checked; 'background image' appears in the background slot."
+    },
+    {
+      "t": "00:11",
+      "action": "click",
+      "target_text": "Remove Background",
+      "target_description": "Checkbox next to 'Remove Background'",
+      "outcome": "Checkbox is unchecked; 'pick a color' appears in the background slot."
+    },
+    {
+      "t": "00:13",
+      "action": "click",
+      "target_text": "Remove Background",
+      "target_description": "Checkbox next to 'Remove Background'",
+      "outcome": "Checkbox is checked; 'background image' appears in the background slot."
+    },
+    {
+      "t": "00:15",
+      "action": "click",
+      "target_text": "Edit with Nano Banana 2 TK",
+      "target_description": "Checkbox next to 'Edit with Nano Banana 2 TK'",
+      "outcome": "Checkbox is unchecked; the text in the 'background' prompt field disappears."
+    },
+    {
+      "t": "00:17",
+      "action": "click",
+      "target_text": "Edit with Nano Banana 2 2K",
+      "target_description": "Checkbox next to 'Edit with Nano Banana 2 2K'",
+      "outcome": "Checkbox is unchecked; the text in the 'jeans' prompt field disappears."
+    },
+    {
+      "t": "00:19",
+      "action": "click",
+      "target_text": "Edit with Nano Banana 2 4K",
+      "target_description": "Checkbox next to 'Edit with Nano Banana 2 4K'",
+      "outcome": "Checkbox is unchecked; the text in the 'tank top' prompt field disappears."
+    },
+    {
+      "t": "00:21",
+      "action": "click",
+      "target_text": "45 angle view",
+      "target_description": "Text input field next to '45 angle view'",
+      "outcome": "The text input field becomes editable."
+    },
+    {
+      "t": "00:23",
+      "action": "type",
+      "target_text": "pose, short_description",
+      "target_description": "Text input field next to '45 angle view'",
+      "outcome": "The text 'pose, short_description' appears in the field."
+    },
+    {
+      "t": "00:24",
+      "action": "click",
+      "target_text": "tank top (white)",
+      "target_description": "Text input field next to 'tank top (white)'",
+      "outcome": "The text input field becomes editable."
+    },
+    {
+      "t": "00:26",
+      "action": "type",
+      "target_text": "The texture of the dress fabric is visible, with subtle folds and creases.",
+      "target_description": "Text input field next to 'tank top (white)'",
+      "outcome": "The text 'The texture of the dress fabric is visible, with subtle folds and creases.' appears in the field."
+    },
+    {
+      "t": "00:27",
+      "action": "click",
+      "target_text": "jeans (denims)",
+      "target_description": "Text input field next to 'jeans (denims)'",
+      "outcome": "The text input field becomes editable."
+    },
+    {
+      "t": "00:29",
+      "action": "type",
+      "target_text": "Here's the revised prompt, following your instructions.",
+      "target_description": "Text input field next to 'jeans (denims)'",
+      "outcome": "The text 'Here's the revised prompt, following your instructions.' appears in the field."
+    },
+    {
+      "t": "00:30",
+      "action": "click",
+      "target_text": "background image",
+      "target_description": "Text input field next to 'background image'",
+      "outcome": "The text input field becomes editable."
+    },
+    {
+      "t": "00:32",
+      "action": "type",
+      "target_text": "Desaturation of blues and greens in the background to enhance the focus on the subject.",
+      "target_description": "Text input field next to 'background image'",
+      "outcome": "The text 'Desaturation of blues and greens in the background to enhance the focus on the subject.' appears in the field."
+    },
+    {
+      "t": "00:33",
+      "action": "click",
+      "target_text": "45 angle view",
+      "target_description": "Text input field next to '45 angle view'",
+      "outcome": "The text input field becomes editable."
+    },
+    {
+      "t": "00:34",
+      "action": "type",
+      "target_text": "180cm tall",
+      "target_description": "Text input field next to '45 angle view'",
+      "outcome": "The text '180cm tall' appears in the field, replacing the previous text."
+    },
+    {
+      "t": "00:35",
+      "action": "click",
+      "target_text": "Describe",
+      "target_description": "Button labeled 'Describe'",
+      "outcome": "The UI shows a loading state, then a grid of generated images appears."
+    },
+    {
+      "t": "00:59",
+      "action": "click",
+      "target_text": "Describe",
+      "target_description": "Button labeled 'Describe'",
+      "outcome": "The UI shows a loading state, then a grid of generated images appears."
+    },
+    {
+      "t": "01:24",
+      "action": "click",
+      "target_text": "Describe",
+      "target_description": "Button labeled 'Describe'",
+      "outcome": "The UI shows a loading state."
+    },
+    {
+      "t": "01:26",
+      "action": "navigate",
+      "target_text": "(unreadable)",
+      "target_description": "Browser tab showing 'astria.apprompts'",
+      "outcome": "The browser navigates to a Google Slides presentation titled 'Using the Describe tool'."
+    },
+    {
+      "t": "01:29",
+      "action": "navigate",
+      "target_text": "(unreadable)",
+      "target_description": "Browser tab showing Google Slides presentation",
+      "outcome": "The browser navigates to another Google Slides presentation slide titled 'Creating template'."
+    },
+    {
+      "t": "01:31",
+      "action": "navigate",
+      "target_text": "(unreadable)",
+      "target_description": "Browser tab showing Google Slides presentation",
+      "outcome": "The browser navigates back to the Astria platform, displaying generated images."
+    },
+    {
+      "t": "01:34",
+      "action": "click",
+      "target_text": "Pack",
+      "target_description": "Dropdown menu labeled 'Pack' next to a generated image",
+      "outcome": "A dropdown menu appears with options like 'New Pack', 'Jeans (pants)', 'Black (pants)', 'Workspace', 'Tribe'."
+    },
+    {
+      "t": "01:36",
+      "action": "click",
+      "target_text": "New Pack",
+      "target_description": "Option 'New Pack' in the dropdown menu",
+      "outcome": "A text input field appears to name the new pack."
+    },
+    {
+      "t": "01:38",
+      "action": "type",
+      "target_text": "Brown New Pack",
+      "target_description": "Text input field for new pack name",
+      "outcome": "The text 'Brown New Pack' appears in the field."
+    },
+    {
+      "t": "01:39",
+      "action": "click",
+      "target_text": "(unreadable)",
+      "target_description": "Area outside the text input field",
+      "outcome": "The 'Brown New Pack' is created and selected for the image."
+    }
+  ],
+  "notable_ui_affordances": [
+    "My packs button",
+    "Generate button",
+    "Lookbook tab",
+    "Image tab",
+    "Search prompts input field",
+    "Filters button",
+    "Liked button",
+    "Rerun button (for generated images)",
+    "Variation button (for generated images)",
+    "Copy button (for generated images)",
+    "Download button (for generated images)",
+    "Community button (for generated images)",
+    "Workspace option in Pack dropdown",
+    "Tribe option in Pack dropdown"
+  ],
+  "open_questions": [
+    "The exact purpose and specific differences between 'Nano Banana 2 4K', '2K', and 'TK' are not explicitly detailed beyond their effect on prompt text.",
+    "The specific model or image being generated is not explicitly named, only the clothing items and general pose/description.",
+    "The Hebrew spoken by the presenter is not translated, so the exact verbal instructions or explanations are unknown."
+  ]
+}

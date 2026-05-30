@@ -1,0 +1,145 @@
+{
+  "summary": "The presenter demonstrates the Astria fashion-AI platform, focusing on how to modify a generated image by changing the model's face and applying a text prompt. They start with a base image of a woman in a tank top and jeans, then update her hairstyle and face using pre-defined references. Finally, they apply a detailed text prompt to generate a new image based on specific characteristics and background.",
+  "urls_visible": [
+    "astria.ai/prompts",
+    "scaling.ai",
+    "astria.ai",
+    "zara.com"
+  ],
+  "ui_state": "The dominant on-screen view is the Astria image generation interface, featuring a 3x3 grid of content slots (Pose, Face, Jacket, Top, Accessories, Footwear, Bottom, Background) at the top, a prompt input area below, and a generated image display. A right-side panel shows image generation details and history.",
+  "interactions": [
+    {
+      "t": "00:04",
+      "action": "hover",
+      "target_text": "Face",
+      "target_description": "Face slot in the content grid",
+      "outcome": "The Face slot is highlighted."
+    },
+    {
+      "t": "00:05",
+      "action": "click",
+      "target_text": "Face",
+      "target_description": "Face slot in the content grid",
+      "outcome": "The Face slot updates to display 'hair bun, sleek hair', and the prompt text area below updates to include 'hair bun, sleek hair'."
+    },
+    {
+      "t": "00:14",
+      "action": "click",
+      "target_text": "Describe",
+      "target_description": "Button to generate image based on prompt",
+      "outcome": "The system begins processing, and a new image is generated showing the model with a hair bun and sleek hair. Processing details appear in the right panel."
+    },
+    {
+      "t": "02:38",
+      "action": "click",
+      "target_text": null,
+      "target_description": "Pencil icon (Edit) on the generated image thumbnail",
+      "outcome": "A dropdown menu appears with editing options."
+    },
+    {
+      "t": "02:39",
+      "action": "click",
+      "target_text": "Edit pose",
+      "target_description": "Option in the dropdown menu to edit the pose",
+      "outcome": "The image opens in a mask editing interface."
+    },
+    {
+      "t": "02:41",
+      "action": "drag",
+      "target_text": null,
+      "target_description": "Drawing tool over the model's body",
+      "outcome": "A purple mask is drawn over the model's body."
+    },
+    {
+      "t": "02:42",
+      "action": "drag",
+      "target_text": null,
+      "target_description": "Drawing tool over the model's head",
+      "outcome": "A purple mask is drawn over the model's head."
+    },
+    {
+      "t": "02:43",
+      "action": "click",
+      "target_text": "Save mask",
+      "target_description": "Button to save the drawn mask",
+      "outcome": "The mask editing interface closes, returning to the main UI."
+    },
+    {
+      "t": "02:45",
+      "action": "click",
+      "target_text": "Face",
+      "target_description": "Face slot in the content grid",
+      "outcome": "A 'Search references' modal window appears."
+    },
+    {
+      "t": "02:47",
+      "action": "scroll",
+      "target_text": null,
+      "target_description": "Scrollbar within the 'Search references' modal",
+      "outcome": "The list of public models scrolls down, revealing more options."
+    },
+    {
+      "t": "02:48",
+      "action": "click",
+      "target_text": "Sasha (woman)",
+      "target_description": "Specific public model reference in the list",
+      "outcome": "The 'Search references' modal closes. The 'Face' slot updates to show Sasha's face, and the prompt text area updates to reflect the new face."
+    },
+    {
+      "t": "02:50",
+      "action": "click",
+      "target_text": "Describe",
+      "target_description": "Button to generate image based on prompt",
+      "outcome": "The system begins processing, and a new image is generated showing the model with Sasha's face. Processing details appear in the right panel."
+    },
+    {
+      "t": "03:10",
+      "action": "type",
+      "target_text": "Describe your image. Type '/' to add a reference",
+      "target_description": "Main prompt text input area",
+      "outcome": "The text 'unique israel woman, with French and Japanese decent, fair skin, studio white background, shoulders up, in clothing' is entered into the prompt area."
+    },
+    {
+      "t": "03:38",
+      "action": "click",
+      "target_text": "Describe",
+      "target_description": "Button to generate image based on prompt",
+      "outcome": "The system begins processing, and a new image is generated based on the detailed text prompt. Processing details appear in the right panel."
+    }
+  ],
+  "notable_ui_affordances": [
+    "Lookbook tab",
+    "Image tab",
+    "Video tab",
+    "Search prompts input field",
+    "Pack dropdown",
+    "Base pack dropdown",
+    "User dropdown",
+    "Filters button",
+    "Liked button",
+    "Nano Banana 2 - Genesis 3.1 Flash Image Prev... dropdown",
+    "Custom dropdown",
+    "2K button",
+    "1x button",
+    "Trash icon (delete image)",
+    "Copy icon (copy prompt)",
+    "Refresh icon (regenerate image)",
+    "Download icon (download image)",
+    "Share icon (share image)",
+    "Generate button (top right)",
+    "My packs button (top right)",
+    "Pick a color button (for background)",
+    "Add front, back, side (for pose)",
+    "Add a reference (for accessories, footwear, bottom)"
+  ],
+  "open_questions": [
+    "The exact functionality of the 'Describe' button beyond triggering image generation.",
+    "The specific details and implications of the 'Nano Banana 2 - Genesis 3.1 Flash Image Prev...' model.",
+    "The meaning of 'Tribes: 136.793K' in the top left corner.",
+    "The purpose and content of the 'Lookbook' and 'Video' tabs.",
+    "The precise functionality of the 'Custom', '2K', and '1x' settings for image generation.",
+    "The meaning of the numbers '3-4' and '2K' displayed next to the model selection dropdown.",
+    "The exact meaning of 'Processing: 9s' and 'Cost: $0.000' in the right-hand panel, especially if the cost is always zero.",
+    "The full content of the 'short_description' associated with the 'front full body (pose)' element."
+  ]
+}

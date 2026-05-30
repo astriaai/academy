@@ -1,0 +1,21 @@
+{
+  "promptId": "43213326",
+  "index": 1,
+  "promptUrl": "https://www.astria.ai/tunes/4180298/prompts/43213326?ws=553",
+  "final": "https://mp.astria.ai/zteaj2ysutdlmzyxw6uk6nwopwj7",
+  "original": {
+    "src": "https://www.astria.ai/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCRmYzQ1EwPSIsImV4cCI6IjIwMjYtMDUtMjlUMTk6MDM6NDEuMDA5WiIsInB1ciI6ImJsb2JfaWQifX0=--9144c3872cc65ce82aaa126ccbdfbadb87f05c1a/43213326-0-0.jpeg?ws=553",
+    "label": "Inpaint Woman Original"
+  },
+  "layers": [
+    {
+      "src": "https://www.astria.ai/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCRmYzQ1EwPSIsImV4cCI6IjIwMjYtMDUtMjlUMTk6MDM6NDEuMDA5WiIsInB1ciI6ImJsb2JfaWQifX0=--9144c3872cc65ce82aaa126ccbdfbadb87f05c1a/43213326-0-0.jpeg?ws=553",
+      "label": "Inpaint Woman Original"
+    }
+  ],
+  "files": {
+    "final": "/Users/burg/git/astria-course/webinar-builder/assets/results/face-inpainting/ws-553/prompt-43213326-final-source.png",
+    "raw": "/Users/burg/git/astria-course/webinar-builder/assets/results/face-inpainting/ws-553/prompt-43213326-raw-source.jpg"
+  },
+  "meta": "<faceid:4094449:1.0> pose <faceid:4868850:1.0> woman Clean fashion lookbook realistic , full 1.80 high female model long legs, hip tilted, relaxed confident stance, centered, <faceid:4869007:1.0> maxi dress plain background #ffffffCreated: 2026-05-29 14:41:10 Alon burg4K3:4Inpaint Faces Nano Banana 2 - Gemini 3.1 Flashfront pose ( pose )"
+}

@@ -1,0 +1,92 @@
+{
+  "summary": "The presenter demonstrates features of the Astria fashion-AI platform. They start by viewing an AI-generated image of a woman in a tank top and jeans. They then navigate to a component selection interface, where they change the model's face by selecting a new face from a list of pre-defined options. Finally, they open a context menu for the image thumbnail, revealing various editing options such as background removal and different resolution edits, but do not execute any of these actions.",
+  "urls_visible": [
+    "astria.app/prompts"
+  ],
+  "ui_state": "The dominant on-screen view transitions from an image generation interface with a full-body image and prompt details to a lookbook cube grid for component selection, and then to the lookbook cube grid with a context menu open for the image thumbnail.",
+  "interactions": [
+    {
+      "t": "00:14",
+      "action": "click",
+      "target_text": "45 angle view",
+      "target_description": "A thumbnail representing the full-body image, labeled '45 angle view' with a small icon.",
+      "outcome": "The main content area changes from the image and prompt details to a grid of selectable clothing and feature slots (Lookbook cube grid)."
+    },
+    {
+      "t": "00:16",
+      "action": "click",
+      "target_text": "Face",
+      "target_description": "A square slot labeled 'Face' within the Lookbook cube grid.",
+      "outcome": "A dropdown menu or modal appears, displaying a list of reference faces."
+    },
+    {
+      "t": "00:17",
+      "action": "scroll",
+      "target_text": "",
+      "target_description": "The list of reference faces in the dropdown/modal.",
+      "outcome": "The list of faces scrolls downwards."
+    },
+    {
+      "t": "00:18",
+      "action": "click",
+      "target_text": "Elara",
+      "target_description": "A name 'Elara' in the list of reference faces.",
+      "outcome": "The selected face ('Elara') is displayed in the 'Face' slot of the Lookbook cube grid."
+    },
+    {
+      "t": "00:20",
+      "action": "click",
+      "target_text": "45 angle view",
+      "target_description": "The thumbnail of the full-body image, labeled '45 angle view', located below the Lookbook cube grid.",
+      "outcome": "A context menu appears with image editing options."
+    },
+    {
+      "t": "00:21",
+      "action": "hover",
+      "target_text": "Remove Background",
+      "target_description": "An option in the context menu.",
+      "outcome": "The 'Remove Background' option is highlighted."
+    },
+    {
+      "t": "00:34",
+      "action": "click",
+      "target_text": "45 angle view",
+      "target_description": "The thumbnail of the full-body image, labeled '45 angle view', located below the Lookbook cube grid.",
+      "outcome": "The context menu reappears after briefly disappearing."
+    },
+    {
+      "t": "00:35",
+      "action": "hover",
+      "target_text": "Remove Background",
+      "target_description": "An option in the context menu.",
+      "outcome": "The 'Remove Background' option is highlighted."
+    }
+  ],
+  "notable_ui_affordances": [
+    "My packs",
+    "Generate",
+    "Describe",
+    "Lookbook tab",
+    "Image tab",
+    "Video tab",
+    "Prompt input field",
+    "User dropdown",
+    "Filters dropdown",
+    "Liked button",
+    "Jacket slot",
+    "Tank top slot",
+    "Accessories slots",
+    "Footwear slot",
+    "Jeans slot",
+    "Background slot",
+    "Crop option in context menu",
+    "Edit with Nano Banana 2 4K option in context menu",
+    "Edit with Nano Banana 2 2K option in context menu",
+    "Edit with Nano Banana 2 TK option in context menu",
+    "Delete option in context menu"
+  ],
+  "open_questions": [
+    "The specific functionality or meaning of 'Nano Banana 2 4K', '2K', and 'TK' options in the context menu is unclear from the video.",
+    "The exact purpose of the '45 angle view' label for the image thumbnail is ambiguous; it could refer to the pose, camera angle, or simply be a generic label for the image itself."
+  ]
+}

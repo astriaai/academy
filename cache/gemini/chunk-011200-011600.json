@@ -1,0 +1,244 @@
+{
+  "summary": "The presenter demonstrates the Astria AI platform for generating fashion images. They begin by creating a new 'pack' (collection) named 'basic' and then navigate to a different pack showcasing a yellow dress. They then explore the Astria homepage and an e-commerce gallery, specifically looking at jewelry. Finally, they return to the image generation interface, where they add a specific face model ('Elara'), footwear ('Brown Nike sneakers with cream laces'), and a 'Blank background' as references. After initiating image generation, the clip shows numerous generated images of the model in various poses, wearing a white tank top and jeans, with the specified sneakers and a plain background.",
+  "urls_visible": [
+    "astria.ai/astraprompts",
+    "astria.ai/basic-c1387fee",
+    "docs.google.com/presentation/d/1Y0W90R340_j_1_v_m_y_w_x_y_z_a_b_c_d_e_f_g_h_i_j_k_l_m_n_o_p_q_r_s_t_u_v_w_x_y_z_0_1_2_3_4_5_6_7_8_9_A_B_C_D_E_F_G_H_I_J_K_L_M_N_O_P_Q_R_S_T_U_V_W_X_Y_Z_a_b_c_d_e_f_g_h_i_j_k_l_m_n_o_p_q_r_s_t_u_v_w_x_y_z_!@#$%^&*()_+=-{}[]|:;\"'<>,.?/~",
+    "astria.ai/astria-yellow-dress",
+    "astria.ai",
+    "astria.ai/gallery/packs/ecommerce",
+    "astria.ai/jewelry-necklace"
+  ],
+  "ui_state": "Astria image generation interface with a lookbook cube grid showing clothing slots (Dress, Top, Bottom, Jacket, Footwear, Accessories, Background, Face) and a prompt input area. Generated images are displayed below.",
+  "interactions": [
+    {
+      "t": "00:01",
+      "action": "click",
+      "target_text": "New Pack...",
+      "target_description": "Option in a dropdown menu for managing packs",
+      "outcome": "A text input field appears, pre-filled with 'New Pack'"
+    },
+    {
+      "t": "00:02",
+      "action": "type",
+      "target_text": "New Pack",
+      "target_description": "Text input field for new pack name",
+      "outcome": "Text in the input field changes to 'basic'"
+    },
+    {
+      "t": "00:03",
+      "action": "keypress",
+      "target_text": null,
+      "target_description": "Enter key press (implied)",
+      "outcome": "A new pack named 'basic' is created, and the page navigates to its view."
+    },
+    {
+      "t": "00:09",
+      "action": "click",
+      "target_text": "astria.ai/basic-c1387fee",
+      "target_description": "Browser URL bar",
+      "outcome": "The URL in the browser bar is highlighted."
+    },
+    {
+      "t": "00:10",
+      "action": "keypress",
+      "target_text": null,
+      "target_description": "Copy action (e.g., Ctrl+C/Cmd+C)",
+      "outcome": "The URL is copied to the clipboard."
+    },
+    {
+      "t": "00:11",
+      "action": "click",
+      "target_text": "Scaling AI Photoshoots for creatives - Astria",
+      "target_description": "Browser tab for Google Slides presentation",
+      "outcome": "The browser switches to the Google Slides tab."
+    },
+    {
+      "t": "01:24",
+      "action": "click",
+      "target_text": "Zara yellow dress",
+      "target_description": "Browser tab for Astria showing a yellow dress pack",
+      "outcome": "The browser switches to the Astria tab displaying the 'Zara yellow dress' pack."
+    },
+    {
+      "t": "01:31",
+      "action": "click",
+      "target_text": "Astria",
+      "target_description": "Browser tab for Astria homepage",
+      "outcome": "The browser switches to the Astria homepage tab."
+    },
+    {
+      "t": "01:36",
+      "action": "click",
+      "target_text": "Generate",
+      "target_description": "Button in the top right navigation bar",
+      "outcome": "The page navigates to the image generation interface."
+    },
+    {
+      "t": "01:40",
+      "action": "click",
+      "target_text": null,
+      "target_description": "Add reference button for the 'Face' slot in the lookbook grid",
+      "outcome": "A dropdown list of public models appears."
+    },
+    {
+      "t": "01:41",
+      "action": "scroll",
+      "target_text": null,
+      "target_description": "Scrollbar of the public models list",
+      "outcome": "The list of models scrolls down."
+    },
+    {
+      "t": "01:42",
+      "action": "click",
+      "target_text": "Milo Boy",
+      "target_description": "Public model name in the list",
+      "outcome": "Milo Boy's face is added as a reference for the 'Face' slot."
+    },
+    {
+      "t": "01:45",
+      "action": "click",
+      "target_text": "astria.ai/astraprompts",
+      "target_description": "Browser URL bar",
+      "outcome": "The URL in the browser bar is highlighted."
+    },
+    {
+      "t": "01:46",
+      "action": "type",
+      "target_text": "astria.ai/astraprompts",
+      "target_description": "Browser URL bar",
+      "outcome": "The URL in the browser bar changes to 'astria.ai/gallery/packs/ecommerce'."
+    },
+    {
+      "t": "01:47",
+      "action": "keypress",
+      "target_text": null,
+      "target_description": "Enter key press (implied)",
+      "outcome": "The browser navigates to the Astria Ecommerce gallery page."
+    },
+    {
+      "t": "01:50",
+      "action": "scroll",
+      "target_text": null,
+      "target_description": "Page scrollbar",
+      "outcome": "The page scrolls down to reveal more categories."
+    },
+    {
+      "t": "02:07",
+      "action": "click",
+      "target_text": "Pendant Necklace",
+      "target_description": "Category card in the Jewelry section of the gallery",
+      "outcome": "The page navigates to the 'Pendant Necklace' pack page."
+    },
+    {
+      "t": "02:16",
+      "action": "scroll",
+      "target_text": null,
+      "target_description": "Page scrollbar",
+      "outcome": "The page scrolls down to reveal more images of pendant necklaces."
+    },
+    {
+      "t": "02:18",
+      "action": "click",
+      "target_text": "Featured Ecommerce",
+      "target_description": "Browser tab for Astria Ecommerce gallery",
+      "outcome": "The browser switches back to the Astria Ecommerce gallery tab."
+    },
+    {
+      "t": "02:57",
+      "action": "click",
+      "target_text": "basic",
+      "target_description": "Browser tab for the 'basic' pack",
+      "outcome": "The browser switches back to the 'basic' pack tab."
+    },
+    {
+      "t": "03:00",
+      "action": "click",
+      "target_text": "Generate",
+      "target_description": "Button in the top right navigation bar",
+      "outcome": "The page navigates to the image generation interface."
+    },
+    {
+      "t": "03:02",
+      "action": "click",
+      "target_text": null,
+      "target_description": "Add reference button for the 'Face' slot in the lookbook grid",
+      "outcome": "A dropdown list of public models appears."
+    },
+    {
+      "t": "03:03",
+      "action": "click",
+      "target_text": "Elara",
+      "target_description": "Public model name in the list",
+      "outcome": "Elara's face is added as a reference for the 'Face' slot."
+    },
+    {
+      "t": "03:05",
+      "action": "click",
+      "target_text": null,
+      "target_description": "Add reference button for the 'Footwear' slot in the lookbook grid",
+      "outcome": "A dropdown list of footwear options appears."
+    },
+    {
+      "t": "03:06",
+      "action": "click",
+      "target_text": "Brown Nike sneakers with cream laces",
+      "target_description": "Footwear option in the list",
+      "outcome": "Brown Nike sneakers are added as a reference for the 'Footwear' slot."
+    },
+    {
+      "t": "03:08",
+      "action": "click",
+      "target_text": "Pick a color",
+      "target_description": "Add reference button for the 'Background' slot in the lookbook grid",
+      "outcome": "A dropdown list of background options appears."
+    },
+    {
+      "t": "03:09",
+      "action": "click",
+      "target_text": "Blank background",
+      "target_description": "Background option in the list",
+      "outcome": "A blank background is added as a reference for the 'Background' slot."
+    },
+    {
+      "t": "03:11",
+      "action": "click",
+      "target_text": "Generate 1 Images - $0.33",
+      "target_description": "Button to generate images",
+      "outcome": "Image generation begins, and new images start appearing in the results area."
+    },
+    {
+      "t": "03:13",
+      "action": "scroll",
+      "target_text": null,
+      "target_description": "Page scrollbar",
+      "outcome": "The page continuously scrolls down to reveal more generated images of the model in various poses with the selected outfit, footwear, and background."
+    }
+  ],
+  "notable_ui_affordances": [
+    "My packs button",
+    "Generate button (in top navigation)",
+    "astria.ai link (in top navigation)",
+    "Lookbook tab",
+    "Image tab",
+    "Video tab",
+    "Search prompts input field",
+    "Pack... dropdown",
+    "Base pack... dropdown",
+    "User... dropdown",
+    "Filters button",
+    "Liked button",
+    "Describe button",
+    "Switch to free mode link",
+    "Add reference buttons for Dress, Top, Bottom, Jacket, Accessories slots",
+    "Developer API button (on homepage)",
+    "Try packs button (on homepage)",
+    "Train a model button (on homepage)",
+    "Use cases section (on homepage)",
+    "Category filters (on gallery page)"
+  ],
+  "open_questions": [
+    "The exact content of the dropdown for 'Background' before 'Blank background' was selected.",
+    "The specific number of images generated in the final step (the button indicated 'Generate 1 Images', but many distinct images were displayed, suggesting either multiple generations or variations of a single generation)."
+  ]
+}
