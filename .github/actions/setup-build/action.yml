@@ -13,25 +13,50 @@ runs:
         cache: npm
         cache-dependency-path: webinar-builder/package-lock.json
 
-    - name: Install ffmpeg
-      shell: bash
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y --no-install-recommends ffmpeg
+    - name: Cache Playwright browsers
+      id: playwright-cache
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/ms-playwright
+        key: ${{ runner.os }}-ms-playwright-${{ hashFiles('webinar-builder/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-ms-playwright-
 
     - name: Install npm dependencies
       shell: bash
       working-directory: webinar-builder
-      run: npm ci
+      run: |
+        set -euxo pipefail
+        timeout 15m npm ci --prefer-offline --no-audit --fund=false
+
+    - name: Install Chromium system dependencies
+      shell: bash
+      working-directory: webinar-builder
+      # Keep this separate from the browser download so setup logs show where
+      # the time is going, and so the browser binary cache can do its job.
+      run: |
+        set -euxo pipefail
+        timeout 20m npx playwright install-deps chromium
+
+    - name: Install ffmpeg
+      shell: bash
+      run: |
+        set -euxo pipefail
+        timeout 10m sudo apt-get install -y --no-install-recommends ffmpeg
 
     - name: Install headless Chromium
       shell: bash
       working-directory: webinar-builder
-      # hyperframes render + Playwright both drive Chromium; --with-deps
-      # pulls the OS libraries a headless browser needs on ubuntu runners.
-      run: npx playwright install --with-deps chromium
+      # hyperframes render + Playwright both drive Chromium. This should be a
+      # quick verification on cache hits, and a bounded download on misses.
+      run: |
+        set -euxo pipefail
+        echo "Playwright cache hit: ${{ steps.playwright-cache.outputs.cache-hit }}"
+        timeout 15m npx playwright install chromium
 
     - name: Verify hyperframes renderer
       shell: bash
       working-directory: webinar-builder
-      run: npx hyperframes@0.4.9 doctor || true
+      run: |
+        set -euxo pipefail
+        timeout 5m npx hyperframes@0.4.9 doctor || true

@@ -64,6 +64,13 @@ render is skipped entirely. So a re-run only re-renders what actually changed.
 The first build of any segment is always a full render; set `NO_RENDER_CACHE=1`
 to force one.
 
+**Setup caching.** `actions/setup-node` caches npm packages, and the shared
+setup action also caches Playwright's browser binaries under
+`~/.cache/ms-playwright`, keyed by `webinar-builder/package-lock.json`.
+Ubuntu system packages still install on each fresh runner, but Chromium should
+only download on cache misses. External install steps are wrapped with `timeout`
+so a stuck setup fails visibly instead of blocking the publish lane.
+
 `gh-pages` is rebuilt as a single fresh orphan commit on every deploy
 (`pipeline/ci/gh-pages.ts`), so its history never bloats; git deduplicates
 unchanged blobs by SHA.
