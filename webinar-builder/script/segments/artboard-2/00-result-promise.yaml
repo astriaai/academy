@@ -5,11 +5,12 @@ visual: video-showcase
 duration: 27.5
 
 showcase:
+  layout: cinema
   videos:
     - src: "assets/results/america-basics/clip-act1-gop30.mp4"
-      label: "FIRST VIDEO PASS"
+      label: "CINEMA VIDEO · STUDIO PASS"
     - src: "assets/results/america-basics/clip-act2-gop30.mp4"
-      label: "MOODY OUTDOOR PASS"
+      label: "CINEMA VIDEO · MOODY PASS"
 
 caption:
   eyebrow: "ARTBOARD TO VIDEO"

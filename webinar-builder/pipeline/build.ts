@@ -89,11 +89,14 @@ interface SegmentYaml {
     subtitle_html?: string;
   };
   showcase?: {
-    // Side-by-side or stacked result videos. Used by the video-showcase
-    // visual for one-off tutorial intros that lead with finished examples.
+    // Side-by-side result videos by default; layout="cinema" presents each
+    // entry as a full-width clip, sequencing entries unless starts are set.
+    // Used by the video-showcase visual for one-off tutorial intros that lead
+    // with finished examples.
     // Each entry may be a plain path or {src, label} — label renders above
     // the pane (e.g. "DRIVING VIDEO" / "GENERATED RESULT").
-    videos: Array<string | { src: string; label?: string }>;
+    videos: Array<string | { src: string; label?: string; start?: number; duration?: number }>;
+    layout?: "cinema";
     autoplay?: boolean;
   };
   face_showcase?: {
@@ -511,10 +514,17 @@ function renderLayout(project: string, projectCfg: ProjectYaml, segment: Segment
     if (videos.length === 0) {
       throw new Error(`segment ${segment.id}: video-showcase requires showcase.videos[]`);
     }
+    const showcaseLayout = segment.showcase?.layout === "cinema" ? "cinema" : "";
+    const cinemaSlotDuration = videos.length > 0 ? durationSec / videos.length : durationSec;
+    vars.SHOWCASE_GRID_CLASS = showcaseLayout;
     vars.SHOWCASE_VIDEOS_HTML = videos
       .map((entry, i) => {
         const src = typeof entry === "string" ? entry : entry.src;
         const label = typeof entry === "string" ? undefined : entry.label;
+        const fallbackStart = showcaseLayout === "cinema" ? i * cinemaSlotDuration : 0;
+        const start = typeof entry === "string" ? fallbackStart : entry.start ?? fallbackStart;
+        const fallbackDuration = showcaseLayout === "cinema" ? cinemaSlotDuration : durationSec - start;
+        const clipDuration = typeof entry === "string" ? fallbackDuration : entry.duration ?? fallbackDuration;
         const labelHtml = label
           ? `<div class="showcase-label">${label}</div>`
           : "";
@@ -525,7 +535,7 @@ function renderLayout(project: string, projectCfg: ProjectYaml, segment: Segment
           ? `<img class="showcase-video" id="showcase-media-${i}" src="${src}" alt="" />`
           : `<video class="showcase-video" id="showcase-media-${i}" data-volume="0" muted playsinline autoplay loop src="${src}"></video>`;
         return (
-          `<div class="showcase-pane clip" data-start="0" data-duration="${durationSec.toFixed(
+          `<div class="showcase-pane clip" data-start="${start.toFixed(2)}" data-duration="${clipDuration.toFixed(
             2,
           )}" data-track-index="${1 + i}">\n` +
           `          ${labelHtml}\n` +
