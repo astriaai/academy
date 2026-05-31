@@ -384,7 +384,7 @@ function pickScreencastMedia(project: string, segment: SegmentYaml): string | un
 
 function avatarMediaHtml(project: string, segmentId: string, hasAvatar: boolean) {
   if (hasAvatar) {
-    return `<video muted playsinline src="assets/avatars/${project}/${segmentId}.mp4" style="width:100%;height:100%;object-fit:cover;display:block;"></video>`;
+    return `<video muted playsinline data-volume="0" src="assets/avatars/${project}/${segmentId}.mp4" style="width:100%;height:100%;object-fit:cover;display:block;"></video>`;
   }
   return `<style>#seg-avatar{display:none!important}</style>`;
 }
@@ -569,8 +569,8 @@ function renderLayout(project: string, projectCfg: ProjectYaml, segment: Segment
           `          <div class="eye-target" aria-hidden="true"><span>EYE</span></div>\n` +
           `          <div class="scan-line" aria-hidden="true"></div>\n` +
           `        </div>\n` +
-          `        <div class="callout callout-raw"><span>RAW PASS</span>${example.raw_callout}</div>\n` +
-          `        <div class="callout callout-final"><span>SECOND PASS</span>${example.final_callout}</div>\n` +
+          `        <div class="callout callout-raw"><span>ORIGINAL</span>${example.raw_callout}</div>\n` +
+          `        <div class="callout callout-final"><span>FINAL</span>${example.final_callout}</div>\n` +
           `      </section>`
         );
       })
@@ -883,6 +883,7 @@ async function buildOne(project: string, segmentId: string) {
   let audioMp3: string;
   let audioUrl: string | null = null;
   let avatarMp4: string | null = null;
+  const activeAvatarMp4 = join(ROOT, "assets", "avatars", project, `${segmentId}.mp4`);
 
   // Visual-only segments (e.g. tv-intro) can declare no narration. In that
   // case we still need an audio file of the right length so the composition
@@ -911,7 +912,10 @@ async function buildOne(project: string, segmentId: string) {
     audioMp3 = ensureSayNarration(project, segmentId, segment.narration);
   }
 
-  if (usePruna && imageUrl) {
+  if (process.env.REUSE_AVATAR === "1" && imageUrl && existsSync(activeAvatarMp4)) {
+    avatarMp4 = activeAvatarMp4;
+    console.log(`[avatar] ${segmentId}: reusing active ${activeAvatarMp4}`);
+  } else if (usePruna && imageUrl) {
     // Pruna takes the local audio file directly — no hosted URL required.
     // video_prompt: segment-level overrides project-level default.
     const videoPrompt =

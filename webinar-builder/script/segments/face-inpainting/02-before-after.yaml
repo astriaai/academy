@@ -1,65 +1,67 @@
 id: 02-before-after
-title: "Before / after — Final vs Original debug layer"
-order: 2
+title: "Before / after — Final vs Original"
+order: 1
 visual: face-detail-showcase
 duration: 40.8
 
 caption:
-  eyebrow: "DEBUG LAYER PROOF"
+  eyebrow: "FACE INPAINTING EXAMPLES"
   html: |
-    Original layer.
-    <span class="accent">Final face pass.</span>
+    Original face detail.
+    <span class="accent">Final with Inpaint faces.</span>
 
 face_showcase:
   examples:
-    - raw: "assets/results/face-inpainting/ws-553/ws553-43213326-a-raw-face.jpg"
-      final: "assets/results/face-inpainting/ws-553/ws553-43213326-a-final-face.jpg"
-      label: "PROMPT 43213326 · RESULT A"
-      raw_callout: "Original debug layer: the first Nano Banana image, before face repair."
+    - raw: "assets/results/face-inpainting/showcase/lookbook-a-original-face.jpg"
+      final: "assets/results/face-inpainting/showcase/lookbook-a-final-face.jpg"
+      label: "LOOKBOOK · RESULT A"
+      raw_callout: "Original: the first Nano Banana image before the face pass."
       final_callout: "Second pass: eyelids, iris edge, pores, and pigmentation hold up."
       focus_x: 42
       focus_y: 30
       start: 0.6
       duration: 8.9
-    - raw: "assets/results/face-inpainting/ws-553/ws553-43213326-b-raw-face.jpg"
-      final: "assets/results/face-inpainting/ws-553/ws553-43213326-b-final-face.jpg"
-      label: "PROMPT 43213326 · RESULT B"
-      raw_callout: "At 600%, the raw eye and skin gradients start reading flatter."
-      final_callout: "At 600%, lashes and under-eye texture still read photographic."
+    - raw: "assets/results/face-inpainting/showcase/lookbook-b-original-face.jpg"
+      final: "assets/results/face-inpainting/showcase/lookbook-b-final-face.jpg"
+      label: "LOOKBOOK · RESULT B"
+      raw_callout: "Original: the eye edge and skin gradients read flatter."
+      final_callout: "Final: lashes and under-eye texture stay photographic."
       focus_x: 42
       focus_y: 30
       start: 9.7
       duration: 8.8
-    - raw: "assets/results/face-inpainting/ws-553/ws553-43164986-raw-face.jpg"
-      final: "assets/results/face-inpainting/ws-553/ws553-43164986-final-face.jpg"
-      label: "PROMPT 43164986 · MEN'S LOOKBOOK"
-      raw_callout: "The first pass gives composition, body, wardrobe, and pose."
-      final_callout: "The second pass repairs the face area without changing the shot."
+    - raw: "assets/results/face-inpainting/showcase/mens-lookbook-original-face.jpg"
+      final: "assets/results/face-inpainting/showcase/mens-lookbook-final-face.jpg"
+      label: "MEN'S LOOKBOOK"
+      raw_callout: "Original: the full image is already composed."
+      final_callout: "Final: the face area is refined while the shot stays intact."
       focus_x: 41
       focus_y: 30
       start: 18.8
       duration: 8.8
-    - raw: "assets/results/face-inpainting/ws-553/ws553-43223445-raw-face.jpg"
-      final: "assets/results/face-inpainting/ws-553/ws553-43223445-final-face.jpg"
-      label: "PROMPT 43223445 · ANIKA LOOKBOOK"
-      raw_callout: "Original debug layer: smooth forehead, softer eye edge, less freckle texture."
-      final_callout: "Final layer: the eye, lashes, and pigmentation hold up at 600%."
+    - raw: "assets/results/face-inpainting/showcase/anika-lookbook-original-face.jpg"
+      final: "assets/results/face-inpainting/showcase/anika-lookbook-final-face.jpg"
+      label: "ANIKA LOOKBOOK"
+      raw_callout: "Original: smoother forehead, softer eye edge, less freckle texture."
+      final_callout: "Final: eye detail, lashes, and pigmentation stay natural."
       focus_x: 42
       focus_y: 30
       start: 27.9
       duration: 12.0
 
 narration: |
-  This is the proof pass from workspace five five three, using the real
-  Original debug layer.
+  Start with a few existing lookbook examples.
 
   Original is the first Nano Banana image. Final is after Inpaint faces runs a
-  second Nano Banana pass over the detected face area. No separate model,
-  and no wardrobe or lighting story here. We are checking the face itself.
+  second Nano Banana pass over the detected face area. No separate model, and
+  no wardrobe or lighting story here. We are checking the face itself.
 
-  Check the same face at one hundred, three hundred, and six hundred percent.
-  If the raw layer turns smooth or glassy and the final keeps pores, lashes,
-  and pigmentation, that is the cost earning its keep.
+  If the original turns smooth or glassy and the final keeps pores, lashes,
+  pigmentation, and eye detail, that is the cost earning its keep.
+
+  The best result should also preserve identity. It should refine the face from
+  the same identity reference, not push the person into a generic
+  skin-enhanced look.
 
 sfx:
   - { src: "assets/sfx/whoosh-soft.mp3", start: 0.2,  volume: 0.55 }

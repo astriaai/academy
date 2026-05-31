@@ -404,12 +404,41 @@ p {
   gap: 26px;
 }
 
+.watch.watch-wide {
+  max-width: none;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.watch.watch-wide .main-player {
+  border-radius: 8px;
+}
+
+.watch.watch-wide .watch-side {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: var(--max);
+  width: 100%;
+  margin: 0 auto;
+}
+
 .watch-player-head {
   display: flex;
   justify-content: space-between;
   gap: 16px;
   align-items: center;
   margin-bottom: 12px;
+}
+
+.watch-player-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.side-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
 }
 
 .main-player {
@@ -481,6 +510,47 @@ p {
 
 .mode-switch .disabled {
   opacity: 0.45;
+}
+
+.layout-toggle {
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 800;
+  white-space: nowrap;
+  transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.layout-toggle svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.layout-toggle:hover {
+  border-color: #111;
+  background: var(--subtle);
+}
+
+.layout-toggle:active {
+  transform: scale(0.98);
+}
+
+.layout-toggle.active {
+  background: #111;
+  border-color: #111;
+  color: #fff;
 }
 
 .watch-title-row h1 {
@@ -787,18 +857,33 @@ p {
   .debug-panel summary {
     display: block;
   }
+  .watch-player-controls {
+    display: flex;
+    justify-content: stretch;
+    margin-top: 12px;
+  }
+  .side-card-head {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
   .watch-actions {
     margin-top: 14px;
     padding-top: 0;
   }
   .mode-switch {
-    margin-top: 12px;
     width: 100%;
   }
   .mode-switch a,
   .mode-switch span {
     flex: 1;
     min-width: 0;
+  }
+  .layout-toggle {
+    justify-content: center;
+    width: 100%;
+  }
+  .watch.watch-wide .watch-side {
+    grid-template-columns: 1fr;
   }
   .debug-panel summary::after {
     display: inline-block;

@@ -40,7 +40,7 @@
         position: absolute;
         top: 48px;
         left: 72px;
-        width: 900px;
+        width: 1040px;
         z-index: 5;
         display: flex;
         flex-direction: column;
@@ -65,8 +65,8 @@
       }
       .caption-text {
         font-family: "Playfair Display", Georgia, serif;
-        font-size: 62px;
-        line-height: 1.05;
+        font-size: 56px;
+        line-height: 1.0;
         font-weight: 400;
         letter-spacing: 0.005em;
       }
@@ -83,7 +83,7 @@
       }
       .example-label {
         position: absolute;
-        top: 170px;
+        top: 194px;
         left: 82px;
         font-size: 18px;
         letter-spacing: 0.22em;
@@ -93,10 +93,10 @@
       }
       .face-stage {
         position: absolute;
-        top: 205px;
+        top: 230px;
         left: 72px;
         width: 1060px;
-        height: 780px;
+        height: 755px;
         overflow: hidden;
         background: #1E1D1C;
         box-shadow: 0 30px 90px rgba(0,0,0,0.58), 0 0 0 1px rgba(244,241,236,0.08);
@@ -342,7 +342,7 @@
         tl.from(label, { opacity: 0, y: -8, duration: 0.4, ease: "power2.out" }, start + 0.25);
         tl.from(rawCallout, { opacity: 0, x: 28, duration: 0.45, ease: "power2.out" }, start + 0.9);
         tl.call(() => { zoomValue.textContent = "100%"; }, [], start + 1.05);
-        tl.call(() => { zoomLabel.textContent = "layer compare"; }, [], start + 1.05);
+        tl.call(() => { zoomLabel.textContent = "Original vs Final"; }, [], start + 1.05);
         tl.to(zoomMeter, { opacity: 1, y: -4, duration: 0.28, ease: "power2.out" }, start + 1.05);
         tl.to(final, { opacity: 1, duration: 0.16, ease: "power1.out" }, start + 2.05);
         tl.fromTo(scan, { opacity: 0, x: -260 }, { opacity: 1, x: 260, duration: 0.85, ease: "power3.inOut" }, start + 1.92);

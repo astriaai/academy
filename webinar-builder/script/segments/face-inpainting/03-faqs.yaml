@@ -10,24 +10,27 @@ slide:
     <span class="accent">you enable it?</span>
   bullets:
     - "It runs a second Nano Banana pass over the face area."
+    - "It should preserve identity from the reference, not smooth everyone into the same face."
     - "Use it when the face will be inspected: fashion, beauty, ecommerce, profile crops."
     - "Budget for extra processing time and roughly double image generation work."
     - "Use 4K, then inspect the face crop before shipping."
-  bullet_starts: [2.0, 6.5, 12.0, 17.0]
+  bullet_starts: [2.0, 6.5, 11.5, 16.5, 21.0]
 
 narration: |
-  Rule: Inpaint faces is not a separate identity engine. It is a second
-  Nano Banana pass over the detected face area.
+  Rule: Inpaint faces is not a separate model. It is a second Nano Banana pass
+  over the detected face area.
 
-  Use it when the face will be inspected: fashion, beauty, ecommerce, profile
-  crops. Budget extra processing time and double generation work.
+  It should not smooth everyone into the same face. Because the generation uses
+  an identity reference, the face pass should preserve the person while
+  improving detail.
 
-  Use 4K, enable Inpaint faces, then inspect Final against the Original debug
-  layer before shipping.
+  Use it for inspected faces, budget extra time and double generation work, and
+  review Final against Original at 4K before shipping.
 
 sfx:
   - { src: "assets/sfx/whoosh-soft.mp3", start: 0.2,  volume: 0.5 }
   - { src: "assets/sfx/ding-soft.mp3",   start: 2.0,  volume: 0.45 }
   - { src: "assets/sfx/ding-soft.mp3",   start: 6.5,  volume: 0.45 }
-  - { src: "assets/sfx/ding-soft.mp3",   start: 12.0, volume: 0.45 }
-  - { src: "assets/sfx/ding-soft.mp3",   start: 17.0, volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 11.5, volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 16.5, volume: 0.45 }
+  - { src: "assets/sfx/ding-soft.mp3",   start: 21.0, volume: 0.45 }

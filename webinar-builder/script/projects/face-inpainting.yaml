@@ -2,7 +2,7 @@
 # Standalone module under the bi-weekly cadence. The whole video lives inside
 # the Astria prompts UI: enable the "Inpaint faces" toggle on a generation and
 # compare the two output versions ("1 Final" with face inpaint applied vs
-# "2 Inpaint Woman/Man Original" — the raw face from the base model).
+# "2 Inpaint Woman/Man Original" — the first face render).
 #
 # Editorial portrait/beauty register — close-up faces, atelier vocabulary.
 
@@ -26,7 +26,7 @@ defaults:
     # https://pixabay.com/music/cafe-acid-jazz-groove-517096/
     # The portrait/beauty register sits well over the same smooth funk pad.
     src: "assets/music/acid-jazz-groove.mp3"
-    volume: 0.55
+    volume: 0.16
     # Mix the bed in once at the stitch stage with sidechain ducking against
     # the narration; keeps it continuous across segment boundaries and pulls
     # it ~8 dB under whenever Yuli speaks. See pipeline/stitch.ts.
@@ -46,7 +46,7 @@ defaults:
 
 segments:
   - 00-intro              # TV-show open with Yuli presenter + face-detail panels (~10s)
-  - 01-overview           # Business/use-case preface: when the second pass pays off (~28s)
-  - 02-before-after       # Workspace 553 debug-layer proof, 4 examples, 100/300/600 zoom (~41s)
-  - 02-workflow           # UI recording: workspace 553 → 4K → toggle → existing layers (~45s)
+  - 02-before-after       # Face inpainting examples: first render vs final face pass (~41s)
+  - 01-overview           # Why it matters after the examples, before workflow (~24s)
+  - 02-workflow           # UI recording: loaded page → 4K → toggle → compare Original/Final (~45s)
   - 03-faqs               # FAQ slide — second Nano Banana pass, time/cost, 4K (~35s)

@@ -1,50 +1,48 @@
 id: 02-workflow
-title: "Workflow — prompt, 4K, Inpaint faces, compare"
+title: "Workflow — 4K + Inpaint faces"
 order: 3
 visual: screencast-pip
 
 # Recording flow (~42s):
-#   0–8s     start on a loaded workspace 553 page filtered to Inpaint faces prompts
+#   0–8s     start on a loaded prompt page filtered to Inpaint faces
 #   8–15s    zoom into the prompt box and resolution row
 #   15–22s   set/confirm 4K, open the cog, enable Inpaint faces
 #   22–29s   hover Generate without submitting a fresh generation
-#   29–45s   jump to prompt 43213326, zoom, hold-drag to the face, compare layers
+#   29–45s   jump to an existing result, zoom, hold-drag to the face, compare Original/Final
 screencast:
   mode: "video"
-  url: "astria.ai/prompts?ws=553&inpaint_faces=true"
+  url: "astria.ai/prompts"
   record_script: "scripts/record/face-inpainting/02-workflow.ts"
 
 caption:
   eyebrow: "WORKFLOW"
   html: |
-    Prompt.
+    Simple brief.
     4K.
     <span class="accent">Inpaint faces.</span>
-    Compare the layers.
+    Compare Original and Final.
 
 slide:
   bullets:
-    - "Start with a simple Nano Banana lookbook prompt."
+    - "Start with a simple lookbook brief."
     - "Set the resolution dropdown to 4K."
     - "Open the cog wheel and turn Inpaint faces on."
-    - "Compare Final and Original at 100%, 300%, and 600%."
+    - "Compare Final and Original in the lightbox."
   bullet_starts: [3.0, 10.0, 16.0, 30.0]
 
 narration: |
   Workflow inside Astria.
 
-  Start with a simple Nano Banana lookbook prompt. We care about Nano Banana,
-  4K, and the face pass, not switching models.
+  Start with a simple lookbook brief. We care about Nano Banana, 4K, and the
+  face pass.
 
   Set resolution to 4K. Open the cog wheel and turn on Inpaint faces.
 
-  When you run it, Astria generates the image with Nano Banana, then runs a
-  second Nano Banana pass over the detected face area. That is the extra cost
-  and time.
+  When you run it, Astria creates the image, then runs a second Nano Banana
+  pass over the detected face area. That is the extra cost and time.
 
-  For proof, jump to completed prompt four three two one three three two six.
-  Open the lightbox and compare Final with the Original debug layer at one
-  hundred, three hundred, and six hundred percent.
+  For the comparison, open a completed result, pan into the face, and compare
+  Final with Original.
 
 markers:
   - { start: 5.0,  duration: 3.2, shape: "underline", cx: 720, cy: 315, w: 620, style: "luxe-gold" }

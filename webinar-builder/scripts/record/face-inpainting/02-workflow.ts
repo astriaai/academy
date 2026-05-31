@@ -2,13 +2,13 @@
  * Real Astria UI recording for the face-inpainting workflow.
  *
  * Flow:
- *   1. Use the real prompt box, prefilled from workspace 553 prompt 43213326.
+ *   1. Use the real prompt box, prefilled from a saved lookbook result.
  *   2. Set the Nano Banana output resolution to 4K.
  *   3. Open the real cog menu and enable `prompt[inpaint_faces]`.
  *   4. Hover Generate, then jump to an existing completed prompt to avoid
  *      creating a new generation during recording.
  *   5. Open the real lightbox, compare at 100/300/600%, and switch between Final
- *      and the original debug layer.
+ *      and Original.
  */
 import type { Page } from "playwright";
 import type { RecordScript, Viewport } from "../../../pipeline/record-screencast.js";
@@ -329,7 +329,7 @@ async function showZoomBadge(page: Page, label: string) {
       const value = badge.querySelector("b");
       if (value) value.textContent = text;
       const detail = badge.querySelector("span");
-      if (detail) detail.textContent = "layer compare";
+      if (detail) detail.textContent = "Original vs Final";
     }, label)
     .catch(() => {});
 }
@@ -375,7 +375,7 @@ async function zoomLightboxStep(
   await sleep(140);
 
   // Anchor the wheel over the face, then visibly hold-and-drag the image so
-  // the face lands in the inspection area before we toggle layers.
+  // the face lands in the inspection area before we compare Original and Final.
   for (let i = 0; i < wheelTicks; i += 1) {
     await page.mouse.wheel(0, -900);
     await sleep(35);
@@ -432,7 +432,7 @@ const script: RecordScript = async ({ page, sleep }) => {
 
   await openCompletedLightbox(page, sleep);
 
-  // Real lightbox zoom + layer picker: prove the face pass at practical zooms.
+  // Real lightbox zoom with Original/Final switching at practical inspection sizes.
   await zoomLightboxStep(page, sleep, "100%", 0);
   await switchLightboxLayer(page, sleep, ORIGINAL_LAYER_LABEL, 600);
   await switchLightboxLayer(page, sleep, "Final", 650);

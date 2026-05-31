@@ -32,6 +32,10 @@ jobs:
         uses: ./.github/actions/setup-build
         timeout-minutes: 45
 
+      - name: Run unit tests
+        working-directory: webinar-builder
+        run: npm test
+
       - name: Restore artifact cache from gh-pages
         working-directory: webinar-builder
         run: npm run ci:restore

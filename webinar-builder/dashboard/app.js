@@ -215,12 +215,15 @@ function firstPlayableSegment(project) {
   return playableSegments(project)[0] || null;
 }
 
-function watchHref(project, seg) {
-  const base = `#watch=${encodeURIComponent(project.id)}`;
-  return seg ? `${base}&segment=${encodeURIComponent(seg.id)}` : base;
+function watchHref(project, seg, layout = "") {
+  return routeHash({
+    watch: project.id,
+    segment: seg?.id,
+    layout: layout === "wide" ? "wide" : "",
+  });
 }
 
-function segmentList(project) {
+function segmentList(project, layout = "") {
   return project.segments
     .map((seg, index) => {
       const playable = Boolean(seg.videoUrl);
@@ -244,7 +247,7 @@ function segmentList(project) {
       if (!playable) {
         return `<div class="queue-item is-${seg.status} disabled" aria-disabled="true" data-segment-id="${attr(seg.id)}">${inner}</div>`;
       }
-      return `<a class="queue-item is-${seg.status}" href="${watchHref(project, seg)}" data-segment-id="${attr(seg.id)}">${inner}</a>`;
+      return `<a class="queue-item is-${seg.status}" href="${watchHref(project, seg, layout)}" data-segment-id="${attr(seg.id)}">${inner}</a>`;
     })
     .join("");
 }
@@ -324,30 +327,47 @@ function playerMarkup(project, activeSegment, isSegmentMode) {
   } src="${esc(source)}" data-mode="${isSegmentMode ? "segment" : "full"}" aria-label="${attr(title)}"></video>`;
 }
 
-function modeSwitch(project, activeSegment, isSegmentMode) {
+function modeSwitch(project, activeSegment, isSegmentMode, layout = "") {
   const firstSegment = activeSegment || firstPlayableSegment(project);
   return `
     <div class="mode-switch" aria-label="Playback mode">
-      <a class="${isSegmentMode ? "" : "active"}" href="${watchHref(project)}">Full video</a>
+      <a class="${isSegmentMode ? "" : "active"}" href="${watchHref(project, null, layout)}">Full video</a>
       ${
         firstSegment
-          ? `<a class="${isSegmentMode ? "active" : ""}" href="${watchHref(project, firstSegment)}">Segments</a>`
+          ? `<a class="${isSegmentMode ? "active" : ""}" href="${watchHref(project, firstSegment, layout)}">Segments</a>`
           : `<span class="disabled">Segments</span>`
       }
     </div>`;
 }
 
-function nextSegmentHref(project, activeSegment) {
+function layoutToggle(project, activeSegment, isWideLayout, q = "") {
+  const nextLayout = isWideLayout ? "" : "wide";
+  const label = isWideLayout ? "Default layout" : "Full width";
+  return `
+    <a class="layout-toggle${isWideLayout ? " active" : ""}" href="${attr(
+      routeHash({ watch: project.id, segment: activeSegment?.id, layout: nextLayout, q }),
+    )}" role="button" aria-pressed="${isWideLayout ? "true" : "false"}" title="${attr(label)}">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <rect x="3.5" y="5" width="17" height="14" rx="2" />
+        <path d="M7 12h10" />
+        <path d="m9 9-3 3 3 3" />
+        <path d="m15 9 3 3-3 3" />
+      </svg>
+      <span>${esc(label)}</span>
+    </a>`;
+}
+
+function nextSegmentHref(project, activeSegment, layout = "") {
   if (!activeSegment) return "";
   const segments = playableSegments(project);
   const index = segments.findIndex((seg) => seg.id === activeSegment.id);
-  return index >= 0 && segments[index + 1] ? watchHref(project, segments[index + 1]) : "";
+  return index >= 0 && segments[index + 1] ? watchHref(project, segments[index + 1], layout) : "";
 }
 
-function wireWatchPlayer(project, activeSegment, isSegmentMode) {
+function wireWatchPlayer(project, activeSegment, isSegmentMode, layout = "") {
   const video = document.getElementById("watch-video");
   if (!video || !isSegmentMode) return;
-  const nextHref = nextSegmentHref(project, activeSegment);
+  const nextHref = nextSegmentHref(project, activeSegment, layout);
   if (!nextHref) return;
   video.addEventListener("ended", () => {
     location.hash = nextHref.slice(1);
@@ -376,6 +396,7 @@ function route() {
   return {
     watch: params.get("watch"),
     segment: params.get("segment"),
+    layout: params.get("layout") === "wide" ? "wide" : "",
     section: normalizeSection(params.get("section")),
     q: params.get("q") || "",
   };
@@ -495,7 +516,7 @@ function wireSearch(q, isWatchPage, section = "all") {
     const next = search.value.trim();
     if (isWatchPage) {
       const current = route();
-      location.hash = routeHash({ watch: current.watch, segment: current.segment, q: next }).slice(1);
+      location.hash = routeHash({ watch: current.watch, segment: current.segment, layout: current.layout, q: next }).slice(1);
       return;
     }
     const selected = normalizeSection(section);
@@ -536,19 +557,22 @@ function renderChannel(m, q = "", section = "all") {
   wireShareButtons();
 }
 
-function renderWatch(m, projectId, segmentId, q = "") {
+function renderWatch(m, projectId, segmentId, q = "", layout = "") {
   const project = m.projects.find((p) => p.id === projectId) || m.projects[0];
   if (!project) return renderChannel(m);
   const activeSegment = segmentId ? project.segments.find((s) => s.id === segmentId && s.videoUrl) || firstPlayableSegment(project) : null;
   const isSegmentMode = Boolean(segmentId && activeSegment);
+  const isWideLayout = layout === "wide";
   document.title = `${project.title} · Astria Academy`;
   document.getElementById("app").innerHTML = `
     ${topBar(m, "Astria Academy", q)}
-    <main class="watch">
+    <main class="watch${isWideLayout ? " watch-wide" : ""}">
       <section class="watch-main">
         <div class="watch-player-head">
           <a class="back-link" href="#">← Back to videos</a>
-          ${modeSwitch(project, activeSegment, isSegmentMode)}
+          <div class="watch-player-controls">
+            ${layoutToggle(project, activeSegment, isWideLayout, q)}
+          </div>
         </div>
         <div class="main-player">
           ${playerMarkup(project, activeSegment, isSegmentMode)}
@@ -563,15 +587,21 @@ function renderWatch(m, projectId, segmentId, q = "") {
             }</p>
           </div>
           <div class="watch-actions">
-            ${shareButton(isSegmentMode ? `${project.title}: ${activeSegment.title}` : project.title, isSegmentMode ? watchHref(project, activeSegment) : watchHref(project))}
+            ${shareButton(
+              isSegmentMode ? `${project.title}: ${activeSegment.title}` : project.title,
+              isSegmentMode ? watchHref(project, activeSegment, layout) : watchHref(project, null, layout),
+            )}
           </div>
         </div>
         ${debugPanel(project, activeSegment, isSegmentMode)}
       </section>
       <aside class="watch-side">
         <div class="side-card">
-          <div class="section-title">Segments</div>
-          <div class="queue">${segmentList(project)}</div>
+          <div class="side-card-head">
+            <div class="section-title">Segments</div>
+            ${modeSwitch(project, activeSegment, isSegmentMode, layout)}
+          </div>
+          <div class="queue">${segmentList(project, layout)}</div>
         </div>
         <div class="side-card">
           <div class="section-title">More Videos</div>
@@ -580,14 +610,14 @@ function renderWatch(m, projectId, segmentId, q = "") {
       </aside>
     </main>`;
   if (isSegmentMode) document.querySelector(`[data-segment-id="${CSS.escape(activeSegment.id)}"]`)?.classList.add("active");
-  wireWatchPlayer(project, activeSegment, isSegmentMode);
+  wireWatchPlayer(project, activeSegment, isSegmentMode, layout);
   wireSearch(q, true);
   wireShareButtons();
 }
 
 function render(m) {
   const r = route();
-  if (r.watch) renderWatch(m, r.watch, r.segment, r.q);
+  if (r.watch) renderWatch(m, r.watch, r.segment, r.q, r.layout);
   else renderChannel(m, r.q, r.section);
 }
 

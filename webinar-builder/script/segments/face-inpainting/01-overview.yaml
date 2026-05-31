@@ -1,6 +1,6 @@
 id: 01-overview
-title: "When Face Inpainting pays off"
-order: 1
+title: "Why Face Inpainting matters"
+order: 2
 visual: presenter-slide
 duration: 24.0
 
@@ -12,27 +12,31 @@ slide:
   columns:
     - heading: "Use it when"
       bullets:
-        - "The image ships large: lookbook, PDP zoom, campaign crop."
-        - "The face is small in the full-body frame but important later."
+        - "The face carries the model's identity in the final crop."
+        - "The image ships large: lookbook, product-detail zoom, campaign crop."
         - "A client, buyer, or retoucher will inspect the face detail."
       bullet_starts: [1.0, 3.8, 6.8]
     - heading: "Remember"
       bullets:
         - "It is a second Nano Banana pass over the detected face area."
-        - "That means extra processing time and roughly double generation work."
-        - "The proof is the face at 100%, 300%, and 600%."
+        - "It should preserve identity, not create a generic skin-smoothing look."
+        - "Budget extra processing time and roughly double generation work."
       bullet_starts: [10.0, 14.0, 18.2]
 
 narration: |
-  Here is when Face Inpainting matters commercially. Use it when the image will
-  be used large: lookbook pages, product-detail zoom, campaign crops, or client
-  review where the face becomes a close-up.
+  Now why it matters.
+
+  Use Face Inpainting when identity has to survive the final crop: lookbook
+  pages, product detail zoom, campaign crops, or client review.
 
   It is not a separate model. It is a second Nano Banana pass over the
-  detected face area, so it adds time and generation work.
+  detected face area.
 
-  The test is practical zoom: one hundred, three hundred, and six hundred
-  percent.
+  Unlike a generic skin enhancer, it works with the identity reference, so the
+  goal is the same person with better pores, pigmentation, lashes, and eye
+  detail.
+
+  Budget extra processing time and roughly double generation work.
 
 sfx:
   - { src: "assets/sfx/whoosh-soft.mp3", start: 0.2,  volume: 0.45 }

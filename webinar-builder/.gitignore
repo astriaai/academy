@@ -4,6 +4,8 @@ node_modules/
 renders/
 out/
 site/
+_site/
+.thumbnails/
 .hyperframes/
 .cache/
 .work/
@@ -13,10 +15,15 @@ storageState.json
 # Generated media artifacts — all regenerable, never commit.
 assets/avatars/**/*.mp4
 assets/avatars/**/*.mp3
+assets/avatars/**/intro-artboard*/
+assets/avatars/**/intro-video-download/
 assets/avatars/edit-image/
 assets/audio/**/*.wav
 assets/captures/**/*.mp4
 assets/results/**/*.mp4
+assets/results/**/existing/
+assets/results/**/fresh/
+assets/results/**/source-downloads/
 assets/results/edit-image/
 assets/inputs/
 assets/artboard/
